@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    title="{{'shp.Representation.Representation' | translate}}"
+                    [allowGrouping]="!companyId"
+                    [showAddButton]="!representationId"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [showExportToExcelButton]="true"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

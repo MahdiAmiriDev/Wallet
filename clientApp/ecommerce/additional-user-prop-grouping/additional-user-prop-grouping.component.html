@@ -1,0 +1,28 @@
+<app-entity-grouping-list
+                          [columns]="columns"
+                          #entityGroupingList
+                          [inputItemGroupCustomRowButtons]="rowButtons"
+                          [showCustomRowButton]="false"
+                          entityName="AdditionalUserProp"
+                          itemGroupListLabel="{{formLabels.additionalUserPropItemGroup}}"
+                          hasReport="false"
+                          [showNextItemGroup] ="true"
+                          [showAddButton]="true">
+</app-entity-grouping-list>
+<dx-popup *ngIf="showAssignUserToGroup && groupId"
+          title="انتخاب کاربر"
+          [rtlEnabled]="true"
+          [(visible)]="showAssignUserToGroup"
+          (onHidden)="showAssignUserToGroup=false"
+          [closeOnOutsideClick]="true"
+          [deferRendering]="false"
+          [dragEnabled]="false"
+          [fullScreen]="true"
+          class="popup">
+    <app-assign-Additional-user-prop-group
+            *ngIf="showAssignUserToGroup && groupId"
+            [groupTitle]="groupTitle"
+            [groupId]="groupId"
+            (assignAffectedChange)="onAssignAffectedChange()">
+    </app-assign-Additional-user-prop-group>
+</dx-popup>

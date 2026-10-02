@@ -1,0 +1,78 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item [label]="{text: 'نام پذیرنده'}" dataField="merchantName">
+
+        <dxi-validation-rule type="required" message="نام پذیرنده اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [template]="'cityTemplate'" dataField="cityId" [label]="{text: 'شهر'}">
+        <dxi-validation-rule type="required" message="شهر اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'cityTemplate'">
+        <dx-drop-down-box
+          #ddlCity
+          [(value)]="entity.cityId"
+          valueExpr="id"
+          displayExpr="title"
+          placeholder="انتخاب شهر..."
+          [showClearButton]="true"
+          [dataSource]="cityDataSource"
+          (onValueChanged)="syncTreeViewSelection($event)">
+
+          <div *dxTemplate="let data of 'content'">
+            <dx-tree-view
+              [dataSource]="cityDataSource"
+              dataStructure="plain"
+              keyExpr="id"
+              parentIdExpr="parentId"
+              selectionMode="single"
+              displayExpr="title"
+              rtlEnabled="true"
+              [selectByClick]="true"
+              [searchEnabled]="true"
+              (onContentReady)="syncTreeViewSelection($event)"
+              (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCity.instance.close();"
+
+            >
+            </dx-tree-view>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <dxi-item dataField="userId" [label]="{text: 'کاربر'}" [template]="'userTemplate'"></dxi-item>
+      <div *dxTemplate="let data of 'userTemplate'">
+        <dx-lookup [dataSource]="usersDataSource"
+                   [(value)]="entity.userId"
+                   searchMode="contains"
+                   displayExpr="title"
+                   valueExpr="id"
+                   [rtlEnabled]="true"
+                   showCancelButton="true">
+        </dx-lookup>
+      </div>
+
+      <dxi-item [label]="{text: 'تلفن ثابت با پیش شماره'}" dataField="phoneNumber">
+        <dxi-validation-rule
+          type="pattern"
+          maxlength="11" minlength="11"
+          pattern="^0[1-9]{2}[0-9]{8}$"
+          message="فرمت شماره تلفن ثابت صحیح نیست">
+        </dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تلفن همراه'}" dataField="mobileNumber">
+        <dxi-validation-rule
+          type="pattern"
+          maxlength="12" minlength="12"
+          pattern="^(\+98|0098|98|0)?9\d{9}$"
+          message="فرمت شماره تلفن همراه صحیح نیست">
+        </dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'آدرس'}" dataField="address" editorType='dxTextArea'>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

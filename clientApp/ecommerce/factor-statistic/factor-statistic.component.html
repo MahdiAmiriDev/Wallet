@@ -1,0 +1,83 @@
+<div style="margin: 5px;" class="alert alert-primary">
+  <div style="text-align: center;margin-bottom: 10px;" [textContent]="title"></div>
+  <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+    <dxi-item [label]="{text: 'قرارداد'}" [editorOptions]="{readOnly:true}" dataField="saleConfigurationTitle">
+    </dxi-item>
+    <dxi-item [label]="{text: 'دسته مالیاتی'}" [editorOptions]="{readOnly:true}" dataField="taxCategoryTitle">
+    </dxi-item>
+    <dxi-item [label]="{text: 'درصد سود(%)'}" dataField="profitPercentage"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item [label]="{text: 'درصد تخفیف(%)'}" dataField="discountPercentage"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ صدور'}" dataField="issueDate" [template]="'intDate'"
+              editorType='dxNumberBox' [editorOptions]="{readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'مبلغ خرید انستیتو(ریال)'}" dataField="companyPurchasePrice"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'هزینه ارسال(ریال)'}" dataField="additionalShippingCharge"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'مبلغ پرداخت شده تاکنون(ریال)'}" dataField="sumPaid"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'مبلغ باقیمانده(ریال)'}" dataField="sumRemaining"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'تعداد اقساط جهت تسویه'}" dataField="factorInstallmentCount"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'تعداد اقساط باقیمانده'}" dataField="remainingFactorInstallmentCount"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'تعداد اقساط پرداخت شده'}" dataField="paidFactorInstallmentCount"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'جمع مبلغ کسورات فاکتور(ریال)'}" dataField="sumFactorDeduction"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'تعداد کسورات فاکتور'}" dataField="factorDeductionCount"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'درصد بیمه'}" dataField="insurancePercentage"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'مبلغ بیمه(ریال)'}" dataField="insurancePrice"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'درصد سایر کسورات قرارداد'}" dataField="otherDeductionsPercentage"
+              editorType='dxNumberBox' [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'مبلغ سایر کسورات قرارداد(ریال)'}" dataField="otherDeductionsPrice"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0', readOnly:true}">
+    </dxi-item>
+
+    <dxi-item *ngIf="complexMode" [label]="{text: 'نام بانک'}" dataField="bankName"
+              [editorOptions]="{readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'نام صاحب حساب'}" dataField="bankAccountOwner"
+              [editorOptions]="{readOnly:true}">
+    </dxi-item>
+
+    <dxi-item *ngIf="complexMode" [label]="{text: 'شماره حساب تسویه فاکتور'}" dataField="accountNumber"
+              [editorOptions]="{readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'شماره شبا تسویه فاکتور'}" dataField="shebaNumber"
+              [editorOptions]="{readOnly:true}">
+    </dxi-item>
+    <dxi-item *ngIf="complexMode" [label]="{text: 'نام شعبه'}" dataField="branchName"
+              [editorOptions]="{ readOnly:true}">
+    </dxi-item>
+
+
+    <div *dxTemplate="let data of 'intDate'">
+      <dx-text-box value="  {{ data.component.option('formData')[data.dataField] | intToStringDate }}" readOnly="true">
+      </dx-text-box>
+    </div>
+  </dx-form>
+</div>

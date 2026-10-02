@@ -1,0 +1,269 @@
+﻿@using Yashil.Core.Enums
+@using YashilCommerce.Web.Areas.ECommerce.ViewModels
+@using YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.IndexPageViewModel
+@{
+
+    Layout = "_Layout";
+    Model.ProductFilter.ControllerName = "Company";
+    Model.ProductFilter.ActionName = "Index";
+    if (!string.IsNullOrEmpty(Model.ProductFilter.CategoryTitle))
+    {
+        ViewData["Title"] = Model.ProductFilter.CategoryTitle;
+    }
+}
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary d-lg-none d-flex justify-content-center py-4">
+    <button class="navbar-toggler "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            onclick="openAdvancedFilter()">
+        <!-- <span class="navbar-toggler-icon"></span> -->
+        <svg width="24" height="24">
+            <use href="../images/icons/general.svg#adjustments-horizontal" />
+        </svg>
+        جستجوی پیشرفته
+    </button>
+</nav>
+
+<div id="products-with-filter__container" class="px-2">
+    <div class="d-flex gap-2 mb-3 pt-md-5 pt-xl-5 pt-xxl-2">
+        <!-- sidebar -->
+        <div class="sidebar-desktop z-2">
+            <div class="sidebar-desktop-inner" data-sticky="true">
+
+                <button type="button" data-toggle="modal" onclick="$('#searchCityModal').modal('show');" class="d-flex d-lg-none border-0 bg-transparent w-100 justify-content-center my-4 choose-city-padding gap-1">
+                    <svg class="location-icon" width="20" height="20" stroke="var(--dark-primary-yellow-color)">
+                        <use href="../images/icons/general.svg#map-pin" />
+                    </svg>
+                    <span class="fs-14">
+                        لطفا شهر خود را انتخاب کنید.
+                    </span>
+                </button>
+                @await Component.InvokeAsync("FilterItemsContainer", new { productFilter = Model.ProductFilter, filterContainerViewMode = FilterContainerViewMode.DesktopMode })
+
+                @if (Model.ProductFilter.CityId == null && Model.ProductFilter.CategoryId == null && string.IsNullOrEmpty(Model.ProductFilter.CompanyTitle))
+                {
+                    <div class="d-block d-lg-none d-xl-none bg-custom-sidebar overflow-hidden rounded-4 my-2">
+                        <div class="sidebar-section__header d-flex justify-content-between align-items-center px-4">
+                            <a href="javascript:void(0)"
+                               class="closebtn d-lg-none mt-2"
+                               style="font-size: 30px !important"
+                               onclick="closeAdvancedFilter()">&times;</a>
+                            <label class="fw-bold mx-auto ">جستجوی پیشرفته</label>
+                        </div>
+                    </div>
+                }
+                @if (!Model.ProductFilter.CityId.HasValue && Model.AllowFilterByCity)
+                {
+                    @await Component.InvokeAsync("CitySelector", new { Model.ProductFilter })
+                }
+                @if (Model.ProductFilter.Company == null || Model.ProductFilter.Company.Count != 1)
+                {
+                    @await Component.InvokeAsync("Company", new { productFilter = Model.ProductFilter, companyViewMode = CompanyViewMode.VerticalSingleSelection })
+                }
+                @if (Model.AllowFilterByCity && Model.ProductFilter.CityId.HasValue && !Model.ProductFilter.RepresentationId.HasValue && Model.ProductFilter.Company != null && Model.ProductFilter.Company.Count == 1)
+                {
+                    @await Component.InvokeAsync("RepresentationByFilter", new { productFilter = Model.ProductFilter })
+                }
+
+                @await Component.InvokeAsync("CategoryHierarchically",
+                new
+                {
+                companyIds = Model.ProductFilter.Company,
+                representationId = Model.ProductFilter.RepresentationId,
+                searchTitle = Model.ProductFilter.SearchTitle,
+                cityId = Model.ProductFilter.CityId,
+                categoryId = Model.ProductFilter.CategoryId,
+                categoryGroupId = Model.ProductFilter.CategoryGroupId
+                })
+
+            </div>
+        </div>
+
+        <div style="width: 100px; flex-grow: 1">
+            @if (string.IsNullOrEmpty(Model.ProductFilter.SearchTitle) && !Model.ProductFilter.CityId.HasValue && !Model.ProductFilter.Company.Any() && !Model.ProductFilter.CategoryId.HasValue)
+            {
+            }
+            @if (Model.ProductFilter != null && !string.IsNullOrEmpty(Model.ProductFilter.CityName))
+            {
+                <div class="d-block d-sm-block d-md-none c-general-location__bar js-general-location-bar">
+                    <span class="c-general-location__bar-icon "></span>
+                    <i class="fa fa-map-marker" aria-hidden="true" style="display: inline-block"></i>  <span class="c-general-location__bar-text">شهر: @Model.ProductFilter.CityName</span>
+                </div>
+            }
+            @if (Model.ProductFilter?.Company != null && Model.ProductFilter.Company.Count == 1)
+            {
+                var currentCompanyId = Model.ProductFilter.Company.FirstOrDefault();
+
+                <div class="mb-5">
+
+
+                    <a href="@(string.IsNullOrEmpty(Model.BannerUrl) ? "#" : Model.BannerUrl)">
+                        <div class="w-100 d-none d-md-block d-lg-block d-xl-block">
+                            <img alt="Company Small Logo" src="@Url.Action("GetCompanyLargeLogo", "Company", new { cId = currentCompanyId, v = currentCompanyId })"
+                                 class="rounded-3 w-100" asp-append-version="true" style="max-height:380px" />
+                        </div>
+                        <div class="w-100 d-block  d-md-none d-lg-none d-xl-none mb-2">
+                            <img alt="Company Large Logo" src="@Url.Action("GetCompanySmallLogo", "Company", new { cId = currentCompanyId, v = currentCompanyId })"
+                                 class="rounded-3 w-100" asp-append-version="true" style="max-height:380px" />
+                        </div>
+
+                    </a>
+                </div>
+            }
+            @if (Model.ProductFilter.CategoryId.HasValue)
+            {
+                <div class="breadcrumbContainer mb-3" style="direction:rtl;">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mybreadcrumb" style="text-align:center;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-start" style="list-style: none;margin: 0 0 -10px;padding: 0;color: #929292;max-width: 100%;display: -webkit-box;display: -webkit-flex;display: -ms-flexbox; display: flex; overflow-x: auto;-webkit-flex-wrap: nowrap;-ms-flex-wrap: nowrap;flex-wrap: nowrap;font-size: 11px;font-size: .786rem;line-height: 2;scroll-behavior: smooth;">
+                                @{
+                                    var ch = Model.ProductFilter.SelectedCategoryWithParents.FirstOrDefault(x => x.Id == Model.ProductFilter.CategoryId);
+                                    while (ch != null)
+                                    {
+                                        <li class="breadcrumb-item" style="display: flex; -webkit-box-align: center; -webkit-align-items: center;-ms-flex-align: center;align-items: center;  white-space: nowrap; vertical-align: middle;padding: 1rem 0;" onclick="setCategoryByFilter(@ch.Id)">
+                                            <a href="#" style="font-size: 12px;">@ch.Title</a>
+                                        </li>
+                                        ch = Model.ProductFilter.SelectedCategoryWithParents.FirstOrDefault(x => x.Id == ch.ParentId);
+                                    }
+                                }
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.ProductFilter.SearchTitle))
+            {
+                var productListPartialViewModel = new ProductListPartialViewModel
+                {
+                    ProductFilter = Model.ProductFilter
+                };
+                @await Html.PartialAsync("_ProductSearchByNamePartial", productListPartialViewModel)
+            }
+            else if (!Model.ProductFilter.CategoryId.HasValue)
+            {
+                if (Model.AllowFilterByCity == true && !Model.CategoryViewModels.Any() && !Model.CompanyViewModels.Any()
+                && !Model.FirstLevelCategories.Any())
+                {
+                    <div class="alert alert-warning" style="margin-top:10px">کاربر گرامی محصولی برای فیلتر اعمال شده یافت نشد.</div>
+                }
+                else
+                {
+                    foreach (var item in Model.FirstLevelCategories)
+                    {
+                        @await Html.PartialAsync("_ProductListByFilterPartial",
+            new ProductListPartialViewModel { ProductFilter = Model.ProductFilter, CategoryViewModel = item, SetSliderCustomConfig = true })
+                    }
+                }
+            }
+            else
+            {
+                var productListPartialViewModel = new ProductListPartialViewModel
+                {
+                    ProductFilter = Model.ProductFilter,
+                    CategoryViewModel = new CategorySimpleViewModel
+                    {
+                        Id = Model.ProductFilter.CategoryId.Value,
+                        Title = Model.ProductFilter.CategoryTitle,
+                        CssClass = Model.ProductFilter.CategoryCssClass
+                    },
+                    ShowProductsByList = true,
+                    ShowNoResultOnEmpty = true
+                };
+                @await Html.PartialAsync("_ProductListByCategoryIdForCompanyPagePartial", productListPartialViewModel)
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/bootstrap/bootstrap.min.js" asp-append-version="true"></script>
+
+@section scripts {
+    <script src="~/js/vanilla-sticky.min.js" asp-append-version="true"></script>
+    <script src="/js/components/product/sidebarCategoryProducts.min.js" asp-append-version="true"></script>
+    <script>
+        var companyParam = '';
+        @for (int i = 0; i < Model.ProductFilter.Company.Count; i++)
+        {
+            @:companyParam = companyParam + '[' + @i + ']=' + @Model.ProductFilter.Company[i] + '&';
+        }
+            loadCategoryTree((event, data) => {
+                insertParam('categoryId', data.id);
+            }, $(".categoriesTreeCustom"), '@Model.ProductFilter.CategoryId', '@Model.ProductFilter.CityId', companyParam);
+
+        function setCategoryByFilter(categoryId) {
+            var cityId = null;
+            var repId = null;
+            var company = null;
+        @if (Model.ProductFilter.Company.Count > 0)
+        {
+            @:company = @Model.ProductFilter.Company.FirstOrDefault();
+        }
+        @if (Model.ProductFilter.CityId.HasValue)
+        {
+            @:cityId = @Model.ProductFilter.CityId;
+        }
+        @if (Model.ProductFilter.RepresentationId.HasValue)
+        {
+            @:repId = @Model.ProductFilter.RepresentationId;
+        }
+                setCategory(categoryId, company, cityId, repId);
+        }
+
+        function setCompany(company) {
+            var url = "@Url.Action(Model.ProductFilter.ActionName, Model.ProductFilter.ControllerName, new { categoryId = Model.ProductFilter.CategoryId, cityId = Model.ProductFilter.CityId, Model.ProductFilter.RepresentationId })";
+            if (url.indexOf('?') === -1) {
+                url += '?';
+            } else {
+                url += '&';
+            }
+            var companyParam = '';
+            for (var i = 0; i < company.length; i++) {
+                companyParam = companyParam + '[' + i + ']=' + company[i] + '&';
+            }
+            window.location = url + companyParam;
+        }
+
+
+
+        $(window).scroll(function () {
+            $('.fstdiv').removeClass('open');
+            $('.fstdropdown').removeClass('open');
+        });
+        $(document).mouseup(function (e) {
+            $('.fstdiv').removeClass('open');
+            $('.fstdropdown').removeClass('open');
+        });
+
+        $(window).bind('beforeunload', function () {
+            $('.sidebar-left').removeAttr('style');
+            $('#deleteRecipientLoading').remove();
+        });
+
+
+        const sidebar = new VanillaSticky({
+            HTMLElement: document.querySelector('.sidebar-desktop-inner'),
+            position: 'auto',
+            stretch: true,
+            resize: true,
+            indents: {
+                top: 70,
+                bottom: 10,
+            },
+            window: {
+                min: 1200,
+                max: null,
+            },
+        });
+
+        sidebar.init();
+    </script>
+}
+

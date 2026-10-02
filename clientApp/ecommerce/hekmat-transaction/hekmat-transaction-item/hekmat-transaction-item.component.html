@@ -1,0 +1,20 @@
+<div *ngIf="_invalidItem" class="alert alert-info">
+  <span style="color: #ff0000"> کاربر گرامی فایل اکسل بارگذاری شده دارای خطا  می باشد، لطفا بعد از رفع آنها مجددا فایل را بارگذاری نمایید </span>
+</div>
+<div *ngIf="!_invalidItem" class="alert alert-info">
+  <span style="color: green"> کاربر گرامی فایل تراکنش های حکمت شما بدون خطا بارگذاری شد، برای به روز رسانی در سایت دکمه ثبت نهایی را کلیک کنید </span>
+</div>
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      [gridHeight]="gridHeight"
+                      [fixHeight]="fixHeight"
+                      [loadAfterSetFilter]="loadAfterSetFilter"
+                      [wordWrapEnabled]="true"
+                      [columns]="columns"
+                      [entityName]="entityName"
+                      (customButtonClicked)="customButtonClicked($event)"
+                      [customButtons]="customButtons">
+  </app-base-list-form>
+</app-busy-indicator>

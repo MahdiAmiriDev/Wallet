@@ -1,0 +1,73 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()"
+                    [showSaveButton]="false" [fixHeight]="false">
+
+  <app-product-sales-planning-list
+    [visibleIndividually]="true"
+    [showCourseColumns]="false"
+    [forSelect]="true"
+    [fixHeight]="false"
+    [gridHeight]="orderItemGridHeight"
+    [selectByButton]="true"
+    [showOnlyActiveProductSalesPlannings]="true"
+    [doGetProductSalePlanningByRepresentation] = "true"
+    [orderId] = "orderId"
+    (selectedRowChanged)="openConfirmDialogBeforeSave($event)">
+  </app-product-sales-planning-list>
+
+</app-base-edit-form>
+<dx-popup
+  title="توضیحات"
+  (onShowing)="entity.description=''"
+  (onHidden)="showDescriptionPopUp=false"
+  [(visible)]="showDescriptionPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <app-busy-indicator #busyIndicatorSetNewItem *ngIf="oldItemForChange">
+      <div class="alert alert-info">
+        توضیح مرکز/نمایندگی: {{oldItemForChange.description}}
+      </div>
+      <div class="alert alert-warning">
+        محصول قبلی:  {{oldItemForChange.oldOrderItemTitle}}
+        <br/>
+        مرکز: {{oldItemForChange.companyTitle}}
+        <br/>
+        نمایندگی: {{oldItemForChange.representationTitle}}
+      </div>
+      <div class="alert alert-danger" *ngIf="selectedNewItem && selectedNewItem.item">
+        محصول انتخاب شده جدید: {{selectedNewItem.item.productTitle}}
+        <br/>
+        مرکز: {{selectedNewItem.selectedCompany.title}}
+        <br/>
+        نمایندگی: {{selectedNewItem.selectedRepresentation.title}}
+
+      </div>
+      <div style="border: 1px solid #ddd;text-align: right;background: #ddd;margin-top: 5px" class="p-1">
+        <dx-button
+          id="btnSave"
+          text="ذخیره"
+          icon="save"
+          type="success"
+          style="font-size: 11px"
+          (onClick)="setNewOrderItem()"
+        >
+        </dx-button>
+        <dx-button
+          class="ml-2 mediumIcon"
+          id="btnClose"
+          text="انصراف"
+          style="margin-right: 5px;"
+          type="default"
+          icon="close"
+          (onClick)="selectedNewItem=null;showDescriptionPopUp=false">
+        </dx-button>
+      </div>
+    </app-busy-indicator>
+  </div>
+</dx-popup>
+
+

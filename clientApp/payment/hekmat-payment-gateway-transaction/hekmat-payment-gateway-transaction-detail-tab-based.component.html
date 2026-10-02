@@ -1,0 +1,46 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'hekmatPaymentGatewayTransaction'" class="tab-content-edit-form">
+    <app-hekmat-payment-gateway-transaction-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="hekmatPaymentGatewayTransaction"
+      [hekmatTerminalId]="hekmatTerminalId"
+      [closeAfterSave]="false"
+      #mainBaseEdit
+      (closeFormClick)="closeFormClick.emit($event)"
+    >
+    </app-hekmat-payment-gateway-transaction-detail>
+  </div>
+  <div *dxTemplate="let company of 'callBackUrl'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="hekmatPaymentGatewayTransaction"
+                        propertyName="CallBackUrl"
+                        propertyLabel="آدرس بازگشت"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'additionalDate'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="hekmatPaymentGatewayTransaction"
+                        propertyName="AdditionalDate"
+                        propertyLabel="داده های تکمیلی"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'hekmatToken'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="hekmatPaymentGatewayTransaction"
+                        propertyName="HekmatToken"
+                        propertyLabel="توکن حکمت"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'hekmatTransactionResultMessage'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="hekmatPaymentGatewayTransaction"
+                        propertyName="HekmatTransactionResultMessage"
+                        propertyLabel="نتیجه تراکنش حکمت"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="hekmatPaymentGatewayTransaction"
+                        propertyName="Description"
+                        propertyLabel="توضیحات"></app-content-editor>
+  </div>
+</dx-tab-panel>

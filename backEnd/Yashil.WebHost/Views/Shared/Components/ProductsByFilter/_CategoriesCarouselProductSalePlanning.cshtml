@@ -1,0 +1,250 @@
+﻿@using Yashil.Core.Enums
+@using Yashil.Infrastructure.Util
+@model Yashil.Core.CustomViewModels.ECommerce.ProductsByFilterViewModel
+
+
+<!-- Swiper -->
+@{
+    string companyIconUrl = "/api/PublicApi/GetCompanyIcon?cId=";
+
+    foreach (var item in Model.ProductSalePlannings)
+    {
+        var onlineClassCss = item.ImplementationType.HasValue && item.ImplementationType == (int)ImplementationTypeEnum.Online ? "online_course" : "";
+        var discountPercentage = CurrencyUtility.RemoveDecimal((1 - item.Price / item.BasePrice) * 100);
+        <div class="swiper-slide swiper-side-product-categories h-auto">
+            <div class="skeleton-loading--container w-100 h-100 d-flex flex-column align-items-center justify-content-between gap-4" style="background: #F8F7FC; padding: 15px">
+                <div class="skeleton skeleton-rect"
+                     style="
+                        --rect-h: 109px;
+              --c-w: 100%;
+              --lines: 8;
+              --l-h: 15px;
+    --c-p: 0px;
+              right: 0;
+              top: 0;
+              z-index: 1;
+                  "></div>
+                <div class="d-flex align-items-center gap-3 w-100">
+                    <div class="skeleton skeleton-circle"
+                         style="--c-s: 50px;--c-p: 0px;"></div>
+                    <div class="skeleton skeleton-line"
+                         style="
+            --lines: 2;
+                --l-h: 15px;
+        --c-w: 100%;
+        --c-p: 0px;
+    flex: 1
+          "></div>
+                </div>
+            </div>
+            <a class="h-100 skeleton-content--container d-none d-flex text-center ss02 p-1"
+               href="@Url.Action("Index","Product",new{pSpId=item.ProductSalePlanningId})" target="_blank">
+                <div class="d-flex flex-column cursor-pointer w-100">
+                    <div class="@onlineClassCss text-center section-img-products-categories-carousel">
+                        <img data-src="@Url.Action("GetProductSalesPlanningImage","PublicApi",new{productSalesPlanningId=item.ProductSalePlanningId, modificationDate = item.ModificationDate})" class="w-100 position-relative rounded-2 img-products-categories-carousel" alt="@item.Title" />
+                    </div>
+                    @if (item.IsEmployment)
+                    {
+                        <div class="cover-highlight-Curve-employment position-absolute d-block fs-12 text-white ">
+                            اشتغال
+                        </div>
+                    }
+                    <div style="flex: 1">
+                        <div class="d-flex flex-column justify-content-between gap-3 w-100 h-100">
+                            <div class="text-right mt-4">
+                                <div class="fs-15 fw-bold">
+                                    <span class="text-dark">
+                                        @if (item.Title.Length > 40)
+                                        {
+                                            @: @item.Title.Substring(0, 35)...
+                                        }
+                                        else
+                                        {
+                                            @item.Title
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start flex-column" style="row-gap: 4px;">
+                                @if (!string.IsNullOrEmpty(item.StartDateString))
+                                {
+                                    <div>
+                                        <div class="text-right">
+                                            <span>
+                                                <svg viewBox="0 0 20 20" width="20" heigth="20" stroke="navy">
+                                                    <use href="../images/icons/product.svg#calendar-time" />
+                                                </svg>
+                                            </span>
+                                            <span class="fs-14">
+                                                <span class="fw-bold">از</span> @item.StartDateString
+                                                <span class="fw-bold">تا</span> @item.EndDateString
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(item.Duration))
+                                {
+                                    <div class="text-right">
+                                        <div class="fs-13">
+                                            <span>
+                                                <svg viewBox="0 0 20 20" width="20" height="20" stroke="green">
+                                                    <use href="../images/icons/product.svg#clock" />
+                                                </svg>
+                                                <span class=""> مدت:</span>
+                                            </span>
+                                            <span class="">
+                                                @item.Duration ساعت
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(item.RepresentationShortName))
+                                {
+                                    <div class="text-right">
+                                        <div class="fs-13">
+                                            <span>
+                                                <svg viewBox="0 0 20 20" width="20" height="20" stroke="teal">
+                                                    <use href="../images/icons/product.svg#watch" />
+                                                </svg>
+                                            </span>
+
+                                            @if (!string.IsNullOrEmpty(item.CoursePlanningSchedule))
+                                            {
+                                                var representationCustomName = String.Concat(item.RepresentationShortName + " - ", item.CoursePlanningSchedule);
+
+                                                <span>@representationCustomName.Substring(0, representationCustomName.Length > 25 ? 25 : representationCustomName.Length)</span>
+                                                @if (representationCustomName.Length > 25)
+                                                {
+                                                    <span>...</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>@item.RepresentationShortName</span>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (Model.SubsidyBased)
+                                {
+                                    <fieldset class="mx-auto rounded-2 text-right fw-500 my-1 employment-subsidy-fieldset-sale-planning">
+                                        <legend class="employment-subsidy-label">
+                                            @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                            {
+                                                <label>یارانه اشتغال</label>
+                                            }
+                                            else
+                                            {
+                                                <label>یارانه</label>
+                                            }
+                                        </legend>
+
+                                        <div class="text-right ">
+                                            <div class="fs-13">
+                                                <span>
+                                                    <svg viewBox="0 0 20 20" width="20" height="20" stroke="red">
+                                                        <use href="../images/icons/product.svg#money-bag" />
+                                                    </svg>
+                                                </span>
+                                                <span>  شاغلین: </span>
+                                                @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                                {
+
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(item.MaxEmploymentVezaratSubsidy)
+                                                        تومان
+                                                    </span>
+                                                }
+                                                else
+                                                {
+
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(item.MaxVezaratSubsidy)
+                                                        تومان
+                                                    </span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="fs-13">
+                                                <span>
+                                                    <svg viewBox="0 0 20 20" width="20" height="20" stroke="brown">
+                                                        <use href="../images/icons/product.svg#coin" />
+                                                    </svg>
+                                                </span>
+                                                <span>  بازنشستگان: </span>
+                                                @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                                {
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(item.MaxEmploymentSataSubsidy) تومان
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(item.MaxSataSubsidy) تومان
+                                                    </span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                }
+
+                                @if (!string.IsNullOrEmpty(item.RepresentationShortName))
+                                {
+                                    <div class="text-right">
+                                        <div class="fs-13">
+                                            <span>
+                                                <svg viewBox="0 0 20 20" width="20" height="20" stroke="purple">
+                                                    <use href="../images/icons/general.svg#map-pin" />
+                                                </svg>
+                                            </span>
+                                            <span>@item.CityTitle</span>
+                                            @*<span class="">-@item.RepresentationShortName</span>*@
+                                            <span>@item.RepresentationShortName.Substring(0, item.RepresentationShortName.Length > 0 ? 0 : item.RepresentationShortName.Length) </span>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class=" w-100 mt-3">
+                                    <div class="d-flex justify-content-between">
+                                        @if (!item.DisableBuyButton)
+                                        {
+                                            <div class="img-icon" style="max-width:52px">
+                                                <img alt="Secondary Color" data-src=@($"{companyIconUrl + item.CompanyId}&modificationDate={item.ModificationDate}") class="w-100" />
+                                            </div>
+                                            @if (discountPercentage != "0")
+                                            {
+                                                <div>
+                                                    <span class="text-dark" style="font-size: 16px;font-weight: 700">
+                                                        @CurrencyUtility.FormatPrice(item.Price)
+                                                        <svg width="20" height="20" viewBox="0 0 16 16">
+                                                            <use href="../images/icons/general.svg#currency" />
+                                                        </svg>
+                                                    </span>
+
+                                                    <div class="d-flex align-items-center justify-content-between fs-14 gap-1">
+                                                        <div class="text-align-last-left mt-1">
+                                                            <span>
+                                                                <s> @CurrencyUtility.FormatPrice(item.BasePrice)</s>
+                                                            </span>
+                                                        </div>
+                                                        <span class="badge discount-percent-in-company-sale-planning fs-12 ">%@discountPercentage </span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+}
+
+

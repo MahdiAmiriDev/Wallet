@@ -1,0 +1,100 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item [label]="{text: 'کد'}" dataField="code">
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+
+      </dxi-item>
+
+      <dxi-item dataField="personId" editorType="dxLookup" [label]="{text: 'شخص'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: personDataSource,displayExpr:'name',valueExpr:'id' }">
+
+
+      </dxi-item>
+
+      <dxi-item dataField="customerClubId" editorType="dxLookup" [label]="{text: 'باشگاه'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: customerClubDataSource,displayExpr:'title',valueExpr:'id' }">
+
+        <dxi-validation-rule type="required" message="باشگاه اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره کارت'}" dataField="cardNumber">
+
+        <dxi-validation-rule type="required" message="شماره کارت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'سقف مبلغ خرید به ریال'}" dataField="maximumPurchaseAmount" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'سقف تعداد خرید'}" dataField="maximumNumberPurchases" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'جمع مبلغ استفاده شده به ریال'}" dataField="amountUsed" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ پایان'}" dataField="toDate" editorType='dxNumberBox'>
+<!--        <dp-date-picker-->
+<!--          [config]="datePickerConfig"-->
+<!--          dir="rtl"-->
+<!--          mode="day"-->
+<!--          placeholder="تاریخ پایان"-->
+<!--          theme="dp-material"-->
+<!--          [ngModel]="entity.toDate | intToStringDate" (ngModelChange)="entity.toDate=convertDateToInt($event)">-->
+<!--        </dp-date-picker>-->
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.toDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="toDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ پایان"
+                 [ngModel]="entity.toDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <dxi-validation-rule type="required" message="تاریخ پایان اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ شروع'}" dataField="fromDate" editorType='dxNumberBox'>
+<!--        <dp-date-picker-->
+<!--          [config]="datePickerConfig"-->
+<!--          dir="rtl"-->
+<!--          mode="day"-->
+<!--          placeholder="تاریخ شروع"-->
+<!--          theme="dp-material"-->
+<!--          [ngModel]="entity.fromDate | intToStringDate" (ngModelChange)="entity.fromDate=convertDateToInt($event)">-->
+<!--        </dp-date-picker>-->
+
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.fromDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="fromDataValue"
+                 style="float:right"
+                 placeholder="تاریخ شروع"
+                 [ngModel]="entity.fromDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <dxi-validation-rule type="required" message="تاریخ شروع اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'فعال'}" dataField="isActive" editorType='dxCheckBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+
+      </dxi-item>
+
+      <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+                [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

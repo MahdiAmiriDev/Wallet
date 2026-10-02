@@ -1,0 +1,39 @@
+<app-base-list-form #listForm
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    entityName="refund"
+                    customListUrl="Refund/GetHekmatUploadedRefundFiles"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="customButtonClicked($event)">
+</app-base-list-form>
+
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  [rtlEnabled]="true"
+  title="بارگذاری فایل اکسل عودتی های حکمت کارت"
+  [dragEnabled]="false"refreshListAndShowMessage
+  [(visible)]="showDialog"
+  [deferRendering]="false">
+  <div style="direction: rtl">
+    <app-busy-indicator>
+      <dx-file-uploader
+        #fileUploader
+        name="hekmatRefundFile"
+        [rtlEnabled]="true"
+        selectButtonText="فایل اکسل عودت وجه های حکمت"
+        style="margin: 20px"
+        labelText="انتخاب فایل اکسل عودت وجه های حکمت"
+        [allowedFileExtensions]="['.xls','.xlsx']"
+        (valueChange)="addFile($event)"
+        [(value)]="value"
+        uploadUrl="api/refund/uploadHekmatRefundFile"
+        (onUploaded)="busyIndicator.setBusy(false);refreshListAndShowMessage($event)"
+        [multiple]="false"
+        uploadMode="instantly">
+      </dx-file-uploader>
+    </app-busy-indicator>
+  </div>
+</dx-popup>

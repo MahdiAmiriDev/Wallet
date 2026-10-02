@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-12">
+    <as-split direction="horizontal">
+      <as-split-area [size]="60" dir="ltr">
+        <as-split direction="vertical">
+          <as-split-area [size]="25">
+            <app-order-item-list
+              [showRepresentationFilter]="true"
+              [showCompletedOrderStatus]="false"
+              [loadAfterSetFilter]="true"
+              [showAmountColumns]="true"
+              [isForSelectReadOnly]="true"
+              [allowGrouping]="true"
+            >
+            </app-order-item-list>
+          </as-split-area>
+        </as-split>
+      </as-split-area>
+    </as-split>
+  </div>
+</div>

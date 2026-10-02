@@ -1,0 +1,226 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model JobOfferListViewModel
+
+
+<link rel="stylesheet" href="~/css/components/job-list.css" asp-append-version="true" />
+@if (Model.JobOffers != null)
+{
+
+    @if (Model.ShowJobOfferFilterSection)
+    {
+        <article class="bg-white bg-white rounded-3 border" style="z-index:10">
+            <section class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 gap-sm-0 p-3">
+                <div class="offers-count--container d-flex align-self-start align-self-sm-center align-items-center gap-1">
+                    @if (Model.JobOffers != null && Model.JobOffers.Count > 0)
+                    {
+                        <p class="mb-0 ss02">@Model.JobOffers.Count</p>
+                        <p class="mb-0">فرصت شغلی فعال</p>
+                    }
+                    else
+                    {
+                        <p class="mb-0 ss02">@Model.JobOffers.Count</p>
+                        <p class="mb-0">فرصت شغلی فعال</p>
+                    }
+                </div>
+                <div class="sort-by--container d-flex align-self-end align-self-sm-center align-items-center gap-2">
+                    <!--/ Advanced Filters Modal Button -->
+                    <button type="button" class="advanced-filters--button d-flex align-items-center gap-1 d-lg-none" title="جستجوی پیشرفته" data-bs-toggle="modal" data-bs-target="#advanced-filters--modal">
+                        <div>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                                <use href="../images/icons/general.svg#adjustments-horizontal" />
+                            </svg>
+                        </div>
+                        <p class="mb-0 d-none d-sm-block">جستجوی پیشرفته</p>
+                    </button>
+                    <!-- Advanced Filters Modal Button /-->
+                    <div class="d-flex align-items-center gap-2 gap-lg-5">
+                        <!-- Sort Offers Options -->
+                        <div class="d-flex align-items-center gap-2">
+                            <p class="mb-0 d-none d-lg-block">
+                                مرتب سازی
+                            </p>
+                            <select id="sort-offers-by" name="sort-offers-by" onchange="addSortValueToSearchParam(event)">
+                                <option class="offers-sort--option" value="false">جدیدترین</option>
+                                <option class="offers-sort--option" value="true">بیشترین حقوق</option>
+                            </select>
+                        </div>
+                        <!-- Sort Offers Options /-->
+                        <!-- Cards Display Mode Options -->
+                        <div class="d-none d-md-flex align-items-center gap-2">
+                            <p class="mb-0 d-none d-lg-block">
+                                حالت نمایش
+                            </p>
+                            <div id="display-mode-buttons--container" class="d-flex align-items-center gap-2">
+                                <button type="button" title="لیست" class="display-mode--button" data-mode="list" onclick="toggleActiveDisplayModeButton(event)">
+                                    <svg width="22" height="22" stroke="currentColor" stroke-width="1.7">
+                                        <use href="../images/icons/general.svg#list" />
+                                    </svg>
+                                </button>
+                                <button type="button" title="کارت" class="display-mode--button active" data-mode="gallery" onclick="toggleActiveDisplayModeButton(event)">
+                                    <svg width="22" height="22" stroke="currentColor" stroke-width="1.7">
+                                        <use href="../images/icons/general.svg#layout-2" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Cards Display Mode Options /-->
+                    </div>
+                </div>
+            </section>
+            @if (Model.ActiveFilters != null && Model.ActiveFilters.Count > 0)
+            {
+                <section id="filters-section" class="d-flex flex-column gap-3 border-top p-3">
+                    <div id="filter-tags--container">
+
+                        @foreach (var filter in Model.ActiveFilters)
+                        {
+                            <div class="filter-tag border" data-category="@filter.CategoryTitle" data-id="@filter.Id" onclick="clearFilter(event)">
+                                <button class="delete-filter--button border-end p-1" onclick="">
+                                    <svg class="pe-none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M18 6l-12 12" />
+                                        <path d="M6 6l12 12" />
+                                    </svg>
+                                </button>
+                                <p class="filter-tag--title p-2 py-1 mb-0">@filter.Title</p>
+                            </div>
+                        }
+
+                    </div>
+                    <button id="delete-filters--button" class="btn btn-danger align-self-end" onclick="clearAllFilters()">
+                        <p class="mb-0">حذف فیلترها</p>
+                        <div>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                                <use href="../images/icons/general.svg#trash" />
+                            </svg>
+                        </div>
+                    </button>
+                </section>
+            }
+        </article>
+    }
+    @* cards section *@
+    @if (Model.JobOffers != null && Model.JobOffers.Count > 0)
+    {
+        <article id="job-offers" class="w-100 bg-white @(Model.IsCorporatinJobOfferView ? "":"rounded-3 border")">
+            @foreach (var item in Model.JobOffers)
+            {
+                <div class="job-offer--card d-flex flex-column flex-md-row gap-3 p-4">
+
+                    <a href="@Url.Action("JobOfferDetail","CorporationJobCo",new {id=item.CorporationJobCoId})"
+                       class="company-logo--container align-self-center align-self-md-start"
+                       asp-append-version="true" target="_blank">
+                        <img class="company-logo lazy-img"
+                             src="~/images/placeholder/70.png" data-src="/api/publicApi/GetCorporationImage?id=@item.CorporationId">
+                    </a>
+
+                    <div class="d-flex flex-column flex-xxl-row justify-content-between pt-1" style="flex: 1">
+                        <div class="d-flex flex-column gap-3">
+                            @if (!string.IsNullOrEmpty(item.CorporationJobCoTitle))
+                            {
+                                <h3 class="job-title--container">
+                                    <a class="job-title" href="@Url.Action("JobOfferDetail","CorporationJobCo",new {id=item.CorporationJobCoId})" asp-append-version="true" target="_blank">
+
+                                        @item.CorporationJobCoTitle
+
+                                    </a>
+                                    <span class="publish-date"></span>
+                                </h3>
+                            }
+                            <ul class="job-details--container">
+                                @if (!string.IsNullOrEmpty(item.CorporationTitle))
+                                {
+                                    <li class="job-detail--container">
+                                        <div>
+                                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                                                <use href="../images/icons/product.svg#building-store" />
+                                            </svg>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <p class="mb-0">@item.CorporationTitle</p>
+                                        </div>
+                                    </li>
+                                }
+
+                                @if (!string.IsNullOrEmpty(item.ProvienceTitle))
+                                {
+                                    <li class="job-detail--container">
+                                        <div>
+                                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                                                <use href="../images/icons/general.svg#map-pin" />
+                                            </svg>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <p class="mb-0">@item.ProvienceTitle</p>
+
+                                        </div>
+                                    </li>
+                                }
+                                <li class="job-detail--container">
+                                    <div>
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                                            <use href="../images/icons/general.svg#checklist" />
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        @if (!string.IsNullOrEmpty(item.CooperationTypeTitle))
+                                        {
+                                            <p class="mb-0">قرارداد</p>
+                                            <p class="mb-0">@item.CooperationTypeTitle</p>
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.SalaryTypeTitle))
+                                        {
+                                            <p class="mb-0">
+                                                -   حقوق
+                                                (@item.SalaryTypeTitle)
+                                            </p>
+                                        }
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="@Url.Action("JobOfferDetail","CorporationJobCo",new {id=item.CorporationJobCoId})" class="align-self-md-end" asp-append-version="true" target="_blank">
+                            <button class="view-offer--button align-self-center align-self-md-end" role="button">
+
+                                <p class="mb-0">مشاهده جزئیات</p>
+                                <div>
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2">
+                                        <use href="../images/icons/general.svg#eye" />
+                                    </svg>
+                                </div>
+
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            }
+        </article>
+    }
+    else
+    {
+        <section class="no-result--container">
+            <div class="no-result-icon--container">
+                <div class="circular-element element-one"></div>
+                <div class="circular-element element-two"></div>
+                <div class="circular-element element-three"></div>
+                <div class="circular-element element-four"></div>
+                <div class="circular-element element-five"></div>
+                <div class="circular-element element-six"></div>
+                <div class="circular-element element-seven"></div>
+                <div class="circular-element element-eight"></div>
+                <div class="circular-element element-nine"></div>
+                <div class="circular-element element-ten"></div>
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2">
+                    <use href="../images/icons/general.svg#hash" />
+                </svg>
+            </div>
+            <div class="text-center">
+                <h4 class="no-result-title">هیچ فرصت شغلی یافت نشد</h4>
+                <p class="no-result-message">برای فیلترهای انتخاب شده، نتیجه‌ای وجود نداشت. لطفا دوباره سعی کنید. </p>
+            </div>
+            <button class="clear-filters--button" onclick="clearAllFilters()">حذف فیلترها</button>
+        </section>
+    }
+}

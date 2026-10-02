@@ -1,0 +1,113 @@
+<app-persian-date-month-list
+  [showSimpleColumns]="true"
+  [customRowButtons]="customRowButtons">
+</app-persian-date-month-list>
+
+
+<dx-popup
+  [title]="popupTitle"
+  [rtlEnabled]="true"
+  [(visible)]="showPopUp"
+  (onHidden)="closePopUpBtn()"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  (onShown)="popupShown()"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <div class="row">
+      <div class="col-5" style="margin-bottom: 5px">
+        <app-category-group-search
+          (categoryGroupChanged)="onCategoryGroupChanged($event)">
+        </app-category-group-search>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <app-factor-payment-installment-list
+          *ngIf="showPopUp"
+          #factorPaymentInstallmentList
+          [showPaymentReference]="false"
+          [yearMonth]="yearMonth"
+          [categoryGroupId]="categoryGroupId">
+        </app-factor-payment-installment-list>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="اقساط بازگذاری شده"
+  [dragEnabled]="false"
+  [(visible)]="showUploadDialog"
+  [deferRendering]="false"
+  (onHiding)="resetFileModel()">
+  <div *ngIf="!showFactorPaymentInstallmentList">
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="fileModel" enctype="multipart/form-data">
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+        <div *dxTemplate="let data of 'fileTemplate'">
+          <dx-file-uploader
+            #tempFileUploader
+            name="tempFileUploader"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="uploadUrl"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            [uploadCustomData]="{ yearMonth: yearMonth }"
+            uploadMode="instantly">
+          </dx-file-uploader>
+        </div>
+
+      </dx-form>
+    </form>
+  </div>
+  <dxi-item>
+    <app-uploaded-factor-installment-payment-list
+      *ngIf="showFactorPaymentInstallmentList"
+      [showFinalRegistrationButton]="!hasErrorOnUpload"
+      [message]="message"
+      [yearMonth]="yearMonth"
+    >
+    </app-uploaded-factor-installment-payment-list>
+  </dxi-item>
+</dx-popup>
+
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="لیست فایل های بارگذاری شده"
+  [dragEnabled]="false"
+  [(visible)]="showPaymentReferenceList"
+  [deferRendering]="false">
+  <dxi-item>
+    <app-factor-payment-installment-reference-list
+      *ngIf="showPaymentReferenceList"
+      [yearMonth]="yearMonth"
+    >
+    </app-factor-payment-installment-reference-list>
+  </dxi-item>
+</dx-popup>
+
+
+

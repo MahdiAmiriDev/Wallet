@@ -1,0 +1,36 @@
+<app-base-list-form #listForm
+                    [title]="'آیتم های فاکتور نشده'"
+                    [allowGrouping]="true"
+                    [columnGrouping]="'quantity'"
+                    [summaryTypeGrouping]="'sum'"
+                    [wordWrapEnabled]="true"
+                    [entityName]="'factorItem'"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="customButtonClicked($event)"
+                    [showExportToExcelButton]="true"
+                    [fixHeight]="fixHeight"
+                    [gridHeight]="gridHeight">
+</app-base-list-form>
+<dx-popup
+        class="popup"
+        [fullScreen]="true"
+        [showTitle]="true"
+        title="برنامه ریزی دوره های فاکتور نشده"
+        [(visible)]="showProductSalesPlanningFilter"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        rtlEnabled="true"
+        [deferRendering]="false"
+        (onHidden)="showProductSalesPlanningFilter=false">
+    <app-un-factored-product-sales-planning
+            (showFilterByProductSalesPlanningBtn)="showFilterByProductSalesPlanningBtn($event)"
+            [mode]="'multiple'"
+            (onSubmitClick)="getSelectedItemsId($event)"
+            [allowSelectAll]="false">
+
+    </app-un-factored-product-sales-planning>
+
+</dx-popup>

@@ -1,0 +1,15 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    title="لیست تاییدکنندگان فاکتور به ترتیب اولویت"
+                    [entityName]="entityName"
+                    [showAddButton]="false"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [allowFilter]="false"
+                    [allowGrouping]="false"
+                    [showFilterButton]="false"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

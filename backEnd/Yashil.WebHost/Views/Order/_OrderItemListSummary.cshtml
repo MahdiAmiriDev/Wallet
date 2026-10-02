@@ -1,0 +1,177 @@
+﻿@using Yashil.Infrastructure.Util
+@using Yashil.Common.SharedKernel.Helpers
+@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderItemDetailPresentationViewModel>
+
+@foreach (var item in Model)
+{
+    <!-- product 1-->
+    <div class="detail-dis-product position-relative rounded p-3 ss02" data-discount="@(100 * (item.DiscountAmountInclTax ?? item.DiscountAmountExclTax) / item.Price)%">
+        <div class="row ">
+            <div class="col-12 col-md-3">
+                <img src="@Url.Action("GetProductSalesPlanningImage", "PublicApi", new { productSalesPlanningId = item.ProductSalesPlanningId, modificationDate = item.ModificationDate })"
+                     alt="product image"
+                     class="w-100 rounded product-image-ordering mx-auto d-block" />
+            </div>
+
+            <div class="col-12 col-md-9 ">
+                <h4 class="mt-3 mb-2">
+                    <strong class="fs-5 product-title">
+                        @item.Title
+                    </strong>
+                </h4>
+
+                <div class="d-md-flex d-sm-block gap-2">
+                    <div>
+                        <span class="badge badge-secondary my-1">قیمت پایه: <del>@CurrencyUtility.FormatPrice(item.Price)</del>تومان</span>
+                    </div>
+                    <div>
+                        <span class="badge Subsidy-money-in-order my-1">تخفیف: @CurrencyUtility.FormatPrice(item.DiscountAmountInclTax ?? item.DiscountAmountExclTax) تومان</span>
+                    </div>
+                </div>
+                @if (item.SubsidyPrice.HasValue && item.SubsidyBased)
+                {
+                    <div class="d-md-flex d-sm-block gap-2">
+                        <div>
+                            <span class="badge discount-money-in-order my-1">
+                                @if (item.IsResumeFillOutEnough
+                               && item.EmploymentSubsidyDto != null
+                               && item.EmploymentSubsidyDto.IsEmploymentProduct.HasValue
+                               && item.EmploymentSubsidyDto.IsEmploymentProduct.Value)
+                                {
+                                    <label>یارانه اشتغال:</label>
+                                }
+                                else
+                                {
+                                    <label>یارانه:</label>
+                                }
+                                @CurrencyUtility.FormatPrice(item.SubsidyPrice) تومان
+                            </span>
+                        </div>
+                    </div>
+                }
+                <div class="d-md-flex d-sm-block align-items-center gap-5">
+                    <div>
+                        <span class="badge final-price-in-order">
+                            قیمت نهایی: @CurrencyUtility.FormatPrice(item.Total) تومان
+                        </span>
+                    </div>
+
+                    <div class="pt-1">
+                        <span class="count-in-order">
+                            <strong>تعداد: @item.Quantity</strong>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-md-flex d-block flex-column">
+                    @if (!string.IsNullOrEmpty(item.CoursePlanningSchedule))
+                    {
+                        <div class="pt-2 d-flex align-items-center gap-1">
+                            <div class="align-self-start">
+                                <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                    <use href="../images/icons/product.svg#calendar-time" />
+                                </svg>
+                            </div>
+                            <span> روزهای @item.CoursePlanningSchedule </span>
+                        </div>
+                    }
+                    @if (item.StartDate.HasValue)
+                    {
+                        <div class="pt-2 d-flex align-items-center gap-1">
+                            <div class="align-self-start">
+                                <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                    <use href="../images/icons/general.svg#calendar" />
+                                </svg>
+                            </div>
+                            <span> از تاریخ @DateFunction.GetDateFromIntReverse(item.StartDate) تا @DateFunction.GetDateFromIntReverse(item.EndDate) </span>
+                        </div>
+                    }
+                </div>
+
+                <div class="d-md-flex d-sm-block align-items-center gap-5">
+                    <div class="pt-2 d-flex align-items-center gap-1">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/product.svg#building-store" />
+                        </svg>
+                        <span> @item.CompanyTitle </span>
+                    </div>
+                    <div class="pt-2 gap-1">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/product.svg#building-store" />
+                        </svg>
+                        <span> @item.RepresentationTitle - @item.CityTitle</span>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(item.RepresentationAddress))
+                {
+                    <div class="pt-2">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/general.svg#map-pin" />
+                        </svg>
+                        <span>@item.RepresentationAddress</span> - <span>@item.RepresentationTelephone</span>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(item.CompanyDescription)
+               && (item.OrderItemChildDetailList is { Count: > 0 } ||
+               (!string.IsNullOrEmpty(item.CompanySubTitleFormat)
+               && !string.IsNullOrEmpty(item.ProductSalePlaningSubTitleFormat))
+               ))
+                {
+                    <div class="pt-2">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/product.svg#warning" />
+                        </svg>
+                        <span class="OrderItemListSummary-warning-text">@Html.Raw(item.CompanyDescription)</span>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(item.MessageForUserRequireSupplierApprovalBeforePaymentProducts))
+                {
+                    <div class="p-3 mt-3" style="   
+    border: 1px solid #f5c2c7;
+    border-radius: 4px;
+    background: #f8d7da;">
+
+                        <img src="~/images/icons/icons8-high-risk.gif" style="width:30px; height:30px;" />
+
+                        <span class="OrderItemListSummary-warning-text fw-bold" style="color: #212529;">@Html.Raw(item.MessageForUserRequireSupplierApprovalBeforePaymentProducts)</span>
+                    </div>
+                }
+                @if (item.OrderItemChildDetailList is { Count: > 0 })
+                {
+
+                    <ul style="list-style: square; margin-right: 2.5rem;">
+                        @foreach (var child in item.OrderItemChildDetailList)
+                        {
+                            <li style="margin-top: 0.5rem;">
+
+                                <div style="font-size: 15px;">
+
+                                    <span class="badge badge-secondary">قیمت @child.Title : @CurrencyUtility.FormatPrice(child.Price) تومان</span>
+                                </div>
+
+                            </li>
+                        }
+                    </ul>
+                }
+                else if (!string.IsNullOrEmpty(item.CompanySubTitleFormat)
+                && !string.IsNullOrEmpty(item.ProductSalePlaningSubTitleFormat))
+
+                {
+                    <ul style="list-style: square; margin-right: 2.5rem;">
+
+                        <li style="margin-top: 0.5rem;">
+
+                            <div style="font-size: 15px;">
+
+                                <span class="badge badge-secondary">قیمت @item.ProductTemplateTitle : @item.CompanySubTitleFormat تومان</span>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+

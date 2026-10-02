@@ -1,0 +1,99 @@
+<div dir="rtl">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-4">
+        <div style="float: right; width: 30%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>از تاریخ:</label>
+        </div>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="refundCreationDateFilterFromDate=convertDateToInt($event);bindCustomDataSources();">
+          <input type="text"
+                 [formControl]="refundCreationDateFilterFromDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ شروع ثبت عودت وجه"
+                 [ngModel]="refundCreationDateFilterFromDate  | intToStringDate"
+                 (ngModelChange)="bindCustomDataSources();"/>
+        </ng-persian-datepicker>
+        <!--            <dp-date-picker-->
+        <!--              [config]="datePickerConfig"-->
+        <!--              dir="rtl"-->
+        <!--              mode="day"-->
+        <!--              placeholder="تاریخ شروع ثبت عودت وجه"-->
+        <!--              theme="dp-material"-->
+        <!--              [ngModel]="refundCreationDateFilterFromDate | intToStringDate"-->
+        <!--              (ngModelChange)="refundCreationDateFilterFromDate=convertDateToInt($event);bindCustomDataSources();">-->
+        <!--            </dp-date-picker>-->
+      </div>
+      <div class="col-4">
+        <div style="float: right; width: 30%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تا تاریخ:</label>
+        </div>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="refundCreationDateFilterToDate=convertDateToInt($event);bindCustomDataSources();">
+          <input type="text"
+                 [formControl]="refundCreationDateFilterToDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ پایان ثبت عودت وجه"
+                 [ngModel]="refundCreationDateFilterToDate  | intToStringDate"
+                 (ngModelChange)="bindCustomDataSources();"/>
+        </ng-persian-datepicker>
+        <!--            <dp-date-picker-->
+        <!--              [config]="datePickerConfig"-->
+        <!--              dir="rtl"-->
+        <!--              mode="day"-->
+        <!--              placeholder="تاریخ پایان ثبت عودت وجه"-->
+        <!--              theme="dp-material"-->
+        <!--              [ngModel]="refundCreationDateFilterToDate | intToStringDate"-->
+        <!--              (ngModelChange)="refundCreationDateFilterToDate=convertDateToInt($event);bindCustomDataSources();">-->
+        <!--            </dp-date-picker>-->
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-4">
+        <div class="dx-field">
+          <div class="alert" dir="rtl" style="text-align: right">
+            <dx-check-box dataField="showGrouping" [text]="'نمایش گروه بندی شده'"
+                          (onValueChanged)="bindCustomDataSources()"
+                          [(value)]="showGrouped"></dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="dx-field">
+          <div class="alert" dir="rtl" style="text-align: right">
+            <dx-check-box dataField="showGrouping" [text]="'نمایش گروه بندی پرداخت عودت شده'"
+                          (onValueChanged)="bindCustomDataSources()"
+                          [(value)]="showPaymentGrouped"></dx-check-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="dx-field">
+          <div class="alert" dir="rtl" style="text-align: right">
+            <dx-check-box dataField="showGrouping" [text]="'نمایش دارای اطلاعات حساب'"
+                          (onValueChanged)="bindCustomDataSources()"
+                          [(value)]="showHasBankAccount"></dx-check-box>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [gridHeight]="gridHeight"
+                    [entityName]="entityName"
+                    title="عودت وجه"
+                    [showExportToExcelButton]="true"
+                    [showAddButton]="false"
+                    [showEditForm]="false"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false">
+</app-base-list-form>

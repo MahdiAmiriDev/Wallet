@@ -1,0 +1,1141 @@
+﻿@using Yashil.Common.Core.Classes;
+@using Yashil.Core.Enums;
+@using YashilCommerce.Core.Classes
+@using ApplicationConfigKey = YashilCommerce.Core.Classes.ApplicationConfigKey
+@using YashilCommerce.Core.Services
+@using YashilCommerce.Web.Areas.ECommerce.DataService
+@inject StoreConfiguration StoreConfiguration;
+@inject IUserPrincipal UserPrincipal;
+@inject IAdditionalUserPropService AdditionalUserPropService;
+@inject PublicDataService PublicDataService;
+
+@{
+    bool userIsNotHekmatCustomerClub = await AdditionalUserPropService.CheckIsHekmatCurrentUserCustomerClub();
+}
+<!DOCTYPE html>
+<!--[if IE 8 ]><html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fa-IR" lang="fa-IR">
+
+<!--<![endif]-->
+<head>
+    <meta name="theme-color" content="#00B4D8" />
+    <meta name="viewport" content="minimum-scale=1" />
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    @*برسی می کند که در سامانه عمومی (isilearno) هستیم ای نه
+    و بر اساس آن عنوان سایت را ست می کنیم
+    *@
+    @if (PublicDataService.IsPublicPage())
+    {
+        <title>@await Component.InvokeAsync("AppConfigValuePresenter", YashilUserManagement.Core.Classes.ApplicationConfigKey.SiteConfigurationHtmlTitleIsilearno) @Html.Raw(ViewData["Title"]) </title>
+    }
+    else
+    {
+        <title>@await Component.InvokeAsync("AppConfigValuePresenter", YashilUserManagement.Core.Classes.ApplicationConfigKey.SiteConfigurationHtmlTitle) @Html.Raw(ViewData["Title"]) </title>
+    }
+    @await Html.PartialAsync("_Meta")
+    <link rel="canonical" href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationCanonical)" />
+    @await RenderSectionAsync("meta", false)
+
+
+    <!-- start Css style Section -->
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.png" />
+    <link rel="stylesheet" href="~/fonts/yekan_bakh/fontface.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.rtl.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/print/print-preview.css" type="text/css" media="screen" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/print/printStyleSheet.css" media="print" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/components/courseCarouselWithImageHorizontal.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/swiper.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/components/css-skeletons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components/select2_custom_dropdown.css" asp-append-version="true" />
+
+    <script src="~/js/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery/jquery-print/jquery.print.min.js" asp-append-version="true"></script>
+    <script src="~/js/swiper.min.js" asp-append-version="true"></script>
+    <script src="~/js/site_util.min.js" asp-append-version="true"></script>
+    <script src="~/js/components/skeleton_loading.js" asp-append-version="true"></script>
+    <script src="~/js/components/select2.min.js" asp-append-version="true"></script>
+    <script src="~/js/components/select2-fa.js" asp-append-version="true"></script>
+    <script src="~/js/components/select2_custom_dropdown.js" asp-append-version="true"></script>
+    <script src="~/js/validator.min.js" asp-append-version="true"></script>
+
+
+
+    <!-- end Css style Section -->
+    @await RenderSectionAsync("css", false)
+
+
+
+</head>
+
+<body style="background-color:#f5f5f5;">
+    <!--Google Tag Manager-->
+    <noscript>@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationBodySeoTagContent)</noscript>
+
+    <!-- #header -->
+    <header>
+        <!-- Navbar content -->
+        <nav class="navbar w-100 wide-nav-header" style="z-index: 1041 !important;">
+            <div class="mx-auto" style="width: 90%; max-width: 1600px">
+                <div class="d-flex justify-content-center justify-content-sm-between align-items-center w-100 ">
+                    <a href="/" class="d-flex align-items-center justify-content-center gap-2">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 45px; width: 45px">
+                            <img class="d-none d-md-block" height="100%" src="~/images/logo/isiran-institute-white-logo.png" />
+                            <img class="d-block d-md-none" height="100%" src="~/images/logo/isiran-institute-blue-logo.png" />
+                        </div>
+                        <span class="fw-bold text-white name-of-site-header mx-auto d-none d-md-block text-nowrap">
+                            انستیتو ایزایران
+                        </span>
+                    </a>
+                    <div class="d-none d-md-block">
+                        <img src="~/images/Slogan.webp" alt="انستیتو ایزایران" />
+                    </div>
+                    <div class="d-flex d-md-none align-items-center justify-content-center">
+                        <img class="w-75 d-block" src="~/images/slogan-mobile.webp" alt="Slogan ISIRAN Institute" />
+                    </div>
+
+                    <p class="mb-0" style="color: #fff"> @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationPhone) </p>
+                </div>
+            </div>
+        </nav>
+        <!--Menu Navbar-->
+        <div id="header" class="menu-position border-bottom bg-white w-100 pb-2 pt-2 pe-2 ps-2 pb-lg-0 px-lg-0">
+            <div class="d-flex flex-column gap-2 top-navbar" style="max-width: 1600px">
+                <div class="d-flex align-items-center flex-column flex-lg-row justify-content-between">
+                    <div class="d-flex align-items-center w-100 gap-2">
+                        <div class="d-none d-lg-flex align-items-center">
+                            @await Component.InvokeAsync("Logo")
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between w-100 my-1 gap-4">
+                            @await Html.PartialAsync("_Menu")
+
+                            <div class="d-none d-lg-flex align-items-center gap-3">
+                                <div>
+                                    @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="d-flex align-items-center btn-screen" *ngIf="isUserLogin">
+                                            <div class="d-flex align-items-center line-height">
+                                                <div class="dropdown">
+                                                    <button class="d-flex dropdown border-0 p-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <svg class="align-self-end" width="18" height="18" stroke="#2c3e50">
+                                                            <use href="../images/icons/header.svg#caret-down-filled" />
+                                                        </svg>
+                                                        <svg width="26" height="26" stroke="#2c3e50" stroke-width="1.5">
+                                                            <use href="../images/icons/header.svg#user" />
+                                                        </svg>
+                                                    </button>
+                                                    <ul class="dropdown-menu menu-user navbar-nav">
+                                                        <li class="px-4 py-2 pb-3 border-bottom">
+                                                            <a href="" class="d-flex align-items-center gap-3">
+                                                                <div class="rounded-circle bg-white border" style="height:60px; width: 60px">
+                                                                    <img src="~/images/men100.png" class="w-100 rounded-circle" alt="User Profile" />
+                                                                </div>
+                                                                <span class="pr-4 font-size-14 ss02 fw-bold">@UserPrincipal.UserName</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="px-4 py-2 border-bottom">
+                                                            <a href="@Url.Action("Index","Order")">
+                                                                <svg width="24" height="24" stroke="#2c3e50">
+                                                                    <use href="../images/icons/header.svg#checkup-list" />
+                                                                </svg>
+                                                                <span class="pr-4 font-size-14">سفارش های من</span>
+
+                                                            </a>
+                                                        </li>
+                                                        <li class="px-4 py-2 border-bottom">
+                                                            <a href="@Url.Action("ChangePassword","User")">
+                                                                <svg width="24" height="24" stroke="#2c3e50">
+                                                                    <use href="../images/icons/header.svg#lock" />
+                                                                </svg>
+                                                                <span class="pr-4 font-size-14">تغییر رمز عبور</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="px-4 py-2">
+                                                            <a onclick="logout()">
+                                                                <svg width="24" height="24" stroke="#2c3e50">
+                                                                    <use href="../images/icons/header.svg#logout" />
+                                                                </svg>
+                                                                <span class="pr-4 font-size-14 hand-cursor">خروج از حساب کاربری</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/login">
+                                            <div class="d-flex btn btn-black max-width lh-base">
+
+                                                <div class="pl-2">
+                                                    <svg width="20" height="20" stroke="#2c3e50">
+                                                        <use href="../images/icons/header.svg#login" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    ورود | ثبت نام
+                                                </div>
+                                            </div>
+                                        </a>
+                                    }
+                                </div>
+                                <div>|</div>
+                                <a class="d-flex position-relative" href="@Url.Action("Index", "ShoppingCartItem")">
+                                    <svg style="transform:scale(-1, 1)" viewBox="0 0 24 24" width="26" heigth="26" stroke-width="1.5" stroke="#2c3e50">
+                                        <use href="../images/icons/header.svg#shopping-cart" />
+                                    </svg>
+                                    <div class="position-absolute shopingCart ss02">
+                                        <div class="d-flex align-items-center count-shopingCart fw-800 fs-12">
+                                            <div class="spinner-border text-white" style="width: 10px; height: 10px; border-width: 0.2em !important; vertical-align:central" role="status">
+                                                <span class="visually-hidden"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Start Top Header and Menu Section -->
+                <div id="navbar" class="d-none d-lg-flex w-100 bg-white" style="z-index:100;">
+                    <div class="main-container w-100">
+                        <nav class="d-flex flex-column flex-xl-row align-items-center justify-content-between" role="navigation">
+                            <div class="d-none d-lg-flex align-items-center justify-content-between align-self-start">
+                                <ul class="main-nav">
+                                    <li id="mega-menu" class="top-level-link">
+                                        <a class="mega-menu d-flex align-items-center gap-1">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/header.svg#menu" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">دسته بندی ها</p>
+                                        </a>
+                                        <div class="overflow-hidden sub-menu-block">
+                                            <div id="categoryListContainer">
+                                                <section class="d-flex" id="menu">
+                                                    <aside id="menu_container" class="overflow-auto text-center"></aside>
+                                                    <div class="d-flex" style="flex:1">
+                                                        <article id="submenu_container" class="w-100 d-flex p-4 pb-0">
+                                                            <div class="h-100 d-flex contents_container">
+                                                                <div class="w-100 submenu_column"></div>
+                                                                <div class="w-100 submenu_column"></div>
+                                                                <div class="w-100 submenu_column"></div>
+                                                            </div>
+                                                        </article>
+                                                        <div class="category_image--container align-self-end">
+                                                            <img class="category_image" src="" width="100%" />
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@Url.Action("RepresentationsSearch","Representation")">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/header.svg#users-group" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">همکاران آموزشی</p>
+                                        </a>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@Url.Action("ListofInstituteRepresentatives" , "Home")">
+                                            <div>
+
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chalkboard-teacher"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1" /><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001" /><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2" /></svg>
+                                            </div>
+                                            <p class="mb-0">نمایندگی های انستیتو ایزایران</p>
+                                        </a>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@Url.Action("CertificateSearch","Certificate")">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/header.svg#certificate" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">استعلام گواهینامه</p>
+                                        </a>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceSiteShoppingGuide)" target="_blank">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/header.svg#cart-search" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">راهنمای خرید</p>
+                                        </a>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@Url.Action("Index","About")">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/header.svg#info-square" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">درباره ما</p>
+                                        </a>
+                                    </li>
+                                    <li class="top-level-link">
+                                        <a class="d-flex align-items-center gap-1" href="@Url.Action("Index","ContactUs")">
+                                            <div>
+                                                <svg width="20" height="20">
+                                                    <use href="../images/icons/general.svg#phone" />
+                                                </svg>
+                                            </div>
+                                            <p class="mb-0">ارتباط با ما</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="d-none d-lg-flex my-2 w-100 w-lg-auto align-self-start">
+                                <button type="button" data-toggle="modal" onclick="$('#searchCityModal').modal('show');" class="d-flex border-0 bg-transparent w-100 choose-city-padding gap-1">
+                                    <svg class="location-icon" width="20" height="20" stroke="var(--dark-primary-yellow-color)">
+                                        <use href="../images/icons/general.svg#map-pin" />
+                                    </svg>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <span class="fs-14">
+                                            لطفا شهر خود را انتخاب کنید.
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Top Header and Menu Section -->
+        <div class="bottom_navbar d-block d-lg-none position-fixed bottom-0 border-top w-100 bg-white" style="z-index:1002">
+            <div class="d-flex justify-content-around align-items-center gap-2 w-100">
+                <!-- Button trigger modal -->
+                <button id="menu-button" type="button" class="w-100 p-0" data-bs-toggle="modal" data-bs-target="#moreLinksModal" style="border:none">
+                    <div class="d-flex flex-column justify-content-center align-items-center p-2 fs-5 bg-white pe-none">
+                        <div>
+                            <svg width="26" height="26" style="color:#2c3e50">
+                                <use href="../images/icons/header.svg#menu" />
+                            </svg>
+                        </div>
+                        <span>منو‌</span>
+                    </div>
+                </button>
+                <a href="@Url.Action("CategoryMobileMenuList","Category")" class="w-100" data-tag="category/categorymobilemenulist">
+                    <div class="d-flex flex-column justify-content-center align-items-center p-2 fs-5 bg-white pe-none">
+                        <div>
+                            <svg width="26" height="26" stroke="#2c3e50">
+                                <use href="../images/icons/header.svg#category" />
+                            </svg>
+                        </div>
+                        <span>دسته‌بندی</span>
+                    </div>
+                </a>
+                <a href="/" class="w-100 active_tab" data-tag="">
+                    <div class="d-flex flex-column justify-content-center align-items-center p-2 fs-5 bg-white pe-none">
+                        <div>
+                            <svg width="26" height="26" stroke="#2c3e50" stroke-width="1.5">
+                                <use href="../images/icons/header.svg#home" />
+                            </svg>
+                        </div>
+                        <span>خانه</span>
+                    </div>
+                </a>
+                <a href="/ShoppingCartItem" class="w-100" data-tag="shoppingcartitem">
+                    <div class="p-2 fs-5 bg-white pe-none">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="position-relative">
+                                <svg style="transform:scale(-1,1)" width="26" height="26" stroke="#2c3e50">
+                                    <use href="../images/icons/header.svg#shopping-cart" />
+                                </svg>
+                                <div class="d-flex align-items-center justify-content-center position-absolute notification text-white ss02">
+                                    <div class="count-shopingCart fw-800 fs-12">
+                                        <div class="spinner-border text-white" style="width: 10px; height: 10px; border-width: 0.2em !important; vertical-align:central" role="status">
+                                            <span class="visually-hidden"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-center">سبد خرید</span>
+                        </div>
+                    </div>
+                </a>
+                @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div id="user-profile__button" class="w-100" data-tag="order">
+                        <div class="p-2 fs-5 bg-white pe-none">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <svg width="18" height="18" style="transform:scale(1,-1); color:#2c3e50">
+                                    <use href="../images/icons/header.svg#caret-down-filled" />
+                                </svg>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <div class="position-relative">
+                                        <svg width="26" height="26" stroke="#2c3e50" stroke-width="1.5">
+                                            <use href="../images/icons/header.svg#user" />
+                                        </svg>
+                                        <span class="notification-empty position-absolute text-white d-flex align-items-center justify-content-center"></span>
+                                    </div>
+                                    <span class="text-center">کاربر</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul id="user-profile__menu" class="navbar-nav position-absolute bg-white border">
+                        <li class="px-3 py-2 border-bottom">
+                            <a href="" class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-white border" style="height:50px; width: 50px">
+                                    <img src="~/images/men100.png" alt="User Profile" class="w-100 rounded-circle" />
+                                </div>
+                                <span class="pr-4 font-size-14 ss02 fw-bold">@UserPrincipal.UserName</span>
+                            </a>
+                        </li>
+                        <li class="px-3 py-2 border-bottom">
+                            <a href="@Url.Action("Index","Order")">
+                                <svg width="24" height="24" stroke="#2c3e50">
+                                    <use href="../images/icons/header.svg#checkup-list" />
+                                </svg>
+                                <span class="pr-4 font-size-14">سفارش های من</span>
+
+                            </a>
+                        </li>
+                        <li class="px-3 py-2 border-bottom">
+                            <a href="@Url.Action("ChangePassword","User")">
+                                <svg width="24" height="24" stroke="#2c3e50">
+                                    <use href="../images/icons/header.svg#lock" />
+                                </svg>
+                                <span class="pr-4 font-size-14">تغییر رمز عبور</span>
+                            </a>
+                        </li>
+                        <li class="px-3 py-2">
+                            <a onclick="logout()">
+                                <svg width="24" height="24" stroke="#2c3e50">
+                                    <use href="../images/icons/header.svg#logout" />
+                                </svg>
+                                <span class="pr-4 font-size-14 hand-cursor">خروج از حساب کاربری</span>
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <a href="/user/login" class="w-100">
+                        <div class="p-2 fs-5 bg-white">
+                            <div class="d-flex flex-column justify-content-center align-items-center pe-none">
+                                <div>
+                                    <svg width="26" height="26" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <use href="../images/icons/header.svg#user" />
+                                    </svg>
+                                </div>
+                                <span>کاربر</span>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </header>
+
+
+
+    <div id="fade_overlay" class="position-fixed vh-100 vw-100">
+    </div>
+    <!--body-->
+    <div class="boxed certificate-search" style="background-color:#f5f5f5">
+        @RenderBody()
+    </div>
+
+
+
+    <!--footer-->
+
+    <div class="wavy-footer">
+        <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150">
+            <path d="M 0,400 L 0,100 C 161.46666666666664,100.80000000000001 322.9333333333333,101.60000000000001 501,92 C 679.0666666666667,82.39999999999999 873.7333333333333,62.400000000000006 1033,62 C 1192.2666666666667,61.599999999999994 1316.1333333333332,80.8 1440,100 L 1440,400 L 0,400 Z" stroke="none" stroke-width="0" fill="#172554" fill-opacity="0.53" class="transition-all duration-300 ease-in-out delay-150 path-0"></path>
+            <path d="M 0,400 L 0,233 C 207.33333333333337,232.33333333333334 414.66666666666674,231.66666666666669 557,225 C 699.3333333333333,218.33333333333331 776.6666666666665,205.66666666666666 913,206 C 1049.3333333333335,206.33333333333334 1244.6666666666667,219.66666666666669 1440,233 L 1440,400 L 0,400 Z" stroke="none" stroke-width="0" fill="#172554" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-1"></path>
+        </svg>
+    </div>
+
+
+
+    <div class="main-footer-blue live-svg-footer ss02">
+        <div class="mx-auto" style="width: 90%; max-width: 1600px">
+            <div class="d-flex justify-content-between align-items-center mx-3 mx-sm-0">
+                <div>
+                    <img style="height:50px; filter: contrast(0) brightness(2) !important;" src="~/images/logo/logo-ft.png" alt="Logo ISIRAN Institute" loading="lazy logo-in-footer" />
+                </div>
+                <div class="cursor-pointer d-flex align-items-center gap-2" onclick="goTopFunction()" style="border: solid 1px #fff;padding: 8px 16px; color:#fff; border-radius:10px">
+                    <p class="mb-0 back-top-top">بازگشت به بالا</p>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M6 15l6 -6l6 6" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap align-items-center text-white fs-14 fw-500 my-2 gap-2 mx-4 mx-sm-0">
+                تلفن پشتیبانی:
+                <div>
+                    <p class="mb-0"> @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationPhone) </p>
+                </div>
+                <div>|</div>
+                پاسخگوی شما هستیم.
+            </div>
+
+            <div class="d-none gap-2 d-lg-flex justify-content-evenly align-items-center mt-3 mb-2">
+                <div class="d-flex flex-column justify-content-around bg-white px-4 py-3 rounded-3 w-25">
+                    <img src="~/images/svg/support.svg" alt="support" style="height:50px" loading="lazy" />
+                    <span class="fs-14 my-2 text-center">پشتیبانی در ساعات اداری</span>
+                </div>
+                <div class="d-flex flex-column justify-content-around bg-white px-4 py-3 rounded-3 w-25">
+                    <img src="/images/svg/deliver.svg" alt="deliver" style="height:50px" loading="lazy" />
+                    <span class="fs-14 my-2 text-center">تحویل سریع</span>
+                </div>
+                <div class="d-flex flex-column justify-content-around bg-white px-4 py-3 rounded-3 w-25">
+                    <img src="/images/svg/tick.svg" alt="tick" style="height:50px" loading="lazy" />
+                    <span class="fs-14 my-2 text-center">ضمانت اصل بودن کالا </span>
+                </div>
+                <div class="d-flex flex-column justify-content-around bg-white px-4 py-3 rounded-3 w-25">
+                    <img src="/images/svg/credit.svg" alt="credit" style="height:50px" loading="lazy" />
+                    <span class="fs-14 my-2 text-center">پرداخت با حکمت کارت </span>
+                </div>
+
+            </div>
+
+            <div class="w-100 d-flex flex-wrap flex-lg-nowrap justify-content-between my-2 gap-2">
+
+                <div class="w-100 bg-white px-4 py-2 rounded-3 mx-3 mx-sm-0">
+                    <div class="fs-16 fw-700 my-2">
+                        پشتیبانی
+                    </div>
+                    <div class="">
+                        <div class="">
+                            <div class="fs-14 mb-2">
+                                <a target="_blank" href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceSiteShoppingGuide)">راهنمای خرید</a>
+                            </div>
+                            <div class="fs-14 mb-2">
+                                <a target="_blank" href="@Url.Action("Index","About")">درباره ما</a>
+                            </div>
+                            <div class="fs-14 mb-2">
+                                <a target="_blank" href="@Url.Action("Index","ContactUs")">تماس با ما</a>
+                            </div>
+                            <div class="fs-14 mb-2">
+                                <a target="_blank" href="https://tbao.ir/SamanehPayamaki.html">راهنمای سامانه پیامکی</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-100 bg-white px-4 py-2 rounded-3 mx-3 mx-sm-0">
+                    <div class="fs-16 fw-700 my-2">
+                        راه های ارتباطی
+                    </div>
+                    <div class="d-flex justify-content-between fs-14 mb-2">
+                        <span>سامانه پیامکی:</span>
+                        <div class="mx-2">
+                            <span>30006925</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between fs-14 mb-2">
+                        <div>ايميل:</div>
+                        <div class="mx-2">
+                            <a href="mailto:@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationEmail)">
+                                @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationEmail)
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column fs-14 mb-2">
+                        <div>آدرس:</div>
+                        <div class="">تهران، حسین آباد خیابان مژده، جنب مترو حسین آباد </div>
+                    </div>
+
+                </div>
+
+                <div class="d-block d-md-flex d-lg-block justify-content-between w-100 bg-white px-4 py-2 rounded-3 mx-3 mx-sm-0">
+                    <div class="fs-16 fw-700 mt-2 mb-3">
+                        همراه ما باشید!
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between be-with-us-in-footer">
+                        <div class="d-flex flex-row flex-lg-column flex-xxl-row mt-2">
+                            <a href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkEitaUrl)" class="m-1 me-3">
+                                <img loading="lazy" src="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkEitaImg)" alt="Eita Logo" style="height:40px" />
+                            </a>
+
+                            <a href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkBaleUrl)" class="m-1 me-3">
+                                <img loading="lazy" src="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkBaleImg)" alt="Bale Logo" style="height:40px" />
+                            </a>
+
+                            <a href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkRubikaUrl)" class="m-1 me-3">
+                                <img loading="lazy" src="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationFooterSocialNetworkRubikaImg)" alt="Rubika Logo" style="height:40px" />
+                            </a>
+                        </div>
+
+
+
+                        <div class="statistics-in-footer">
+                            <div class="d-flex align-items-center justify-content-between gap-2 pt-2">
+                                <span>بازدید کل:</span>
+                                <span class="ss02" id="total-visit"></span>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between gap-2 pt-2">
+                                <span>بازدید امروز:</span>
+                                <span class="ss02" id="today-visit"></span>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between gap-2 pt-2">
+                                <span>بازدید دیروز:</span>
+                                <span class="ss02" id="yesterday-visit"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-column flex-md-row align-items-center my-2">
+                <div class="d-block d-sm-block d-md-flex bg-white px-4 py-3 rounded-3 mb-3 mx-3 mx-sm-0" style="text-align:justify ">
+
+                    <div>
+                        <p>@await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.CorporationAbout })</p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-0 ms-md-4" style="width:110px ; height:110px">
+                                <div id="enamadContainer">
+                                    <a href="https://trustseal.enamad.ir/?id=200876&Code=luqXQEntPisbJmeefKUX" target="_blank"> <img data-src="/images/upload.php_.webp" alt="Enamad Logo" class="w-100 h-100 lazy-img bg-white" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="copyright-footer-blue">
+        <div class="mx-auto" style="width: 90%; max-width: 1600px">
+            <div class="col-12">
+                <div class="copyright fs-12 text-center bg-white pb-1 pt-2 mx-3 mx-sm-0">
+                    <span>© کلیه حقوق این سایت متعلق به <a class="fw-600" href="#"> انستیتوایزایران </a> می باشد. </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /.bottom -->
+    <a id="scroll-top">
+        <i class="fas fa-angle-up" style="color:white;font-size: 17px;"></i>
+    </a>
+    <div id="fsModalSorty"
+         class="modal animated "
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <!-- dialog -->
+        <div class="modal-dialog">
+
+            <!-- content -->
+            <div class="modal-content">
+
+                <!-- header -->
+                <div class="modal-header">
+                    <h1 id="myModalLabel"
+                        class="modal-title" style="font-size: 16px; font-weight: 400">
+                        انتخاب زیرگروه
+                    </h1>
+                    <div style="float: left">
+                        <button class="btn btn-secondary"
+                                data-dismiss="modal" style="font-size: 16px; font-weight: 400; color: white; margin-top: -10px; color: black;">
+                            x
+                        </button>
+                    </div>
+                </div>
+                <!-- header -->
+                <!-- body -->
+                <div class="modal-body" style="text-align: right;">
+                    <div id="treeee"></div>
+                </div><!-- /.sidebar-left -->
+            </div>
+            <!-- body -->
+            <!-- footer -->
+            <!-- footer -->
+
+        </div>
+        <!-- content -->
+
+    </div>
+
+    <!-- More Links Modal -->
+    <div class="modal fade" id="moreLinksModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="navbar-nav bg-white">
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("RepresentationsSearch","Representation")">
+                                <div>
+                                    <svg width="20" height="20">
+                                        <use href="../images/icons/header.svg#users-group" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">همکاران آموزشی</p>
+                            </a>
+                        </li>
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("ListofInstituteRepresentatives" , "Home")">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chalkboard-teacher"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1" /><path d="M12 14a2 2 0 1 0 4.001 -.001a2 2 0 0 0 -4.001 .001" /><path d="M17 19a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2" /></svg>
+                                </div>
+                                <p class="mb-0">نمایندگی های انستیتو ایزایران</p>
+                            </a>
+                        </li>
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("CertificateSearch","Certificate")">
+                                <div>
+                                    <svg width="20" height="20">
+                                        <use href="../images/icons/header.svg#certificate" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">استعلام گواهینامه</p>
+                            </a>
+                        </li>
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceSiteShoppingGuide)" target="_blank">
+                                <div>
+                                    <svg width="20" height="20">
+                                        <use href="../images/icons/header.svg#cart-search" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">راهنمای خرید</p>
+                            </a>
+                        </li>
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("Index","About")">
+                                <div>
+                                    <svg width="20" height="20">
+                                        <use href="../images/icons/header.svg#info-square" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">درباره ما</p>
+                            </a>
+                        </li>
+                        <li class="border-bottom">
+                            <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("Index","ContactUs")">
+                                <div>
+                                    <svg width="20" height="20">
+                                        <use href="../images/icons/general.svg#phone" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">ارتباط با ما</p>
+                            </a>
+                        </li>
+                        @if (userIsNotHekmatCustomerClub)
+                        {
+                            <li class="border-bottom">
+                                <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("Employment", "Home")">
+                                    <div>
+                                        <svg width="20" height="20">
+                                            <use href="../images/icons/header.svg#template" />
+                                        </svg>
+                                    </div>
+                                    <p class="mb-0">سامانه اشتغال</p>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="d-flex align-items-center gap-1 py-3 px-4" href="@Url.Action("ResumeFillHelp", "Home")">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list-details"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>
+                                    </div>
+                                    <p class="mb-0">رزومه کاربر</p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The fsModalSort Modal -->
+    <div class="modal fade rtl" id="fsModalSort">
+        <div class="modal-dialog top-30">
+            <div class="modal-content">
+
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title">انتخاب گروه بندی</h4>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" data-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="min-height:280px">
+                    <a href=""><span class="fs-14 fw-400 text-right float-right pr-1"> همه ی گروه پیش دبستانی ودبستان</span></a>
+
+                    <br />
+                    <div id="treee" class="mt-3"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- The Search city Modal -->
+    <div class="modal fade rtl" id="searchCityModal">
+        <div class="modal-dialog top-30">
+            <div class="modal-content">
+
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title">انتخاب شهر</h4>
+                    <button type="button" class="btn-close m-0" data-bs-dismiss="modal" data-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="min-height:280px">
+
+                    <div class="alert alert-info text-right" role="alert">
+                        کاربر گرامی خواهشمنداست، برای انتخاب شهر در کادر زیر نام شهر را وارد نموده و روی اسم آن در لیست باز شده کلیک نمائید.
+                    </div>
+                    @await Html.PartialAsync("_SearchCityPartial", new Yashil.Core.CustomViewModels.ECommerce.ProductFilter())
+
+
+                </div>
+                <div id="loadingDiv" style="display:none">
+                    <object type="image/svg+xml" data="~/images/svg/loading.svg" class="d-block mx-auto" alt="loading" loading="lazy"></object>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const topMenuContainer = document.querySelector('.menu-position');
+        var lastScrollTop = 0;
+        function scrollDetecter() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // downscroll code
+                topMenuContainer.classList.add('header-banner');
+            } else if (scrollTop < lastScrollTop && window.pageYOffset <= 65) {
+                // upscroll code
+                topMenuContainer.classList.remove('header-banner');
+            } // else was horizontal scroll
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        }
+        // element should be replaced with the actual target element on which you have applied scroll, use window in case of no target element.
+        window.addEventListener("scroll", scrollDetecter, false);
+        window.addEventListener("DOMContentLoaded", function () {
+            if (window.pageYOffset > 65) {
+                topMenuContainer.classList.add('header-banner');
+            }
+        }, false)
+    </script>
+    <script src="~/js/bootstrap/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/Loading.js" asp-append-version="true"></script>
+    <script src="~/js/navigateToTop.min.js" asp-append-version="true"></script>
+    <script src="~/js/commerce.min.js" asp-append-version="true"></script>
+    <script src="~/js/fullOfDiscountProducts/fullOfDiscountProducts.min.js" asp-append-version="true"></script>
+    <script src="~/js/categoryMenu/categories.js" asp-append-version="true"></script>
+    <script src="~/js/categoryMenu/categoryMenuList.min.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        lazyLoad();
+        skeletonLoading();
+        homePageSliderLazyLoad();
+        const loadingSpinnerWithModal = new ModalLoadingSpinner('loadingSpinnerWithModal');
+
+    </script>
+
+    <script type="text/javascript">
+        let currentPath = window.location.pathname.slice(1).toLocaleLowerCase();
+        const bodyContainer = document.querySelector('body');
+        const bottomNavbarElement = document.querySelector('.bottom_navbar');
+        const userProfileButton = document.querySelector('#user-profile__button');
+        const userProfileContainer = document.querySelector('#user-profile__menu');
+        bottomNavbarElement.addEventListener('click', function (e) {
+            currentPath = e.target.dataset.tag;
+        })
+        const navbarElements = Array.from(document.querySelector('.bottom_navbar').querySelectorAll('a'));
+        const menuButton = document.getElementById('menu-button');
+        navbarElements.forEach(navbarElement => navbarElement.classList.remove('active_tab'));
+        const activeNavbarTab = navbarElements.find(navbarElement => navbarElement.dataset.tag === currentPath);
+        if (activeNavbarTab) { activeNavbarTab.classList.add('active_tab') };
+        if (!activeNavbarTab) { menuButton.classList.add('active_tab') };
+        if (userProfileButton) {
+            userProfileButton.addEventListener('click', function () {
+                userProfileContainer.classList.toggle('user-profile__active')
+            })
+            bodyContainer.addEventListener('click', function (e) {
+                if (e.target.dataset.tag === undefined) {
+                    userProfileContainer.classList.remove('user-profile__active')
+                }
+            })
+        }
+    </script>
+
+    <script>
+        const mapIcon = document.querySelector('.location-icon');
+
+        /* scale کردن آیکن لوکیشن بعد از 0.5 ثانیه */
+        const addPulseEffect = setInterval(() => {
+            mapIcon.classList.add('pulsing');
+        }, 500);
+
+        /* بازگردانی آیکن لوکیشن به حالت اولیه بعد از یک ثانیه */
+        const removePulseEffect = setInterval(() => {
+            mapIcon.classList.remove('pulsing');
+        }, 1000);
+
+        /* پاک کردن افکت ضربان قلب بعد از گذشت 10 ثانیه */
+        setTimeout(() => {
+            clearInterval(addPulseEffect);
+            clearInterval(removePulseEffect);
+        }, 10000);
+    </script>
+
+    @if (StoreConfiguration.AllowFilterByCity)
+    {
+        <script>
+            $(document).ready(() => {
+                fetch('/api/city/getCities').then(response => response.json()).then(data => {
+                    $('#searchCityName').autocomplete({
+                        lookup: data,
+                        onSelect: function (suggestion) {
+                            setCity(suggestion);
+                        },
+                        autoSelectFirst: true
+                    });
+                });
+            });
+        </script>
+    }
+
+
+    <script>
+        const searchComponentElement = document.getElementById('search-component');
+        const fadeOverlay = document.getElementById('fade_overlay');
+        const categoriesButton = document.getElementById('mega-menu');
+        const headerEl = document.getElementById('header');
+        const wideNavHeaderEl = document.querySelector('.wide-nav-header');
+        const mainContent = document.querySelector('body');
+
+        fadeOverlay.addEventListener('click', function () {
+            searchComponentElement.classList.remove('show');
+            fadeOverlay.classList.remove('show');
+            mainContent.classList.remove('overflow-hidden');
+        });
+
+        categoriesButton.addEventListener('mouseover', function () {
+            searchComponentElement.classList.remove('show');
+            mainContent.classList.remove('overflow-hidden');
+            fadeOverlay.classList.add('show');
+            headerEl.classList.add('hovered');
+            mainContent.classList.add('hovered');
+            $('.wide-nav-header').css('padding-right', function (index, curValue) {
+                return parseInt(curValue, 10) + 14 + 'px';
+            });
+        });
+        categoriesButton.addEventListener('mouseout', function () {
+            fadeOverlay.classList.remove('show');
+            headerEl.classList.remove('hovered');
+            mainContent.classList.remove('hovered');
+            $('.wide-nav-header').css('padding-right', function (index, curValue) {
+                return parseInt(curValue, 10) - 14 + 'px';
+            });
+        })
+
+        $('#mobileCategoryListContainer').load('@Url.Action("CategoryMobileMenuList", "category")');
+
+
+
+        $(document).ready(() => {
+            fetch('/api/PublicApi/GetCategoryHierarchically').then(response => response.json()).then(data => {
+                bindCategoryTreeWithData((event, selectedNode) => {
+                    window.location = "/Company?categoryId=" + selectedNode.id;
+                }, $('#categoryMobileListContainer'), data);
+            });
+            fetch('/api/PublicApi/getShoppingCartItemsCount').then(response => response.json()).then(data => {
+                $('.count-shopingCart').each(function (index) {
+                    $(this).text(data);
+                });
+            });
+            loadMenu();
+        });
+
+    </script>
+    <script>
+        bootbox.setDefaults({
+            locale: "fa",
+            closeButton: true,
+            animate: true
+        });
+    </script>
+
+    @await RenderSectionAsync("scripts", false)
+
+    <script>
+        var loadMenuBefore = false;
+        function loadMenu() {
+            if (!loadMenuBefore) {
+                $('#menuContainer').load('@Url.Action("Menu", "Home")');
+            }
+        }
+
+        $(document).mouseup(function (e) {
+            closeUserMenu($('#userMenuContainer'), $('#userAccountMenu'));
+            closeUserMenu($('#userMenuContainerMobileMode'), $('#userAccountMenuMobileMode'));
+        });
+
+        function closeUserMenu(userMenuContainerEl, userAccountMenuEl) {
+            userAccountMenuEl.removeClass('openAccount');
+            userAccountMenuEl.addClass('closeAccount');
+            userMenuContainerEl.addClass("open");
+        }
+
+        $("#searchBox").keypress(function (e) {
+            if (e.which === 13) {
+                var searchBoxTitle = $("#searchBox").val();
+                if (window.location.href.indexOf("/Company") > -1) {
+                    insertParam('searchTitle', searchBoxTitle);
+                } else {
+                    window.location = '@Url.Action("Index", "Company")?searchTitle=' + searchBoxTitle;
+                }
+            }
+        });
+        $("#searchBox").keyup(function (e) {
+            if ($('#searchBox').val() == '') {
+                // $('#crossInput').removeClass('eraseSearchboxCross');
+                $('#crossInput').css('display', 'none');
+            }
+            else if ($('#searchBox').val() != '') {
+                // $('#crossInput').addClass('eraseSearchboxCross');
+                $('#crossInput').css('visibility', 'visible');
+                $('#crossInput').css('display', '');
+            }
+        });
+        $(window).scroll(function () {
+            $('.autocomplete-suggestions').css('display', 'none');
+        });
+    </script>
+    <script>
+        function eraseSearchBox() {
+            $('#searchBox').val('');
+            $('#crossInput').css('display', 'none');
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#drawerContentMenu').html($('#mainMenu').html());
+        })
+    </script>
+    <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("navbar").style.top = "0";
+            } else {
+                document.getElementById("navbar").style.top = "-50px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+
+
+
+        // When the user clicks on the button, scroll to the top of the document
+        function goTopFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+    @if (StoreConfiguration.AllowFilterByCity)
+    {
+        <script>
+            $('#searchCityModal').on('shown.bs.modal', function () {
+                $('#searchCityName').focus();
+            })
+        </script>
+    }
+
+
+
+    @* Call Statistics API *@
+    <script>
+        const apiUrlStatistics = '/api/siteVisit/GetSiteVisitInfo';
+        const totalVisit = document.getElementById('total-visit');
+        const todayVisit = document.getElementById('today-visit');
+        const yesterdayVisit = document.getElementById('yesterday-visit');
+        // Make a GET request
+        fetch(apiUrlStatistics)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Display data in an HTML element
+                totalVisit.textContent = data.totalSiteVisitCount;
+                todayVisit.textContent = data.currentDaySiteVisitCount;
+                yesterdayVisit.textContent = data.perviousDayTotalSiteVisitCount;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+
+
+
+    <script>
+                // انتخاب منوی ناوبری شما از طریق کلاس wide-nav-header
+        const targetElement = document.querySelector('.wide-nav-header');
+
+        // رنگ آبی روشن فعلی شما
+        const lightColor = { r: 114, g: 194, b: 233 }; // معادل #72c2e9
+        // رنگ آبی پررنگ برای حالت دم
+        const darkColor = { r: 45, g: 100, b: 160 };
+
+        const breatheSpeed = 1.2;
+
+        function animateBackground() {
+            if (!targetElement) return; // اگر عنصر پیدا نشد، کد متوقف شود
+
+            const time = Date.now() * 0.001;
+            const wave = (Math.sin(time * breatheSpeed) + 1) / 2;
+
+            const currentR = Math.round(lightColor.r + (darkColor.r - lightColor.r) * wave);
+            const currentG = Math.round(lightColor.g + (darkColor.g - lightColor.g) * wave);
+            const currentB = Math.round(lightColor.b + (darkColor.b - lightColor.b) * wave);
+
+            // نوسان حجم رنگی بین 20 تا 28 درصد برای سمت چپ و 80 تا 72 درصد برای سمت راست
+            const leftPercent = 20 + (wave * 8);
+            const rightPercent = 80 - (wave * 8);
+
+            targetElement.style.backgroundImage = `linear-gradient(to right, rgb(35 31 85) ${leftPercent}%, rgb(${currentR}, ${currentG}, ${currentB}), rgb(35 31 85) ${rightPercent}%)`;
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        animateBackground();
+    </script>
+</body>
+</html>

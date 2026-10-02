@@ -1,0 +1,84 @@
+<!-- Navbar (Header) Starts -->
+<nav class="header-navbar navbar navbar-expand-lg navbar-light bg-faded">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle d-lg-none float-left" data-toggle="collapse"
+              (click)="toggleSidebar()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="d-lg-none navbar-right navbar-collapse-toggle">
+                <a class="open-navbar-container" (click)="isCollapsed = !isCollapsed"
+                   [attr.aria-expanded]="!isCollapsed" aria-controls="navbarSupportedContent">
+                    <i class="ft-more-vertical"></i>
+                </a>
+            </span>
+      {{selectedUser.userFullName}}-{{selectedUser.userName}}
+      <dx-button icon="redo" text="تغییر برنامه" height="30px" width="100px" *ngIf="allowUserSelectApplication"
+                 (click)="onClick($event)"></dx-button>
+    </div>
+    <div class="navbar-container">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
+        <ul class="navbar-nav d-flex align-items-end">
+          <li class="nav-item mr-2  d-none d-lg-block">
+            <button *ngIf="lmsMode" class="version-info--button" role="button" (click)="showPopup($event)">تغییرات آخرین نسخه
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+            </button>
+          </li >
+          <li class="nav-item mr-2  d-none d-lg-block">
+            <a href="javascript:;" class="nav-link" id="navbar-fullscreen" appToggleFullscreen
+               (click)="ToggleClass()">
+              <i class="{{toggleClass}} font-medium-3 blue-grey darken-4"></i>
+              <p class="d-none">fullscreen</p>
+            </a>
+          </li >
+          <li class="nav-item" ngbDropdown [placement]="placement">
+            <a class="nav-link position-relative" id="dropdownBasic3" ngbDropdownToggle>
+              <i class="ft-user font-medium-3 blue-grey darken-4"></i>
+              <p class="d-none">User Settings</p>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="text-left">
+              <a class="dropdown-item py-1" href="javascript:;" (click)="changePassword()" >
+                <i class="ft-edit mr-2"></i>
+                <span style="font-size: 12px !important;">تغییر کلمه عبور</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="javascript:;" (click)="logOut()" >
+                <i class="ft-power mr-2"></i>
+                <span style="font-size: 12px !important;">خروج از سیستم</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Navbar (Header) Ends -->
+
+
+
+<!-- PopUp for latest version -->
+<dx-popup
+  *ngIf="showPopUp"
+  [title]="titlePopUp"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  rtlEnabled="true"
+  class="popup">
+  <div class="container-fluid">
+    <div class=" d-flex justify-content-between alert alert-success">
+      <b style="font-family:iransans !important;">تغیرات آخرین نسخه</b>
+      <b style="font-family:iransans !important;">نسخه : {{listOfLastVersion.title}}</b>
+    </div>
+<ul class="pt-1" style="font-family:iransans !important;" >
+  <div [innerHTML]="formattedText"></div>
+</ul>
+  </div>
+
+
+</dx-popup>

@@ -1,0 +1,455 @@
+﻿@using Yashil.Core.Enums
+@using YashilCommerce.Web.Areas.ECommerce.ViewModels
+
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.CheckoutViewModel
+@{
+    Layout = "_Layout";
+    var vezarat = ((int)MembershipTypesEnum.Vezarat).ToString();
+    var sata = ((int)MembershipTypesEnum.Sata).ToString();
+    var membershipTypes = Model.MembershipTypeList.Where(x => x.Id != (int)MembershipTypesEnum.Others).ToList();
+}
+<!-- tabs -->
+<section id="tabs" class="mx-auto my-2 pt-2 pt-lg-5 pt-xxl-2">
+    <div class="container custom-container ss02">
+        <div class="row">
+            <ul class="nav nav-tabs bg-white rounded " id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active text-secondary"
+                            id="recipientTabButton"
+                            data-bs-toggle="tab"
+                            data-bs-target="#recipientTabContent"
+                            type="button"
+                            role="tab"
+                            aria-controls="home"
+                            aria-selected="true">
+                        <svg viewBox="0 0 24 24" width="24" heigth="24" stroke="#6c757d">
+                            <use href="../images/icons/general.svg#checklist" />
+                        </svg>
+                        تحویل گیرنده
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-secondary disabled"
+                            id="orderTabButton"
+                            data-bs-toggle="tab"
+                            data-bs-target="#orderTabContent"
+                            type="button"
+                            role="tab"
+                            aria-controls="profile"
+                            aria-selected="false">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/general.svg#receipt" />
+                        </svg>
+                        پیش فاکتور
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content bg-white" id="tabContent">
+                <div class="tab-pane fade show active" id="recipientTabContent" role="tabpanel"
+                     aria-labelledby="home-tab">
+                    <!-- content start-->
+
+                    <div>
+                        <div class="row">
+                            <div class="col-12 py-3 px-3">
+                                <!-- content -->
+                                <div class="detail-dis2 rounded p-2">
+                                    @await Html.PartialAsync("_Recipient", Model)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="orderTabContent" role="tabpanel"
+                     aria-labelledby="profile-tab">
+                    <div id="orderSummary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The edit Recipient Modal -->
+
+<div class="modal fade rtl" id="editRecipientModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <h4 class="modal-title">اطلاعات تحویل گیرنده</h4>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" data-dismiss="modal" onclick="$('#editRecipientModal').collapse('hide')"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body p-2">
+                <div id="editRecipientContent">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- The checkRecipient Modal -->
+<div class="modal fade rtl" id="checkRecipientModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <h4 class="modal-title">بررسی اطلاعات تحویل گیرنده</h4>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="min-height:280px">
+                <img class="loadingImg" alt="loadingImg" src="/images/Inquery.gif"
+                     style="margin:auto;right: 50%;z-index: 1000;" />
+                <p class="waiting-txt-for-user-in-order text-center mb-5">
+                    کاربر گرامی،
+                    <br /><span id="messageContent"></span>
+                    <br /> لطفا منتظر بمانید
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The checkRecipient Modal -->
+<div class="modal fade rtl" id="paymentMethodInfoModal">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" class="close m-0 me-3" style="border: none; background: transparent;"
+                        data-bs-dismiss="modal" data-dismiss="modal" onclick="closeSaminPaymentModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff0000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M18 6l-12 12" />
+                        <path d="M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="min-height:280px">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/bootstrap/bootstrap.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/script.js"></script>*@
+    <script src="~/js/jquery/jquery-validate/jquery.validate.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" type="text/javascript" asp-append-version="true"></script>
+
+
+    <script type="text/javascript">
+
+        function closeSaminPaymentModal() {
+            document.documentElement.classList.remove('overflow-hidden');
+        }
+
+        function openHomeTab() {
+            $('#orderTabButton').removeClass('active');
+            $('#orderTabContent').removeClass('active');
+            $('#orderTabContent').removeClass('show');
+
+            $('#recipientTabButton').addClass('active');
+            $('#recipientTabContent').addClass('active');
+            $('#recipientTabContent').addClass('show');
+
+            $('#checkRecipientModal').modal('hide');
+
+        }
+
+        function loadOrderSummary(recipientId, spinner, submit) {
+            var checkRecipientModal = new bootstrap.Modal(document.getElementById('checkRecipientModal'),
+                {
+                    keyboard: false
+                });
+
+            spinner.classList.remove('d-none');
+            submit.setAttribute('disabled', true);
+            $('#messageContent').html('سیستم در حال بررسی اطلاعات تحویل گیرنده می باشد');
+
+            document.querySelector('body').style.pointerEvents = "none";
+            checkRecipientModal.show();
+
+            //$('#orderSummary').load('@Url.Action("OrderSummery", "Order") ' + ' ?recipientId= ' + encodeURIComponent(recipientId),
+
+
+            var url = '@Url.Action("OrderSummery", "Order")';
+            var params = new URLSearchParams({
+                recipientId: recipientId
+            });
+            $('#orderSummary').load(`${url}?${params}`,
+                function (response, status, xhr) {
+                    checkRecipientModalHide();
+                    document.querySelector('body').style.pointerEvents = "auto";
+                    if (response === "") {
+                        window.location = "/user/login";
+                    } else if (response === "ShoppingCartItem") {
+                        window.location = "/ShoppingCartItem";
+                    } else if (response === "SubsidyStatusIsInitialRegistration") {
+                        spinner.classList.add('d-none');
+                        submit.removeAttribute('disabled');
+                        bootbox.alert('کاربر گرامی، سرویس بررسی عائله بازنشستگان قطع می باشد ، امکان ادامه خرید ندارید لطفا مجددا تلاش کنید.');
+                    } else if (response === "InvalidRecipientId") {
+                        spinner.classList.add('d-none');
+                        submit.removeAttribute('disabled');
+                        bootbox.alert('خطا - دسترسی غیر مجاز ');
+                    } else {
+                        spinner.classList.add('d-none');
+                        submit.removeAttribute('disabled');
+                        $('#recipientTabButton').removeClass('active');
+                        $('#recipientTabContent').removeClass('active');
+                        $('#recipientTabContent').removeClass('show');
+                        $('#orderTabButton').addClass('active');
+                        $('#orderTabContent').addClass('active');
+                        $('#orderTabContent').addClass('show');
+                    }
+                });
+        }
+
+        function checkRecipientModalHide() {
+            const modalEl = document.getElementById('checkRecipientModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+
+            modalEl.style.display = "none";
+            modal.dispose();
+        }
+
+
+        function showOrderSummery(recipientId) {
+            loadOrderSummary(recipientId);
+        }
+
+        /**
+         * ویرایش دریافت کننده کالا
+         */
+        function editRecipient(id) {
+            $('#editRecipientContent').html('<object type="image/svg+xml" data="~/images/svg/loading.svg" alt="Loading" class="d-block mx-auto"></object>');
+            $('#editRecipientModal').modal('show');
+
+
+            $('#editRecipientContent').load('@Url.Action("EditRecipient", "Recipient")' + '?recipientId=' + id,
+                function (response, status, xhr) {
+
+                    if (response === "") {
+                        window.location = "/user/login";
+                    } else {
+                        $("#recipientForm").each(function () { $.data($(this)[0], 'validator', false); });
+                        $.validator.unobtrusive.parse("#recipientForm");
+
+                        $('#stringId').val(id);
+                        $('.alert').hide();
+                        var cityDdl = $(".fstdropdown-select").parents('form:first').validate();
+                        if (cityDdl) {
+                            cityDdl.settings.ignore = ':not(select:hidden, input:visible, textarea:visible)';
+                        }
+                    }
+                });
+
+        }
+
+        function openRecipientRegisterForm() {
+            $('#RecipientForm2').css('display', '');
+            $('#RecipientForm2').css('visibility', 'visible');
+            $('#EditRecipientForm').css('display', 'none');
+        }
+
+        /*
+         نمایش لیست تمام دریفات کنندگان خدمت  و نمایش دکمه افزودن تحویل گیرنده
+         * */
+        function openEditRecipientForm() {
+            $('#EditRecipientForm').css('display', '');
+            $('#EditRecipientForm').css('visibility', 'visible');
+            $('.alert').hide();
+            $('#RecipientForm2').css('display', 'none');
+        }
+
+        function deleteRecipient(id) {
+            $('.alert').hide();
+            fetch('/api/Recipient/DeleteEntity/' + id,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    //body: JSON.stringify(id)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isSuccess === true) {
+                        window.location = "/checkout";
+
+                    } else {
+                        $('.alert').alert();
+                        $('.alert').show();
+
+                    }
+
+                })
+                .catch(x => {
+                    $('.alert').alert();
+                    $('.alert').show();
+                });
+        }
+
+        function dissmissModal() {
+            $('.alert').hide();
+        }
+
+        function recipientFormSubmit(e, form, submit) {
+            const buttonElement = document.querySelector(submit);
+            const spinnerElement = buttonElement.querySelector('.spinner-border');
+            e.preventDefault();
+            e.stopPropagation();
+            spinnerElement.classList.remove('d-none');
+            buttonElement.setAttribute('disabled', true);
+
+            try {
+                if ($("#recipientForm").valid()) {
+                    var formData = Object.fromEntries(new FormData(document.getElementById('recipientForm')));
+                    formData.Id = +formData.stringId;
+                    formData.NationalCode = formData.NationalCode.toEnglishDigit();
+                    formData.GenderType = +formData.GenderType;
+                    formData.BirthDateStr = formData.BirthDateStr;
+
+                    if (formData.Name) {
+                        formData.Name = formData.Name;
+                    } else if (formData.Name && formData.Name === "") {
+                        throw new Error('لطفا نام خود وارد کنید.')
+                    }
+                    if (formData.LastName) {
+                        formData.LastName = formData.LastName;
+                    } else if (formData.LastName && formData.LastName === "") {
+                        throw new Error('لطفا نام خانوادگی خود وارد کنید.')
+                    }
+                    if (formData.CityId && formData.CityId !== "0") {
+                        formData.CityId = +formData.CityId;
+                    } else if (formData.CityId && formData.CityId === "") {
+                        throw new Error('لطفا شهر محل سکونت خود وارد کنید.')
+                    }
+
+                    if (formData.RelationshipWithBuyerType && formData.RelationshipWithBuyerType !== "0") {
+                        formData.RelationshipWithBuyerType = +formData.RelationshipWithBuyerType;
+                    } else if (formData.RelationshipWithBuyerType === "" || formData.RelationshipWithBuyerType === undefined) {
+                        formData.RelationshipWithBuyerType = 0;
+                    }
+
+                    if (formData.FullAddress) {
+                        formData.FullAddress = formData.FullAddress.toEnglishDigit();
+                    } else if (formData.FullAddress && formData.FullAddress === "") {
+                        throw new Error('لطفا آدرس خود وارد کنید.')
+                    }
+                    if (formData.AddressId) {
+                        formData.AddressId = +formData.AddressId;
+                    } else {
+                        formData.AddressId = null;
+                    }
+                    formData.MembershipType = +formData.MembershipType;
+                    formData.HasCardNumber = (formData.HasCardNumber === "true");
+
+                    if (!formData.CardNumber) {
+                        formData.CardNumber = '';
+                    } else {
+                        formData.CardNumber = formData.CardNumber.toEnglishDigit();
+                    }
+                    if (!formData.BirthDateStr) {
+                        throw new Error('لطفا تاریخ تولد خود را به درستی وارد کنید.')
+                    }
+                    fetch('/api/recipient/AddOrUpdateRecipient',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            body: JSON.stringify(formData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.errors && data.isSuccess === true) {
+                                window.location = "/order/checkout?recipientId=" + data.entityId;
+                            } else {
+                                if (data.message) {
+                                    spinnerElement.classList.add('d-none');
+                                    buttonElement.removeAttribute('disabled');
+                                    bootbox.alert(data.message);
+                                } else {
+                                    spinnerElement.classList.add('d-none');
+                                    buttonElement.removeAttribute('disabled');
+                                    bootbox.alert('لطفا  ورودی ها را کنترل کنید.');
+                                }
+                            }
+
+                        })
+                        .catch(data => {
+                            spinnerElement.classList.add('d-none');
+                            buttonElement.removeAttribute('disabled');
+                            bootbox.alert('خطا در ذخیره سازی.');
+                        });
+                } else {
+                    spinnerElement.classList.add('d-none');
+                    buttonElement.removeAttribute('disabled');
+                }
+            } catch (error) {
+                spinnerElement.classList.add('d-none');
+                buttonElement.removeAttribute('disabled');
+                bootbox.alert(error.message);
+            }
+        };
+
+        function selectedCityChanged(e) {
+            var cityId = +e.value;
+            if (cityId === 0) {
+                $('#CityId-error').html('لطفا شهر را انتخاب کنید');
+            } else {
+                $('#CityId-error').html('');
+            }
+
+        };
+
+        function changeCardNumberLabel(e) {
+            if (+e.value === @sata || +e.value === @vezarat) {
+                document.getElementById('lblCardNumber').innerHTML = "شماره حکمت";
+            } else {
+                document.getElementById('lblCardNumber').innerHTML = "شماره کارت";
+            }
+        }
+
+        function onCloseModal() {
+            hideErrorMessage($('#validationErrorMessage'));
+        }
+
+        function changeRequireCardNumber(e) {
+            var carNumberInputArea = document.getElementById("cardNumberInputAria");
+            carNumberInputArea.innerHTML = '';
+            if (e.checked) {
+                carNumberInputArea.innerHTML = `@await Html.PartialAsync("_MembershipType", new RecipientPresentationEditModel { MembershipTypes = membershipTypes, MembershipType = (int)MembershipTypesEnum.Others })`;
+            }
+            $("#recipientForm").each(function () { $.data($(this)[0], 'validator', false); });
+            $.validator.unobtrusive.parse("#recipientForm");
+            toggleDisplayNoneFromRelationshipWithBuyerElement();
+        }
+
+        function toggleDisplayNoneFromRelationshipWithBuyerElement() {
+            var relationshipWithBuyerElement = document.getElementById('relationshipWithBuyer');
+            var isDisplayNone = relationshipWithBuyerElement.classList.contains('d-none');
+            if (isDisplayNone) {
+                relationshipWithBuyerElement.classList.remove('d-none');
+            } else {
+                relationshipWithBuyerElement.classList.add('d-none');
+            }
+        }
+
+
+    </script>
+
+
+}
+
+
+

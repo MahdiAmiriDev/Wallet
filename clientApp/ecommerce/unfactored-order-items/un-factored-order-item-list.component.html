@@ -1,0 +1,24 @@
+<app-representation-filter
+  (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+  (selectedCompanyChanged)="onSelectedCompanyChanged($event)"
+>
+</app-representation-filter>
+
+<app-base-list-form #listForm
+                    [title]="'آیتم های فاکتور نشده'"
+                    [allowGrouping]="true"
+                    [columnGrouping]="'quantity'"
+                    [summaryTypeGrouping]="'sum'"
+                    [wordWrapEnabled]="true"
+                    [customListUrl]="baseListUrl"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [loadAfterSetFilter]="true"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [showExportToExcelButton]="true"
+                    [fixHeight]="fixHeight"
+                    [gridHeight]="gridHeight"
+>
+</app-base-list-form>

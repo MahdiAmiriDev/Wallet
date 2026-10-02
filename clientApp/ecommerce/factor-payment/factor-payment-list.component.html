@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [title]="'لیست پرداختی های فاکتور'"
+                    [showAddButton]="showAddButton"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

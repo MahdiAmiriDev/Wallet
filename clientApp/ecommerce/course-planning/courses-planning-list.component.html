@@ -1,0 +1,11 @@
+<app-base-list-form
+    #listForm
+    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+    [allowGrouping]="false"
+    [columns]="columns"
+    [entityName]="entityName"
+    [detailComponent]="detailComponent"
+    [showExportToExcelButton]="true"
+    [showAddButton]="showAddButton"
+    [wordWrapEnabled]="true">
+</app-base-list-form>

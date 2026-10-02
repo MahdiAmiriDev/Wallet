@@ -1,0 +1,20 @@
+<app-base-list-form
+  #listForm
+  [columns]="columns"
+  [entityName]="entityName"
+  [showExportToExcelButton]="true"
+  [wordWrapEnabled]="true"
+  [showAddButton]="false"
+  [showEditForm]="false"
+  [allowEditInForm]="false"
+  [allowDeleteInForm]="false"
+  [allowAdd]="false"
+  [showFilterButton]="true"
+  [showCustomCheckBox]="false"
+  [customButtons]="customButtons"
+  (customButtonClicked)="customButtonClicked($event)"
+  (selectedRowChanged)="onRowClicked($event)"
+  showCheckBoxesMode="onClick"
+  selectedMode="multiple"
+  selectAllMode="page">
+</app-base-list-form>

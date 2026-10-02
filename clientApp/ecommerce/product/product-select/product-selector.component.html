@@ -1,0 +1,46 @@
+<dx-drop-down-box
+    #ddlPerson
+    [(value)]="selectedItems"
+    valueExpr="id"
+    displayExpr="title"
+    placeholder="انتخاب کالا..."
+    [dataSource]="productDataSource"
+    [deferRendering]="false"
+    [showClearButton]="true">
+    <div *dxTemplate="let data of 'dropDownButton'">
+        <dx-button icon="plus" (onClick)="showSelectProduct=true"></dx-button>
+    </div>
+    <div *dxTemplate="let data of 'content'">
+        <app-base-list-form #listForm
+                            [isForSelectReadOnly]="true"
+                            selectedMode="multiple"
+                            selectAllMode="page"
+                            showCheckBoxesMode="onClick"
+                            [showAddButton]="false"
+                            [selectedRowKeys]="selectedItems"
+                            [showListHeader]="false"
+                            [allowFilter]="true"
+                            [allowEditInForm]="false"
+                            [allowDeleteInForm]="false"
+                            (selectedRowChanged)="SelectedProductsChanged($event)"
+                            [columns]="columns"
+                            [entityName]="entityName">
+        </app-base-list-form>
+    </div>
+</dx-drop-down-box>
+<dx-popup
+        class="popup"
+        [fullScreen]="true"
+        [showTitle]="true"
+        rtlEnabled="true"
+        title=""
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        [(visible)]="showSelectProduct"
+        [deferRendering]="false">
+    <div *dxTemplate="let data = model of 'content'">
+        <app-product-select (closeFormClick)="ddlPerson.instance.close(); onCloseProductSelectForm()" [selectedItems]="selectedItems"
+                            (onSelectionChanged)="selectionChanged($event);">
+        </app-product-select>
+    </div>
+</dx-popup>

@@ -1,0 +1,108 @@
+<app-busy-indicator>
+<div dir="rtl">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-7">
+        <app-representation-filter
+          (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+          (selectedCompanyChanged)="onSelectedCompanyChanged($event)"
+        >
+        </app-representation-filter>
+      </div>
+      <div class="col-5">
+        <div style="float: right; width: 23%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>وضعیت سفارش:</label>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <dx-select-box dataField="orderStatusType" text="وضعیت سفارش"
+                           [items]="orderStatusTypes"
+                           displayExpr="title"
+                           rtlEnabled="true"
+                           valueExpr="id"
+                           [(value)]="orderStatusType"
+                           [showClearButton]="true"
+                           (onSelectionChanged)="selectedOrderStatusChanged($event)">
+              <!--        [editorOptions]="{ items: orderStatusTypes,displayExpr:'title',valueExpr:'id' }"-->
+            </dx-select-box>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-4" style="margin-left: 55px;">
+        <div style="float: right; width: 25%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تاریخ ثبت از:</label>
+        </div>
+        <div style="float: right; width: 75%;">
+          <ng-persian-datepicker
+            (dateOnSelect)="orderCreationDateFilterFromDate=convertDateToInt($event);bindCustomDataSources();">
+            <input type="text"
+                   [formControl]="orderCreationDateFilterFromDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ شروع ثبت سفارش"
+                   [ngModel]="orderCreationDateFilterFromDate | intToStringDate"
+                   (ngModelChange)="bindCustomDataSources();"/>
+          </ng-persian-datepicker>
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div style="float: right; width: 20%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تا تاریخ:</label>
+        </div>
+        <div style="float: right; width: 80%;">
+          <ng-persian-datepicker
+            (dateOnSelect)="orderCreationDateFilterToDate=convertDateToInt($event);bindCustomDataSources();">
+            <input type="text"
+                   [formControl]="orderCreationDateFilterToDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ پایان ثبت سفارش"
+                   [ngModel]="orderCreationDateFilterToDate | intToStringDate"
+                   (ngModelChange)="bindCustomDataSources();"/>
+          </ng-persian-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-base-list-form #listForm
+                    [showRowLines]="true"
+                    [wordWrapEnabled]="true"
+                    (listRowPrepared)="onListRowPrepared($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [gridHeight]="gridHeight"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [allowInsertInForm]="false"
+                    [showExportToExcelButton]="true"
+                    [customRowButtons]="customRowButtons"
+                    [isForSelectReadOnly]="isForSelectReadOnly"
+                    [columnHidingEnabled]="true"
+                    [showRefreshButton]="true"
+                    [allowFilter]="true"
+                    [customButtons]="customButtons">
+</app-base-list-form>
+
+<dx-popup
+  [title]="popUpTitle"
+  (onHidden)="showPopUp=false"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <ng-template appDetailComponentHost></ng-template>
+  </div>
+</dx-popup>
+</app-busy-indicator>
+
+

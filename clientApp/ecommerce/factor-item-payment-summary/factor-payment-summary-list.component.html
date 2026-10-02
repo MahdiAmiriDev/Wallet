@@ -1,0 +1,14 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [title]="'درصد پرداخت های آیتم فاکتور'"
+                    [showAddButton]="false"
+                    [wordWrapEnabled]="true"
+                    [showExportToExcelButton]="true">
+</app-base-list-form>
+

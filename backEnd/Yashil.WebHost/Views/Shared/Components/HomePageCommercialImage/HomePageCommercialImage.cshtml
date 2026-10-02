@@ -1,0 +1,44 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.HomePageAdvertisingImageViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <!-- tree section (compare - buy - Catch ) -->
+    <div class="container">
+        <div class="three_introduction--container mx-3 mx-sm-0">
+            @foreach (var item in Model)
+            {
+                if (item.DeskTopModeAppDocumentId != 0)
+                {
+                    <div>
+                        <!-- Skeleton Loading Placeholder for Commercial Image Item -->
+                        <div class="skeleton--container d-none d-md-block">
+                            <div class="skeleton-loading--container overflow-hidden rounded-3">
+                                <div class="skeleton skeleton-line commercial-image--skeleton"></div>
+                            </div>
+                            <div class="skeleton-content--container d-none">
+                                <a href="@(string.IsNullOrEmpty(item.Url) ? "#" : item.Url)">
+                                    <img class="rounded-3 w-100" alt="@item.Title"
+                                         data-src="/api/publicApi/GetHomePageAdvertisingImage?appDocumentId=@item.DeskTopModeAppDocumentId" />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Skeleton Loading Placeholder for Commercial Image Item /-->
+
+                        <!-- Commercial Image Item -->
+                        <div class="skeleton--container d-block d-md-none">
+                            <div class="skeleton-loading--container overflow-hidden rounded-3">
+                                <div class="skeleton skeleton-line commercial-image--skeleton"></div>
+                            </div>
+                            <div class="skeleton-content--container d-none">
+                                <a href="@(string.IsNullOrEmpty(item.Url) ? "#" : item.Url)">
+                                    <img class="rounded-3 w-100 d-block d-md-none" alt="@item.Title" data-src="/api/publicApi/GetHomePageAdvertisingImage?appDocumentId=@item.MobileModeAppDocumentId" />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Commercial Image Item /-->
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

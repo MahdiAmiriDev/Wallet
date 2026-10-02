@@ -1,0 +1,84 @@
+<div style="width: 100%;" [style.height.px]="contentHeight">
+    <as-split direction="vertical" dir="ltr">
+        <as-split-area size="25" #t2 dir="rtl">
+            <form (submit)="onFilterForm($event)">
+                <dx-form id="form" [colCount]="3" #detailForm [formData]="searchEntity" [rtlEnabled]="true">
+
+                    <dxi-item dataField="companyId" editorType="dxLookup" [label]="{text: 'مرکز'}"
+                              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: companyDataSource,displayExpr:'title',valueExpr:'id' }">
+                    </dxi-item>
+                    <dxi-item [template]="'categoryTree'" dataField="categories" [label]="{text: 'زیرگروه'}">
+                    </dxi-item>
+                    <dxi-item [label]="{text: 'کد'}" dataField="code">
+                    </dxi-item>
+                    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+                    </dxi-item>
+                    <dxi-item dataField="taxCategoryId" editorType="dxLookup" [label]="{text: 'دسته مالیات'}"
+                              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">
+                    </dxi-item>
+                    <dxi-item [label]="{text: 'ارسال رایگان'}" dataField="forceFreeShipping" editorType='dxCheckBox'>
+                    </dxi-item>
+                    <dxi-item [label]="{text: 'فروش مستقل'}" dataField="visibleIndividually"
+                              editorType='dxCheckBox'>
+                    </dxi-item>
+                    <dxi-item [label]="{text: 'معاف از مالیات'}" dataField="isTaxExempt" editorType='dxCheckBox'>
+                    </dxi-item>
+                    <dxi-item itemType="button"
+                              [buttonOptions]="{ text: 'فیلتر',type: 'success', useSubmitBehavior: true}">
+                    </dxi-item>
+                    <div *dxTemplate="let data of 'specificationCategoryTemplate'">
+                        <app-product-type-select
+                                (onSelectionChanged)="selectedSpecificationCategoryChanged($event);"></app-product-type-select>
+                    </div>
+                    <div *dxTemplate="let data of 'categoryTree'">
+                        <app-category-select [selectedCategoryId]="searchEntity.categories"
+                                             (selectedRowChanged)="selectedCategoryChanged($event);"
+                                             [companyId]="searchEntity.companyId"></app-category-select>
+                    </div>
+                </dx-form>
+            </form>
+        </as-split-area>
+        <as-split-area size="65" #t2 dir="rtl">
+            <app-base-list-form #listForm
+                                [isForSelectReadOnly]="true"
+                                selectedMode="multiple"
+                                selectAllMode="page"
+                                showCheckBoxesMode="onClick"
+                                [selectedRowKeys]="selectedItems"
+                                [showAddButton]="false"
+                                [showListHeader]="false"
+                                [allowFilter]="true"
+                                [allowEditInForm]="false"
+                                [allowDeleteInForm]="false"
+                                [gridHeight]="t2.offsetHeight-10"
+                                [loadAfterSetFilter]="loadAfterSetFilter"
+                                (selectedRowChanged)="SelectedProductsChanged($event)"
+                                [columns]="columns"
+                                [entityName]="entityName"
+                                [detailComponent]="detailComponent">
+            </app-base-list-form>
+        </as-split-area>
+        <as-split-area size="10" dir="rtl">
+            <div class="dx-fieldset" style="padding: 0; margin: 0; direction: rtl; float: right">
+                <dx-button
+                        id="btnSave"
+                        text="انتخاب"
+                        icon="select"
+                        type="success"
+                        class="ml-2 mr-2 "
+                        (onClick)="selectBtnClicked($event)">
+                </dx-button>
+                <dx-button
+                        class="ml-2 mr-2"
+                        id="btnClose"
+                        text="بستن"
+                        type="success"
+                        icon="close"
+                        (onClick)="onCloseForm($event)">
+                </dx-button>
+            </div>
+
+        </as-split-area>
+    </as-split>
+</div>
+

@@ -1,0 +1,56 @@
+<!-- پیام خطا -->
+<div
+  *ngIf="!showFinalRegistrationButton && message"
+  class="alert alert-danger">
+
+  <span
+    style="color: #7f0200"
+    [textContent]="message">
+  </span>
+
+</div>
+
+
+<!-- پیام موفقیت -->
+<div
+  *ngIf="showFinalRegistrationButton"
+  class="alert alert-info">
+
+  <span style="color: green">
+    کاربر گرامی فایل اکسل شما بدون خطا بارگذاری شد،
+    برای بروزرسانی در سایت دکمه ثبت نهایی را کلیک کنید
+  </span>
+
+</div>
+
+
+<!-- دکمه ثبت نهایی -->
+<div
+  *ngIf="showFinalRegistrationButton"
+  style="margin-bottom: 20px;">
+
+  <app-busy-indicator>
+
+    <dx-button
+      text="ثبت نهایی"
+      type="success"
+      icon="file"
+      (onClick)="finalRegistrationButtonClicked()">
+    </dx-button>
+
+  </app-busy-indicator>
+
+</div>
+
+
+<!-- لیست -->
+<div>
+  <app-base-list-form
+    #listForm
+    [loadAfterSetFilter]="loadAfterSetFilter"
+    (selectedRowChanged)="selectedRowChanged.emit($event)"
+    [columns]="columns"
+    >
+  </app-base-list-form>
+</div>
+

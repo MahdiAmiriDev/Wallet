@@ -1,0 +1,56 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="customButtonClicked($event)"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری فایل اطلاعات کارت اعتباری"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetCardInfoModel()">
+  <div>
+    <app-busy-indicator>
+      <section id="cardChargeSection">
+        <form (submit)="onSubmit()">
+          <dx-form id="form" [colCount]="2" [formData]="cardInfoModel" enctype="multipart/form-data">
+            <dxi-item dataField="OrganizationId" editorType="dxLookup" [label]="{text: 'سازمان'}"
+                      [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: organizationDataSource,displayExpr:'title',valueExpr:'id' }">
+              <dxi-validation-rule type="required" message="سازمان را انتخاب نمایید"></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item dataField="CardTypeId" editorType="dxSelectBox" [label]="{text: 'نوع کارت'}"
+                      [editorOptions]="{ items: cardTypes,displayExpr:'title',valueExpr:'id' }">
+              <dxi-validation-rule type="required" message="نوع کارت را انتخاب نمایید"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [template]="'fileTemplate'"></dxi-item>
+            <div *dxTemplate="let data of 'fileTemplate'">
+              <dx-file-uploader
+                name="cardInfoFile"
+                rtlEnabled="true"
+                selectButtonText="بارگذاری فایل"
+                labelText=""
+                [allowedFileExtensions]="['.xls','.xlsx']"
+                (valueChange)="addFile($event)"
+                uploadUrl="api/cardInfo/uploadCardInfo"
+                uploadMode="instantly">
+              </dx-file-uploader>
+            </div>
+            <dxi-item editorType="dxButton"
+                      [editorOptions]="{text: 'ثبت', icon:'save', useSubmitBehavior: true, width: 120}">
+            </dxi-item>
+          </dx-form>
+        </form>
+      </section>
+    </app-busy-indicator>
+  </div>
+</dx-popup>

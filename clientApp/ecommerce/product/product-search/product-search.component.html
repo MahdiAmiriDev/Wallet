@@ -1,0 +1,27 @@
+<app-busy-indicator #busyIndicatorComponent>
+  <app-product-info [showCustomButton]="showCustomButton" [productId]="productId"
+                    (customButtonClick)="showSelectProductList()"
+                    (afterLoadData)="setProductData($event)"></app-product-info>
+</app-busy-indicator>
+
+
+<dx-popup *ngIf="showCustomButton"
+          [rtlEnabled]="true"
+          [(visible)]="showPopUp"
+          (onHidden)="closePopUpBtn()"
+          [closeOnOutsideClick]="true"
+          [deferRendering]="false"
+          [dragEnabled]="false"
+          [fullScreen]="true"
+          class="popup">
+  <app-base-list-form title="دوره"
+                      loadAfterSetFilter="true"
+                      [showAddButton]="false"
+                      [allowDeleteInForm]="false"
+                      [allowEditInForm]="false"
+                      [customRowButtons]="customRowButtons"
+                      [columns]="columns"
+                      [entityName]="entityName"
+                      #listForm>
+  </app-base-list-form>
+</dx-popup>

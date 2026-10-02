@@ -1,0 +1,27 @@
+<dx-drop-down-box
+    #ddlCity
+    [(value)]="selectedItemId"
+    valueExpr="id"
+    displayExpr="title"
+    placeholder="{{'base.City.CitySelection'|translate}}"
+    [showClearButton]="true"
+    [dataSource]="cityDataSource"
+    (onValueChanged)="syncTreeViewSelection($event)">
+    <div *dxTemplate="let data of 'content'">
+        <dx-tree-view
+                [dataSource]="cityDataSource"
+                dataStructure="plain"
+                keyExpr="id"
+                parentIdExpr="parentId"
+                selectionMode="single"
+                displayExpr="title"
+                rtlEnabled="true"
+                [selectByClick]="true"
+                [searchEnabled]="true"
+                (onContentReady)="syncTreeViewSelection($event)"
+                (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCity.instance.close();"
+
+        >
+        </dx-tree-view>
+    </div>
+</dx-drop-down-box>

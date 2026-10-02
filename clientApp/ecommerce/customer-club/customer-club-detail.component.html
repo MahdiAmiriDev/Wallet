@@ -1,0 +1,34 @@
+<app-busy-indicator>
+    <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+        <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+            <dxi-item [label]="{text: 'عنوان'}" dataField="title" [colSpan]="2">
+                <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="registrationModeType" editorType="dxSelectBox" [label]="{text: 'نوع مدل ثبت نام'}"
+                      [editorOptions]="{ items: registrationModeTypes,displayExpr:'title',valueExpr:'id'}">
+                <dxi-validation-rule type="required" message="نوع تخفیف اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'پرداخت با کیف پول'}" dataField="payWithWallet" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'مشمول یارانه'}" dataField="supportSubsidy" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'مبتنی بر IPG'}" dataField="ipgBased" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'آدرس IPG'}" dataField="ipgPageUrl">
+            </dxi-item>
+            <dxi-item [label]="{text: 'مبتنی بر سرویس'}" dataField="serviceBased" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'آدرس سرویس'}" dataField="serviceUrl">
+            </dxi-item>
+            <dxi-item [label]="{text: 'نام کاربری سرویس'}" dataField="userName">
+            </dxi-item>
+            <dxi-item [label]="{text: 'کلمه عبور سرویس'}" dataField="password"
+                      [editorOptions]="{ mode: 'password' , inputAttr: { autocomplete: 'new-password'  }}">
+            </dxi-item>
+            <dxi-item [label]="{text: 'مبتنی بر پایگاه داده محلی'}" dataField="isLocalClub" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+            </dxi-item>
+        </dx-form>
+    </app-base-edit-form>
+</app-busy-indicator>

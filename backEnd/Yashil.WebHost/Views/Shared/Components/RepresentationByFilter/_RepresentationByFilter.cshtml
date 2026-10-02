@@ -1,0 +1,47 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.RepresentationSimpleViewModel>
+
+@if (Model != null && Model.Count > 1)
+{
+    <div class="sidebar-section border mb-2">
+        <div class="sidebar-section__header" style="border-top-right-radius: 10px; border-top-left-radius: 10px;">
+            <label for="citys" class="sidebar-section__title">نمایندگی</label>
+        </div>
+        <hr class="m-0" />
+        <!--jQuery slideToggle()-->
+        @if (Model.Count > 15)
+        {
+            <div class="sidebar-section__content">
+                <select id="representation-list" name="representation" style="width:100%;">
+                    <option></option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Id">@item.Title</option>
+                    }
+                </select>
+            </div>
+        }
+        else
+        {
+            @foreach (var representation in Model)
+            {
+                <div onclick="insertParam('representationId',@representation.Id)" class="form-check" style="cursor:pointer;">
+                    <label class="form-check-labell"
+                           style="margin-top: 10px;">@representation.Title</label>
+                </div>
+            }
+
+        }
+    </div>
+}
+
+<script type="text/javascript">
+    // Initialize Representation List Dropdown
+    createSelect2Dropdown('#representation-list', 'لطفا مرکز را انتخاب کنید');
+    $('#representation-list').on('select2:select', retrieveRepresentationListValue)
+
+    function retrieveRepresentationListValue(e) {
+        const data = e.params.data;
+        const representation = data.id;
+        insertParam('representationId', representation);
+    }
+</script>

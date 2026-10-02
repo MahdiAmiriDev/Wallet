@@ -1,0 +1,91 @@
+syntax = "proto3";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Yashil.Core.Protos";
+
+package hekmatIPG;
+
+// The greeting service definition.
+service HekmatIPG {
+  // Sends a greeting
+  rpc PaymentRequest (PaymentRequestModel) returns (PaymentRequestResultModel);
+  rpc GetPaymentStatus (PaymentStatusModel) returns (PaymentStatusResultModel);
+
+  rpc HybridPaymentRequest (PaymentRequestModel) returns (PaymentRequestResultModel);
+  rpc GetHybridPaymentRequestStatus (PaymentStatusModel) returns (HybridPaymentRequestStatusResultModel);
+
+  rpc CancelHekmatPaymentRequest (CanelHekmatPaymentRequestModel) returns (CanelHekmatPaymentRequestResultModel);
+}
+
+message  PaymentRequestModel
+{
+  int32 MerchantId = 1;
+  int32 TerminalId = 2;
+  string ReservationNumber = 3;
+  string LocalDateTime = 4;
+  string ReturnUrl = 5;
+  int64 Amount = 6;
+  int32 InstallmentCount = 7;
+  string  SignData = 8;
+  string AdditionalData = 9;
+  string MultiplexingData = 10;
+  string ApplicationName = 11;
+  string CardNumber = 12;
+  optional google.protobuf.Int32Value CashPaymentPercentage = 13;
+  bool IsTaxExempt = 14;
+  optional google.protobuf.Int32Value ShippingAmount= 15;
+  bool UseFormula = 16;
+}
+// The response message containing the greetings.
+message PaymentRequestResultModel {
+  optional string Message = 1;
+  optional int32 StatusCode = 2;
+  optional string Token = 3;
+  optional bool Succeeded = 4;
+}
+message PaymentStatusModel{
+  int32 MerchantId = 1;
+  int32 TerminalId = 2;
+  string ReservationNumber = 3;
+  string  SignData = 4;
+  bool useFormula = 5;
+}
+message PaymentStatusResultModel{
+  optional string ReservationNumber = 1;
+  optional string RefrenceNumber = 2;
+  optional int32  ErrorCode = 3;
+  optional int32  StatusCode = 4;
+  optional string Message = 5;
+  optional string PaidDate = 6;
+}
+
+
+message HybridPaymentRequestStatusResultModel{
+  optional string ReservationNumber = 1;
+  optional string ReferenceNumber = 2;
+  optional int32  ErrorCode = 3;
+  optional int32  StatusCode = 4;
+  optional string Message = 5;
+  optional string PaidDate = 6;
+  optional google.protobuf.Int32Value CahPaymentPercentage = 7;
+  optional google.protobuf.Int32Value InstallmentCount = 8;
+  optional google.protobuf.Int32Value HybridPaymentRequestId = 9;
+  optional google.protobuf.Int32Value HekmatPaymentGatewayTransactionId = 10;
+  
+  repeated PaymentStatusResultModel HekmatPayments = 11;
+  repeated PaymentStatusResultModel OnlinePayments = 12;
+}
+
+message CanelHekmatPaymentRequestModel{
+	string SignData = 1;
+}
+
+message CanelHekmatPaymentRequestResultModel{
+	bool IsSuccess = 1;
+	string Message = 2;
+}
+
+
+

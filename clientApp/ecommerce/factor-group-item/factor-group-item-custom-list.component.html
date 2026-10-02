@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-12">
+        <div [style.height.px]="contentHeight">
+            <as-split direction="horizontal" dir="ltr">
+                <as-split direction="horizontal">
+                    <as-split-area size="70" #t1 dir="rtl">
+                        <app-base-list-form #factorListForm
+                                            title="لیست فاکتور های گروه کانورت"
+                                            [loadAfterSetFilter]="loadAfterSetFilter"
+                                            [columns]="columns"
+                                            [customRowButtons]="customRowButtons"
+                                            [entityName]="entityName"
+                                            [allowDeleteInForm]="false"
+                                            [allowEditInForm]="false"
+                                            [wordWrapEnabled]="true"
+                                            [showAddButton]="false">
+                        </app-base-list-form>
+                    </as-split-area>
+                    <as-split-area size="30" #t2 dir="rtl">
+                        <app-factor-group-list
+                                [selectable]="true"
+                                [selectByButton]="false"
+                                [gridHeight]="gridHeight"
+                                [fixHeight]="fixHeight"
+                                (listRefreshed)="this.factorListForm.refreshList();"
+                                (confirmFactorStart)="this.factorListForm.setBusy(true)"
+                                (confirmFactorEnd)="this.factorListForm.setBusy(false)"
+                                (selectedRowChanged)="selectedFactorGroupChanged($event)">
+                        </app-factor-group-list>
+                    </as-split-area>
+                </as-split>
+            </as-split>
+        </div>
+    </div>
+</div>
+<dx-popup
+        [title]="popUpTitle"
+        (onHidden)="showPopUp=false"
+        [(visible)]="showPopUp"
+        [closeOnOutsideClick]="true"
+        [deferRendering]="false"
+        [dragEnabled]="false"
+        [fullScreen]="true"
+        [rtlEnabled]="true"
+        class="popup">
+    <app-comparison-hekmat-transaction-list *ngIf="showPopUp"
+                                            [gridHeight]="comparisonHekmatTransactionListHeight"
+                                            [factorId]="factorId">
+    </app-comparison-hekmat-transaction-list>
+</dx-popup>
+
+

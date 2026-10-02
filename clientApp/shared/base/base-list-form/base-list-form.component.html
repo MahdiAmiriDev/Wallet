@@ -1,0 +1,289 @@
+<app-busy-indicator>
+    <div style="display: flex; align-items: center; background: #8689c8;" class="p-1" *ngIf="showListHeader">
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <dx-button hint="جدید" id="plusIcon" class="mediumIcon" icon="plus" (onClick)="addEntity()"
+                       *ngIf="!isForSelectReadOnly && allowInsertInForm && showAddButton && resourceAllowAdd">
+            </dx-button>
+
+            <dx-button hint="فیلتر" id="filterIcon" *ngIf="showFilterButton && showFilterButton===true" class="mediumIcon"
+                       icon="filter" (onClick)="toggleFilter()">
+            </dx-button>
+
+            <dx-button hint="پاک کردن فیلتر" id="clearFilterIcon" *ngIf="showFilterButton && showClearFilterButton"
+                       class="mediumIcon" icon="../../../../assets/img/svg/filter-remove.svg" (click)="clearFilter()">
+            </dx-button>
+
+            <dx-button hint="خروجی اکسل" id="exportIcon" class="mediumIcon" icon="xlsfile"
+                       (click)="exportGridToExcel($event)" *ngIf="!isForTree && showExportToExcelButton">
+            </dx-button>
+
+            <dx-button hint="بازیابی" id="refreshIcon" class="mediumIcon" icon="refresh"
+                       (click)="refreshData()" *ngIf="showRefreshButton">
+            </dx-button>
+
+            <dx-button id="roleResourceActionButton"
+                       *authorization="'RoleResourceAction';appAction:'postEntity';enable:showRoleResourceActionPopUp;"
+                       (click)="enableRoleResourceActionPopUp = !enableRoleResourceActionPopUp"
+                       hint="تخصیص نقش به مجوز" class="mediumIcon" icon="../../../../assets/img/svg/add-4.svg">
+            </dx-button>
+
+            <dx-button id="resourceAppActionButton"
+                       *authorization="'ResourceAppAction';appAction:'postEntity';enable:showResourceAppActionPopUp;"
+                       (click)="enableResourceAppActionPopUp = !enableResourceAppActionPopUp"
+                       hint="تخصیص مجوز" class="mediumIcon" icon="../../../../assets/img/svg/add-5.svg">
+            </dx-button>
+
+            <span style="color: white">{{ title }}</span>
+        </div>
+
+        <div style="margin-right: auto; display: flex; align-items: center;" *ngIf="showCustomCheckBox" >
+            <span style="margin-left: 8px; color: #fff; height: auto">{{customButtonCheckBoxTitle}}</span>
+            <dx-check-box (onValueChanged)="onCustomCheckBoxClicked()" [(ngModel)]="customCheckboxIsChecked">
+            </dx-check-box>
+        </div>
+
+        <dx-button *ngFor='let button of customButtons'
+                   class="mediumIcon" [icon]="button.icon"
+                   [text]="button.text"
+                   [type]="button.type"
+                   style="margin-right: 5px;font-size: 12px !important;"
+                   (onClick)="selectedCustomButtonChanged(button.key)">
+        </dx-button>
+    </div>
+    <dx-data-grid id="gridContainer"
+                  *ngIf="!isForTree"
+                  width="100%"
+                  [showRowLines]="showRowLines"
+                  [columnAutoWidth]="columnAutoWidth"
+                  [paging]="{enabled:allowPaging}"
+                  [selectedRowKeys]="selectedRowKeys"
+                  [allowColumnResizing]="allowColumnResizing"
+                  [dataSource]="gridDataSource"
+                  [showBorders]="true"
+                  [rtlEnabled]="true"
+                  [rowAlternationEnabled]="rowAlternationEnabled"
+                  [height]="gridHeight"
+                  [allowColumnReordering]="false"
+                  [columns]="columns"
+                  [columnHidingEnabled]="columnHidingEnabled"
+                  [wordWrapEnabled]="wordWrapEnabled"
+                  [remoteOperations]="lazyLoading"
+                  (onSelectionChanged)="onSelectionChanged($event)"
+                  (onSaving)="inlineBatchSaving($event)"
+                  (onRowPrepared)="onListRowPrepared($event)"
+    >
+        <dxo-editing [mode]="inlineEditMode"
+                     [allowUpdating]="!isCustomEditForm && allowEditInForm===true && resourceAllowEdit"
+                     [useIcons]="false"
+                     *ngIf="!isCustomEditForm">
+        </dxo-editing>
+        <dxo-summary>
+            <dxi-group-item
+                    [column]="columnGrouping"
+                    [summaryType]="summaryTypeGrouping"
+                    [displayFormat]="displayFormatGrouping">
+            </dxi-group-item>
+        </dxo-summary>
+        <dxo-group-panel [visible]="true" *ngIf="allowGrouping"></dxo-group-panel>
+        <dxo-grouping #expand [autoExpandAll]="true" expandMode='rowClick'></dxo-grouping>
+        <dxo-scrolling
+                *ngIf="virtualPaging"
+                mode="virtual"
+                rowRenderingMode="virtual"
+                columnRenderingMode="virtual"></dxo-scrolling>
+        <dxo-pager
+                [dir]="'rtl'"
+                [visible]="true"
+                [displayMode]="pagerDisplayMode"
+                [showPageSizeSelector]="false"
+                [showInfo]="false"
+                [showNavigationButtons]="true"
+        >
+        </dxo-pager>
+        <dxo-filter-row
+                [visible]="allowFilter"></dxo-filter-row>
+        <dxo-header-filter
+                [visible]="allowFilter"></dxo-header-filter>
+        <dxo-selection
+                [selectAllMode]="selectAllMode"
+                [showCheckBoxesMode]="showCheckBoxesMode"
+                [mode]="selectedMode">
+        </dxo-selection>
+
+        <div *dxTemplate="let data of 'cellTemplate'">
+            <dx-button hint="ویرایش" class="smallIcon" icon="edit" (onClick)="editEntity(data.data.id)"
+                       *ngIf="data.data.deleted !== true && allowEditRecord(data.data)===true && allowEditInForm
+                        && resourceAllowEdit"></dx-button>
+            <dx-button hint="حذف" style="margin-right: 3px" class="smallIcon" icon="btnTrash" icon="trash"
+                       *ngIf="allowDeleteRecord(data.data)===true && resourceAllowDelete"
+                       (onClick)="delete(data.data.id)"></dx-button>
+            <dx-button hint="آرشیو" style="margin-right: 3px" class="smallIcon" icon="folder" icon="folder"
+                       *ngIf="data.data.deleted===false && allowArchiveRecord(data.data)===true && resourceAllowArchive"
+                       (onClick)="archive(data.data.id)"></dx-button>
+            <dx-button hint="خروج از آرشیو" style="margin-right: 3px" class="smallIcon" icon="refresh" icon="refresh"
+                       *ngIf="data.data.deleted===true && resourceAllowArchive"
+                       (onClick)="restore(data.data.id)"></dx-button>
+        </div>
+
+
+        <div *dxTemplate="let data of 'selectRowButtonTemplate'">
+            <dx-button hint="انتخاب" class="smallIcon" text="انتخاب"
+                       (onClick)="selectedSelectButtonChanged(data.data)"></dx-button>
+        </div>
+        <ng-container *ngIf="customRowButtons">
+            <div *dxTemplate="let data of 'rowButtonTemplate'">
+                <dx-button *ngFor="let btn of customRowButtons.customButtons" style="margin: 3px" [class]="btn.class"
+                           [hint]="btn.hint"
+                           [text]="btn.text"
+                           [icon]="btn.icon"
+                           [width]="btn.width"
+                           [type]="btn.type"
+                           [stylingMode]="btn.stylingMode"
+                           [visible]="!btn.hasOwnProperty('visibleProp') || data.row.data[btn.visibleProp]"
+                           [disabled]="btn.hasOwnProperty('archived') && data.row.data[btn.archived] === true"
+                           (onClick)="btn.onClick(data)"></dx-button>
+            </div>
+        </ng-container>
+        <div *dxTemplate="let data of 'img'">
+            <div class="employeeInfo">
+                <img class="employeePhoto" [src]="data.displayValue"/>
+            </div>
+        </div>
+        <div *dxTemplate="let data of 'titleColumn'">
+            {{ data.data.title }}
+        </div>
+
+        <div *dxTemplate="let data of 'intDate'">
+            {{ data.displayValue | intToStringDate }}
+        </div>
+        <div *dxTemplate="let data of 'jalaliDate'">
+            {{ data.displayValue | jalali }}
+        </div>
+        <div *dxTemplate="let data of 'jalaliDateWithTime'">
+            {{ data.displayValue | jalaliDateWithTime }}
+        </div>
+        <div *dxTemplate="let data of 'stringTime'">
+            {{ data.displayValue | intToStringTime }}
+        </div>
+        <div *dxTemplate="let data of 'number'" style="direction: ltr !important;">
+            {{ data.displayValue | number }}
+        </div>
+        <div *dxTemplate="let data of 'numberInt'" style="direction: ltr !important;">
+            {{ data.displayValue | number: '1.0-0' }}
+        </div>
+        <div *dxTemplate="let data of 'numberRound'" style="direction: ltr !important;">
+            {{ data.displayValue | number: '1.0-2' }}
+        </div>
+    </dx-data-grid>
+    <dx-tree-list columnChooser="true"
+                  *ngIf="isForTree"
+                  [wordWrapEnabled]="wordWrapEnabled"
+                  [rootValue]="rootValue"
+                  id="dataTreeList"
+                  [dataSource]="gridDataSource"
+                  parentIdExpr="parentId"
+                  [showRowLines]="true"
+                  [showBorders]="true"
+                  [columnAutoWidth]="true"
+                  [rtlEnabled]="true"
+                  [rowAlternationEnabled]="true"
+                  [height]="gridHeight"
+                  [columnHidingEnabled]="columnHidingEnabled"
+                  [columns]="columns"
+                  [selectedRowKeys]="selectedRowKeys"
+                  (onSelectionChanged)="onSelectionChanged($event)"
+                  (onRowPrepared)="onListRowPrepared($event)"
+
+    >
+        <dxo-filter-row
+                [visible]="allowFilter"></dxo-filter-row>
+        <dxo-header-filter
+                [visible]="allowFilter"></dxo-header-filter>
+        <!--    <dxo-selection mode="single"></dxo-selection>-->
+        <dxo-selection
+                [recursive]="selectionRecursive"
+                [selectAllMode]="selectAllMode"
+                [showCheckBoxesMode]="showCheckBoxesMode"
+                [mode]="selectedMode">
+        </dxo-selection>
+        <dxo-remote-operations
+                [sorting]="true"
+                [paging]="true"
+                *ngIf="lazyLoading">
+        </dxo-remote-operations>
+        <dxo-paging [pageSize]="8"></dxo-paging>
+        <dxo-pager
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+        <div *dxTemplate="let data of 'cellTemplate'">
+            <dx-button hint="ویرایش" class="smallIcon" icon="edit" (onClick)="editEntity(data.data.id)"
+                       *ngIf="allowEditRecord(data.data)===true && allowEditInForm===true && resourceAllowEdit
+                 &&  (data.row.data.allowEditAndDelete=== undefined || data.row.data.allowEditAndDelete )"></dx-button>
+            <dx-button hint="حذف" style="margin-right: 3px" class="smallIcon" icon="btnTrash" icon="trash"
+                       *ngIf="allowDeleteRecord(data.data)===true && resourceAllowDelete
+                 &&  (data.row.data.allowEditAndDelete=== undefined || data.row.data.allowEditAndDelete )"
+                       (onClick)="delete(data.data.id)"></dx-button>
+        </div>
+        <div *dxTemplate="let data of 'rowButtonTemplate'">
+            <dx-button aria-expanded="true" *ngFor="let btn of customRowButtons.customButtons" style="margin: 3px"
+                       [class]="btn.class" [hint]="btn.hint"
+                       [text]="btn.text" [icon]="btn.icon" [width]="btn.width" [type]="btn.type"
+                       [stylingMode]="btn.stylingMode"
+                       [visible]="!btn.hasOwnProperty('visibleProp') || data.row.data[btn.visibleProp]"
+                       (onClick)="btn.onClick(data)"></dx-button>
+        </div>
+    </dx-tree-list>
+    <dx-popup
+            class="popup"
+            [fullScreen]="true"
+            [showTitle]="true"
+            rtlEnabled="true"
+            [title]="dialogTitle"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [(visible)]="showEditForm"
+            (onHidden)="dialogClosed()"
+            [deferRendering]="false">
+        <div *dxTemplate="let data = model of 'content'">
+            <ng-template appDetailComponentHost></ng-template>
+        </div>
+    </dx-popup>
+
+    <dx-popup
+            class="popup"
+            [fullScreen]="true"
+            [showTitle]="true"
+            rtlEnabled="true"
+            *ngIf="enableRoleResourceActionPopUp && showRoleResourceActionPopUp"
+            [title]="dialogTitle"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [(visible)]="enableRoleResourceActionPopUp"
+            (onHidden)="dialogClosed()"
+            [deferRendering]="false">
+        <app-role-resource-action-list
+                [resourceName]="resourceName"
+                [allowGrouping]="true"
+        >
+        </app-role-resource-action-list>
+    </dx-popup>
+
+    <dx-popup
+            class="popup"
+            [fullScreen]="true"
+            [showTitle]="true"
+            rtlEnabled="true"
+            *ngIf="enableResourceAppActionPopUp && showResourceAppActionPopUp"
+            [title]="dialogTitle"
+            [dragEnabled]="false"
+            [closeOnOutsideClick]="true"
+            [(visible)]="enableResourceAppActionPopUp"
+            (onHidden)="dialogClosed()"
+            [deferRendering]="false">
+        <app-resource-app-action-list
+                [resourceName]="resourceName"
+                [allowGrouping]="false">
+        </app-resource-app-action-list>
+    </dx-popup>
+
+</app-busy-indicator>

@@ -1,0 +1,12 @@
+<app-assignable-list
+  [notAssignedMethodExtraQueryParam]="notAssignedExtraQueryParam"
+  [assignedMethodExtraQueryParam]="assignedExtraQueryParam"
+  [showGroupItemComponent]="true"
+  [assignedColumns]="columns"
+  [selectedGroupItemId]="roleId"
+  [assignableListName]="'RoleResourceAction'"
+  [groupEntityName]="'Role'"
+  [assignableListLabel]="'um.ResourceAppAction.AppActionId'|translate"
+  groupEntityLabel="نقش"
+  [(assignAffected)]="updateOrInsertAffected">
+</app-assignable-list>

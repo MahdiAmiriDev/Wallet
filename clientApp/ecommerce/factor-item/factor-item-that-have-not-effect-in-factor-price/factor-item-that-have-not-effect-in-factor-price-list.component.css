@@ -1,0 +1,15 @@
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem; /* فاصله‌ی واضح‌تر بین دکمه‌ها */
+}
+
+.custom-btn {
+  transition: all 0.25s ease-in-out;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
+}

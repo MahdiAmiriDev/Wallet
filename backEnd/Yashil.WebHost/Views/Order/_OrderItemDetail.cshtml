@@ -1,0 +1,87 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderItemDetailPresentationViewModel
+@using Yashil.Infrastructure.Util
+@using Yashil.Common.Core.Classes;
+@inject ApplicationConfiguration ApplicationConfiguration
+@{
+}
+<div class="c-checkout__group">
+    <form>
+        <div class="c-checkout__body">
+            <ul class="c-checkout__items">
+                <li class="c-checkout__item">
+                    <div class="" data-price-change="0" data-min-price-badge="">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="c-cart-item__container" style="padding-bottom: 8px;">
+                                    <div class="c-cart-item__thumb hidden-sm hidden-xs">
+                                        <a class="c-cart-item__thumb-img " href="@Url.Action("Index","Product",new {pSpId= Model.ProductSalesPlanningId})" target="_blank">
+                                            <img alt="cart item thumb img" class="courseimage" src="@Url.Action("GetProductSalesPlanningImage","PublicApi",new{productSalesPlanningId=@Model.ProductSalesPlanningId, modificationDate = @Model.ModificationDate})">
+                                        </a>
+                                    </div>
+                                    <div class="c-cart-item__data">
+                                        <div class="c-cart-item__title">
+                                            @Model.Title
+                                            <a class="c-cart-item__thumb-img hidden-lg hidden-md" href="@Url.Action("Index","Product",new {pSpId= Model.ProductSalesPlanningId})" target="_blank">
+                                                <img alt="cart item thumb img" class="courseimage" src="@Url.Action("GetProductSalesPlanningImage","PublicApi",new{productSalesPlanningId=@Model.ProductSalesPlanningId, modificationDate = @Model.ModificationDate})">
+                                            </a>
+                                            @if (Model.SubsidyPrice != 0)
+                                            {
+                                                <span class="badge badge-danger displayTable">یارانه:@CurrencyUtility.FormatPrice(Model.SubsidyPrice)تومان</span>
+                                            }
+                                            <span class="badge badge-success">قیمت نهایی:@CurrencyUtility.FormatPrice(Model.Total)تومان</span>
+                                            <span class="badge badge-warning">تخفیف:@CurrencyUtility.FormatPrice(Model.DiscountAmountExclTax)تومان</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 padding hidden-xs hidden-sm">
+                                                <div class="c-cart-item__product-data " style="font-size: 12px;">
+                                                    <i class="fad fa-sitemap" aria-hidden="true"></i>
+                                                    @Model.CompanyTitle
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                                <div class="c-cart-item__product-data" style="font-size: 12px;">
+                                                    <i class="fad fa-sitemap" aria-hidden="true"></i>
+                                                    @Model.RepresentationTitle
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 padding hidden-xs hidden-sm">
+                                                <div class="c-cart-item__product-data " style="font-size: 12px;">
+                                                    <span>
+                                                        تعداد :
+                                                    </span>
+                                                    <span>
+                                                        @Model.Quantity
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                                <div class="c-cart-item__product-data " style="font-size: 12px;">
+                                                    <span>
+                                                        قیمت پایه :
+                                                    </span>
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(Model.Price)تومان
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="c-cart-item__price-row">
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </form>
+    <div class="c-checkout__group-divider"></div>
+</div>

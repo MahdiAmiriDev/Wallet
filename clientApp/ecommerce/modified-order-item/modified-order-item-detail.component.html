@@ -1,0 +1,58 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()"
+                      [showSaveButton]="false" [fixHeight]="false">
+    <app-order-item-list-for-modify
+      [fixHeight]="false"
+      [gridHeight]="orderItemGridHeight"
+      (orderItemCanceled)="onOrderItemCanceled($event)"
+      (orderItemEdited)="onOrderItemEdited($event)"></app-order-item-list-for-modify>
+
+
+  </app-base-edit-form>
+</app-busy-indicator>
+<dx-popup
+  title="توضیحات"
+  (onShowing)="entity.description=''"
+  (onHidden)="showDescriptionPopUp=false"
+  [(visible)]="showDescriptionPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <form autocomplete="off" (ngSubmit)="formSubmit($event,detailForm)" class="p-1"
+          style="padding: 0 !important; margin: 0px !important;"
+          enctype="multipart/form-data">
+      <dx-form id="form" [colCount]="1" #detailForm [formData]="entity">
+        <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+          <dxi-validation-rule type="required" message="توضیحات اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+      </dx-form>
+
+      <div style="border: 1px solid #ddd;text-align: right;background: #ddd;margin-top: 5px" class="p-1">
+        <dx-button
+          id="btnSave"
+          text="ذخیره"
+          icon="save"
+          type="success"
+          style="font-size: 11px"
+          [disabled]="disabled"
+          [useSubmitBehavior]="true">
+        </dx-button>
+        <dx-button
+          class="ml-2 mediumIcon"
+          id="btnClose"
+          text="انصراف"
+          style="margin-right: 5px;"
+          type="default"
+          icon="close"
+          (onClick)="showDescriptionPopUp=false">
+        </dx-button>
+      </div>
+    </form>
+  </div>
+</dx-popup>
+
+

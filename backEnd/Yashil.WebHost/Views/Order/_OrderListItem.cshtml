@@ -1,0 +1,158 @@
+﻿@using Yashil.Common.SharedKernel.Helpers
+@using Yashil.Core.Enums
+@using Yashil.Infrastructure.Util
+@using YashilCommerce.Core.Classes
+@using YashilCommerce.Core.Enums
+
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderListPresentationViewModel
+
+
+<div class="container-fluid ss02 p-0 p-md-2">
+    <div class="row">
+        <div class="col-12 p-3 p-md-3">
+            <!-- information-->
+            <div class=" border border-1 rounded-3 p-2 p-md-3" style="background-color:@(Model.OrderSimpleViewModel.OrderStatusType == (int)OrderStatusTypesEnum.Complete ? "#fafad2":"")">
+                <div class="border-bottom pb-4">
+                    <div class="d-flex justify-content-between align-items-baseline pb-3">
+                        <div class="d-sm-block d-md-flex gap-4">
+                            <div>
+                                <span>
+                                    @DateFunction.GetDateStringFromInt(Model.OrderSimpleViewModel.CreationDateInt)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href="@Url.Action("Detail", "Order", new {orderId = Model.OrderSimpleViewModel.Id})">
+                                <strong class="View-order-text">
+                                    @if (Model.OrderSimpleViewModel.OrderStatusType == (int)OrderStatusTypesEnum.Complete)
+                                    {
+                                        @:مشاهده و چاپ
+                                    }
+                                    else
+                                    {
+                                        @:مشاهده سفارش
+                                    }
+                                </strong>
+                                <svg width="20" height="20" stroke="var(--bold-primary-yellow-color)">
+                                    <use href="images/icons/general.svg#arrow-left" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-sm-block d-md-flex gap-4 pb- align-items-center">
+                        <div class="pb-3">
+                            <span>کدپیگیری:</span>
+                            <strong class="ps-1 text-danger">@Model.OrderSimpleViewModel.Title </strong>
+                        </div>
+
+                        <div class="d-flex align-items-center pb-3">
+                            <span>سفارش:</span>
+                            <strong class="ps-1 text-danger"> @Model.OrderSimpleViewModel.OrderStatusTypeTitle </strong>
+                            <img class="ps-1" alt="check" src="/images/check.png" style="width:20px;display:@(Model.OrderSimpleViewModel.OrderStatusType == (int)OrderStatusTypesEnum.Complete ? "":"none")" />
+
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.OrderSimpleViewModel.SubsidyStatusTypeTitle))
+                        {
+                            <div class="pb-3">
+                                <span>یارانه:</span>
+                                <strong class="ps-1 text-danger">
+                                    @Model.OrderSimpleViewModel.SubsidyStatusTypeTitle
+                                </strong>
+                            </div>
+                        }
+                    </div>
+                    @if (Model.OrderSimpleViewModel.TotalInclSubsidy > 0)
+                    {
+                        <div class="d-flex gap-2 align-items-center py-1">
+
+                            <span>قیمت کل:</span>
+                            @if (Model.OrderSimpleViewModel.SubsidyStatusType == (int)SubsidyStatusTypesEnum.Confirmed)
+                            {
+                                <p class="fw-600">
+                                    @CurrencyUtility.FormatPrice(Model.OrderSimpleViewModel.TotalInclSubsidy)
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="fw-600 mb-0">
+                                    @CurrencyUtility.FormatPrice(Model.OrderSimpleViewModel.TotalExclSubsidy)
+                                </p>
+                            }
+                            <p class="mb-0">تومان</p>
+                        </div>
+                    }
+
+
+                    <div class="d-flex gap-2 align-items-center">
+                        <span>
+                            @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientNationalCodeLabel):
+                        </span>
+                        <p class="fw-600 mb-0">
+                            @Model.OrderSimpleViewModel.NationalCode
+                        </p>
+                    </div>
+
+                    <div class="d-flex flex-row-reverse align-items-center ">
+                        @if (Model.OrderSimpleViewModel.Cancelable)
+                        {
+                            <div class="col-12 col-sm-3">
+                                <button type="button" onclick="cancelOrder(@Model.OrderSimpleViewModel.Id,'cancelOrder')"
+                                        id="cancelOrder" class="loginButton">
+                                    انصراف
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <p class="fw-600 fs-16">لیست کالا</p>
+                    @foreach (var orderItem in Model.OrderItemSimplePresentationViewModels.Where(x => x.Deleted == false))
+                    {
+
+                        <div class="d-block d-md-flex align-items-center gap-2 px-3 pb-2">
+                            <img src="/images/bookmark1.png"
+                                 alt="bookmark"
+                                 width="32px"
+                                 height="32px" />
+
+                            <span>
+                                @orderItem.ProductTitle (@orderItem.Quantity)
+                            </span>
+                            @if (!string.IsNullOrWhiteSpace(orderItem.VoucherString))
+                            {
+                                var voucherCode = CryptographyHelper.AesDecrypt(orderItem.VoucherString);
+                                var voucherUrl = string.Concat(orderItem.VoucherUrlPrefix, voucherCode);
+                                @if (orderItem.VoucherTemplateId == (int)VoucherTemplateIdEnum.HasLinkAddress)
+                                {
+                                    <div class="alert alert-danger voucherLink">
+                                        <span style="color:darkgreen;">
+                                            کاربر گرامی، برای دریافت خدمات به لینک زیر مراجعه فرمایید.
+                                        </span>
+                                        <br />
+                                        <a href="@voucherUrl">@voucherUrl</a>
+                                    </div>
+                                }
+                                @if (orderItem.VoucherTemplateId == (int)VoucherTemplateIdEnum.NotHasLinkAddress)
+                                {
+                                    @await Html.PartialAsync("_SpotPlayerPartial", voucherCode)
+                                }
+
+                            }
+                            @if (Model.OrderSimpleViewModel.OrderStatusType == (int)OrderStatusTypesEnum.Complete &&
+                                orderItem.CompanyApiSupported &&
+                                orderItem.NeedRedirectToCompanySiteForReceive)
+                            {
+                                @await Component.InvokeAsync("RedirectToExternalSiteForReceiveProduct",
+                                    new {key=orderItem.CompanyApiLocalKey,orderItemId=orderItem.Id})
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

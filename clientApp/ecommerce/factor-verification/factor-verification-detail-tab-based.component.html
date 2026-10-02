@@ -1,0 +1,28 @@
+<dx-tab-panel #tabPanel
+              rtlEnabled="true"
+              [dataSource]="tabs"
+              [selectedIndex]="0"
+              [loop]="false"
+              [animationEnabled]="false"
+              [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'factorVerification'" class="tab-content-edit-form">
+    <app-factor-verification-detail [selectedEntityId]="selectedEntityId"
+                                    (afterInsertRow)="rowInserted($event)"
+                                    entityName="factorVerification"
+                                    (afterDataLoaded)="getFactorId($event)"
+                                    [factorConfirmationType]="factorConfirmationType"
+                                    [factorVerificationConfigurationRoleId]="factorVerificationConfigurationRoleId"
+                                    [closeAfterSave]="false"
+                                    #mainBaseEdit
+                                    (closeFormClick)="closeFormClick.emit($event)">
+    </app-factor-verification-detail>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+  </div>
+  <div *dxTemplate="let company of 'factorVerifications'" class="tab-content-edit-form">
+    <app-factor-verifier-list [factorId]="factorId"></app-factor-verifier-list>
+  </div>
+  <div *dxTemplate="let company of 'factorItems'" class="tab-content-edit-form">
+    <app-factor-item-list [factorId]="factorId"></app-factor-item-list>
+  </div>
+</dx-tab-panel>

@@ -1,0 +1,38 @@
+<dx-drop-down-box
+    #ddlPerson
+    [(value)]="selectedItemId"
+    valueExpr="id"
+    displayExpr="title"
+    placeholder="انتخاب شخص..."
+    [dataSource]="yashilSchedulerDataSource"
+    [deferRendering]="false"
+    [showClearButton]="true">
+  <dx-validator>
+    <dxi-validation-rule type="required" *ngIf="isRequired" [message]="requiredMessage" ></dxi-validation-rule>
+    <dxi-validation-rule type="range" *ngIf="isRequired" [min]="1" [message]="requiredMessage"></dxi-validation-rule>
+
+  </dx-validator>
+  <div *dxTemplate="let data of 'dropDownButton'">
+    <dx-button icon="plus"></dx-button>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <dx-data-grid id="gridContainer"
+                  width="100%"
+                  height="100%"
+                  [dataSource]="yashilSchedulerDataSource"
+                  [showBorders]="true"
+                  [rtlEnabled]="true"
+                  [rowAlternationEnabled]="true"
+                  [columns]="columns"
+                  [wordWrapEnabled]="true"
+                  [selectedRowKeys]="selectedItemId"
+                  [remoteOperations]="true"
+                  (onSelectionChanged)="selectedYashilSchedulerChanged($event);ddlPerson.instance.close();">
+      <dxo-selection mode="single"></dxo-selection>
+      <div *dxTemplate="let data of 'intDate'">
+        {{data.displayValue | intToStringDate}}
+      </div>
+    </dx-data-grid>
+  </div>
+</dx-drop-down-box>
+

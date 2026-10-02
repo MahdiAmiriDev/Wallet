@@ -1,0 +1,20 @@
+<app-base-list-form #listForm
+                    [gridHeight]="gridHeight"
+                    [fixHeight]="fixHeight"
+                    [allowFilter]="allowFilter"
+                    [showListHeader]="showListHeader"
+                    [wordWrapEnabled]="true"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [allowInsertInForm]="false"
+                    [showExportToExcelButton]="false"
+                    [columnAutoWidth]="false"
+                    [isForSelectReadOnly]="true"
+                    [allowGrouping]="allowGrouping"
+                    (listRowPrepared)="onListRowPrepared($event)">
+</app-base-list-form>

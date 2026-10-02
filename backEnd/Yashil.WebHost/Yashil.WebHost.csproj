@@ -1,0 +1,479 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TaskFolder Condition=" '$(MSBuildRuntimeType)' == 'Core' ">netcoreapp2.0</TaskFolder>
+		<TaskFolder Condition=" '$(MSBuildRuntimeType)' != 'Core' ">SimplCommerce.MSBuildTasks\bin\Debug\net46</TaskFolder>
+	</PropertyGroup>
+	<UsingTask AssemblyFile="..\..\Yashilbuild\$(TaskFolder)\SimplCommerce.MSBuildTasks.dll" TaskName="CopyModuleTask" />
+	<PropertyGroup>
+		<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>aspnet-Modular.WebHost-dca604fa-ee10-4a6c-8e7d-8cc79dca8c8f</UserSecretsId>
+		<EnableDefaultContentItems>false</EnableDefaultContentItems>
+		<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+		<AspNetCoreHostingModel>InProcesyashils</AspNetCoreHostingModel>
+		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+
+		<StartupObject></StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="wwwroot\**\*;modules.json;appsettings.json;Modules\**\*;Themes\**\*;Views\**\*">
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Compile Remove="%2a%2a\**" />
+		<Compile Remove="obj\**" />
+		<Compile Remove="wwwroot\HekmatRefundedTransactionsExcel\**" />
+		<Compile Remove="wwwroot\javascript\**" />
+		<Compile Remove="wwwroot\lib\**" />
+		<Compile Remove="wwwroot\node_modules\**" />
+		<Compile Remove="wwwroot\UploadHekmatExcel\**" />
+		<Compile Remove="wwwroot\UploadHekmatTransactionFile\**" />
+		<Compile Remove="wwwroot\uploads\**" />
+		<Content Remove="wwwroot\HekmatRefundedTransactionsExcel\**" />
+		<Content Remove="wwwroot\javascript\**" />
+		<Content Remove="wwwroot\lib\**" />
+		<Content Remove="wwwroot\node_modules\**" />
+		<Content Remove="wwwroot\UploadHekmatExcel\**" />
+		<Content Remove="wwwroot\UploadHekmatTransactionFile\**" />
+		<Content Remove="wwwroot\uploads\**" />
+		<EmbeddedResource Remove="%2a%2a\**" />
+		<EmbeddedResource Remove="obj\**" />
+		<EmbeddedResource Remove="wwwroot\HekmatRefundedTransactionsExcel\**" />
+		<EmbeddedResource Remove="wwwroot\javascript\**" />
+		<EmbeddedResource Remove="wwwroot\lib\**" />
+		<EmbeddedResource Remove="wwwroot\node_modules\**" />
+		<EmbeddedResource Remove="wwwroot\UploadHekmatExcel\**" />
+		<EmbeddedResource Remove="wwwroot\UploadHekmatTransactionFile\**" />
+		<EmbeddedResource Remove="wwwroot\uploads\**" />
+		<None Remove="%2a%2a\**" />
+		<None Remove="obj\**" />
+		<None Remove="wwwroot\HekmatRefundedTransactionsExcel\**" />
+		<None Remove="wwwroot\javascript\**" />
+		<None Remove="wwwroot\lib\**" />
+		<None Remove="wwwroot\node_modules\**" />
+		<None Remove="wwwroot\UploadHekmatExcel\**" />
+		<None Remove="wwwroot\UploadHekmatTransactionFile\**" />
+		<None Remove="wwwroot\uploads\**" />
+		<TypeScriptCompile Remove="obj\**" />
+		<TypeScriptCompile Remove="wwwroot\javascript\**" />
+		<TypeScriptCompile Remove="wwwroot\lib\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Views\Home\JobOfferLanding.cshtml.cs" />
+		<Compile Remove="Views\Shared\_CategoryListMenu.cshtml.cs" />
+		<Compile Remove="wwwroot\css\main_loading_skeleton.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="Views\Shared\CategoriesCarouselProductSalePlanningViewModel.cs" />
+		<Content Remove="Views\Shared\_CategoryListMenu.cshtml" />
+		<Content Remove="wwwroot\package-lock.json" />
+		<Content Remove="wwwroot\package.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="bundleconfig.json" />
+		<None Remove="Modules\Yashil.Runtime\module.json" />
+		<None Remove="Views\About\Index.cshtml" />
+		<None Remove="Views\Category\_MobileCategoryMenuList.cshtml" />
+		<None Remove="Views\AnsarPayment\Index.cshtml" />
+		<None Remove="Views\Certificate\CertificateSearch.cshtml" />
+		<None Remove="Views\Company\Index.cshtml" />
+		<None Remove="Views\ContactUs\Index.cshtml" />
+		<None Remove="Views\CustomerClub\CustomerClubMembershipVerify.cshtml" />
+		<None Remove="Views\HekmatIpg\CompletePurchase.cshtml" />
+		<None Remove="Views\HekmatIpg\Index.cshtml" />
+		<None Remove="Views\HekmatIpg\IpgError.cshtml" />
+		<None Remove="Views\Home\CorporationJobOfferDetail.cshtml" />
+		<None Remove="Views\Home\DetailsInstituteRepresentatives.cshtml" />
+		<None Remove="Views\Home\Employment.cshtml" />
+		<None Remove="Views\Home\Home.cshtml" />
+		<None Remove="Views\Home\Index.cshtml" />
+		<None Remove="Views\Home\JobOffer.cshtml" />
+		<None Remove="Views\Home\JobOfferDetail.cshtml" />
+		<None Remove="Views\Home\JobOfferLanding.cshtml" />
+		<None Remove="Views\Home\Menu.cshtml" />
+		<None Remove="Views\Home\PlacementForeignLanguage.cshtml" />
+		<None Remove="Views\Home\Resume.cshtml" />
+		<None Remove="Views\Home\ShowResume.cshtml" />
+		<None Remove="Views\Home\TalentExam.cshtml" />
+		<None Remove="Views\HybridIpg\IpgError.cshtml" />
+		<None Remove="Views\Order\Detail.cshtml" />
+		<None Remove="Views\Order\Index.cshtml" />
+		<None Remove="Views\Order\OrderList.cshtml" />
+		<None Remove="Views\Order\_EmpityOrderListPartialView.cshtml" />
+		<None Remove="Views\Order\_OrderItemDetail.cshtml" />
+		<None Remove="Views\Order\_OrderListItem.cshtml" />
+		<None Remove="Views\Order\_OrderSuccessFulPaymentListSummary.cshtml" />
+		<None Remove="Views\Product\Index.cshtml" />
+		<None Remove="Views\Product\_City.cshtml" />
+		<None Remove="Views\Recipient\EditRecipient.cshtml" />
+		<None Remove="Views\Recipient\MemberShipType.cshtml" />
+		<None Remove="Views\Representation\_Representation.cshtml" />
+		<None Remove="Views\SaminPayment\Index.cshtml" />
+		<None Remove="Views\SaminPayment\ShowPurchaseType.cshtml" />
+		<None Remove="Views\Shared\Components\AppConfigValuePresenter\_AppConfigValuePresenter.cshtml" />
+		<None Remove="Views\Shared\Components\ApplicationPaymentMethodComponent\_ApplicationPaymentMethod.cshtml" />
+		<None Remove="Views\Shared\Components\CategoryGroupProductsSalePlanning\CategoryGroupProductsSalePlanning.cshtml" />
+		<None Remove="Views\Shared\Components\CategoryHierarchically\Default.cshtml" />
+		<None Remove="Views\Shared\Components\CitySelector\_CitySelector.cshtml" />
+		<None Remove="Views\Shared\Components\CorporationDetailHeader\Default.cshtml" />
+		<None Remove="Views\Shared\Components\CourseCarouselWithImageHorizontal\Default.cshtml" />
+		<None Remove="Views\Shared\Components\CourseDetail\_CourseDetail.cshtml" />
+		<None Remove="Views\Shared\Components\CustomerClubRegister\_CustomerClubRegister.cshtml" />
+		<None Remove="Views\Shared\Components\FilterItemsContainer\_Desktop.cshtml" />
+		<None Remove="Views\Shared\Components\FilterItemsContainer\_Mobile.cshtml" />
+		<None Remove="Views\Shared\Components\HomePageCategory\Default.cshtml" />
+		<None Remove="Views\Shared\Components\HomePageSlider\Default.cshtml" />
+		<None Remove="Views\Shared\Components\HomePageTopRightAdvertisingImage\HomePageTopRightAdvertisingImage.cshtml" />
+		<None Remove="Views\Shared\Components\JobOfferList\Default.cshtml" />
+		<None Remove="Views\Shared\Components\Logo\Default.cshtml" />
+		<None Remove="Views\Shared\Components\Menu\Default.cshtml" />
+		<None Remove="Views\Shared\Components\MostPopularCompanyCenters\Default.cshtml" />
+		<None Remove="Views\Shared\Components\NewsAndAnnouncements\Default.cshtml" />
+		<None Remove="Views\Shared\Components\OrdersSubsidyWaitingToBePaidStatistics\_OrderSubsidyStatus.cshtml" />
+		<None Remove="Views\Shared\Components\ProductDetail\_ProductDetail.cshtml" />
+		<None Remove="Views\Shared\Components\ProductsByFilter\_ProductsByFilter.cshtml" />
+		<None Remove="Views\Shared\Components\Content\Default.cshtml" />
+		<None Remove="Views\Shared\Components\ProductTag\ProductTag.cshtml" />
+		<None Remove="Views\Shared\Components\RedirectToExternalSiteForReceiveProduct\RedirectToExternalSiteForReceiveProduct.cshtml" />
+		<None Remove="Views\Shared\Components\RelatedProduct\RelatedProduct.cshtml" />
+		<None Remove="Views\Shared\Components\RepresentationByFilter\_RepresentationByFilter.cshtml" />
+		<None Remove="Views\Shared\Components\Slider\Default.cshtml" />
+		<None Remove="Views\Shared\_BaseLayout.cshtml" />
+		<None Remove="Views\Shared\_CategoryHierarchicallyPartial.cshtml" />
+		<None Remove="Views\Shared\_HekmatIpgLayout.cshtml" />
+		<None Remove="Views\Shared\_JobOffersFilterSectionPartial.cshtml" />
+		<None Remove="Views\Shared\_Layout.cshtml" />
+		<None Remove="Views\Shared\_LeadToEmploymentPartial.cshtml" />
+		<None Remove="Views\Shared\_MainCategories.cshtml" />
+		<None Remove="Views\Shared\_Menu.cshtml" />
+		<None Remove="Views\Shared\_ProductListByCategoryIdForCompanyPagePartial.cshtml" />
+		<None Remove="Views\Shared\_ProductListByFilterForCompanyPagePartial.cshtml" />
+		<None Remove="Views\Shared\_ProductListByFilterPartial.cshtml" />
+		<None Remove="Views\Shared\_ProductListPartial.cshtml" />
+		<None Remove="Views\Shared\_ProductSimpleListByCategoryIdForCompanyPagePartial.cshtml" />
+		<None Remove="Views\Shared\_SearchCityPartial.cshtml" />
+		<None Remove="Views\ShoppingCartItem\Index.cshtml" />
+		<None Remove="Views\VirtualClass\CreateMeetingVirtualClassAndJoinAsStudent.cshtml" />
+		<None Remove="Views\VirtualClass\CreateMeetingVirtualClassAndJoinAsTeacher.cshtml" />
+		<None Remove="Views\WalletPayment\Index.cshtml" />
+		<None Remove="Views\WalletPayment\Result.cshtml" />
+		<None Remove="wwwroot\css\ApplicationId_15.css" />
+		<None Remove="wwwroot\css\AutoCompleteStyles.css" />
+		<None Remove="wwwroot\css\bootstrap-rtl.css" />
+		<None Remove="wwwroot\css\bootstrap-treeview.css" />
+		<None Remove="wwwroot\css\boxicon.min.css" />
+		<None Remove="wwwroot\css\certificateSearch.css" />
+		<None Remove="wwwroot\css\chosen.css" />
+		<None Remove="wwwroot\css\chosen.min.css" />
+		<None Remove="wwwroot\css\components\categoryHierarchically.css" />
+		<None Remove="wwwroot\css\components\filterItemsContainer.css" />
+		<None Remove="wwwroot\css\components\homePageSlider.css" />
+		<None Remove="wwwroot\css\components\mostPopularCompanyCenter.css" />
+		<None Remove="wwwroot\css\components\newsAndAnnouncements.css" />
+		<None Remove="wwwroot\css\components\productCategory.css" />
+		<None Remove="wwwroot\css\components\verticalSingleSelection.css" />
+		<None Remove="wwwroot\css\CustomStyle.css" />
+		<None Remove="wwwroot\css\fstdropdown.css" />
+		<None Remove="wwwroot\css\fstdropdown.min.css" />
+		<None Remove="wwwroot\css\hekmatIpg.css" />
+		<None Remove="wwwroot\css\homepage-tbao.css" />
+		<None Remove="wwwroot\css\icons.svg" />
+		<None Remove="wwwroot\css\job-offer-card.css" />
+		<None Remove="wwwroot\css\jqTree\jqtree.css" />
+		<None Remove="wwwroot\css\ProductCustomStyle.css" />
+		<None Remove="wwwroot\css\resume.css" />
+		<None Remove="wwwroot\css\tempCss.css" />
+		<None Remove="wwwroot\css\variable.css" />
+		<None Remove="wwwroot\images\bookmark1.png" />
+		<None Remove="wwwroot\images\chD.jpg" />
+		<None Remove="wwwroot\images\chD2.jpg" />
+		<None Remove="wwwroot\images\courseCarouselImages\best-seller.png" />
+		<None Remove="wwwroot\images\courseCarouselImages\newest.png" />
+		<None Remove="wwwroot\images\icon\C-44.png" />
+		<None Remove="wwwroot\images\icon\check.png" />
+		<None Remove="wwwroot\images\icon\cort.png" />
+		<None Remove="wwwroot\images\icon\C_40-2.png" />
+		<None Remove="wwwroot\images\icon\C_40.png" />
+		<None Remove="wwwroot\images\icon\down-arrow.svg" />
+		<None Remove="wwwroot\images\icon\favorite-places.png" />
+		<None Remove="wwwroot\images\icon\flag.png" />
+		<None Remove="wwwroot\images\icon\palce.png" />
+		<None Remove="wwwroot\images\icon\stopwhatch.png" />
+		<None Remove="wwwroot\images\icon\UI_90.png" />
+		<None Remove="wwwroot\images\icon\UI_93.png" />
+		<None Remove="wwwroot\images\icon\user-profile.svg" />
+		<None Remove="wwwroot\images\logo\me-logo.png" />
+		<None Remove="wwwroot\images\search.png" />
+		<None Remove="wwwroot\images\search.svg" />
+		<None Remove="wwwroot\images\shopcart.png" />
+		<None Remove="wwwroot\images\shoppinCart.png" />
+		<None Remove="wwwroot\images\shopping-cart-svgrepo-com.svg" />
+		<None Remove="wwwroot\images\shoppingcart.png" />
+		<None Remove="wwwroot\images\shoppingcart1.png" />
+		<None Remove="wwwroot\images\shop\shoppingCart.png" />
+		<None Remove="wwwroot\js\commerce.js" />
+		<None Remove="wwwroot\js\components\CategoryHierarchically.js" />
+		<None Remove="wwwroot\js\components\filterItemsContainer.js" />
+		<None Remove="wwwroot\js\components\homePageSlider.js" />
+		<None Remove="wwwroot\js\components\job_offer_detail.js" />
+		<None Remove="wwwroot\js\components\product\preRegister.js" />
+		<None Remove="wwwroot\js\components\searchComponent.js" />
+		<None Remove="wwwroot\js\components\skeleton_laoding.js" />
+		<None Remove="wwwroot\js\components\verticalSingleSelection.js" />
+		<None Remove="wwwroot\js\courseCustomJs.js" />
+		<None Remove="wwwroot\js\fstdropdown.js" />
+		<None Remove="wwwroot\js\components\product\fstdropdown.min.js" />
+		<None Remove="wwwroot\js\hekmatIpg.js" />
+		<None Remove="wwwroot\js\Loading.js" />
+		<None Remove="wwwroot\js\newfolder\categories.js" />
+		<None Remove="wwwroot\js\components\product\sidebarCategoryProducts.min.js" />
+		<None Remove="wwwroot\js\scrollDetecter.js" />
+		<None Remove="wwwroot\js\site.js" />
+		<None Remove="wwwroot\package-lock.json" />
+		<None Remove="wwwroot\package.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="bundleconfig.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Modules\YashilBaseInfo\YashilBaseInfo.Web\YashilBaseInfo.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilCommerce\YashilCommerce.Web\YashilCommerce.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilCorporation\YashilCorporation.Web\YashilCorporation.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilDashboard\YashilDashboard.Web\YashilDashboard.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilDms\YashilDms.Web\YashilDms.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilJobJourney\YashilJobJourney.Web\YashilJobJourney.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilLight\YashilLight.Web\YashilLight.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilLoanManager\YashilLoanManager.Web\YashilLoanManager.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilNews\YashilNews.Web\YashilNews.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilPayment\YashilPayment.Web\YashilPayment.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilReport\YashilReport.Web\YashilReport.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilTms\YashilTms.Web\YashilTms.Web.csproj" />
+		<ProjectReference Include="..\Modules\YashilUserManagement\YashilUserManagement.Web\YashilUserManagement.Web.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+
+		<PackageReference Include="Azure.Identity" Version="1.13.1" />
+
+		<PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+
+		<PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.66.0" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.10" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version=" 8.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
+		<PackageReference Include="SyrianBallaS.AutoMapper.Extensions.Microsoft.DependencyInjection.Signed" Version="3.2.0" />
+		<PackageReference Include="Yashil.Runtime" Version="9.8.45" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Controllers" />
+		<Folder Include="Contents\" />
+		<Folder Include="Middlewares\" />
+		<Folder Include="Views\Shared\Components\FooterParallax\" />
+		<Folder Include="wwwroot\js\NewFolder\" />
+		<Folder Include="wwwroot\stylesheets\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="Views\About\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\AnsarPayment\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\ContactUs\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Home\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\CheckOut.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\LastOrderStatus.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\_OrderItemListSummary.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\_EmpityOrderListPartialView.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Representation\_Representation.cshtml">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\SaminPayment\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\SaminPayment\ShowPurchaseType.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Checkout\_OrderSummary.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\_Recipient.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Company\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\CustomerClub\CustomerClubMembershipVerify.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Home\Menu.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\Detail.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\_OrderItemDetail.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Order\_OrderListItem.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Product\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Product\_City.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Recipient\EditRecipient.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\CitySelector\_CitySelector.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\CourseDetail\_CourseDetail.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\Logo\Default.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\OrdersSubsidyWaitingToBePaidStatistics\_OrderSubsidyStatus.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\ProductDetail\_ProductDetail.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\Slider\Default.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_MainCategories.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_Menu.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\ApplicationPaymentMethodComponent\_ApplicationPaymentMethod.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\CustomerClubRegister\_CustomerClubRegister.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\Menu\Default.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\ProductsByFilter\_ProductsByFilter.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\Components\Content\Default.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Product\CategoryProducts.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_ProductListByCategoryIdForCompanyPagePartial.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_ProductListByFilterForCompanyPagePartial.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_ProductListByFilterPartial.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\Shared\_SearchCityPartial.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\ShoppingCartItem\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\User\ChangePassword.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\User\CustomerClubRegister.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\User\LoginByPassword.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\User\Register.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\VirtualClass\CreateMeetingVirtualClassAndJoinAsTeacher.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\VirtualClass\CreateMeetingVirtualClassAndJoinAsStudent.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\WalletPayment\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Update="Views\WalletPayment\Result.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="modules.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<Target Name="CopyModule" AfterTargets="Build">
+		<CopyModuleTask ProjectDir="$(ProjectDir)" TargetFramework="netcoreapp3.0" BuildConfiguration="$(ConfigurationName)" />
+	</Target>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<TypeScriptTarget>ES2019</TypeScriptTarget>
+		<TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+		<TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+		<TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+		<TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+		<TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+		<TypeScriptOutFile />
+		<TypeScriptOutDir />
+		<TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+		<TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+		<TypeScriptSourceMap>False</TypeScriptSourceMap>
+		<TypeScriptMapRoot />
+		<TypeScriptSourceRoot />
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+	<ItemGroup>
+		<UpToDateCheckInput Remove="Views\Shared\_CategoryListMenu.cshtml" />
+	</ItemGroup>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/azure-deviceupdate-import-manifest-5.0.json" />
+		</VisualStudio>
+	</ProjectExtensions>
+</Project>

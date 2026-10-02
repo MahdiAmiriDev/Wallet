@@ -1,0 +1,61 @@
+<div class="row" style="padding-bottom: 5px">
+    <div [ngClass]="showInOneRow?(showCategoryFilter?'col-4':'col-6'):'col-12'">
+        <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+            <label> {{'shp.RepresentationFilter.Company' | translate}} </label>
+        </div>
+        <div style="float: right; width: 80%">
+            <app-company-select
+                    [disabled] ="additionalUserProp && additionalUserProp.companyId"
+                    [selectedCompanyId]="additionalUserProp &&  additionalUserProp.companyId ?  additionalUserProp.companyId :  companyId"
+                    (selectedRowChanged)="onSelectedCompanyChanged($event);">
+            </app-company-select>
+
+        </div>
+    </div>
+    <div *ngIf="showRepresentation" [ngClass]="showInOneRow?(showCategoryFilter?'col-4':'col-6'):'col-12'">
+        <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+            <label> {{ 'shp.RepresentationFilter.Representation' | translate}} </label>
+        </div>
+        <div style="float: right; width: 80%">
+            <dx-lookup
+                    [disabled]="additionalUserProp && additionalUserProp.representationId"
+                    [dataSource]="representationDataSource"
+                    [(value)]="representationId"
+                    displayExpr="title"
+                    valueExpr="id"
+                    rtlEnabled="true"
+                    [showCancelButton]="true"
+                    [showClearButton]="true"
+                    (onSelectionChanged)="onSelectedRepresentationChanged($event)">
+                <dxo-drop-down-options
+                        [closeOnOutsideClick]="true"
+                        [showTitle]="false">
+                </dxo-drop-down-options>
+            </dx-lookup>
+        </div>
+    </div>
+    <div *ngIf="showCategoryFilter" [ngClass]="showInOneRow?(showCategoryFilter?'col-4':'col-6'):'col-12'">
+
+        <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+            <label> {{'shp.RepresentationFilter.Category' | translate}} </label>
+        </div>
+        <div style="float: right; width: 80%">
+
+            <dx-lookup
+                    [dataSource]="categoryDataSource"
+                    [disabled]="additionalUserProp && additionalUserProp.representationCategoryId"
+                    [(value)]="categoryId"
+                    displayExpr="title"
+                    valueExpr="id"
+                    rtlEnabled="true"
+                    showCancelButton="true"
+                    [showClearButton]="true"
+                    (onSelectionChanged)="onSelectedCategoryChanged($event)">
+                <dxo-drop-down-options
+                        [closeOnOutsideClick]="true"
+                        [showTitle]="false">
+                </dxo-drop-down-options>
+            </dx-lookup>
+        </div>
+    </div>
+</div>

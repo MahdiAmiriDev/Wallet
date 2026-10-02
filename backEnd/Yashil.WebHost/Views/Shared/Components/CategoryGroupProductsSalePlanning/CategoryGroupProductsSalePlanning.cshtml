@@ -1,0 +1,38 @@
+﻿@using Yashil.Core.CustomViewModels.ECommerce
+@model List<YashilCommerce.Core.DTO.CategoryGroupInfoDto>
+
+@foreach (var item in Model)
+{
+    <div class="d-flex flex-column gap-5">
+        <div class="container rounded-3 my-3 slide-products-categories-sale-planning bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold fs-18 course-carousel__title">
+                    @item.Title
+                </h4>
+                <a class="font-weight-500 text-nowrap" style="color:#e97c24" href="@Url.Action("main",new {categoryGroupId=item.Id})">
+                    <span class="fullProductList showing-all-in-company  fw-500">
+                        مشاهده همه
+                    </span>
+                    <svg viewBox="0 0 16 16" width="20" height="20" stroke="currentColor" stroke-width="2">
+                        <use href="../images/icons/general.svg#chevron-left" />
+                    </svg>
+                </a>
+            </div>
+            <div class="swiper  my-4 mb-0" id='swiperContainerCategoriesProductSalePlanning'>
+                <div class="swiper-wrapper">
+                    @await Component.InvokeAsync("ProductsByFilter", new
+                {
+                productFilter = (ProductFilter)null,
+                categoryGroupId = item.Id,
+                showNoResultOnEmpty = false,
+                showProductsByList = false,
+                showHomePageProductsView = true
+                })
+                </div>
+                <div id=@($"next{item.Id}") class="swiper-button-next d-none d-lg-flex"></div>
+                <div id=@($"prev{item.Id}") class="swiper-button-prev d-none d-lg-flex"></div>
+            </div>
+
+        </div>
+    </div>
+}

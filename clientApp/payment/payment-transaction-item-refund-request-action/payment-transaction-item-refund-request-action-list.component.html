@@ -1,0 +1,12 @@
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      [loadAfterSetFilter]="loadAfterSetFilter"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [entityName]="entityName"
+                      [customRowButtons]="customRowButtons"
+                      [showAddButton]="false"
+                      [showRefreshButton]="true"
+                      [wordWrapEnabled]="true">
+  </app-base-list-form>
+</app-busy-indicator>

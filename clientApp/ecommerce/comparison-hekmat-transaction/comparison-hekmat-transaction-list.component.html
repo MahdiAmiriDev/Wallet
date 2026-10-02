@@ -1,0 +1,41 @@
+<app-factor-statistic [factorId]="factorId" [complexMode]="false"></app-factor-statistic>
+<div class="alert alert-light" dir="rtl" style="text-align: right">
+  <dx-check-box dataField="showContrast" [text]="'نمایش مغایرت'"
+                (onValueChanged)="bindCustomDataSources()"
+                [(value)]="showContrast"></dx-check-box>
+</div>
+<app-base-list-form #listForm
+                    (listRowPrepared)="onListRowPrepared($event)"
+                    [gridHeight]="gridHeight"
+                    [fixHeight]="fixHeight"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    [columns]="columns"
+                    title="اعتبارسنجی تراکنشات حکمت"
+                    [allowFilter]="false"
+                    [customRowButtons]="customRowButtons"
+                    entityName="factor"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [showAddButton]="false"
+                    [showExportToExcelButton]="true"
+                    [showFilterButton]="false">
+</app-base-list-form>
+
+<dx-popup
+  [title]="popUpTitle"
+  (onHidden)="showPopUp=false"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <app-refund-detail-list *ngIf="showPopUp"
+                          [showAddButton]="false"
+                          [allowDeleteInForm]="false"
+                          [allowEditInForm]="false"
+                          [paymentId]="paymentId"
+                          [showEditInform]="false">
+  </app-refund-detail-list>
+</dx-popup>

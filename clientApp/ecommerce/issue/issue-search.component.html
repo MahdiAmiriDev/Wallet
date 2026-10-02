@@ -1,0 +1,77 @@
+<div style="width: 100%;" [style.height.px]="contentHeight">
+  <div class="row" style="padding-bottom: 3px">
+    <div class="col-5">
+      <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+        <label>شماره موبایل : </label>
+      </div>
+      <div style="float: right; width: 20%">
+        <input type="text" [(ngModel)]="searchedMobileNumber" (keyup.enter)="search()">
+      </div>
+    </div>
+    <div class="col-5">
+      <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+        <label>شماره کارت : </label>
+      </div>
+      <div style="float: right; width: 20%">
+        <input type="text" [(ngModel)]="searchedCardNumber" (keyup.enter)="search()">
+      </div>
+    </div>
+    <div class="col-2">
+      <dx-button
+        (click)="search()"
+        icon="search"
+        style="margin: 3px 18px 3px 3px;"
+        text="جستجو"
+        hint="جستجو">
+      </dx-button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div style="width: 100%;" [style.height.px]="contentHeight">
+        <as-split direction="horizontal">
+          <as-split-area [size]="100" dir="ltr">
+            <as-split direction="vertical">
+              <as-split-area #t [size]="60">
+                <app-order-item-list
+                  [gridHeight]="t.offsetHeight-50"
+                  [fixHeight]="false"
+                  [showRepresentationFilter]="false"
+                  [mobileNumber]="mobileNumber"
+                  [cardNumber]="cardNumber"
+                  [loadAfterSetFilter]="true"
+                  [isForSelectReadOnly]="true"
+                  [showAmountColumns]="true"
+                  (selectedRowChanged)="selectedOrderItemChanged($event)">
+                </app-order-item-list>
+              </as-split-area>
+              <as-split-area #t2 [size]="40">
+                <as-split direction="horizontal">
+                  <as-split-area [size]="40">
+                    <app-issue-log-work-list
+                      [fixHeight]="false"
+                      [gridHeight]="t2.offsetHeight-50"
+                      [issueId]="issueId"
+                      #issueLogWorkList
+                      [loadAfterSetFilter]="true"></app-issue-log-work-list>
+                  </as-split-area>
+
+                  <as-split-area [size]="60">
+                    <app-issue-list #issueList
+                                    [fixHeight]="false"
+                                    [gridHeight]="t2.offsetHeight-50"
+                                    [orderItemId]="orderItemId"
+                                    [issueOwner]="issueOwner"
+                                    [nonRegisteredUser]="nonRegisteredUser"
+                                    [loadAfterSetFilter]="true"
+                                    (selectedRowChanged)="selectedIssueChanged($event)"></app-issue-list>
+                  </as-split-area>
+                </as-split>
+              </as-split-area>
+            </as-split>
+          </as-split-area>
+        </as-split>
+      </div>
+    </div>
+  </div>
+</div>

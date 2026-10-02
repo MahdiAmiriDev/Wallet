@@ -1,0 +1,57 @@
+<app-factor-statistic [factorId]="selectedEntityId" [complexMode]="false"></app-factor-statistic>
+
+
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <div class="alert alert-primary" role="alert">
+      کاربر گرامی، اطلاعات فروشنده در فاکتور را با پر کردن مقادیر زیر می توانید تغییر دهید
+    </div>
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item colSpan="2" [label]="{text: 'انتخاب اطلاعات حساب'}">
+        <app-person-bank-account-select (selectedRowChanged)="selectedPersonBankAccountChanged($event)"
+                                        [isRequired]="true"
+                                        [requiredMessage]="'انتخاب اطلاعات حساب جهت پرداختی صورت حساب اجباری میباشد'"
+                                        [selectedItemId]="entity.personBankAccountId">
+
+        </app-person-bank-account-select>
+      </dxi-item>
+      <dxi-item [label]="{text: 'آدرس'}" dataField="fullAddress" editorType="dxTextArea" colSpan="2">
+        <dx-text-area [(value)]="entity.fullAddress">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="آدرس اجباری می باشد"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-area>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'شماره تلفن'}" dataField="telephone">
+        <dx-text-box [(value)]="entity.telephone">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="شماره تلفن اجباری میباشد"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'دور نگار'}" dataField="faxNumber">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'کد اقتصادی'}" dataField="economicCode">
+        <dx-text-box [(value)]="entity.economicCode">
+        </dx-text-box>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'کد ملی'}" dataField="nationalCode">
+        <dx-text-box [(value)]="entity.nationalCode">
+        </dx-text-box>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'نام مرکز'}" dataField="companyTitle">
+        <dx-text-box [(value)]="entity.companyTitle">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="نام مرکز اجباری میباشد"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </dxi-item>
+
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

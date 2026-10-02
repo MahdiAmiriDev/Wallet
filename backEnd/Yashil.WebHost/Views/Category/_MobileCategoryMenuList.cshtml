@@ -1,0 +1,42 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.CategoryHierarchicalViewModel>
+@{
+    Layout = "_Layout";
+
+    var mainCategories = Model?.FirstOrDefault()?.SubCategories;
+    if (mainCategories == null)
+    {
+        return;
+    }
+}
+
+<style>
+    .wavy-footer,
+    .main-footer-blue,
+    .copyright-footer-blue {
+        display: none;
+    }
+
+    body {
+        overflow: hidden;
+    }
+</style>
+
+<section class="d-flex" id="menu_responsive">
+    <aside id="menu_container--responsive" class="overflow-auto text-center">
+    </aside>
+    <article id="submenu_container--responsive" class="overflow-auto px-4 py-3">
+        <a id="submenu_title">
+            <div class="d-flex align-items-center mb-4 gap-2">
+                <h4 class="text-primary pt-2">عنوان</h4>
+                <svg viewBox="0 0 16 16" width="20" height="20" stroke="#0d6efd" stroke-width="2">
+                    <use href="../images/icons/general.svg#chevron-left" />
+                </svg>
+            </div>
+        </a>
+        <div class="bg-white" id="submenu_responsive"></div>
+    </article>
+</section>
+
+<script src="~/js/bootstrap/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/js/categoryMenu/categories.js" asp-append-version="true"></script>
+<script src="~/js/categoryMenu/categoryMenuListResponsive.min.js" asp-append-version="true"></script>

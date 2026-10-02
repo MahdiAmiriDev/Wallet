@@ -1,0 +1,46 @@
+<ng-container>
+  <div class="alert alert-info">
+    <span style="font-weight: bold;color: #ff0000">
+    با توجه به تنظیم فروش اگر هزینه تبلیغات در فاکتور تامین کننده لحاظ شده باشد:
+    </span>
+    <span style="font-weight: bold;color: #ff0000"> تخفیف فاکتور = تخفیف + سود + هزینه تبلیغات. </span>
+    <span
+      style="font-weight: bold;color: #ff0000">مبلغ کل باتخفیف در فاکتور = مبلغ کل منهای تخفیف منهای سود منهای هزینه تبلیغات. </span><br/><br/>
+    <span style="font-weight: bold;color: green">
+    با توجه به تنظیم فروش اگر هزینه تبلیغات در فاکتور تامین کننده لحاظ شده نباشد :
+    </span>
+    <span style="font-weight: bold;color: green"> تخفیف فاکتور = تخفیف + سود. </span>
+    <span
+      style="font-weight: bold;color: green">مبلغ کل باتخفیف در فاکتور = مبلغ کل منهای تخفیف منهای سود.</span>
+  </div>
+</ng-container>
+
+<app-base-list-form #listForm
+                    [columns]="columns"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [showFilterButton]="true"
+                    [wordWrapEnabled]="true"
+                    [customRowButtons]="customRowButtons"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="downloadFactorGroupItemReport($event)"
+                    [entityName]="entityName"
+                    [showExportToExcelButton]="true"
+                    [fixHeight]="fixHeight"
+                    [gridHeight]="gridHeight"
+                    [allowFilter]="false"
+                    title="گزارش فاکتورهای گروه">
+</app-base-list-form>
+<dx-popup
+  [title]="popUpTitle"
+  (onHidden)="showPopUp=false"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <app-comparison-hekmat-transaction-list [factorId]="selectedFactorId"></app-comparison-hekmat-transaction-list>
+</dx-popup>

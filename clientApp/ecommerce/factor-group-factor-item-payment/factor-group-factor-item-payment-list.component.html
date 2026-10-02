@@ -1,0 +1,16 @@
+<app-base-list-form #listForm
+                    [showExportToExcelButton]="true"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [gridHeight]="gridHeight"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="downloadFactorGroupFactorItemPaymentReport($event)"
+                    [wordWrapEnabled]="true"
+                    title="ریز پرداخت های آیتم های فاکتور فاکتورهای گروه بندی شده"
+                    [fixHeight]="true"
+                    [entityName]="entityName">
+</app-base-list-form>

@@ -1,0 +1,79 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+        <dxi-item [label]="{text: 'حقوقی است؟'}" dataField="isLegalPerson" editorType='dxCheckBox'
+                  [editorOptions]="{onValueChanged:changedIsLegalPerson}">
+        </dxi-item>
+
+        <dxi-item  [label]="{text: 'نام حقوقی'}" dataField="name"
+                  [editorOptions]="{readOnly:!entity.isLegalPerson
+                  ,disabled: !entity.isLegalPerson }">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'کد اقتصادی'}"
+                  [editorOptions]="{disabled: !entity.isLegalPerson}" dataField="economicCode">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'تلفن ثابت با پیش شماره'}" dataField="address.telephone">
+            <dxi-validation-rule
+                    type="pattern"
+                    maxlength="11" minlength="11"
+                    pattern="^0[1-9]{2}[0-9]{8}$"
+                    message="فرمت شماره تلفن ثابت صحیح نیست">
+            </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'رایانامه (Email)'}" dataField="address.email">
+            <dxi-validation-rule
+                    type="pattern"
+                    pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                    message="فرمت ایمیل صحیح نیست">
+            </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'دور نگار'}" dataField="address.faxNumber">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'کد پستی'}" dataField="address.postalCode">
+        </dxi-item>
+
+        <dxi-item [template]="'cityTemplate'" dataField="address.cityId" [label]="{text: 'شهر'}">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'آدرس'}" dataField="address.fullAddress" editorType="dxTextArea" colSpan="2">
+            <dx-text-area [(value)]="entity.address.fullAddress">
+                <dxi-validation-rule type="required" message="آدرس اجباری می باشد"></dxi-validation-rule>
+            </dx-text-area>
+        </dxi-item>
+
+        <div *dxTemplate="let data of 'cityTemplate'">
+            <dx-drop-down-box
+                #ddlCity
+                [(value)]="entity.address.cityId"
+                valueExpr="id"
+                displayExpr="title"
+                placeholder="انتخاب شهر..."
+                [showClearButton]="true"
+                [dataSource]="cityDataSource"
+                (onValueChanged)="syncTreeViewSelection($event)">
+                <div *dxTemplate="let data of 'content'">
+                    <dx-tree-view
+                            [dataSource]="cityDataSource"
+                            dataStructure="plain"
+                            keyExpr="id"
+                            parentIdExpr="parentId"
+                            selectionMode="single"
+                            displayExpr="title"
+                            rtlEnabled="true"
+                            [selectByClick]="true"
+                            [searchEnabled]="true"
+                            (onContentReady)="syncTreeViewSelection($event)"
+                            (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCity.instance.close();">
+                    </dx-tree-view>
+                </div>
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="شهر اجباری می باشد"></dxi-validation-rule>
+                </dx-validator>
+            </dx-drop-down-box>
+        </div>
+    </dx-form>
+</app-base-edit-form>

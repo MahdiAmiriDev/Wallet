@@ -1,0 +1,30 @@
+﻿@model Yashil.Core.CustomViewModels.ECommerce.ProductFilter
+
+<form autocomplete="off">
+    <div class="autocomplete">
+        <input id="searchCityName" class="w-100 input-login-page px-3" name="searchCityName" type="text" placeholder="نام شهر مورد نظر را وارد نمائید...">
+    </div>
+    <input type="submit" style="color:white !important;width: 26%; height: 44px; border-radius: 5px; border-radius: 5px; margin-right: -5px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; bottom: 1px;display:none;" value="انتخاب">
+</form>
+
+<script type="text/javascript">
+    function setCity(suggestion) {
+        $('#loadingDiv').css('visibility', 'visible');
+        $('#loadingDiv').css('display', '');
+        $('.modal-body').css('opacity', '0.5');
+        $('.modal-body').addClass('disabledDiv');
+
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.has('cityId')) {
+            queryParams.set('cityId', suggestion.data)
+        } else {
+            queryParams.append('cityId', suggestion.data);
+        }
+
+        const newParams = new URLSearchParams(queryParams).toString();
+
+        const baseUrl = '/Company';
+        const newUrl = `${baseUrl}?${newParams}`
+        window.location.href = newUrl
+    }
+</script>

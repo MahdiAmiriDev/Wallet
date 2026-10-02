@@ -1,0 +1,19 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+
+    <dxi-item dataField="issueId" editorType="dxLookup" [label]="{text: 'شناسه مسئله'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: issueDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="شناسه مسئله اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item dataField="userId" editorType="dxLookup" [label]="{text: 'مرجع رسیدگی'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: userDataSource,displayExpr:'userName',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="مرجع رسیدگی اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form></app-busy-indicator>

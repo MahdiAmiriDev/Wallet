@@ -1,0 +1,88 @@
+<div
+  class="row"
+  style="margin-bottom: 15px;">
+
+  <!-- شناسه مرجع پرداخت -->
+  <div class="col-md-4">
+
+    <label>
+      شناسه مرجع پرداخت
+    </label>
+
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="paymentReferenceId"
+      [readonly]="readonlyPaymentReference"
+      placeholder="شناسه مرجع پرداخت">
+
+  </div>
+
+
+  <!-- تاریخ مرجع پرداخت -->
+  <div class="col-md-4">
+
+    <label>
+      تاریخ مرجع پرداخت
+    </label>
+
+    <ng-persian-datepicker
+      *ngIf="!readonlyPaymentReference"
+      [dateInitValue]="false"
+      dateFormat="YYYY/MM/DD"
+      (dateOnSelect)="onPaymentReferenceDateSelect($event)">
+
+      <input
+        type="text"
+        [formControl]="paymentReferenceDateDataValue"
+        class="form-control"
+        style="float:right"
+        placeholder="تاریخ مرجع پرداخت">
+
+    </ng-persian-datepicker>
+
+    <input
+      *ngIf="readonlyPaymentReference"
+      type="text"
+      [formControl]="paymentReferenceDateDataValue"
+      class="form-control"
+      placeholder="تاریخ مرجع پرداخت"
+      readonly>
+
+  </div>
+
+
+  <!-- دکمه ثبت -->
+  <div
+    class="col-md-2"
+    style="padding-top: 25px;"
+    *ngIf="!readonlyPaymentReference">
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="registerPaymentReference()">
+      ثبت
+    </button>
+
+  </div>
+
+</div>
+
+
+<app-base-list-form
+  #listForm
+  [columns]="columns"
+  [entityName]="entityName"
+  [showExportToExcelButton]="true"
+  [wordWrapEnabled]="true"
+  [showAddButton]="false"
+  [showEditForm]="false"
+  [allowEditInForm]="false"
+  [allowDeleteInForm]="false"
+  [allowAdd]="false"
+  [showFilterButton]="true"
+  [showCustomCheckBox]="false"
+  selectAllMode="page">
+
+</app-base-list-form>

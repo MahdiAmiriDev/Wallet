@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [customRowButtons]="customRowButtons"
+                    [entityName]="entityName"
+                    [allowFilter]="true"
+                    [detailComponent]="detailComponent"
+                    [gridHeight]="gridHeight"
+                    [columnAutoWidth]="true">
+</app-base-list-form>

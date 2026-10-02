@@ -1,0 +1,9 @@
+<app-base-list-form #listForm
+					[isForTree]="true"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedContentCategoryChanged($event); selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

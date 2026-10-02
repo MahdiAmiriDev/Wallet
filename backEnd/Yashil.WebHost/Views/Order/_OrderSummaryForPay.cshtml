@@ -1,0 +1,383 @@
+﻿@using Yashil.Core.Enums;
+@using Yashil.Infrastructure.Util
+@using YashilCommerce.Core.Enums
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderSummaryForPayViewModel
+@{
+    int saminPaymentMethodType = (int)PaymentMethodTypesEnum.Samin;
+    var creditType = (int)SaminPurchaseTypeEnum.Credit;
+    // پرداخت نقدی
+    var debitType = (int)SaminPurchaseTypeEnum.Debit;
+    int installmentCount = Model.InstallmentCount ?? 1;
+    var requireSupplierApprovalBeforePayment = Model.RequireSupplierApprovalBeforePayment;
+}
+
+<style>
+    body {
+        padding-right: 0px !important;
+        overflow: auto !important;
+    }
+</style>
+
+
+<!-- left sidebar -->
+<div class="detail p-sm-1 p-md-3 rounded ">
+    <div class="c-checkout-bill">
+        <div class="d-flex justify-content-between">
+            <span>
+                قیمت
+                (@Model.OrderItemsCount)
+            </span>
+            <span>
+                @CurrencyUtility.FormatPrice(Model.SumPrice) <span class="currency">تومان</span>
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2">
+            <span class="dark-orange-order-summary-for-pay">تخفیف</span>
+            <span class="dark-orange-order-summary-for-pay">
+                @CurrencyUtility.FormatPrice(Model.SumDiscount)
+                <span class="currency dark-orange-order-summary-for-pay">تومان</span>
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2">
+            <span>
+                قیمت با تخفیف
+                (@Model.OrderItemsCount)
+            </span>
+            <span>
+                @CurrencyUtility.FormatPrice(Model.SumPrice - Model.SumDiscount)
+                <span class="currency">تومان</span>
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2">
+            <span>کارمزد</span>
+            <span>
+                @CurrencyUtility.FormatPrice(Model.SumWage)
+                <span class="currency">تومان</span>
+            </span>
+        </div>
+        @if (Model.SubsidyBased)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <span>یارانه</span>
+                <span>
+                    @CurrencyUtility.FormatPrice(Model.SumSubsidy)
+                    <span class="currency">تومان</span>
+                </span>
+            </div>
+        }
+        @if (Model.SumTax > 0)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <span>مالیات</span>
+                <span>
+                    @CurrencyUtility.FormatPrice(Model.SumTax)
+                    <span class="currency">تومان</span>
+                </span>
+            </div>
+        }
+        @if (Model.AllowedToPayInInstallment && Model.SumTotal > 0)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <span>تعداد اقساط</span>
+                <span>
+                    @Model.InstallmentCount
+                    <span class="currency">قسط</span>
+                </span>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                <span>مبلغ اقساط</span>
+                <span>
+                    @CurrencyUtility.FormatPrice(Model.InstallmentAmount)
+                    <span class="currency">تومان</span>
+                </span>
+            </div>
+        }
+        @if (Model.SumShippingCharge > 0)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <span>هزینه ارسال</span>
+                <span>
+                    @CurrencyUtility.FormatPrice(Model.SumShippingCharge)
+                    <span class="currency">تومان</span>
+                </span>
+            </div>
+        }
+        <hr />
+        @if (Model.SumTotal > 0)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <strong>جمع</strong>
+                <strong>
+                    @CurrencyUtility.FormatPrice(Model.SumTotal)
+                    <span class="currency">تومان</span>
+                </strong>
+            </div>
+        }
+        <hr />
+        @if (Model.OrderId.HasValue &&
+        Model.OrderStatusType != (int)OrderStatusTypesEnum.Complete &&
+        Model.OrderStatusType != (int)OrderStatusTypesEnum.CancelBySystem &&
+        Model.OrderStatusType != (int)OrderStatusTypesEnum.Canceled)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <strong>مبلغ قابل پرداخت</strong>
+                <strong class="dark-orange-order-summary-for-pay">
+                    @CurrencyUtility.FormatPrice(Model.SumTotalForPay)
+                    <span class="currency">تومان</span>
+                </strong>
+            </div>
+        }
+        @if (!Model.OrderId.HasValue)
+        {
+            <div class="d-flex justify-content-between mt-2">
+                <strong>مبلغ قابل پرداخت</strong>
+                <strong class="dark-orange-order-summary-for-pay">
+                    @CurrencyUtility.FormatPrice(Model.SumTotal)
+                    <span class="currency ">تومان</span>
+                </strong>
+            </div>
+        }
+        @if (Model.OrderId.HasValue && Model.OrderIsComplete)
+        {
+            <div class="d-flex justify-content-between mt-2 no-print">
+                <button type="button" class="d-flex alig-items-center justify-content-center certificateSearchBtn btn print-btn-in-certificate d-block w-75 mx-auto mt-3 fs-14 px-4  print">
+                    <span class="text-white pe-2">چاپ</span>
+                    <span class="spinner-border text-warning spinner-border-sm  d-none" role="status" aria-hidden="true" style="margin-top:3px"></span>
+                    <svg viewBox="0 0 24 24" width="22" heigth="22">
+                        <use href="../images/icons/general.svg#print" />
+                    </svg>
+                </button>
+
+
+            </div>
+        }
+
+
+        <!-- type of payment  -->
+        @if (Model.AllowSelectPaymentGateway &&
+        !Model.RequireSupplierApprovalBeforePayment)
+        {
+            @await Component.InvokeAsync("ApplicationPaymentMethodComponent",
+                     new
+                     {
+                         limitToHekmat = Model.LimitToHekmatPayment,
+                         limitedToBankInternetPaymentGateway = Model.LimitedToBankInternetPaymentGateway,
+                         saleType = Model.SaleType
+                     })
+        }
+
+
+
+        @if (Model.AllItemsHasValue && Model.AllowContinueShopping && Model.SaleType.HasValue)
+    {
+            <div class="payment-btn d-grid gap-2 p-2 mt-1">
+                <button onclick="checkAndPayDuplicateOrder(@Model.RecipientId,@(!Model.OrderId.HasValue ? 0:Model.OrderId),@Model.OrderStatusType)" class="btn payment-final-register p-2 d-flex alig-items-center justify-content-center w-100 gap-2" type="button">
+                    <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                    @if (Model.OrderStatusType == (int)OrderStatusTypesEnum.IncompleteCashAndInstallmentPay)
+                    {
+                        <text> پرداخت - نقدی اقساطی </text>
+
+                    }else if (!Model.RequireSupplierApprovalBeforePayment)
+                    {
+                        <text> پرداخت و ثبت نهایی سفارش</text>
+                    }
+                    else
+                    {
+                        <text>@Model.ButtonTextRequireSupplierApprovalBeforePayment</text>
+                    }
+                </button>
+            </div>
+        }
+
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    let blinkingIntervalId = null;  // Store interval ID globally
+
+    function startBlinking(label) {
+        if (blinkingIntervalId) clearInterval(blinkingIntervalId); // clear existing
+        let isOrange = false;
+        blinkingIntervalId = setInterval(() => {
+            label.style.color = isOrange ? 'black' : 'rgb(192, 0, 0)';
+            isOrange = !isOrange;
+        }, 900);
+    }
+
+    function stopBlinking(label) {
+        if (blinkingIntervalId) {
+            clearInterval(blinkingIntervalId);
+            blinkingIntervalId = null;
+        }
+        label.style.color = 'black'; // reset to default color
+    }
+
+    function doPay(recipientId) {
+        const buttonElement = document.querySelector('.payment-final-register');
+        const spinnerElement = buttonElement.querySelector('.spinner-border');
+        const overflowHtmlElement = document.querySelector('html');
+        const approvementCheckbox = document.getElementById("approvement");
+        const approvementLabel = document.getElementById("approvement-label");
+
+        if (!approvementCheckbox.checked) {
+            bootbox.alert('کاربر گرامی لطفا توافقنامه را تایید نمایید.');
+            spinnerElement.classList.add('d-none');
+            loadingSpinnerWithModal.hideLoadingSpinner();
+            buttonElement.removeAttribute('disabled');
+            overflowHtmlElement.classList.remove("overflow-hidden");
+
+            approvementCheckbox.scrollIntoView({ behavior: "smooth", block: 'center' });
+
+            setTimeout(() => {
+                startBlinking(approvementLabel);
+            }, 700); // small delay to let scroll finish
+
+            return;
+        } else {
+            overflowHtmlElement.classList.remove("overflow-hidden");
+
+            // Stop blinking and reset color if checkbox checked
+            stopBlinking(approvementLabel);
+
+            var paymentMethod = $('input[name=paymentMethodType]:checked').val();
+            if (+paymentMethod === @saminPaymentMethodType) {
+                showPaymnetMethodInfo(recipientId, paymentMethod, buttonElement, spinnerElement);
+                loadingSpinnerWithModal.hideLoadingSpinner();
+            } else {
+                doFinalPay(recipientId, paymentMethod, null, '.payment-final-register');
+            }
+        }
+    }
+
+    // Listen for checkbox changes to immediately stop blinking if user checks it manually
+    document.getElementById('approvement').addEventListener('change', function () {
+        if (this.checked) {
+            const label = document.getElementById('approvement-label');
+            stopBlinking(label);
+        }
+    });
+
+
+    const removeScrollbarSaminPayment = document.querySelector(".payment-final-register");
+    removeScrollbarSaminPayment.addEventListener("click",
+        () => {
+            document.documentElement.classList.add("overflow-hidden");
+        });
+
+    function doFinalPay(recipientId, paymentMethod, purchaseType, submit) {
+        const buttonElement = document.querySelector(submit);
+        const spinnerElement = buttonElement.querySelector('.spinner-border');
+        var orderId = '@Model.OrderId';
+        var requiredSupplierApprovalBeforePayment = @Html.Raw(Json.Serialize(requireSupplierApprovalBeforePayment));
+        if (orderId === '') {
+            orderId = null;
+        }
+        else {
+            orderId = +orderId;
+        }
+        hideErrorMessage($("#validationErrorMessage"));
+        spinnerElement.classList.remove('d-none');
+        buttonElement.setAttribute('disabled', true);
+        if (purchaseType == @creditType) {
+            disableButtonAndShowSnipper('btnCreditPayment');
+            disableButtonAndShowSnipper('btnDebitPayment', false);
+            disableButtonAndShowSnipper('btnInstallmentPayment', false);
+            loadingSpinnerWithModal.showLoadingSpinner();
+        }
+
+        else if (purchaseType == @debitType) {
+            disableButtonAndShowSnipper('btnCreditPayment', false);
+            disableButtonAndShowSnipper('btnDebitPayment');
+            disableButtonAndShowSnipper('btnInstallmentPayment', false);
+        }
+        else {
+            disableButtonAndShowSnipper('btnCreditPayment', false);
+            disableButtonAndShowSnipper('btnDebitPayment', false);
+            disableButtonAndShowSnipper('btnInstallmentPayment');
+            loadingSpinnerWithModal.hideLoadingSpinner();
+        }
+
+
+
+        var dataParams = { recipientId: recipientId, paymentMethodType: +paymentMethod, orderId: orderId, purchaseType: purchaseType, RequiredSupplierApprovalBeforePayment: requiredSupplierApprovalBeforePayment };
+        fetch('/api/order/saveShoppingCartToOrder',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(dataParams)
+
+            })
+            .then(response => response.json())
+            .then(data => {
+                 loadingSpinnerWithModal.hideLoadingSpinner();
+                if (data.returnUrl) {
+                    window.location = data.returnUrl;
+                    loadingSpinnerWithModal.showLoadingSpinner();
+                } else if (data.message) {
+                    bootbox.alert(data.message);
+                    spinnerElement.classList.add('d-none');
+                    buttonElement.removeAttribute('disabled');
+
+                }
+            })
+            .catch(data => {
+                spinnerElement.classList.add('d-none');
+                buttonElement.removeAttribute('disabled');
+                loadingSpinnerWithModal.hideLoadingSpinner();
+            });
+    }
+
+
+</script>
+
+
+<script type="text/javascript">
+
+
+    /*
+    نمایش اطلاعات مربوط به درگاه و
+    انتخاب مدل پرداخت درگاه پرداخت در صورتی که درگاه پرداخت دارای مدل های مختلف باشد
+    */
+    async function showPaymnetMethodInfo(recipientId, paymentMethod, button, spinner) {
+        const paymentMethodModalElement = document.getElementById('paymentMethodInfoModal');
+        const paymentMethodModalBody = paymentMethodModalElement.querySelector('.modal-body');
+        const paymentMethodModal = new bootstrap.Modal(document.getElementById('paymentMethodInfoModal'), {
+            keyboard: false
+        });
+        const response = await fetch('@Url.Action("ShowPurchaseType", "SaminPayment")' + '?recipientId=' + recipientId + '&installmentCount=' + @installmentCount);
+        const data = await response.text();
+        paymentMethodModalBody.innerHTML = data;
+        paymentMethodModal.show();
+        spinner.classList.add('d-none');
+        button.removeAttribute('disabled');
+    }
+
+
+
+</script>
+
+
+<script type='text/javascript'>
+
+    /*   کد جی کوئری برای چاپ جزئیات سفارش تکمیل شده*/
+
+    $(function () {
+        $(".printable").find('.print').on('click', function () {
+            $.print(".printable");
+
+        });
+
+    });
+
+
+</script>
+
+

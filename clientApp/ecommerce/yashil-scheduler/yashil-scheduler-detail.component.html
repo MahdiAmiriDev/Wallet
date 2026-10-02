@@ -1,0 +1,69 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item dataField="occuranceType" editorType="dxSelectBox" [label]="{text: 'نوع زمانبندی'}"
+              [editorOptions]="{ items: occuranceTypes,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="نوع زمانبندی اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'بازه از'}" dataField="fromEra" #fromEra editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="تعیین ابتدای بازه اجباری می باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="range" [min]="1" message="مقدار ابتدای بازه باید بزرگتر از 0 باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'تا'}" dataField="toEra" editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="تعیین انتهای بازه اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'حداکثر تعداد تکرار'}" dataField="repeatNumber" editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="حداکثر تعداد تکرار اجباری می باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="range" [min]="1" message="حداقل مقدار تکرار 1 میباشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ شروع'}" dataField="startDate" >
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.startDate=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="startDateDataValue"
+               style="float:right"
+               placeholder="تاریخ شروع"
+               [ngModel]="entity.startDate  | intToStringDate"/>
+      </ng-persian-datepicker>
+<!--      <dp-date-picker-->
+<!--        [config]="datePickerConfig"-->
+<!--        dir="rtl"-->
+<!--        mode="day"-->
+<!--        placeholder="تاریخ شروع"-->
+<!--        theme="dp-material"-->
+<!--        [ngModel]="entity.startDate | intToStringDate"-->
+<!--        (ngModelChange)="entity.startDate=convertDateToInt($event)">-->
+<!--      </dp-date-picker>-->
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'تاریخ پایان'}" dataField="endDate">
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.endDate=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="endDateDataValue"
+               style="float:right"
+               placeholder="تاریخ پایان"
+               [ngModel]="entity.endDate  | intToStringDate"/>
+      </ng-persian-datepicker>
+<!--      <dp-date-picker-->
+<!--        [config]="datePickerConfig"-->
+<!--        dir="rtl"-->
+<!--        mode="day"-->
+<!--        placeholder="تاریخ پایان"-->
+<!--        theme="dp-material"-->
+<!--        [ngModel]="entity.endDate | intToStringDate" (ngModelChange)="entity.endDate=convertDateToInt($event)">-->
+<!--      </dp-date-picker>-->
+    </dxi-item>
+
+
+  </dx-form>
+</app-base-edit-form></app-busy-indicator>

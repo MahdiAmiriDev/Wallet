@@ -1,0 +1,41 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'کد'}" dataField="code">
+    </dxi-item>
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیدی رکورد'}" dataField="objectId" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="آیدی رکورد اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item dataField="appEntityId" editorType="dxLookup" [label]="{text: 'موجودیت رکورد'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: appEntityDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="موجودیت رکورد اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item dataField="customerclubId" editorType="dxLookup" [label]="{text: 'باشگاه مشتریان'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: customerclubDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="باشگاه مشتریان اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+
+    </dxi-item>
+
+    <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+              [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

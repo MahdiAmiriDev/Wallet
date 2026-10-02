@@ -1,0 +1,19 @@
+:host :host body {
+    background-color: #e74c3c;
+}
+
+.fix-height {
+    height: calc(100% - 350px);
+    background-color: green;
+}
+
+:host ::ng-deep .dx-checkbox-checked .dx-checkbox-icon::before {
+position: absolute;
+}
+/*::ng-deep .smallIcon .dx-icon {*/
+    /*font-size: 14px;*/
+/*}*/
+
+/*::ng-deep .smallIcon .dx-button-content {*/
+    /*padding: 3px !important;*/
+/*}*/

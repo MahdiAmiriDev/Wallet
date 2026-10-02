@@ -1,0 +1,33 @@
+<ng-container>
+    <div class="alert alert-info">
+        <div class="dx-field-item-label" style="padding: 5px 10px 5px 5px;">نمایش رکوردها بر اساس نوع یارانه:</div>
+        <dx-radio-group [items]="radioButtonItems"
+                        displayExpr="text"
+                        valueExpr="value"
+                        layout="horizontal"
+                        class="customRadioBtn"
+                        (onValueChanged)="bindCustomDataSources()"
+                        [(value)]="subsidyType">
+
+        </dx-radio-group>
+    </div>
+</ng-container>
+
+
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [title]="'جزییات عودت وجه فاکتور های دارای یارانه'"
+                    [showAddButton]="false"
+                    [wordWrapEnabled]="true"
+                    [showExportToExcelButton]="true"
+                    [additionalData]="entity"
+                    [gridHeight]="screen.availHeight-300"
+>
+</app-base-list-form>
+
+

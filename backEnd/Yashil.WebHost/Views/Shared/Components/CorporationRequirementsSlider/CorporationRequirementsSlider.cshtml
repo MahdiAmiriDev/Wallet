@@ -1,0 +1,33 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model List<CorporationRequirementsSliderViewModel>
+
+<link rel="stylesheet" href="~/css/components/corporation_requirements.css" asp-append-version="true" />
+
+@if (Model.Any() && Model.Count > 0)
+{
+    <!-- Slider main container -->
+    <div class="swiper corporation-requirements--swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            @foreach (var slide in Model)
+            {
+                <div class="swiper-slide">
+                    <a href="/CorporationJobOffer/@slide.Id" class="d-flex flex-column align-items-center gap-2">
+                        <div class="corporation-logo--container">
+                            <img src="~/images/placeholder/70.png" data-src="/api/publicApi/GetCorporationImage?id=@slide.Id" class="corporation-logo lazy-img" />
+                        </div>
+                        <div class="text-center">
+                            <p class="job-offers-count--container mb-0"><span class="ss02 job-offers-count">@slide.ActiveJobCount</span> فرصت شغلی</p>
+                            <p class="corporation-title mb-0">@slide.Title</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+}

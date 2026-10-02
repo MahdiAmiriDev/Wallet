@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [gridHeight]="gridHeight"
+                    [entityName]="entityName"
+                    title="عودت وجه"
+                    [showAddButton]="showAddButton"
+                    [showEditForm]="showEditInform"
+                    [allowEditInForm]="allowEditInForm"
+                    [allowDeleteInForm]="allowDeleteInForm">
+</app-base-list-form>

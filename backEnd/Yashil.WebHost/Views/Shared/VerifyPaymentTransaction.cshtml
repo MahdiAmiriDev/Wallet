@@ -1,0 +1,138 @@
+﻿@using Yashil.Core.Enums
+@model Yashil.Core.CustomViewModels.VerifyPaymentViewModel
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    Layout = "_Layout";
+}
+
+
+@section scripts
+{
+    <script>
+        function viewOrderList() {
+            disableButtonAndShowSnipper('btnViewOrderList');
+            window.location = '@Model.OrderListUrl';
+        }
+
+        const paymentReportEl = document.getElementById('payment-status');
+        const isPaid = '@Model.PaymentStatusType' == '@PaymentStatusTypesEnum.Paid';
+        isPaid ? paymentReportEl.classList.add('text-success') : paymentReportEl.classList.add('text-danger');
+    </script>
+
+}
+<!--start shopping-cart-->
+<div class="boxed">
+    <div class="container">
+        <div class="card2">
+            <div class="col-md-12 paddingLeftMob paddingRightMob">
+                <!-- Nav tabs -->
+                <div class="bg-white rounded rounded-2 border py-1">
+                    <ul class="nav nav-tabs px-3" role="tablist">
+                        <li role="presentation" class="active border-bottom border-2 border-danger">
+                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="d-block px-3 py-2">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                <span class="myTab text-danger">وضعیت خرید</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="profile">
+                            <div id="cart-data" class="my-4">
+                                <!--<div class="c-checkout__tab-container js-cart-tab-main ">-->
+                                <div class="container-fluid">
+                                    <div class="flex">
+                                        <div class="col-12" style="width:70%; margin:0 auto">
+                                            @if (Model.PaymentStatusType == PaymentStatusTypesEnum.WaitingResponseFromPaymentGateway)
+                                            {
+                                                <div class="verifyPayment"></div>
+                                                <div class="c-checkout-empty__title">
+                                                </div>
+                                                <p class="c-checkout-PurchaseStatus-content" style="line-height: 30px;text-align:center;">
+                                                    خرید شما ثبت شد و در انتظار تایید می باشد.<br />
+                                                    لطفا جهت اطلاع از وضعیت سفارش خود
+                                                    به لیست سفارشات مراجعه نمایید.
+                                                </p>
+                                            }
+                                            else if (Model.PaymentStatusType == PaymentStatusTypesEnum.Cancel || Model.PaymentStatusType == PaymentStatusTypesEnum.Unsuccessful)
+                                            {
+                                                <div class="cancelPayment"></div>
+                                                <div class="c-checkout-empty__title">
+                                                    کاربر گرامی پرداخت شما <b>ناموفق</b> بود...
+                                                </div>
+                                            }
+                                            else if (Model.PaymentStatusType == PaymentStatusTypesEnum.Paid)
+                                            {
+                                                <input type="hidden" value="" />
+                                                <div class="verifyPayment"></div>
+                                                <div class="c-checkout-empty__title">
+                                                    کاربر گرامی پرداخت شما <b>انجام</b> شد...
+                                                </div>
+                                            }
+
+
+                                        </div>
+
+                                        <div class="col-12" style="width:70%; margin:0 auto">
+                                            <div class="d-flex flex-column mt-4" id="payment-status">
+                                                @if (!string.IsNullOrEmpty(Model.Message))
+                                                {
+                                                    <div class="d-flex justify-content-between">
+                                                        <label for="TRStates" style="text-wrap: nowrap"> وضعیت تراکنش:</label>
+                                                        <label ID="TRStates" runat="server">@Model.Message</label>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(Model.ResNum))
+                                                {
+                                                    <div class="d-flex justify-content-between">
+                                                        <label for="ResNum" style="text-wrap: nowrap"> کد خرید:</label>
+                                                        <label ID="ResNum" runat="server">@Model.ResNum</label>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(Model.OrderNumber))
+                                                {
+                                                    <div class="d-flex justify-content-between">
+                                                        <label for="OrderNum" style="text-wrap: nowrap"> شماره سفارش:</label>
+                                                        <label ID="OrderNum" runat="server">@Model.OrderNumber</label>
+                                                    </div>
+                                                }
+
+                                                @if (!string.IsNullOrEmpty(Model.CustomerRefNum))
+                                                {
+                                                    <div class="d-flex justify-content-between">
+                                                        <label for="RRN" style="text-wrap: nowrap"> شماره بازیابی:</label>
+                                                        <label ID="RRN" runat="server">@Model.CustomerRefNum</label>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(Model.RefNum))
+                                                {
+                                                    <div class="d-flex justify-content-between">
+                                                        <label for="RefNum" style="text-wrap: nowrap"> شماره پیگیری:</label>
+                                                        <label ID="RefNum" runat="server">@Model.RefNum</label>
+                                                    </div>
+                                                }
+                                                <br />
+
+                                                <div class="c-checkout__to-shipping-sticky directionLtr" style="margin:auto;">
+                                                    <button id="btnViewOrderList" class="bg-primary verify-payment-button" onclick="viewOrderList();">
+                                                        نمایش لیست سفارشات
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

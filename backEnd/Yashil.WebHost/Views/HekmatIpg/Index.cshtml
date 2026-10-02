@@ -1,0 +1,390 @@
+﻿@addTagHelper *, DNTCaptcha.Core
+@model YashilPayment.Web.Areas.Payment.ViewModels.HekmatIpgViewModel
+@using Yashil.Infrastructure.Util;
+@{
+
+    //درصورتی که شماره کارت از سمت مدل ارسال شود مقدار آن در صفحه درگاه فقط خواندنی باشد
+    bool hekmatCardReadOnly = !string.IsNullOrEmpty(Model.CardNumber);
+    Layout = "_HekmatIpgLayout";
+}
+
+<body class="bg-gray-light">
+    <div class="container dir-rtl  mt-3  mb-3">
+        <div class="bg-white d-flex pt-1 ps-1 pe-1 rounded-2 justify-content-between align-items-center flex-column position-relative">
+            <div class="order-0 top-lg-40">
+                <div class="pt-3 pt-lg-0 text-center">
+                    <span class="fs-20-px">درگاه پرداخت اینترنتی شرکت انستیتوایزایران</span>
+                </div>
+            </div>
+            <div class="order-1 d-flex justify-content-between  align-items-center w-100 mt-2 mt-lg-0">
+                <img src="/images/HekmatIpg/hekmat.jpg" alt="Hekmat Logo" class="w-50-m-1 w-lg-auto ms-1 img-fluid" />
+                <img src="/images/HekmatIpg/inst.png" alt="Institute Logo" class="w-50-m-1 w-lg-auto me-1 img-fluid" />
+            </div>
+            <div class="order-2 overflow-hide h-50-px w-100 position-relative d-flex justify-content-center align-items-end">
+                <div class="bg-svg">
+                    <span class="text-white">www.tbao.ir</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-4">
+
+            <div class="col-md-12 col-lg-4 col-sm-12 col-xs-12 mb-3 order-2 order-lg-1 d-table-cell" style="">
+
+                <div class="beh-card merchantdetail">
+                    <div class="card-headerr">
+                        <h3>اطلاعات پذیرنده</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="merchant-container">
+                            <div class="col-lg-12 col-sm-4 merchant-logo-mobile" style="text-align:center;">
+                                <img asp-append-version="true" class="form-check-labell"
+                                     style="max-width:280px;max-height: 135px;"
+                                     src="@Url.Action("GetYashilHekmatTerminalIcon",
+                                              "YashilHekmatTerminal",
+                                              new { terminalId = Model.TerminalId })"
+                                     alt="merchantlogo">
+                                <span class="helper"></span>
+                            </div>
+
+                            <ul class="col-lg-12 col-sm-8 merchant-detail py-3" style="text-align:right;margin-top:20px;direction:rtl;">
+                                <li>نام پذیرنده : <b>@Model.MerchantName</b></li>
+                                <li class="ss02">شماره پذیرنده: <b>@Model.MerchantId</b></li>
+
+
+                                <li class="ss02">شماره ترمینال: <b>@Model.TerminalId</b></li>
+                                <li>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>آدرس وب سایت:</div>
+                                        <b class="merchantwebsite">
+                                            <span class="merchant_a" title="@Model.MerchantUrl"> @Model.MerchantUrl </span>
+                                        </b>
+                                    </div>
+
+
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="merchant-detail price" style="direction: rtl;">
+                            <li>
+                                تعداد اقساط :
+                                <span class="price-number ss02" title="@Model.InstallmentCount"> @Model.InstallmentCount قسط</span>
+                            </li>
+                            <li>
+                                مبلغ قابل پرداخت :
+                                <b class="price-number ss02">
+                                    @CurrencyUtility.FormatPrice(Model.Price)
+                                    &nbsp; تومان
+                                </b>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-8 col-sm-12 col-xs-12 mb-3 order-0 order-lg-1 d-table-cell ">
+                <div class="beh-card carddetail">
+                    <div class="background-overflow">
+                        <!--<span class="shape"></span>-->
+                    </div>
+                    <div class="card-headerr">
+                        <h3>اطلاعات کارت</h3>
+                        <div style=" display: flex; ">
+                            <div class="ss02" style=" width: 45px; "><span id="remaining-time"></span></div>
+                            : زمان باقی مانده
+
+                        </div>
+                    </div>
+                    <div class="card-body p-2 bg-logo">
+                        <form class="card-info" id="paymentForm" method="post">
+                            <input type="hidden" value="@Model.PaymentRequestToken" id="paymentRequestToken" name="paymentRequestToken" />
+                            <div class="form-group row" style="direction:rtl">
+                                <div class="col-sm-4" style="text-align:right;">
+                                    <label for="cardnumber" class="col-form-label">شماره حکمت کارت</label>
+                                    <small class="hidden-sm hidden-xs">شماره کارت 16 رقمی درج شده روی کارت را وارد نمایید</small>
+                                </div>
+                                <div class="col-md-6 col-sm-8 col-12 mobile-justify">
+                                    <div class="cardnumberbox" id="cardnumberbox">
+                                        <span class="banklogo"></span>
+                                        <input autocomplete="off" id="cardNumber" maxlength="16" name="cardNumber"
+                                               type="text" class="form-control invalid-data ss02" value="@Model.CardNumber" readonly="@hekmatCardReadOnly" onchange="checkCardNumber()"
+                                               onkeypress="return isNumberKey(event)">
+                                        <button type="button" id="card-list-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1"></button>
+                                        <div class="card-suggestionlist dropdown-menu" aria-labelledby="card-list-button" style="max-height: 349.3px;">
+                                        </div>
+                                    </div>
+                                    <span id="validationCardNumber" class="validation-error"></span>
+
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+
+
+
+                            <div class="form-group row" style="direction:rtl;">
+                                <div class="col-sm-4" style="text-align:right">
+                                    <label for="inputcvv2" class="col-form-label">کد ملی صاحب حکمت کارت</label>
+                                    <small class="hidden-sm hidden-xs">کد ملی صاحب کارت را وارد نمایید</small>
+                                </div>
+                                <div class="col-md-6 col-sm-8 mobile-justify keypad-parent">
+                                    <input autocomplete="off" id="nationalCode" maxlength="10" name="nationalCode"
+                                           type="text" class="form-control ss02" onchange="checkNationalCode()"
+                                           onkeypress="return isNumberKey(event)">
+                                    <span id="validationNationalCode" class="validation-error"></span>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group row" style="direction:rtl;">
+                                <div class="col-sm-4" style="text-align:right">
+                                    <label for="inputcvv2" class="col-form-label">شماره همراه</label>
+                                    <small class="hidden-sm hidden-xs">شماره همراه را وارد نمایید</small>
+                                </div>
+                                <div class="col-md-6 col-sm-8 mobile-justify keypad-parent">
+                                    <input autocomplete="off" id="mobile" maxlength="11" name="mobile" type="text"
+                                           class="form-control ss02" onchange="checkMobile()"
+                                           onkeypress="return isNumberKey(event)">
+                                    <span id="validationMobileNumber" class="validation-error"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row" style="direction:rtl;">
+                                <div class="col-sm-4" style="text-align:right">
+                                    <label for="inputcvv2" class="col-form-label">شماره تلفن ثابت</label>
+                                    <small class="hidden-sm hidden-xs">شماره تلفن ثابت را وارد نمایید</small>
+                                </div>
+                                <div class="col-md-6 col-sm-8 mobile-justify keypad-parent">
+
+
+
+                                    <input autocomplete="off" id="tell" maxlength="11" name="tell" type="text"
+                                           class="form-control ss02" onchange="checkTellNumber()"
+                                           onkeypress="return isNumberKey(event)">
+                                    <span id="validationTellNumber" class="validation-error"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row" style="text-align:right;direction:rtl">
+                                <div class="col-sm-4">
+                                    <label for="inputcapcha" class="col-form-label">کد امنیتی</label>
+                                    <small class="hidden-sm hidden-xs">لطفا کد امنیتی داخل کادر را وارد نمایید</small>
+                                </div>
+                                <div class="col-md-6 col-sm-8 mobile-justify keypad-parent">
+                                    <div class="d-flex flex-mobile-column flex-row justify-content-between align-items-center">
+                                        @Html.TextBoxFor(x => x.DNTCaptchaInputText, new { autocomplete = "off", @class =
+                                        "form-control mw-100-px ms-2 ss02" })
+                                        <img alt="captcha" id="dntCaptchaImg" name="dntCaptchaImg" style="height: 36px; max-width: 170px;" />
+                                        <input asp-for=DNTCaptchaToken id="DNTCaptchaToken" name="DNTCaptchaToken" type="hidden" />
+                                        <input asp-for=DNTCaptchaText id="DNTCaptchaText" name="DNTCaptchaText" type="hidden" />
+                                        <div class=" justify-content-center align-items-center">
+                                            <button type="button" id="dntCaptchaRefreshButton" name="dntCaptchaRefreshButton"
+                                                    class="form-btn capcha" onclick="doRefreshCaptcha()" title="نمايش کد جديد"></button>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.DNTCaptchaInputText, "", new { @class = "validation-error" })
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group row" style="text-align:center;direction:rtl;">
+                                <div class="col-sm-4"></div>
+                                <div class="col-md-6 col-sm-8 col-12 mobile-justify btn-submit-form">
+                                    <button type="submit" class="btn btn-perches" id="paymentButton">
+                                        <i id="spinner" style="display: none" class="fas fa-spinner fa-spin"></i>
+                                        پرداخت
+                                    </button>
+                                    <button type="button" class="btn btn-decline" id="cancelButton" onclick="cancelPayment()">انصراف</button>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+
+                            <div class="form-group row" style="margin-top: 20px;">
+                                <div class="col-md-12 col-sm-12 col-12 mobile-justify btn-submit-form">
+                                    <div class="alert alert-warning hide fade" style="text-align: right;"
+                                         id="validationErrorMessage" role="alert">
+                                        <strong>خطا!</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(@Model.AdditionalDate))
+            {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 order-1 order-lg-2 mb-3 mb-lg-0">
+                    <div class="beh-card merchantdetail">
+                        <div class="card-headerr">
+                            <h3>اطلاعات خرید</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="merchant-container">
+                                <div class="col-lg-12 col-sm-12 merchant-additionalData dir-rtl">
+                                    <label for="messageValue" class="col-form-label">@Model.AdditionalDate</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <form method="POST" action="" id="frmComplete" style="display:none">
+                <input type="hidden" name="_back" value="@Model" />
+                <input type="hidden" id="refrenceNumber" name="refrenceNumber" value="" />
+                <input type="hidden" id="reservationNumber" name="reservationNumber" value="" />
+                <input type="hidden" id="status" name="status" value="" />
+                <input type="hidden" id="message" name="message" value="" />
+                <input type="hidden" id="amount" name="amount" value="" />
+                <input type="hidden" id="callBackUrl" name="callBackUrl" value="" />
+                <input type="hidden" id="basePrice" name="basePrice" value="" />
+                <input type="hidden" id="frmCompleteUseFormula" name="useFormula" value="" />
+                <input type="hidden" id="installmentCount" name="installmentCount" value="" />
+                <button style="display:none"></button>
+            </form>
+
+            <form method="POST" action="HybridIpg/VerifyHekmatPaymentTransaction" id="frmCancelPayment" style="display:none">
+                <input type="hidden" id="canceledTransactionReservationNumber" name="reservationNumber" value="@Model.ReservationNumber" />
+                <input type="hidden" id="canceledTransactionStatus" name="status" value="2" />
+                <input type="hidden" id="canceledamount" name="amount" value="" />
+                <input type="hidden" id="canceledTransactionMessage" name="message" value="انصراف کاربر از پرداخت" />
+                <input type="hidden" id="canceledTransactionCallBackUrl" name="callBackUrl" value=@Model.CallBackUrl />
+                <input type="hidden" id="frmCancelPaymentUseFormula" name="useFormula" value="" />
+                <button style="display:none"></button>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+
+
+@section Scripts {
+    <script>
+        $("#paymentForm").submit(function (e) {
+            hideErrorMessage($('#validationErrorMessage'));
+            showSpinner($('#spinner'));
+            disableButton($('#paymentButton'));
+            disableButton($('#cancelButton'));
+
+            e.preventDefault();
+
+            if ($("#paymentForm").valid() && checkCardNumber() && checkNationalCode() &&
+                checkMobile() && checkTellNumber()) {
+                var jsonObject = Object.fromEntries(new FormData(e.target));
+                var hekmatCardReadOnly = @Json.Serialize(hekmatCardReadOnly);
+                if (hekmatCardReadOnly) {
+                    jsonObject.cardNumber = '@Model.CardNumber';
+                }
+                let formData = new FormData();
+                for (let key in jsonObject) {
+                    formData.append(key, jsonObject[key]);
+                }
+                fetch('/api/HekmatIpg/Purchase',
+                    {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.errors) {
+                            if (data.isSuccess) {
+                                debugger;
+                                $("#frmComplete").attr('action', data.url);
+                                $("#refrenceNumber").val(data.refrenceNumber);
+                                $("#reservationNumber").val(data.reservationNumber);
+                                $("#status").val(data.status);
+                                $("#callBackUrl").val(data.callBackUrl);
+                                $("#message").val(data.message);
+                                $("#amount").val(data.amount);
+                                $("#basePrice").val(data.basePrice);
+                                $("#frmCompleteUseFormula").val(data.useFormula);
+                                $("#installmentCount").val(data.installmentCount);
+
+                                document.getElementById("frmComplete").submit();
+
+                            } else {
+                                doRefreshCaptcha();
+                                $('#DNTCaptchaInputText').val('');
+                                hideSpinner($('#spinner'));
+                                enableButton($('#paymentButton'));
+                                enableButton($('#cancelButton'));
+
+                                showErrorMessage(data.message, $('#validationErrorMessage'));
+                            }
+                        }
+                    }).catch(data => {
+                        doRefreshCaptcha();
+                        $('#DNTCaptchaInputText').val('');
+                        hideSpinner($('#spinner'));
+                        enableButton($('#paymentButton'));
+                        enableButton($('#cancelButton'));
+                        showErrorMessage(data.message, $('#validationErrorMessage'));
+
+                    });
+            } else {
+                hideSpinner($('#spinner'));
+                enableButton($('#paymentButton'));
+                enableButton($('#cancelButton'));
+                doRefreshCaptcha();
+                $('#DNTCaptchaInputText').val('');
+                showErrorMessage('ورودی ها را چک نمایید', $("#validationErrorMessage"));
+                $('#spinner').css('display', 'none');
+            }
+        });
+        function cancelPayment() {
+            $("#frmCancelPaymentUseFormula").val('@Model.UseFormula');
+            document.getElementById("frmCancelPayment").submit();
+        }
+    </script>
+    <script>
+        setTimeInterval(600);
+        function setTimeInterval(expireTimeValue) {
+            var minute = 0;
+            var sec = 0;
+            if (expireTimeValue >= 60) {
+                minute = parseInt(expireTimeValue / 60);
+                sec = expireTimeValue % 60;
+            }
+            else {
+                sec = expireTimeValue;
+            }
+
+            var interval = setInterval(function () {
+
+                if (sec > 0) {
+                    sec = sec - 1;
+                }
+                if (sec == 0 && minute > 0) {
+                    minute = minute - 1;
+                    sec = 59;
+                }
+                if (sec == 0 && minute == 0) {
+                    clearInterval(interval);
+                    cancelPayment();
+
+                }
+
+                $('#remaining-time').html(minute + ":" + sec);
+
+            }, 1000);
+
+        }
+
+
+
+
+    </script>
+    }
+
+
+
+

@@ -1,0 +1,65 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" [formData]="entity">
+        <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+            <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="customerClubId" editorType="dxLookup" [label]="{text: 'باشگاه مشتریان'}"
+                  [editorOptions]="{disabled:entity.id,readOnly:entity.id ,rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false},
+                   dataSource: customerClubDataSource,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="باشگاه مشتریان اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="saleType" editorType="dxSelectBox" [label]="{text: 'نوع فروش'}"
+                  [editorOptions]="{ items: saleTypes,displayExpr:'title',valueExpr:'id'}">
+            <dxi-validation-rule type="required" message="نوع فروش اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'درصد تخفیف'}" dataField="discountPercentage"
+                  editorType='dxNumberBox'>
+            <dxi-validation-rule type="required" message="درصد تخفیف اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'درصد سود از تامین کننده'}" dataField="profitPercentage" editorType='dxNumberBox'>
+            <dxi-validation-rule type="required" message="درصد سود از تامین کننده اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد سایر کسورات'}" dataField="otherDeductionsPercentage" editorType='dxNumberBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد کارمزد'}" dataField="wagePercentage" editorType='dxNumberBox'>
+            <dxi-validation-rule type="required" message="درصد کارمزد اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+      <dxi-item [label]="{text: 'تعداد اقساط پیش فرض'}" dataField="installmentCount" editorType='dxNumberBox' >
+      </dxi-item>
+      <dxi-item [label]="{text: 'محاسبه اقساط بر اساس فرمول'}" dataField="expressionBasedInstallmentCount"
+                editorType='dxCheckBox'>
+      </dxi-item>
+      <dxi-item [label]="{text: 'تعیین اقساط در تعریف محصول'}" dataField="allowSetInstallmentInProduct"
+                editorType='dxCheckBox'>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'فرمول محاسبه قسط'}" dataField="installmentExpression" colSpan="2"
+                [editorOptions]="{disabled: !entity.expressionBasedInstallmentCount}">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'shp.Company.IsActive' | translate}" dataField="isActive" editorType='dxCheckBox'>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+        </dxi-item>
+      <dxi-item [label]="{text: 'تعداد اقساط تسویه فاکتور'}" dataField="factorInstallmentCount"
+                editorType='dxNumberBox'>
+        <dxi-validation-rule type="required"
+                             message="تعداد اقساط تسویه فاکتور اجباری می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="range" [min]="1" [max]="60"
+                             message="مقدار وارد شده بین 1 تا 60 می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+        <div *dxTemplate="let data of 'startTimeTemplate'">
+            <app-time-picker [(value)]="entity.startTime"></app-time-picker>
+        </div>
+
+        <div *dxTemplate="let data of 'endTimeTemplate'">
+            <app-time-picker [(value)]="entity.endTime"></app-time-picker>
+
+        </div>
+    </dx-form>
+</app-base-edit-form>

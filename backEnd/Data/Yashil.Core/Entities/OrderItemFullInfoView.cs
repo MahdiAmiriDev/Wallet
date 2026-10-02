@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using Yashil.Common.Core.Interfaces;
+
+namespace Yashil.Core.Entities
+{
+    public partial class OrderItemFullInfoView  
+    {
+public int? ParentId { get; set; }
+public int ApplicationId { get; set; }
+public string ApplicationTitle { get; set; }
+public int OrderId { get; set; }
+public string CardNumber { get; set; }
+public string NationalCode { get; set; }
+public int OrderItemId { get; set; }
+public string OrderNumber { get; set; }
+public int CreationDateInt { get; set; }
+public int CreationDateYearInt { get; set; }
+public int CreationDateMonthInt { get; set; }
+public string MonthTitle { get; set; }
+public int CreationDateDayInt { get; set; }
+public int? CreationDateHour { get; set; }
+public int? CreationDateMinute { get; set; }
+public int ProductSalesPlanningId { get; set; }
+public string ProductTitle { get; set; }
+public int ProductId { get; set; }
+public string CompanyTitle { get; set; }
+public int CompanyId { get; set; }
+public string RepresentationTitle { get; set; }
+public int RepresentationId { get; set; }
+public string CityTitle { get; set; }
+public string CityShortTitle { get; set; }
+public int? CityId { get; set; }
+public string ProvinceTitle { get; set; }
+public int? ProvinceId { get; set; }
+public string PaymentMethodType { get; set; }
+public string InstallmentCount { get; set; }
+public string UserName { get; set; }
+public int UserId { get; set; }
+public string SubsidyTypeTitle { get; set; }
+public int? SubsidyTypeId { get; set; }
+public int? SubsidyStatusTypeId { get; set; }
+public string SubsidyStatusTypeTitle { get; set; }
+public string MembershipTypeTitle { get; set; }
+public int MembershipTypeId { get; set; }
+public string CustomerClubTitle { get; set; }
+public int CustomerClubId { get; set; }
+public decimal Price { get; set; }
+public decimal BasePrice { get; set; }
+public decimal? DiscountAmountExclTax { get; set; }
+public decimal PriceIncDiscount { get; set; }
+public decimal? AdditionalShippingCharge { get; set; }
+public decimal? WageAmountExcTax { get; set; }
+public decimal? AmountPaidToSupplier { get; set; }
+public decimal? SataSubsidePrice { get; set; }
+public decimal? SataSubsidyPriceIncProfit { get; set; }
+public decimal? SataSubsidyPriceIncTaxIncProfit { get; set; }
+public decimal? VezaratSubsidyPrice { get; set; }
+public decimal? VezaratSubsidyPriceIncProfit { get; set; }
+public decimal? VezaratSubsidyPriceIncTaxIncProfit { get; set; }
+public decimal TaxPrice { get; set; }
+public decimal? TaxPercentage { get; set; }
+public decimal Total { get; set; }
+public decimal? TotalExclTax { get; set; }
+public decimal ProfitPrice { get; set; }
+public decimal InsurancePercentage { get; set; }
+public decimal InsurancePrice { get; set; }
+public decimal OtherDeductionsPercentage { get; set; }
+public decimal OtherDeductionsPrice { get; set; }
+public decimal ValueAddedPrice { get; set; }
+public int Quantity { get; set; }
+public bool OrderItemIsDeleted { get; set; }
+public decimal? OrderItemNetprice { get; set; }
+public int OrderStatusType { get; set; }
+public string OrderStatusTypeTitle { get; set; }
+public string OrganTitle { get; set; }
+public int? OrganId { get; set; }
+public string RecipientMobileNumber { get; set; }
+public int? RecipientBirthDate { get; set; }
+public int? RecipientAge { get; set; }
+public string ProductCode { get; set; }
+public string RepresentationCode { get; set; }
+public decimal? TotalPerformance { get; set; }
+public decimal? PurchasePriceFromSupplier { get; set; }
+public int HasBeenInvoiced { get; set; }
+public int? FactorId { get; set; }
+public string FactorCode { get; set; }
+public int? FactorGroupId { get; set; }
+public string FactorGroupTitle { get; set; }
+public int? FactorItemId { get; set; }
+public int HasBeenFactorGrouped { get; set; }
+public int CategoryGroupId { get; set; }
+public string CategoryGroupTitle { get; set; }
+public int CategoryGroupIdBaseOnProductType { get; set; }
+public string CategoryGroupTitleBaseOnProductType { get; set; }
+public int? CompanyGroupId { get; set; }
+public string CompanyGroupTitle { get; set; }
+public int? ProductTemplateId { get; set; }
+public int? ConfirmDateInt { get; set; }
+public int? FactorGroupConfirmDateInt { get; set; }
+public bool? IsGroupedByTaxCategory { get; set; }
+public string TaxCategoryCode { get; set; }
+public string MainCategoryCode { get; set; }
+public string RepresentationFullAddress { get; set; }
+public string ProductTitleForFactor { get; set; }
+public string ProductTemplateTitle { get; set; }
+public int? SubsidyId { get; set; }
+public int? SubsidyCategoryGroupId { get; set; }
+public string SubsidyCategoryGroupTitle { get; set; }
+    }
+ }

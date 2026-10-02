@@ -1,0 +1,90 @@
+<dx-tab-panel
+  #tabPanel
+  rtlEnabled="true"
+  [dataSource]="tabs"
+  [selectedIndex]="0"
+  [loop]="false"
+  [animationEnabled]="false"
+  [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'coursePlanning'" class="tab-content-edit-form">
+    <app-courses-planning-detail [showConfirm]="showConfirmOnEditForm"
+                                 [productId]="productId"
+                                 [categoryId]="categoryId"
+                                 [productSalesPlanningDescription]="this.productSalesPlanningDescription"
+                                 [companyId]="companyId"
+                                 [representationId]="representationId"
+                                 [isCourse]="isCourse"
+                                 [stayOnPageAfterSave]="true"
+                                 [selectedEntityId]="selectedEntityId"
+                                 (afterInsertRow)="rowInserted($event)"
+                                 (afterDataLoaded)="setCoursesPlanningId($event)"
+                                 entityName="productSalesPlanning"
+                                 [closeAfterSave]="false"
+                                 [isAdmin]="isAdmin"
+                                 #mainBaseEdit
+                                 (closeFormClick)="closeFormClick.emit($event)"></app-courses-planning-detail>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" [entityName]="entityName" propertyName="Description"
+                        propertyLabel="{{'shp.Product.MetaDescription'|translate}}"
+                        (afterUpdateRow)="onAfterDescriptionUpdated($event)"
+                        [emitEntityAfterUpdatedRow]="true"
+    ></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'docs'" class="tab-content-edit-form">
+    <app-entity-document-upload (docUploaded)="onDocUploaded($event)"  [appEntityName]="entityName" [docCategoryId]="12"
+                                [objectId]="selectedEntityId"></app-entity-document-upload>
+  </div>
+  <div *dxTemplate="let company of 'images'" class="tab-content-edit-form">
+    <app-entity-document-upload (docUploaded)="onDocUploaded($event)" [appEntityName]="entityName" [docCategoryId]="1067"
+                                [objectId]="selectedEntityId"></app-entity-document-upload>
+  </div>
+  <div *dxTemplate="let company of 'softwareRequirementTemplate'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" [entityName]="entityName"
+                        propertyName="SoftwareRequirement"
+                        propertyLabel="{{'shp.ProductSalesPlanning.SoftwareRequirement'|translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'hardwareRequirementTemplate'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" [entityName]="entityName"
+                        propertyName="HardwareRequirement"
+                        propertyLabel="{{'shp.ProductSalesPlanning.HardwareRequirement'|translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'usedForTemplate'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" [entityName]="entityName" propertyName="UsedFor"
+                        propertyLabel="{{'shp.ProductSalesPlanning.UsedFor'|translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'preRegistrationTemplate'" class="tab-content-edit-form">
+    <app-pre-registration-list
+      *ngIf="!lmsMode"
+      [productSalesPlanningId]="selectedEntityId">
+    </app-pre-registration-list>
+  </div>
+  <div *dxTemplate="let company of 'mediaSessionsTemplate'" class="tab-content-edit-form">
+    <app-media-session-custom-list
+      [productSalesPlanningId]="selectedEntityId"
+    ></app-media-session-custom-list>
+  </div>
+  <div *dxTemplate="let company of 'productSalesPlanningTeacherTemplate'" class="tab-content-edit-form">
+    <app-product-sales-planning-teacher-list
+      [representationId]="representationId"
+      [productSalesPlanningId]="selectedEntityId"
+    ></app-product-sales-planning-teacher-list>
+  </div>
+  <div *dxTemplate="let itemGroup of 'itemGroupTemplate'" class="tab-content-edit-form">
+ <app-product-sales-planning-item-group-list [productSalesPlanningId]="selectedEntityId" >
+ </app-product-sales-planning-item-group-list>
+  </div>
+  <div class="tab-content-edit-form" *dxTemplate="let company of 'completedOrderItems'">
+    <app-order-item-list
+      *ngIf="!lmsMode"
+      [showRepresentationFilter]="false"
+      [showCompletedOrderStatus]="true"
+      [loadAfterSetFilter]="true"
+      [showAmountColumns]="false"
+      [isForSelectReadOnly]="true"
+      [allowGrouping]="false"
+      [productSalesPlanningId]="selectedEntityId"
+    >
+    </app-order-item-list>
+  </div>
+</dx-tab-panel>

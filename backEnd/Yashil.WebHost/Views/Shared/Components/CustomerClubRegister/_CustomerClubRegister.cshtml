@@ -1,0 +1,57 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.CustomerClubListViewModel>
+<div class="form-group  ">
+    <div class="row form-group  fullwidth">
+        <div class="c-checkout__to-shipping-sticky" style="text-align:right; direction:rtl;">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="custom-control custom-radio" style="padding-left: 1.3rem !important;">
+
+
+                        <input autocomplete="off"
+                               data-val="true"
+                               data-val-required="لطفا یک باشگاه را انتخاب کنید"
+                               id="r_@item.Id"
+                               value=@item.Id
+                               name="CustomerClubId"
+                               type="radio"
+                               class="input-validation-error"
+                               aria-describedby="CustomerClubId-error"
+                               aria-invalid="true"
+                               onclick="loadRepresentation(@item.Id)" style="vertical-align: middle;">
+                        <label for="r_@item.Id">
+                            @item.Title
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-group  ">
+            <div class="customLable">
+                <span class="validationMessage field-validation-error" data-valmsg-for="CustomerClubId" data-valmsg-replace="true">
+                    <span id="CustomerClubId-error"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="custommerClubInfoContainer"></div>
+<script>
+    var lastCustommerClubId = null;
+    function loadRepresentation(custommerClubId) {
+        if (lastCustommerClubId && lastCustommerClubId == custommerClubId) {
+            return;
+        }
+        lastCustommerClubId = custommerClubId;
+        $('#custommerClubInfoContainer').append($('<option></option>').html('درحال بارگذاری...'));
+        $('#custommerClubInfoContainer').load('@Url.Action("CustomerClubMembershipVerify", "CustomerClub")' + '?custommerClubId=' + custommerClubId,
+            function (response, status, xhr) {
+                    var $form = $("#registerForm");
+                    $form.unbind();
+                    $form.data("validator", null);
+                    $.validator.unobtrusive.parse(document);
+            });
+    }
+</script>

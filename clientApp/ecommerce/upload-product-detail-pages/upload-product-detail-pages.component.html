@@ -1,0 +1,85 @@
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      entityName="product"
+                      [resourceName]="resourceName"
+                      customListUrl="Product/GetUploadedProductDetailPagesFile"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [customButtons]="customButtons"
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      (customButtonClicked)="showUploadForm()"
+                      [showAddButton]="false">
+  </app-base-list-form>
+</app-busy-indicator>
+<dx-popup
+  *ngIf="showDialog"
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری صفحات توضیحات محصول"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="true"
+>
+  <div class="alert alert-info" dir="rtl">
+    لطفا با زدن دکمه انتخاب فایل، فایل فشرده zip را از روی کامپیوتر شخصی خود انتخاب کنید
+  </div>
+  <div class="alert alert-info" dir="rtl">
+    کاربر گرامی قبل از بارگذاری فایل فشرده صفحات توضیحات محصول لطفا قوانین زیر را مطالعه و در صورت پذیرش اقدام به
+    بارگذاری نمایید:
+    <br/>
+    <span
+      style="font-weight: bold" dir="rtl">"مسئولیت کنترل و محتوای بارگذاری شده بر عهده فردی است که اقدام به بارگذاری می کند." </span>
+    <br/>
+    <span style="font-weight: bold">"بدیهی است که در صورت بارگذاری فایل های دارای محتوای نامناسب، کاربری که بارگذاری را انجام داده پاسخگو و مسئول خواهد بود." </span>
+    <br/>
+    <span style="font-weight: bold">"فرمت فایل بارگذاری باید zip باشد" </span>
+    <br/>
+    <span
+      style="font-weight: bold">"محتوای فایل زیپ نباید داخل فولدر دیگری باشد و فایل صفحات دارای فرمت html باشد" </span>
+    <br/>
+    <br/>
+    <dx-check-box text="تمامی موارد بالا را مطالعه نمودم و قوانین ذکر شد را رعایت می کنم."
+                  [(value)]="acceptRules"></dx-check-box>
+  </div>
+  <form>
+    <dx-form id="form"
+             [colCount]="1" [formData]="productDetailPagesFileModel" enctype="multipart/form-data">
+
+      <dxi-item [template]="'fileTemplate'"></dxi-item>
+      <div *dxTemplate="let data of 'fileTemplate'">
+        <dx-file-uploader
+            #fileUploader
+            name="productDetailPagesFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            [class]="'uploaderButtonClass'"
+            [disabled]="!acceptRules"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.zip']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="'api/product/UploadedProductDetailPagesFile'"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+        </dx-file-uploader>
+      </div>
+    </dx-form>
+  </form>
+  <style>
+    .uploaderButtonClass /deep/ .dx-fileuploader-button {
+      color: #0b2e13;
+      background: #0ABC76;
+      cursor: pointer;
+    }
+
+  </style>
+</dx-popup>
+
+

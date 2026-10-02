@@ -1,0 +1,9 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [showAddButton]="false"
+                    [allowEditInForm]="false"
+                    [entityName]="entityName"
+                 >
+</app-base-list-form>

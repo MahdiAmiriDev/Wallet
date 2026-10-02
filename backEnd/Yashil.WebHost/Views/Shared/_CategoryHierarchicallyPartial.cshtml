@@ -1,0 +1,82 @@
+﻿@using YashilCommerce.Web.Areas.ECommerce.ViewModels;
+@model CategoryHierarchicallyModel
+@if (Model.CategoryHierarchical != null)
+{
+    ShowCategoryTree(Model.CategoryHierarchical);
+}
+else
+{
+    ShowCategoryTree(Model.CategoryHierarchicalList);
+}
+
+
+@functions {
+
+    public void ShowCategoryTree(List<CategoryHierarchicalViewModel> categoryList)
+    {
+        @foreach (var item in categoryList)
+        {
+            GenerateTree(item);
+
+        }
+    }
+
+    public void ShowCategoryTree(CategoryHierarchicalViewModel categoryList)
+    {
+        if (categoryList.SubCategories != null && categoryList.SubCategories.Any())
+        {
+            @foreach (var item in categoryList.SubCategories)
+            {
+                GenerateTree(item);
+
+            }
+        }
+        else
+        {
+            <a class="nav-link fs-13 " href="@categoryList.Href">
+                @categoryList.Title
+            </a>
+        }
+    }
+
+    public void GenerateTree(CategoryHierarchicalViewModel item)
+    {
+        <li class="nav-item has-submenu "  onclick="openNav(parent@(item.Id))">
+            <a class="nav-link fs-13 " href="@item.Href" style="filter:contrast(0.1)">
+                @if (item.SubCategories != null && item.SubCategories.Any())
+                {
+                    <img src="/images/caret-left-fill.svg" alt="drop-dwon-icon" id="parent@(item.Id)" />
+                }
+                @item.Title
+            </a>
+            @if (item.SubCategories != null && item.SubCategories.Any())
+            {
+            <ul class="submenu collapse ">
+                @foreach (var subItems in item.SubCategories)
+                {
+                    <li class="has-submenu">
+                            <a class="nav-link fs-13 fw-bold" href="@subItems.Href">
+                            @if (subItems.SubCategories != null && subItems.SubCategories.Any())
+                            {
+                                <img src="/images/caret-left-fill.svg" alt="drop-dwon-icon" style="filter:contrast(0.1)" />
+                            }
+                            @subItems.Title
+                        </a>
+                        <ul class="submenu collapse show">
+                            @if (subItems.SubCategories != null && subItems.SubCategories.Any())
+                            {
+                                ShowCategoryTree(subItems.SubCategories);
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            }
+        </li>
+    }
+
+}
+
+
+
+

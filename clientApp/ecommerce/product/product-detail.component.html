@@ -1,0 +1,417 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+        <dxi-item [label]="{text: 'کد'}" dataField="code">
+        </dxi-item>
+        <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+            <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال رایگان'}" dataField="isFreeShipping" editorType='dxCheckBox'>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'گروه کالای فروش گروهی'}" dataField="isGroupProduct" editorType='dxCheckBox'>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'فروش توسط چند نماینده'}" dataField="allowMultyVendor" editorType='dxCheckBox'>
+        </dxi-item>
+
+        <dxi-item dataField="companyId" editorType="dxLookup" [label]="{text: 'مرکز'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: companyDataSource,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="مرکز اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item dataField="appEntityId" editorType="dxLookup" [label]="{text: 'نوع محصول'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: appEntityDataSource,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="نوع محصول اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'قابل مشاهده به صورت جداگانه'}" dataField="visibleIndividually"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات کوتاه'}" dataField="shortDescription" editorType='dxTextArea'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات کامل'}" dataField="fullDescription" editorType='dxTextArea'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیح مدیر'}" dataField="adminComment" editorType='dxTextArea'>
+        </dxi-item>
+
+        <dxi-item dataField="productTemplateId" editorType="dxLookup" [label]="{text: 'ProductTemplateId'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: productTemplateDataSource,displayExpr:'title',valueExpr:'id' }">
+        </dxi-item>
+        <dxi-item [label]="{text: 'نمایش در صفحه اصلی'}" dataField="showOnHomepage" editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'کلمات کلیدی'}" dataField="metaKeywords">
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات'}" dataField="metaDescription" editorType='dxTextArea'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'MetaTitle'}" dataField="metaTitle">
+        </dxi-item>
+        <dxi-item [label]="{text: 'اجازه ثبت نظر'}" dataField="allowCustomerReviews" editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'امتیاز مشتری به محصول'}" dataField="approvedRatingSum" editorType='dxNumberBox'>
+            <dxi-validation-rule type="required" message="امتیاز مشتری به محصول اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'مجموع امتیازات منفی مشتریان'}" dataField="notApprovedRatingSum"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="مجموع امتیازات منفی مشتریان اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'SubjectToAcl'}" dataField="subjectToAcl" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'محدود به فروشگاه'}" dataField="limitedToStores" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شماره تجاری جهانی'}" dataField="gTIN">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد کارخانه'}" dataField="manufacturerPartNumber">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کارت هدیه'}" dataField="isGiftCard" editorType='dxCheckBox'>
+        </dxi-item>
+
+        <dxi-item dataField="giftCardTypeId" editorType="dxLookup" [label]="{text: 'نوع کارت هدیه'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: giftCardTypeDataSource,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="نوع کارت هدیه اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'OverriddenGiftCardAmount'}" dataField="overriddenGiftCardAmount"
+                  editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'RequireOtherProducts'}" dataField="requireOtherProducts" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'RequiredProductIds'}" dataField="requiredProductIds">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'AutomaticallyAddRequiredProducts'}" dataField="automaticallyAddRequiredProducts"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'محصولات قابل دانلود'}" dataField="isDownload" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'محصول دانلودی'}" dataField="downloadId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'دانلود نامحدود'}" dataField="unlimitedDownloads" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداکثر دانلود ها'}" dataField="maxNumberOfDownloads" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="حداکثر دانلود ها اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تعداد روز دانلود'}" dataField="downloadExpirationDays" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="downloadActivationType" editorType="dxSelectBox" [label]="{text: 'نوع فعال سازی دانلود'}"
+                  [editorOptions]="{ items: downloadActivationTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'دارای فایل نمونه'}" dataField="hasSampleDownload" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'فایل نمونه'}" dataField="sampleDownloadId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'دارای توافقنامه کاربری'}" dataField="hasUserAgreement" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'متن توافقنامه کاربری'}" dataField="userAgreementText" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'دوره ای'}" dataField="isRecurring" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'RecurringCycleLength'}" dataField="recurringCycleLength" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="RecurringCycleLength اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="recurringCyclePeriodType" editorType="dxSelectBox"
+                  [label]="{text: 'RecurringCyclePeriodType'}"
+                  [editorOptions]="{ items: recurringCyclePeriodTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'RecurringTotalCycles'}" dataField="recurringTotalCycles" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="RecurringTotalCycles اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'اجاره ای'}" dataField="isRental" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'طول دوره اجاره'}" dataField="rentalPriceLength" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="طول دوره اجاره اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'دوره اجاره'}" dataField="rentalPricePeriodId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال فعال شده'}" dataField="isShipEnabled" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال به صورت جداگانه'}" dataField="shipSeparately" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'معاف از مالیات'}" dataField="isTaxExempt" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="taxCategoryId" editorType="dxLookup" [label]="{text: 'دسته مالیات'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">
+
+            <dxi-validation-rule type="required" message="دسته مالیات اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال رایگان'}" dataField="forceFreeShipping" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارتباطات، پخش و خدمات الکترونیکی'}"
+                  dataField="isTelecommunicationsOrBroadcastingOrElectronicServices" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'MinStockQuantity'}" dataField="minStockQuantity" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'LowStockActivityId'}" dataField="lowStockActivityId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'NotifyAdminForQuantityBelow'}" dataField="notifyAdminForQuantityBelow"
+                  editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'BackorderModeId'}" dataField="backorderModeId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'AllowBackInStockSubscriptions'}" dataField="allowBackInStockSubscriptions"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نمایش تعداد موجودی'}" dataField="displayStockQuantity" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'استفاده از چند انبار'}" dataField="useMultipleWarehouses" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نمایش موجود بودن در انبار'}" dataField="displayStockAvailability"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداقل تعداد کالا سبد'}" dataField="orderMinimumQuantity" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="حداقل تعداد کالا سبد اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداکثر تعداد کالا در سبد'}" dataField="orderMaximumQuantity"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="حداکثر تعداد کالا در سبد اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'بسته تعداد'}" dataField="allowedQuantities">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'AllowAddingOnlyExistingAttributeCombinations'}"
+                  dataField="allowAddingOnlyExistingAttributeCombinations" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'غیر قابل استرداد'}" dataField="notReturnable" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'غیر فعال کردن دکمه خرید'}" dataField="disableBuyButton" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'غیر فعال کردن افزودن به لیست علاقه مندی'}" dataField="disableWishlistButton"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'پیش سفارش'}" dataField="availableForPreOrder" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تماس برای قیمت'}" dataField="callForPrice" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداقل قیمت(ریال) مجاز برای فروش'}" dataField="minPrice" editorType='dxNumberBox' [editorOptions]="{format:'#,##0'}">
+            <dxi-validation-rule type="required"
+                                 message="حداقل قیمت مجاز برای فروش اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداکثر قیمت(ریال) مجاز برای فروش'}" dataField="maxPrice" editorType='dxNumberBox' [editorOptions]="{format:'#,##0'}">
+            <dxi-validation-rule type="required"
+                                 message="حداکثر قیمت مجاز برای فروش اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'مشتری قیمت را وارد کند'}" dataField="customerEntersPrice" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداقل مقدار مشتری'}" dataField="minimumCustomerEnteredPrice"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="حداقل مقدار مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'حداکثر مقدار مشتری'}" dataField="maximumCustomerEnteredPrice"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="حداکثر مقدار مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'قیمت پایه فعال'}" dataField="basePriceEnabled" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'BasePriceAmount'}" dataField="basePriceAmount" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="basePriceUnitType" editorType="dxSelectBox" [label]="{text: 'BasePriceUnitType'}"
+                  [editorOptions]="{ items: basePriceUnitTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'BasePriceBaseAmount'}" dataField="basePriceBaseAmount" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="basePriceBaseUnitType" editorType="dxSelectBox" [label]="{text: 'BasePriceBaseUnitType'}"
+                  [editorOptions]="{ items: basePriceBaseUnitTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'انتخاب به عنوان جدید'}" dataField="markAsNew" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'HasTierPrices'}" dataField="hasTierPrices" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'HasDiscountsApplied'}" dataField="hasDiscountsApplied" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'وزن'}" dataField="weight" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="وزن اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'طول'}" dataField="length" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="طول اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'عرض'}" dataField="width" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="عرض اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارتفاع'}" dataField="height" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="ارتفاع اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تاریخ شروع در دسترس بودن'}" dataField="availableStartDate">
+          <ng-persian-datepicker [dateInitValue]="false"
+                                 (dateOnSelect)="entity.availableStartDate=convertDateToInt($event);">
+            <input type="text"
+                   [formControl]="availableStartDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ شروع در دسترس بودن"
+                   [ngModel]="entity.availableStartDate  | intToStringDate"/>
+          </ng-persian-datepicker>
+<!--            <dp-date-picker-->
+<!--                    [config]="datePickerConfig"-->
+<!--                    dir="rtl"-->
+<!--                    mode="day"-->
+<!--                    placeholder="تاریخ شروع در دسترس بودن"-->
+<!--                    theme="dp-material"-->
+<!--                    [ngModel]="entity.availableStartDate | intToStringDate"-->
+<!--                    (ngModelChange)="entity.availableStartDate=convertDateToInt($event)">-->
+<!--            </dp-date-picker>-->
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تاریخ انتهای در دسترس بودن'}" dataField="availableEndDate">
+          <ng-persian-datepicker [dateInitValue]="false"
+                                 (dateOnSelect)="entity.availableEndDate=convertDateToInt($event);">
+            <input type="text"
+                   [formControl]="availableEndDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ انتهای در دسترس بودن"
+                   [ngModel]="entity.availableEndDate  | intToStringDate"/>
+          </ng-persian-datepicker>
+<!--            <dp-date-picker-->
+<!--                    [config]="datePickerConfig"-->
+<!--                    dir="rtl"-->
+<!--                    mode="day"-->
+<!--                    placeholder="تاریخ انتهای در دسترس بودن"-->
+<!--                    theme="dp-material"-->
+<!--                    [ngModel]="entity.availableEndDate | intToStringDate"-->
+<!--                    (ngModelChange)="entity.availableEndDate=convertDateToInt($event)">-->
+<!--            </dp-date-picker>-->
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ترتیب نمایش'}" dataField="displayOrder" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="ترتیب نمایش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'انتشار داده شده'}" dataField="published" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+                  [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>

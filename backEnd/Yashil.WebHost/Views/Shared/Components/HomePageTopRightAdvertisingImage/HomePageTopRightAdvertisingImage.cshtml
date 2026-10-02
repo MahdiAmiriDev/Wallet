@@ -1,0 +1,24 @@
+﻿@model List<Yashil.Core.CustomViewModels.Cms.YashilCmsCustomViewModel>
+
+@if (Model.Any())
+{
+    <div class="home-page-right--four-banners">
+        @foreach (var item in Model)
+        {
+            <div class="g-col-6">
+                <!-- Skeleton Loading Placeholder for Advertisement Item -->
+                <div class="skeleton-loading--container w-100 overflow-hidden" style="border-radius: 8px">
+                    <div class="skeleton skeleton-line hero-advertisement-image--skeleton"></div>
+                </div>
+                <!-- Skeleton Loading Placeholder for Advertisement Item /-->
+                <!-- Advertisement Item -->
+                <a asp-append-version="true" href="@(string.IsNullOrEmpty(item.Url) ? "#":item.Url)" target="_blank" class="skeleton-content--container d-none">
+                    <img data-src="api/publicApi/GetHomePageTopRightImage?id=@item.Id" class="main-baners-top-home w-100"
+                         alt="@item.Title" />
+                </a>
+                <!-- Advertisement Item /-->
+            </div>
+        }
+    </div>
+
+}

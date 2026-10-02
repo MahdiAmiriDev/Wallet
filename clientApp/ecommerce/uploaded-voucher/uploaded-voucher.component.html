@@ -1,0 +1,91 @@
+<app-busy-indicator>
+  <div class="col-12">
+    <div class="row" style="padding-bottom: 5px">
+      <div class="col-7">
+        <app-company-voucher-type-filter
+          (selectedCompanyChanged)="selectedCompanyChanged($event)"
+          (selectedVoucherTypeChanged)="selectedVoucherTypeChanged($event)">
+        </app-company-voucher-type-filter>
+      </div>
+      <div class="col-3">
+        <div style="float: right; margin-top: 4px; font-size: 14px;text-align: right">
+          <dx-button
+            (click)="downloadSampleExcel()"
+            icon="download"
+            text="دانلود نمونه اکسل"
+            type="default"
+            style="font-size: 11px;text-align:right"
+            hint="دانلود نمونه اکسل">
+          </dx-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-base-list-form #listForm
+                      entityName="UploadVoucher"
+                      customListUrl="UploadedVoucher/GetTransactionFiles"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [customButtons]="customButtons"
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      [showAddButton]="false"
+                      (customButtonClicked)="customButtonClicked($event)">
+  </app-base-list-form>
+</app-busy-indicator>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری کد کوپن"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetVoucherFileModel()">
+  <div *ngIf="!showList">
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+    <div class="alert alert-info">
+      کاربر گرامی قبل از بارگذاری فایل اکسل کد کوپن لطفا موارد زیر را رعایت فرمایید:
+      <br/>
+      <span
+        style="font-weight: bold">"در ستون کد کوپن کد های مربوط به نوع کوپن انتخابی را وارد نمایید" </span>
+    </div>
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="voucherFileModel" enctype="multipart/form-data">
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+        <div *dxTemplate="let data of 'fileTemplate'">
+          <dx-file-uploader
+            #fileUploader
+            name="tempVoucherFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="uploadUrl"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+          </dx-file-uploader>
+        </div>
+
+      </dx-form>
+    </form>
+  </div>
+  <app-uploaded-voucher-verify *ngIf="showList" [invalidItem]="invalidItem"
+                             [companyId]="companyId"
+                             [message]="message"
+                             [voucherTypeId]="voucherTypeId"
+                             (afterFinalRegistration)="afterFinalRegistration()">
+
+  </app-uploaded-voucher-verify>
+</dx-popup>
+
+

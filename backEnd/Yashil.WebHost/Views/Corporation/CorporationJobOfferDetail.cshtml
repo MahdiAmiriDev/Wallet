@@ -1,0 +1,14 @@
+﻿@model int
+@{
+    Layout = "_Layout";
+}
+
+@* JobOffer Detail Header section *@
+@await Component.InvokeAsync("CorporationDetailHeader", new { Id = Model, showCorporationIntroduction = true })
+
+
+
+@* cards JobOffer List section *@
+<div class="container border border-2 bg-white rounded">
+    @await Component.InvokeAsync("JobOfferList", new {  corporationIds = new List<int?>(){Model},isCorporatinJobOfferView = true,showJobOfferFilterSection = false  })
+</div>

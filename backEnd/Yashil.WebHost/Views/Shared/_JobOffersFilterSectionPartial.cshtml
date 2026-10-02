@@ -1,0 +1,167 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model JobOfferFilterDetailModel
+
+@if (Model.FilterOptions.Any())
+{
+    <details class="filters-section--detail open" open>
+        <summary>
+            <input type="checkbox" name="filter" id="@Model.FilterSectionType-@Model.DisplayMode" class="filter-section--checkbox" checked />
+            <label for="@Model.FilterSectionType-@Model.DisplayMode" class="filter-section--title">
+                <div class="filter-section--title d-flex align-items-center gap-1">
+                    @{
+                        switch (Model.FilterSectionType)
+                        {
+                            case "GenderTypeIds":
+                                // Use the text block below to separate html elements from code
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M10 16v5" />
+                                        <path d="M14 16v5" />
+                                        <path d="M9 9h6l-1 7h-4z" />
+                                        <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+                                        <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+                                        <path d="M12 4m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    </svg>
+                                    <p class="mb-0">
+                                        جنسیت
+                                    </p>
+                                </text>
+                                break;  // Always break each case
+                            case "CooperationTypeIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                        <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                        <path d="M9 14h.01" />
+                                        <path d="M9 17h.01" />
+                                        <path d="M12 16l1 1l3 -3" />
+                                    </svg>
+                                    <p class="mb-0">
+                                        نوع قرارداد
+                                    </p>
+                                </text>
+                                break;
+                            case "SalaryTypeIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z" />
+                                        <path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                                    </svg>
+                                    <p class="mb-0">
+                                       حداقل حقوق
+                                    </p>
+                                </text>
+                                break;
+                            case "EducationGradeIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        <path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" />
+                                        <path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" />
+                                        <path d="M6 9l12 0" />
+                                        <path d="M6 12l3 0" />
+                                        <path d="M6 15l2 0" />
+                                    </svg>
+                                    <p class="mb-0">
+                                        مدرک تحصیلی
+                                    </p>
+                                </text>
+                                break;
+                            case "MilitaryServiceStatusTypeIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M17 7v13h-10v-13l5 -3z" />
+                                        <path d="M10 13l2 -1l2 1" />
+                                        <path d="M10 17l2 -1l2 1" />
+                                        <path d="M10 9l2 -1l2 1" />
+                                    </svg>
+                                    <p class="mb-0">
+                                        وضعیت خدمت سربازی
+                                    </p>
+                                </text>
+                                break;
+                            case "JobCoCategoryIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M13 5h8" />
+                                        <path d="M13 9h5" />
+                                        <path d="M13 15h8" />
+                                        <path d="M13 19h5" />
+                                        <path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                        <path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                                    </svg>
+                                    <p class="mb-0">
+                                       دسته بندی شغلی
+                                    </p>
+                                </text>
+                                break;
+                            case "ProvinceIds":
+                                <text>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" stroke-width="1.8" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                                    </svg>
+                                    <p class="mb-0">
+                                       استان
+                                    </p>
+                                </text>
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                </div>
+                <div class="filter-section--icon rotate">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M6 9l6 6l6 -6" />
+                    </svg>
+                </div>
+            </label>
+        </summary>
+        <ul class="filters-container d-flex flex-column gap-2">
+            @foreach (var filter in Model.FilterOptions)
+            {
+                <li class="filter-item">
+                    <div class="checkbox-wrapper d-flex">
+                        <span class="checkbox">
+                            <input id="@filter.Id-@Model.DisplayMode" class="filter-checkbox" type="checkbox" name="@Model.FilterSectionType" value="@filter.Id" />
+                            <svg>
+                                <use xlink:href="#checkbox" class="checkbox"></use>
+                            </svg>
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+                            <symbol id="checkbox" viewBox="0 0 22 22">
+                                <path fill="none" stroke="currentColor" d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2" />
+                            </symbol>
+                        </svg>
+                    </div>
+                    <label for="@filter.Id-@Model.DisplayMode" class="filter-title">@filter.Title</label>
+                </li>
+            }
+        </ul>
+        @if (Model.FilterOptions.Count > 4)
+        {
+            <button type="button" class="show-more-filters--button">
+                <svg class="pe-none" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor">
+                    <use href="../images/icons/general.svg#plus" />
+                </svg>
+                <p class="mb-0 pe-none">موارد بیشتر</p>
+            </button>
+            <button type="button" class="show-less-filters--button d-none">
+                <svg class="pe-none" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l14 0" />
+                </svg>
+                <p class="mb-0 pe-none">موارد کمتر</p>
+            </button>
+        }
+    </details>
+}

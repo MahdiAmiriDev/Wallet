@@ -1,0 +1,143 @@
+﻿@using Microsoft.IdentityModel.Tokens
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.ResumeFillHelpViewModel
+@{
+    Layout = "_Layout";
+}
+
+@* section one *@
+<section class="mb-5 m-2 pt-3 pt-lg-5 pt-xxl-2 master-section-one-employement">
+    <div class="container">
+        <div class="w-100 d-block d-md-flex justify-content-around align-items-center bg-white rounded-3 section-one-employement">
+            <div class="p-3 w-50 section-one-employement-right">
+                <h1 class="fw-bold fs-30">سامانه اشتغال</h1>
+                <p class="text-muted section-one-employement-text fs-20">
+                    کاربر گرامی جهت ایجاد رزومه در سامانه اشتغال، از طریق لینک زیر اقدام نمایید.
+                    <a class="text-danger2 text-nowrap" href="~/pdf/راهنمای ثبت نام طرح اشتغال.pdf" target="_blank" asp-append-version="true">
+                        <u> >> دریافت فایل راهنما <<</u>    
+
+                    </a>
+                </p>
+                <div class="d-block d-xl-flex align-items-center gap-2">
+                    <a type="button" href="@Url.Action("Resume", "Home")" class="btn btn-lg fs-18 btn-employement mx-auto d-flex align-items-center justify-content-between mx-md-0 position-relative gap-2">
+                        <p class="mb-0 text-nowrap" style="font-size: inherit; color: inherit">ایجاد رزومه جهت اشتغال</p>
+                        <div class="position-relative" style="min-width: 45px; height:30px">
+                            <div id="moving-arrow">
+                                <svg viewBox="0 0 24 24" width="30" heigth="30" stroke="currentColor" stroke-width="1.5">
+                                    <use href="../images/icons/general.svg#arrow-narrow-left" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    @if (Model.HasUserAlreadyFilledOutResume)
+                    {
+                        <a type="button" href="@Url.Action("TalentExam", "Home")" class="btn btn-lg fs-18 btn-employement-telent mx-auto d-flex align-items-center justify-content-between mx-md-0 position-relative gap-2">
+                            <div>
+                                <p class="mb-0 text-nowrap" style="font-size: inherit; color: inherit">شروع آزمون استعدادیابی</p>
+                            </div>
+                            <div class="position-relative" style="min-width: 45px; height:30px">
+                                <div id="moving-arrow">
+                                    <svg viewBox="0 0 24 24" width="30" heigth="30" stroke="currentColor" stroke-width="1.5">
+                                        <use href="../images/icons/general.svg#arrow-narrow-left" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="w-75 section-one-employement-left ">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+@* section two *@
+<section class="mt-2">
+    <div class="container">
+        <div class="w-75 bg-white mx-auto d-block section-two-employement">
+            <div class="pt-2 w-100 d-flex justify-content-center align-items-center ">
+                <h3 class=" fs-30 fw-bold section-two-employement-title ">آموزش متصل به مهارت و مهارت منجر به اشتغال </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* section three *@
+<section class="m-2 mt-0">
+    <div class="container">
+        <div class="w-100 bg-white rounded-3 section-three-employement">
+            <div class="p-3 px-2 p-md-3 px-md-5 w-100">
+                <p class="px-3 px-md-5 text-muted section-three-employement-text fs-20">
+                    در راستای تحقق منویات مقام معظم رهبری و فرماندهی معظم کل قوا «مدظله العالی»
+                    <span class="fw-bold fs-22" style="color:forestgreen">
+                        معاونت نیروی انسانی ستاد کل ن.م-اداره خدمات و حکمت
+                    </span>
+                    جهت ترویج و تقویت فرهنگ کار و حمایت از تولید داخلی و اشتغال آفرینی بر پایه دانش بنیان برای
+                    <span class="fw-bold fs-22" style="color:orangered">فرزندان کارکنان  و بازنشستگان</span>
+                    معزز نیروهای مسلح، در نظر است آموزش های مورد نظر توسط
+                    <a target="_blank" href="@Url.Action("Index","About")" class="fw-bold fs-22" style="color: rgb(0, 112, 192);">شرکت انستیتو ایزایران </a>به عنوان مجری برگزار گردیده و پس از کسب مهارت های مورد تقاضا، زمینه اشتغال فراهم گردد.
+                    لذا <span class="fw-bold fs-22" style="color: darkorange">سامانه اشتغال</span>، در راستای جمع آوری رزومه متقاضیان، استعداد یابی،استعداد سنجی و برگزاری دوره های مهارتی متناسب با استعدادهای اشخاص طراحی گردیده است.
+
+                </p>
+
+            </div>
+            <div class="w-100">
+                <img class="w-100 employement-image3 rounded-3 mx-auto d-block" src="~/images/samane-eshteghal-map.webp" alt="resume fill help Institute ISIRAN " />
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+@* section four *@
+<section class="m-2 mt-5">
+    <div class="container">
+        <div class="w-100 bg-white rounded-3 ">
+            <img class="employement-image2 w-100 d-none d-lg-block" src="~/images/employement.jpg" alt="resume fill help Institute ISIRAN desktop mode" />
+            <img class="employement-image2 w-100 d-block d-lg-none" src="~/images/employement-mobile.jpg" alt="resume fill help Institute ISIRAN mobile mode" />
+        </div>
+
+    </div>
+</section>
+
+
+
+@if (! string.IsNullOrEmpty(Model.Message))
+{
+    <div id="resume-fill-help-banner" class="d-block w-100 hide-slow">
+
+        <a id="close-btn-banner-resume-fill-help" onclick="closingBannerInHome()">
+            <svg id="square-rounded-x" xmlns="http://www.w3.org/2000/svg" width="32" heigth="32" stroke="#000" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <title>square-rounded-x</title>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" fill="white" />
+                <path d="M10 10l4 4m0 -4l-4 4" stroke="black" />
+
+            </svg>
+
+        </a>
+        <a class="text-justify w-100" href="">
+            <p class=" w-100 BannerInResumefillhelp p-2 text-white ">@Html.Raw(Model.Message)</p>
+        </a>
+    </div>
+}
+
+<script>
+    var mobileBannerInHome = document.getElementById('resume-fill-help-banner');
+    window.addEventListener("load",
+        function () {
+            mobileBannerInHome.classList.remove("hide-slow");
+            mobileBannerInHome.classList.add("show-slow");
+        });
+
+    function closingBannerInHome() {
+        mobileBannerInHome.classList.remove("show-slow");
+        mobileBannerInHome.classList.add("hide-slow");
+    }
+</script>

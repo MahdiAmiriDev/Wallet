@@ -1,0 +1,11 @@
+<dx-form id="form" style="padding-top: 6px" [colCount]="1" #detailForm [formData]="entity">
+  <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea' [editorOptions]="{height:150}"
+            colSpan="5">
+  </dxi-item>
+</dx-form>
+<div style="padding: 16px">
+  <dx-button text="رد فاکتور" class="dx-button-danger" (onClick)="rejectFactorVerification()"></dx-button>
+</div>
+<dx-button text="انصراف" (onClick)="cancelForm()" class="dx-button-default"
+           style="margin: 6px;"></dx-button>
+

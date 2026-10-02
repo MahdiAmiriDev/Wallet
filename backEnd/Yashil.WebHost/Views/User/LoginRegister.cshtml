@@ -1,0 +1,67 @@
+﻿@model string
+@{
+    Layout = "_BaseLayout";
+}
+<div class="d-flex align-items-center justify-content-center lh-lg vh-100 ss02">
+    <div class="bg-white border-login ">
+
+        <form id="loginForm" method="post" class="LoginForm">
+            <div class="d-flex align-items-center justify-content-center">
+
+                @await Component.InvokeAsync("Logo")
+            </div>
+            <div class="mt-3">
+                <span class="fs-18 fw-700 login-register-title"> ورود | ثبت نام</span>
+            </div>
+            <div class="mt-3">
+                <span class="fs-12"> خوش آمدید!</span>
+            </div>
+            <div class="form-group">
+                <label class="mb-3 fs-12" for="username">شماره موبایل خود را وارد کنید </label>
+                <input class="input-login input-login-page w-100 ss02" autofocus type="text" dir="ltr" id="mobileNumber" name="mobileNumber" maxlength="11" autocomplete="off" style="border-radius: 8px; height:48px" inputmode="tel" />
+            </div>
+
+            <div class="mt-5">
+                <div class="form-group">
+                    <button type="submit" id="loginButton" class="d-flex alig-items-center justify-content-center w-100 p-1 login-with-sms-btn gap-2">
+                        <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                        ورود با رمز یکبار مصرف
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group " style="text-align:center;">
+                    <a onclick="loginByPassword(event)">
+                        <label class="d-flex align-items-center customLable cursor-pointer text-orange-in-login fw-500 gap-1" for="username">
+                            <span class="text-orange-in-login fw-600">ورود با رمز عبور</span>
+                            <div>
+                                <svg viewBox="0 0 16 16" width="22" height="22" stroke="currentColor" stroke-width="2">
+                                    <use href="../images/icons/general.svg#chevron-left" />
+                                </svg>
+                            </div>
+                        </label>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group fullwidth">
+                    <span class="loginError fs-10 ">
+                        ورود و یا ثبت نام در سایت، به معنای پذیرش شرایط سایت و قوانین حریم خصوصی می باشد.
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <form method="POST" action="" id="frmConfirm" style="display:block">
+        <input type="hidden" name="_back" value="@Model" />
+    </form>
+</div>
+
+
+<script src="~/js/components/authentication/loginRegister.js" asp-append-version="true"></script>
+
+
+
+
+
+

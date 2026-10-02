@@ -1,0 +1,447 @@
+﻿@using Yashil.Core.Enums
+@using YashilCommerce.Core.Classes
+@using ApplicationConfigKey = YashilCommerce.Core.Classes.ApplicationConfigKey
+@inject StoreConfiguration _storeConfiguration;
+
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.CheckoutViewModel
+ 
+<script>
+    function SetRecipient(recipient) {
+        if (@Model.AddressBased && (!recipient.FullAddress || recipient.CityId)) {
+            bootbox.alert('کاربر گرامی اطلاعات آدرس تحویل گیرنده انتخابی کامل نمی باشد، لطفا با زدن دکمه ویرایش و اصلاح آن اقدام نمایید');
+        } else if (!recipient.Name || !recipient.LatName) {
+            bootbox.alert('کاربر گرامی اطلاعات نام و نام خانوادگی تحویل گیرنده انتخابی کامل نمی باشد، لطفا با زدن دکمه ویرایش و اصلاح آن اقدام نمایید');
+        } else {
+            window.location = unescape('@Url.Action("Checkout", "Order", new { recipientId = "{0}" })').format(recipient.Id);
+        }
+
+    }
+</script>
+
+
+<div class="content-wrap" style="display: none;">
+
+
+    <!-- /.content-wrap  -->
+    <!-- modal -->
+    <!-- modal -->
+</div>
+<div class="col-md-12 my-3 w-100 ss02" id="RecipientForm2">
+    <section>
+        <input type="hidden" name="item[]" value="519200536">
+        <div class="" data-price-change="0" data-min-price-badge="">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <div class="d-flex w-100">
+
+                        <div class="w-75 px-3">
+                            @if (Model.SelectedRecipient != null)
+                            {
+                                <div class="my-2 w-100">
+                                    <p class="fs-16 fw-600">
+                                        اطلاعات تحویل گیرنده:
+                                    </p>
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.Name)
+                               && Model.AddressBased)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1 ">
+                                                <span>
+                                                    نام
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.Name
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-xs hidden-sm padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.LastName) && Model.AddressBased)
+                                {
+
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                <span>
+                                                    نام خانوادگی تحویل گیرنده
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.LastName
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-xs hidden-sm padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.NationalCode))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                <span>
+                                                    @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientNationalCodeLabel)
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.NationalCode
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-xs hidden-sm padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.MobileNumber))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                <span>
+                                                    @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientMobileNumberLabel)
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.MobileNumber
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-xs hidden-sm padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.CardNumber))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                @if (Model.SelectedRecipient.MembershipType == (int)MembershipTypesEnum.Vezarat ||
+                                               Model.SelectedRecipient.MembershipType == (int)MembershipTypesEnum.Sata)
+                                                {
+                                                    <span>
+                                                        شماره حکمت
+                                                    </span>
+                                                }
+                                                else if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.CardNumber))
+                                                {
+                                                    <span>
+                                                        شماره کارت
+                                                    </span>
+                                                }
+                                                <span>
+                                                    @Model.SelectedRecipient.CardNumber
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-sm hidden-xs padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.CityTitle)
+                               && Model.AddressBased)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-12 col-sm-12 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                <span>
+                                                    شهر :
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.CityTitle
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-xs hidden-sm padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.SelectedRecipient.FullAddress)
+                               && Model.AddressBased)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                                <span>
+                                                    آدرس :
+                                                </span>
+                                                <span>
+                                                    @Model.SelectedRecipient.FullAddress
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-sm hidden-xs padding">
+                                            <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            @if (Model.RecipientViewList.Count != 0)
+                            {
+                                <div class="row">
+                                    <div class="mt-2 ps-4 fs-12 fw-600">
+                                        <a href="#" class=" dark-orange-order-checkout text-nowrap" onclick="openEditRecipientForm()">
+                                            افزودن یا ویرایش تحویل گیرنده
+                                            <svg viewBox="0 0 16 16" width="20" height="20" stroke="currentColor" stroke-width="2">
+                                                <use href="../images/icons/general.svg#chevron-left" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6  col-lg-6 col-xs-6 col-sm-6 hidden-sm hidden-xs padding">
+                                        <div class="fs-12 w-100 text-right ps-3 position-relative mt-1">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div onclick="editRecipient(null)" type="button" class="col-12 col-md-12 col-lg-6 col-xl-3 my-2">
+                                    <div class="d-sm-block d-md-flex justify-content-between h-100 add-new-recipient">
+                                        <div class="AddressContent2 rounded-3 px-3 pt-sm-0 pt-md-2 my-1 w-100 d-flex justify-content-center align-item-center my-3">
+                                            <div class="d-flex justify-content-center flex-column-reverse align-items-center">
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="add-delivery">افزودن تحویل گیرنده</span>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <svg width="24" height="24" stroke="var(--dark-primary-yellow-color)">
+                                                        <use href="../images/icons/general.svg#plus" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="c-cart-item__price-row">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        @if (Model.SelectedRecipient != null)
+        {
+            <div class="d-flex justify-content-end">
+                <div class="div-payment-btn p-2 mt-3 w-25">
+                    <button class="btn continue-delivery-btn p-2 w-100 text-white"
+                            type="button"
+                            onclick="continuePurchase('@Model.SelectedRecipient.EncryptedId', '.continue-delivery-btn')" id="ContinuePurchase">
+                        <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true" ></span>
+                        ادامه     
+                    </button>
+                </div>
+            </div>
+        }
+    </section>
+</div>
+<div class="col-md-12 my-3" id="EditRecipientForm" style="display:none">
+    <section class="">
+        <div class="">
+            <div class="">
+                <input type="hidden" name="item[]" value="519200536">
+                <div class="" data-price-change="0" data-min-price-badge="">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="p-sm-0 p-md-3">
+                                <div class="row mycontent">
+
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="user-information">
+                                            <span class="fw-600">
+                                                اطلاعات تحویل گیرنده خود را انتخاب نمائید :
+                                            </span>
+                                        </div>
+                                        <a class="getback d-flex align-items-center gap-1" onclick="openRecipientRegisterForm()" style="cursor: pointer;">
+                                            <span class="">بازگشت </span>
+                                            <svg width="24" height="24" stroke="currentColor">
+                                                <use href="../images/icons/general.svg#arrow-left" />
+                                            </svg>
+                                        </a>
+
+                                    </div>
+                                    <div class="row p-0 mx-auto">
+                                        @foreach (var item in Model.RecipientViewList)
+                                        {
+                                            <div id="@item.Id" data-event="change_address" data-event-category="funnel" class="col-12 col-md-12 col-lg-6 col-xl-3 py-3">
+
+                                                <div class=" d-sm-block d-md-flex justify-content-between align-items-center h-100">
+
+                                                    <div class="AddressContent d-flex flex-column justify-content-between rounded-3 w-100 h-100 p-3">
+                                                        <div onclick="window.location = '@Url.Action("Checkout", "Order", new { recipientId = item.Id })'" class="d-flex flex-column pb-0 gap-2">
+                                                            <div class="form-check-select-delivery py-2 rounded-3 d-flex justify-content-start align-item-center gap-2">
+
+                                                                <div class="d-flex align-items-center">
+                                                                    <input class="form-check-input m-0 p-0" type="radio" id="r_@item.Id" name="recipient" checked="@(Model.SelectedRecipient != null && Model.SelectedRecipient.Id == item.Id)" />
+                                                                </div>
+
+                                                                <div class="d-flex align-items-center justify-content-start">
+                                                                    <label class="form-check-label"
+                                                                           for="r_@item.Id">
+                                                                        انتخاب تحویل گیرنده
+                                                                    </label>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="py-2">
+                                                                <div class="mb-1">
+                                                                    <strong>
+                                                                        @item.Title
+                                                                    </strong>
+                                                                </div>
+                                                                <div class="py-1">
+                                                                    <span>
+                                                                        @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientNationalCodeLabel) : @item.NationalCode
+                                                                    </span>
+                                                                </div>
+                                                                @if (!string.IsNullOrEmpty(item.Name) && Model.AddressBased)
+                                                                {
+                                                                    <div class="py-1">
+                                                                        <span>
+                                                                            نام تحویل گیرنده : @item.Name
+                                                                        </span>
+                                                                    </div>
+                                                                }
+                                                                @if (!string.IsNullOrEmpty(item.Name) && Model.AddressBased)
+                                                                {
+                                                                    <div class="py-1">
+                                                                        <span>
+                                                                            نام خانوادگی تحویل گیرنده : @item.LastName
+                                                                        </span>
+                                                                    </div>
+                                                                }
+                                                                <div class="py-1">
+                                                                    @if (item.MembershipType == (int)MembershipTypesEnum.Sata || item.MembershipType == (int)MembershipTypesEnum.Vezarat)
+                                                                    {
+                                                                        <span id="lblCard">شماره حکمت:</span>
+                                                                        <span>@item.CardNumber</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @if (!string.IsNullOrWhiteSpace(item.CardNumber))
+                                                                        {
+                                                                            <span id="lblCard">شماره کارت:</span>
+                                                                            <span>@item.CardNumber</span>
+                                                                        }
+                                                                    }
+
+                                                                </div>
+                                                                @if (Model.AddressBased)
+                                                                {
+                                                                    <div class="py-1">
+                                                                        <span>
+                                                                            آدرس : @item.CityTitle - @item.FullAddress
+                                                                        </span>
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-flex justify-content-center">
+                                                                <button class="btn btn-danger de-btn delete-recepient-@item.Id d-flex alig-items-center justify-content-center gap-2"
+                                                                    type="button"
+                                                                            onclick="openDeleteModal(@item.Id, '.delete-recepient-@item.Id')"
+                                                                    data-id="36133181" data-token="">
+                                                                    <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true" ></span>
+                                                                حذف
+                                                            </button>
+                                                            <button class="btn btn-primary ed-btn"
+                                                                    data-event="edit_address"
+                                                                    onclick="editRecipient(@item.Id)"
+                                                                    data-event-category="funnel"
+                                                                    data-event-label="addresses: 2, position: list of addresses"
+                                                                    data-id="36133181">
+                                                                ویرایش
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        }
+                                        @if (_storeConfiguration.MaximumRecipientNumber <= Model.RecipientViewList.Count)
+                                        {
+
+                                            <div type="button" disabled="disabled" class="col-12 col-md-12 col-lg-6 col-xl-3 my-2">
+                                                <div class="d-sm-block d-md-flex justify-content-between h-100 add-new-recipient">
+                                                    <div class="AddressContent2 rounded-3 px-3 pt-sm-0 pt-md-2 my-1 w-100 d-flex justify-content-center align-item-center my-3">
+                                                        <div class="d-flex justify-content-center flex-column-reverse align-items-center">
+                                                            <div class="d-flex justify-content-center">
+                                                                <span class="add-delivery text-center text-secondary">برای افزودن تحویل گیرنده، لطفا یکی از تحویل گیرندگان قبلی را حذف نمایید</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <div onclick="editRecipient(null)" type="button" class="col-12 col-md-12 col-lg-6 col-xl-3 py-3">
+                                                <div class="d-sm-block d-md-flex justify-content-between h-100 add-new-recipient">
+                                                    <div class="AddressContent2 rounded-3 w-100 d-flex justify-content-center align-item-center">
+                                                        <div class="d-flex justify-content-center flex-column-reverse align-items-center">
+                                                            <div class="d-flex justify-content-center">
+                                                                <span class="add-delivery">افزودن تحویل گیرنده</span>
+                                                            </div>
+                                                            <div class="d-flex justify-content-center">
+                                                                <svg width="24" height="24" stroke="var(--dark-primary-yellow-color)">
+                                                                    <use href="../images/icons/general.svg#plus" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                    </div>
+                                    <div class="c-cart-item__price-row">
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    function continuePurchase(selectedRecipientId,button) {
+        const buttonElement = document.querySelector(button);
+        const spinnerElement = buttonElement.querySelector('.spinner-border');
+
+        spinnerElement.classList.remove('d-none');
+        buttonElement.setAttribute('disabled', true);
+        doCancelOrder(selectedRecipientId, spinnerElement, buttonElement);
+    }
+</script>

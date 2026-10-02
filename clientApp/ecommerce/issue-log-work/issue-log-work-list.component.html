@@ -1,0 +1,16 @@
+<app-base-list-form #listForm
+                    [gridHeight]="gridHeight"
+                    [fixHeight]="fixHeight"
+                    [wordWrapEnabled]="true"
+                    [customButtons]="customButtons"
+                    [showAddButton]="false"
+                    [allowEditInForm]="allowEditInForm"
+                    [allowDeleteInForm]="allowDeleteInForm"
+                    (customButtonClicked)="customButtonClicked($event)"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

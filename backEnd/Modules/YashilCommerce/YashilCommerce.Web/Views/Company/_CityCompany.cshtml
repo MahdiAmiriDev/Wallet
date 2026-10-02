@@ -1,0 +1,34 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.CompanyViewModel>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+
+<select id="representation-list" name="representation" style="width:100%;">
+    <option></option>
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id">@item.Title</option>
+    }
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

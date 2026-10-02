@@ -1,0 +1,16 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item dataField="productId" editorType="dxLookup" [label]="{text: 'shp.ProductCategory.Product'|translate}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: productDataSource,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required"
+                             message="{{'shp.ProductCategory.Validation.Product' | translate}}"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="categoryId" editorType="dxLookup"
+                [label]="{text: 'shp.ProductCategory.Category' | translate}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: categoryDataSource,displayExpr:'title',valueExpr:'id' }">
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

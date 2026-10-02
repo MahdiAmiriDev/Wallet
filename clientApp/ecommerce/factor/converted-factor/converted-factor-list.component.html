@@ -1,0 +1,51 @@
+<div class="row mb-2">
+  <div class="col-1">
+     گروه فاکتور:
+  </div>
+  <div class="col-4">
+    <dx-lookup
+      [dataSource]="userDataSource"
+      (onValueChanged)="onSelectedFactorGroupChange($event)"
+      displayExpr="title"
+      valueExpr="id"
+      [showClearButton]="true"
+      [rtlEnabled]="true">
+    </dx-lookup>
+
+  </div>
+</div>
+
+
+<app-base-list-form
+  #listForm
+  [entityName]="'factor'"
+  [customListUrl]="customListUrl"
+  [columns]="columns"
+  [showAddButton]="false"
+  [showEditForm]="false"
+  [allowDeleteInForm]="false"
+  [allowEditInForm]="false"
+  [customRowButtons]="customRowButtons"
+>
+
+</app-base-list-form>
+
+
+<dx-popup
+  [title]="'بررسی ایتم های سفارش'"
+  [(visible)]="activeCheckingFactorItemPopup"
+  (onHidden)="activeCheckingFactorItemPopup=false"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  rtlEnabled="true"
+  class="popup">
+  <factor-item-that-have-not-effect-in-factor-price-list-component *ngIf="activeCheckingFactorItemPopup"
+                                                                   [factorInstallmentCount]="factorInstallmentCount"
+                                                                   [factorId]="selectedFactorId"
+                                                                   (afterUpdateDone)="onAfterUpdateDone()"
+  >
+
+  </factor-item-that-have-not-effect-in-factor-price-list-component>
+</dx-popup>

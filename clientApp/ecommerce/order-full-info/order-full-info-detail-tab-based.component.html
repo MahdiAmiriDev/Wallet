@@ -1,0 +1,43 @@
+<app-order-statistic [orderId]="orderId"></app-order-statistic>
+<dx-tab-panel
+  rtlEnabled="true"
+  [dataSource]="tabs"
+  [loop]="false"
+  [(selectedIndex)]="selectedIndex"
+  [height]="formHeight"
+  [animationEnabled]="false"
+  [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'order'" class="tab-content-edit-form">
+  </div>
+  <div *dxTemplate="let company of 'orderItems'" class="tab-content-edit-form">
+    <app-order-item-with-deleted-list [orderId]="orderId"
+
+                                      [gridHeight]="tabSimpleComponentGridHeight"></app-order-item-with-deleted-list>
+  </div>
+  <div *dxTemplate="let company of 'orderPayments'" class="tab-content-edit-form">
+    <app-payment-list [orderId]="orderId" [gridHeight]="tabSimpleComponentGridHeight"></app-payment-list>
+  </div>
+
+  <div *dxTemplate="let company of 'refundDetails'" class="tab-content-edit-form">
+    <app-refund-detail-list [orderId]="orderId" [allowDeleteInForm]="false" [allowEditInForm]="false"
+                            [showAddButton]="false" [showEditInform]="false"
+                            [gridHeight]="tabSimpleComponentGridHeight"></app-refund-detail-list>
+  </div>
+  <div *dxTemplate="let company of 'issueLogWorks'" class="tab-content-edit-form">
+    <app-issue-log-work-detail
+      [stayOnPageAfterSave]="true"
+      [orderId]="orderId"
+      [customIssueTitle]="orderTitle"
+      [fixHeight]="false"
+      (afterUpdateRow)="logWorkListComponent.listForm.refreshList()"
+      (afterInsertRow)="logWorkListComponent.listForm.refreshList()">
+    </app-issue-log-work-detail>
+    <br/>
+    <app-issue-log-work-list id="issueLogWorkListForm" #logWorkListComponent
+                             [showCustomButtons]="false"
+                             [allowDeleteInForm]="false"
+                             [gridHeight]="issueLogWorkList"
+                             [orderId]="orderId" [fixHeight]="false"></app-issue-log-work-list>
+  </div>
+</dx-tab-panel>
+

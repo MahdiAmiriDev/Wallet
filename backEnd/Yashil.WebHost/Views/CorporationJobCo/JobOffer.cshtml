@@ -1,0 +1,140 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model JobOfferFilterViewModel
+@{
+    Layout = "_Layout";
+}
+
+<link href="~/css/components/job-offer.css" rel="stylesheet" asp-append-version="true" />
+<div id="job-offer-search--container">
+    @await Component.InvokeAsync("CorporationJobCoHeaderSearch",new {showActiveJobPositionCount = false})
+</div>
+<div id="job-offers-with-filters--container" class="px-2">
+    <section class="d-flex align-items-start gap-3 mb-3 pt-md-2 pt-lg-5 pt-xxl-2">
+        <!-- Sidebar -->
+        <aside class="job-offer-filters--container d-none d-lg-block bg-white rounded-3 border">
+            @{
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.JobCoCategories)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.Provinces)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.GenderType)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.CooperationType)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.EducationGrade)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial", Model.SalaryType)
+                @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.MilitaryServiceStatusType)
+            }
+        </aside>
+        <main class="w-100 position-relative" style="flex: 1">
+            <div id="job-offers--container" class="d-flex flex-column gap-2 overfflow-hidden">
+                <!-- Data Will Be Fetched By JavaScript -->
+            </div>
+            <div class="loading-spinner--container position-fixed d-none"><span class="loader"></span></div>
+            <div class="pagination-wrapper mx-auto"></div>
+        </main>
+    </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="advanced-filters--modal" tabindex="-1" aria-labelledby="advanced-filters-modal--label" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="advanced-filters-modal--label">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor">
+                        <use href="../images/icons/general.svg#adjustments-horizontal" />
+                    </svg>
+                    <p class="mb-0">جستجوی پیشرفته</p>
+                </h5>
+                <button type="button" class="close-modal--button" data-bs-dismiss="modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M18 6l-12 12" />
+                        <path d="M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <aside class="modal-job-offer-filters--container bg-white rounded-3 border">
+                    @{
+                        Model.JobCoCategories.DisplayMode = "responsive";
+                        Model.Provinces.DisplayMode = "responsive";
+                        Model.GenderType.DisplayMode = "responsive";
+                        Model.CooperationType.DisplayMode = "responsive";
+                        Model.EducationGrade.DisplayMode = "responsive";
+                        Model.SalaryType.DisplayMode = "responsive";
+                        Model.MilitaryServiceStatusType.DisplayMode = "responsive";
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.JobCoCategories)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.Provinces)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.GenderType)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.CooperationType)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.EducationGrade)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial", Model.SalaryType)
+                        @await Html.PartialAsync("_JobOffersFilterSectionPartial",Model.MilitaryServiceStatusType)
+                    }
+                </aside>
+            </div>
+            <div class="modal-footer">
+                <button class="apply-filters--button btn btn-success" data-bs-dismiss="modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z" />
+                    </svg>
+                    <p class="mb-0">مشاهده نتایج</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const jobOffersCardsUrl = '@Url.Action("GetJobOfferListByFilter", "CorporationJobCo")';
+    const filterOptions = {
+        categoryId: @Html.Raw(Json.Serialize(Model.JobCoCategories.FilterOptions)),
+        cityId: @Html.Raw(Json.Serialize(Model.Provinces.FilterOptions)),
+        genderType: @Html.Raw(Json.Serialize(Model.GenderType.FilterOptions)),
+        cooperationType: @Html.Raw(Json.Serialize(Model.CooperationType.FilterOptions)),
+        educationGrade: @Html.Raw(Json.Serialize(Model.EducationGrade.FilterOptions)),
+        salaryType: @Html.Raw(Json.Serialize(Model.SalaryType.FilterOptions)),
+        militaryServiceStatusType: @Html.Raw(Json.Serialize(Model.MilitaryServiceStatusType.FilterOptions)),
+    };
+</script>
+
+
+@*<script src="~/js/components/pagination.js" asp-append-version="true"></script>*@
+<script src="~/js/components/job_offer.js" asp-append-version="true"></script>
+<script src="~/js/components/job_offer_list.js" asp-append-version="true"></script>
+
+<!-- کانفیگ سوییپر اسلایدر دسته بندی های اصلی-->
+<script type="text/javascript">
+    productListCarousel("CategoriesProductSalePlanning", 0, {
+        320: {
+            slidesPerView: 1.2
+        },
+
+        360: {
+            slidesPerView: 1.5
+        },
+        402: {
+            slidesPerView: 1.8
+        },
+        502: {
+            slidesPerView: 2.1
+        },
+        640: {
+            slidesPerView: 2.2
+        },
+        768: {
+            slidesPerView: 2.5
+        },
+        992: {
+            slidesPerView: 3.7
+        },
+        1024: {
+            slidesPerView: 3.9
+        },
+        1200: {
+            slidesPerView: 4.5
+        },
+        1400: {
+            slidesPerView: 5.1
+        }
+    })
+</script>

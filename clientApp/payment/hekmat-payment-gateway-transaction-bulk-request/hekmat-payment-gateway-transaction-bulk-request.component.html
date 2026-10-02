@@ -1,0 +1,12 @@
+
+<as-split direction="horizontal" dir="rtl">
+  <as-split-area size="25" #t1 dir="rtl">
+    <app-hekmat-payment-gateway-transaction-bulk-request-category-list (selectedRowChanged)="setBulkRequestCategoryId($event)">
+    </app-hekmat-payment-gateway-transaction-bulk-request-category-list>
+  </as-split-area>
+
+  <as-split-area size="75" #t1 dir="rtl">
+<app-hekmat-payment-gateway-transaction-bulk-request-list #transactionBulkRequest [hekmatPaymentGatewayTransactionBulkRequestCategoryId]="bulkRequestCategoryId">
+</app-hekmat-payment-gateway-transaction-bulk-request-list>
+  </as-split-area>
+</as-split>

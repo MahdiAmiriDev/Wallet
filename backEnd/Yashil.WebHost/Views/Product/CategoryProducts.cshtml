@@ -1,0 +1,3 @@
+﻿@using Yashil.Core.CustomViewModels.ECommerce
+@model ProductFilter
+@await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model, showNoResultOnEmpty = false,ShowProductsByList = true })

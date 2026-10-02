@@ -1,0 +1,86 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'سقف اقساط'}" dataField="maxInstallmentCount"
+              editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="سقف اقساط"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'حداقل مبلغ تراکنش(ریال)'}" dataField="minAmount"
+              [editorOptions]="{ format:'#,##0'}" editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="حداقل مبلغ تراکنش"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'حداکثر مبلغ تراکتش(ریال)'}" dataField="maxAmount"
+              [editorOptions]="{ format:'#,##0'}" editorType='dxNumberBox'>
+      <dxi-validation-rule type="required" message="حداکثر مبلغ تراکتش"></dxi-validation-rule>
+
+    </dxi-item>
+
+
+    <dxi-item dataField="hekmatTerminalId" editorType="dxLookup" [label]="{text: 'ترمینال حکمت'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: hekmatTerminalDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="ترمینال حکمت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+
+    <dxi-item [label]="{text: 'آی پی'}" dataField="ipAddress">
+      <dxi-validation-rule
+        type="pattern"
+        maxlength="15" minlength="9"
+        pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+        message="فرمت آی پی صحیح نیست">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'کلید عمومی'}" dataField="publicKey" editorType='dxTextArea'>
+      <dxi-validation-rule type="required" message="کلید عمومی"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'آدرس سایت'}" dataField="url" editorType='dxTextArea'>
+
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'فعال'}" dataField="isActive" editorType='dxCheckBox'>
+    </dxi-item>
+
+
+    <dxi-item itemType="group" colSpan="2" caption="تنظیمات پرداخت ترکیبی" colCount="4">
+
+      <dxi-item [label]="{text: 'درصد کارمزد اقساطی ترمینال'}" dataField="supplierWage" editorType='dxNumberBox'>
+        <dxi-validation-rule type="range" [min]="0" [max]="100"
+                             message="مقدار وارد شده بین 0 تا 100 می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="required" message="درصد کارمزد اقساطی ترمینال اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'درصد کارمزد اقساطی درگاه'}" dataField="instituteWage" editorType='dxNumberBox'>
+        <dxi-validation-rule type="range" [min]="0" [max]="100"
+                             message="مقدار وارد شده بین 0 تا 100 می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="required" message="درصد کارمزد اقساطی درگاه اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'درصد کارمزد نقدی ترمینال'}" dataField="cashSupplierWage" editorType='dxNumberBox'>
+        <dxi-validation-rule type="range" [min]="0" [max]="100"
+                             message="مقدار وارد شده بین 0 تا 100 می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="required" message="درصد کارمزد نقدی ترمینال اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'درصد کارمزد نقدی درگاه'}" dataField="cashInstituteWage" editorType='dxNumberBox'>
+        <dxi-validation-rule type="range" [min]="0" [max]="100"
+                             message="مقدار وارد شده بین 0 تا 100 می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="required" message="درصد کارمزد نقدی درگاه اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

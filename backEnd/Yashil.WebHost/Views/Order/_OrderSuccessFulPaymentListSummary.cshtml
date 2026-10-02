@@ -1,0 +1,49 @@
+﻿@using Yashil.Common.SharedKernel.Helpers
+@using Yashil.Infrastructure.Util
+@model List<YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.SuccessFulPaymentListViewModel>
+
+
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <div class="detail p-sm-1 p-md-3 rounded mb-2">
+            <div class="">
+                @if (item.Total > 0)
+                {
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>
+                            نام درگاه
+                        </span>
+                        <span>
+                            @item.PaymentMethodTypeTitle
+                        </span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>
+                            تاریخ پرداخت
+                        </span>
+                        <span>
+                            @if (item.PaidDateUtc != null)
+                            {
+                                @DateFunction.ToShamsiString(item.PaidDateUtc.Value.Year,
+                                    item.PaidDateUtc.Value.Month, item.PaidDateUtc.Value.Day)
+                            }
+                        </span>
+                    </div>
+                }
+                <div class="d-flex justify-content-between mt-2">
+                    <span class="text-danger">
+                        مبلغ پرداختی
+                    </span>
+                    <span class="text-danger">
+                        @CurrencyUtility.FormatPrice(item.Total)
+                        <span class="currency">تومان</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+}

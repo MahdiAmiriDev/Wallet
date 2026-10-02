@@ -1,0 +1,27 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="onSelectedRowChanged($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    [customRowButtons]="customRowButton"
+>
+</app-base-list-form>
+
+
+<dx-popup
+  [title]="'لیست کوپن ها'"
+  (onHidden)="showVochersList=false"
+  [(visible)]="showVochersList"
+  [closeOnOutsideClick]="false"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <app-vocher-type-Vochers-list *ngIf="showVochersList"
+     [vocherTypeId]="this.vocherTypeId"
+  >
+  </app-vocher-type-Vochers-list>
+</dx-popup>

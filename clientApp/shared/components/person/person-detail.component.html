@@ -1,0 +1,62 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item [label]="{text: 'um.Person.NationalCode'|translate}" dataField="nationalCode"
+                [editorOptions]="{valueChangeEvent:'keyup',
+                onKeyUp: nationalCodeChanged,
+                disabled: selectedEntityId!=null && selectedEntityId!=undefined && hasNationalCode}">
+        <dxi-validation-rule maxlength="10" minlength="10" type="required"
+                             message="{{'um.Person.Validation.NationalCode'|translate}}"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="{{'um.Person.Validation.NationalCodeFormat'|translate}}"
+                             [validationCallback]="nationalCodeValidate"></dxi-validation-rule>
+        <dxi-validation-rule type="async" message="{{'um.Person.Validation.NationalCodeRegister'|translate}}"
+                             [validationCallback]="validateNationalCode"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.Name'|translate}" dataField="name">
+        <dxi-validation-rule type="required" message="{{'um.Person.Validation.Name'|translate}}"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.LastName'|translate}" dataField="lastName">
+        <dxi-validation-rule type="required"
+                             message="{{'um.Person.Validation.LastName'|translate}}"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.FatherName'|translate}" dataField="fatherName">
+        <dxi-validation-rule type="required"
+                             message="{{'um.Person.Validation.FatherName'|translate}}"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="gender" editorType="dxSelectBox" [label]="{text: 'um.Person.Gender'|translate}"
+                [editorOptions]="{ items: genders,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required"
+                             message="{{'um.Person.Validation.Gender'|translate}}"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.BirthDate'|translate}" dataField="birthDate" editorType='dxNumberBox'>
+
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.birthDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="dateValue"
+                 style="float:right"
+                 placeholder="{{'um.Person.BirthDate'|translate}}"
+                 [ngModel]="entity.birthDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.PhoneNumber'|translate}" dataField="phoneNumber"
+                editorOptions="mask: '\\0\\900 0000000'">
+      </dxi-item>
+      <dxi-item dataField="educationGrade" editorType="dxSelectBox"
+                [label]="{text: 'um.Person.EducationGrade'|translate}"
+                [editorOptions]="{ items: educationGrades,displayExpr:'title',valueExpr:'id' }">
+      </dxi-item>
+      <dxi-item [label]="{text: 'um.Person.Email'|translate}" dataField="email">
+        <dxi-validation-rule type="email"
+                             message="{{'um.Person.Validation.EmailFormat'|translate}}"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'base.AccessLevel.Title'|translate}"
+                [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required"
+                             message="{{'base.AccessLevel.Validation.Title'|translate}}"></dxi-validation-rule>
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

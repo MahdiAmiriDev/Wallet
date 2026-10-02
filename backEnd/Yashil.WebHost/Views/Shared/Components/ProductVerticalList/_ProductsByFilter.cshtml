@@ -1,0 +1,158 @@
+﻿@using Yashil.Infrastructure.Util
+@model Yashil.Core.CustomViewModels.ECommerce.ProductsByFilterViewModel
+@using Yashil.Common.Core.Classes;
+@inject ApplicationConfiguration _applicationConfiguration;
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+@*   مربوط به کامپوننت
+    ProductVerticalListViewComponent
+    می باشد ولی به خاطر اینکه دیتاهای این ویو با
+    ProductsByFilter
+    یکی است از همان متد و بلطبع همان نام استفاده شده است
+*@
+
+@foreach (var item in Model.ProductSalePlannings)
+{
+    var discountPercentage = CurrencyUtility.RemoveDecimal((1 - item.Price / item.BasePrice) * 100);
+    <div style="cursor: pointer;" class="container" onclick="window.location='@Url.Action("Index","Product",new{pSpId=item.ProductSalePlanningId})'">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 searchProductBox">
+                <div class="col-md-3 col-lg-3 hidden-sm hidden-xs">
+                    <a href="#"><img src="@Url.Action("GetProductSalesPlanningImage","PublicApi",new{productSalesPlanningId=item.ProductSalePlanningId , modificationDate = item.ModificationDate})" class="imgCourse" alt="Sales Planning Image"></a>
+                </div>
+                <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="line-height: 22px">
+                            <span class="spanCourseName">@item.Title</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
+                            <a href="#"><img src="@Url.Action("GetProductSalesPlanningImage","PublicApi",new{productSalesPlanningId=item.ProductSalePlanningId,  modificationDate = item.ModificationDate})" class="imgCourse" alt="Sales Planning Image"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="line-height: 22px">
+                            <span class="spanCourseName">گروه های آموزشی:  @item.Title</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <span class="badge badge-secondary">قیمت پایه:  <del> @CurrencyUtility.FormatPrice(item.BasePrice) تومان</del> </span>
+                        </div>
+                    </div>
+                    @if (Model.SubsidyBased)
+                    {
+                        <div class="row">
+                            <div class="w-50 mx-auto d-block bg-primary text-white p-1 SubsidyBased-main-products mt-1">
+                                @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                {
+                                    <label>یارانه اشتغال</label>
+                                }
+                                else
+                                {
+                                    <label>یارانه</label>
+                                }
+                            </div>
+                            <div class="border border-1 rounded-2 p-2 mb-1 mx-auto">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingLeft">
+                                    <span>
+                                        <img src="~/images/favorite.png" alt="favorite" style="width: 16px; display: inline-block;" />
+                                    </span>
+                                    <span class="courseDetailTitle">شاغلین: </span>
+                                    <span class="courseDetaill">
+                                        @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                        {
+                                            @CurrencyUtility.FormatPrice(item.MaxEmploymentVezaratSubsidy)
+                                        }
+                                        else
+                                        {
+                                            @CurrencyUtility.FormatPrice(item.MaxVezaratSubsidy)
+                                        }
+                                        تومان
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingLeft">
+                                    <span>
+                                        @*<i style="font-size: 12px;" class=" fad fa-tag " aria-hidden="true"></i>*@
+                                        <img src="~/images/flower.png" alt="flower" style="width: 16px; display: inline-block;" />
+                                    </span>
+                                    <span class="courseDetailTitle">بازنشستگان: </span>
+                                    <span class="courseDetaill">
+                                        @if (Model.IsResumeFillOutEnough && item.IsEmployment)
+                                        {
+                                        } @CurrencyUtility.FormatPrice(item.MaxEmploymentSataSubsidy)
+                                        else
+                                        {
+                                        @CurrencyUtility.FormatPrice(item.MaxSataSubsidy)
+                                        }
+                                        تومان
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    @if (!string.IsNullOrEmpty(item.StartDateString))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingLeft">
+                                <span>
+                                    <i style="font-size: 10px; color: #0060ff;" class=" fad fa-calendar-alt " aria-hidden="true"></i>
+                                </span>
+                                <span class="courseDetaill">از @item.StartDateString تا @item.EndDateString</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(item.Duration))
+                            {
+
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingLeft">
+                                    <span>
+                                        <i style="font-size: 12px; color: #911265;" class=" fad fa-clock " aria-hidden="true"></i>
+                                        <span class="courseDetailTitle"> مدت:</span>
+                                    </span>
+                                    <span class="courseDetaill">@item.Duration ساعت</span>
+                                </div>
+
+                            }
+
+                        </div>
+                    }
+                    <div class="row">
+
+                        @if (!string.IsNullOrEmpty(item.CityTitle))
+                        {
+
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingLeft">
+                                <span>
+                                    <i style="font-size: 12px; color: #008c99;" class=" fad fa-city " aria-hidden="true"></i>
+
+                                </span>
+                                <span style="font-size: 11px;"> @item.CityTitle</span>
+                            </div>
+
+                        }
+                        @if (!string.IsNullOrEmpty(item.RepresentationShortName))
+                        {
+
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 agentHeight paddingLeft">
+                                <span>
+                                    <i style="font-size: 12px; color: #008c99;" class="fad fa-sitemap " aria-hidden="true"></i>
+                                </span>
+                                <span class=""> @item.RepresentationShortName </span>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

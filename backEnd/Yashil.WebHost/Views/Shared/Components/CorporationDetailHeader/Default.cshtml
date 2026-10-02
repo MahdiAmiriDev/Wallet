@@ -1,0 +1,94 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model CorporationDetailHeaderViewModel
+
+
+
+<link href="~/css/components/jobOfferDetail.min.css" rel="stylesheet" asp-append-version="true" />
+@if (Model != null)
+{
+    @* top background header *@
+    <section>
+        <div class="top-background-jobofferdetail">
+            <img src="/api/publicapi/GetCorporationBackgroundImage?id=@Model.Id"/>
+            <div class="container container-joboffer-fisrt-section">
+                <div class="d-flex justify-content-between">
+                    <div class="w-100 m-0 p-0">
+                        <img src="/api/publicApi/GetCorporationImage?id=@Model.Id" class="rounded company-joboffer-logo bg-white " alt="logo" />
+                    </div>
+                    <div class="company-joboffer-info ">
+                        @if (!string.IsNullOrEmpty(Model.Title))
+                        {
+                            <h3 class="fs-18 text-white company-joboffer-info-title ss02">@Model.Title</h3>
+                        }
+                        <div class="d-flex gap-3 gap-md-5 pt-1  justify-content-center justify-content-sm-start">
+                            @if (!string.IsNullOrEmpty(Model.FieldOfActivity))
+                            {
+                                <div class="fs-12 text-light ss02"> @Model.FieldOfActivity</div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.EstablishedYear))
+                            {
+                                <div class="fs-12 text-light ss02">
+                                    تاسیس در
+                                    @Model.EstablishedYear
+                                </div>
+                            }
+                            @if (Model.EmployeeCount != 0)
+                            {
+                                <div class="fs-12 text-light ss02">
+                                    @Model.EmployeeCount
+                                    نفر
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @* menu section *@
+    <nav class="bg-white border-bottom border-2 p-4">
+        <div class="d-flex gap-2 align-items-center justify-content-center ">
+            @if (Model.ActiveJobCoCount != 0)
+            {
+                <a href="@Url.Action("CorporationJobOfferDetail","Corporation", new {id=Model.Id})" class="text-muted nav-items-corporation-detail-header" asp-append-version="true">
+                    فرصت های شغلی
+                    <span class="badge bg-success ss02">@Model.ActiveJobCoCount</span>
+                </a>
+            }
+        </div>
+    </nav>
+
+
+
+    @if (Model.showCorporationIntroduction)
+    {
+        @* Introduction section *@
+        <div class="container">
+            <section class="my-4 ">
+                <div class="bg-white border border-2 rounded">
+                    <div class="p-4">
+                        @if (!string.IsNullOrEmpty(Model.Title))
+                        {
+                            <h2 class="fs-14 pt-3 lh-base fw-bold">
+                                @Model.Title معرفی
+                            </h2>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <p class="text-muted text-justify ss02 lh-lg">
+                                @Model.Description
+                            </p>
+                        }
+                    </div>
+                </div>
+            </section>
+            @if (!string.IsNullOrEmpty(Model.Title))
+            {
+                <h3 class="fs-18 ss02 text-muted px-4 lh-base px-sm-0">
+                    @Model.Title
+                </h3>
+            }
+        </div>
+    }
+}

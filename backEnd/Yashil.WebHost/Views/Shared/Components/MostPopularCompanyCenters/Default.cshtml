@@ -1,0 +1,107 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.CompanyViewModel>
+
+@{
+    var slidesCount = Model.Count();
+}
+
+<section class="candidate-section py-3 my-4">
+    <div class="container">
+        <div class="sale-product-carousel mx-3 mx-sm-0" style="background-color:white">
+            <div class="d-flex justify-content-center align-items-center mt-2 mb-3 p-1 align-text-center gap-1">
+                <svg width="28" height="28" stroke="var(--dark-primary-yellow-color)">
+                    <use href="../images/icons/general.svg#sparkles"></use>
+                </svg>
+                <h4 class="mb-0" style="font-size: 23px; font-weight: 600">
+                    محبوب ترین مراکز آموزشی
+                </h4>
+            </div>
+            @if (Model.Any())
+            {
+                <!-- Slider main container -->
+                <div class="swiper popular_swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper popular_swiper--wrapper">
+                        <!-- Slides -->
+                        @foreach (var item in Model)
+                        {
+                            <div class="swiper-slide d-flex align-items-center">
+                                <!-- Skeleton Loading Placeholder for Most Popular Center Item -->
+                                <div class="skeleton-loading--container">
+                                    <div class="skeleton skeleton-line"
+                                         style="
+    --l-h: 90px;
+--c-w: 90px;
+--c-p: 0px
+  "></div>
+                                </div>
+                                <!-- Skeleton Loading Placeholder for Most Popular Center Item /-->
+                                
+                                <!-- Most Popular Center Item -->
+                                <a href="/Company?company=@item.Id" target="_self" class="w-100 skeleton-content--container d-none" style="text-align: center;">
+                                    <img src="" alt="Secondary Color" data-src=@($"/api/PublicApi/GetCompanyIcon?cId={item.Id}&modificationDate={item.ModificationDate}") title="@item.Title" width="80px">
+                                </a>
+                                <!-- Most Popular Center Item /-->
+                            </div>
+                        }
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    const popularSwiper = new Swiper('.popular_swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        speed: 500,
+        breakpoints: {
+            // when window width is >= 320px
+            280: {
+                slidesPerView: 2,
+            },
+            // when window width is >= 550px
+            375: {
+                slidesPerView: 3,
+            },
+            // when window width is >= 550px
+            500: {
+                slidesPerView: 4,
+            },
+            // when window width is >= 550px
+            700: {
+                slidesPerView: 5,
+            },
+            // when window width is >= 550px
+            900: {
+                slidesPerView: 7,
+            },
+            // when window width is >= 550px
+            1000: {
+                slidesPerView: 9,
+            },
+            // when window width is >= 550px
+            1150: {
+                slidesPerView: 11,
+            },
+            // when window width is >= 550px
+            1300: {
+                slidesPerView: 13,
+            },
+        },
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: 'true',
+        },
+        grid: {
+            rows: 2,
+        },
+    });
+</script>
+
+
+

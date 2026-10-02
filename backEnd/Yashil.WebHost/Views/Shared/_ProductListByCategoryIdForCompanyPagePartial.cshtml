@@ -1,0 +1,43 @@
+﻿@using YashilCommerce.Core.Classes
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.ProductListPartialViewModel
+
+<section class="flat-popular-courses style4" style="text-align:left !important; height:max-content">
+    <div class="">
+        <div class="flat-title flat-text-center">
+            <h2 class="title mb-0 py-2 text-right fs-15">
+                <i class="@Model.CategoryViewModel.CssClass" aria-hidden="true"></i>
+                <span class="grade">@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceCategoryPrefixLabel)</span>
+                <span class="title-in-company fw-600 fs-16">
+                    @Model.CategoryViewModel.Title
+                </span>
+            </h2>
+           
+        </div>
+    </div>
+    <div id="newContent" style="display:none"></div>
+</section>
+
+@await Html.PartialAsync("_ProductListByFilterPartial",new YashilCommerce.Web.Areas.ECommerce.ViewModels.ProductListPartialViewModel { ProductFilter = Model.ProductFilter,ShowProductsByList = Model.ShowProductsByList,ShowNoResultOnEmpty = Model.ShowNoResultOnEmpty})
+
+<script type="text/javascript">
+    var pageIndex = 2;  //Infinate Scroll starts from second block
+    var noMoreData = false;
+    var inProgress = false;
+
+    $(window).scroll(function () {
+        if (!noMoreData && !inProgress && ($(window).scrollTop() + 1500 > $(document).height() - $(window).height())) {
+            inProgress = true;
+            const queryString = window.location.search + '&pageIndex=' + pageIndex;
+            fetch('@Url.Action("CategoryProducts", "Product")' + queryString).then(response => response.text()).then(data => {
+                const productsContainer = document.getElementById('productsContainer');
+                productsContainer.insertAdjacentHTML('beforeend', data);
+                skeletonLoading();
+                pageIndex++;
+                inProgress = false;
+                if (data === undefined || data.trim() === '') {
+                    noMoreData = true;
+                }
+            });
+        }
+    });
+</script>

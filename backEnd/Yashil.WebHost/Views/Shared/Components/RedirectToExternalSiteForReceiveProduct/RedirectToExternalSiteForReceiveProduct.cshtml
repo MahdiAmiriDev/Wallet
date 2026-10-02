@@ -1,0 +1,25 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.RedirectToExternalSiteForReceiveProductViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="w-100 p-3 text-center mt-3 mt-md-0 rounded-3" style="background: #9ed368;">
+
+        @foreach (var item in Model)
+        {
+            <span class="text-white">
+                @item.ButtonText
+            </span>
+            <a class="text-primary"
+               href="@Url.Action(item.ActionName, item.ControllerName,
+                             new { key = item.ApiKey, orderItemId = item.OrderItemId })">
+                (لینک)
+            </a>
+            <span class="text-white">
+                کلیک کنید.
+            </span>
+
+            <br />
+        }
+
+    </div>
+}

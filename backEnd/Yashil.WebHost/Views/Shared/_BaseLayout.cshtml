@@ -1,0 +1,46 @@
+﻿@using YashilCommerce.Core.Classes
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fa-IR" lang="fa-IR">
+<!--<![endif]-->
+<head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <title>@await Component.InvokeAsync("AppConfigValuePresenter", YashilUserManagement.Core.Classes.ApplicationConfigKey.SiteConfigurationHtmlTitle)</title>
+    <meta name="description" content="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationMetaDescription)">
+    <meta name="keywords" content="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationKeyWord)">
+    <link rel="canonical" href="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationCanonical)" />
+    <meta name="author" content="Isiran Institute">
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--Google Tag Manager-->
+    <script>@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationHeaderSeoTagContent)</script>
+    <link asp-append-version="true" rel="apple-touch-icon-precomposed" href="~/images/favicon-apple.png">
+    <link asp-append-version="true" rel="shortcut icon" href="~/images/favicon.png">
+    <link asp-append-version="true" rel="stylesheet" href="~/css/bootstrap/bootstrap.rtl.min.css">
+    <link asp-append-version="true" rel="stylesheet" href="~/css/site.min.css" />
+    @*<link asp-append-version="true" rel="stylesheet" href="~/fonts/iran_sans/style.css" media="all">*@
+    <link rel="stylesheet" href="~/fonts/yekan_bakh/fontface.css" asp-append-version="true" />
+    @await RenderSectionAsync("css", false)
+</head>
+<body style="">
+    @RenderBody()
+
+    <script asp-append-version="true" src="~/js/jquery/jquery.min.js"></script>
+    <script asp-append-version="true" src="~/js/site.min.js?v=3"></script>
+    <script asp-append-version="true" src="~/js/jquery/jquery-validate/jquery.validate.min.js"></script>
+    <script asp-append-version="true" src="~/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    @await RenderSectionAsync("scripts", false)
+
+    <script>
+        bootbox.setDefaults({
+            locale: "fa",
+            closeButton: true,
+            animate: true
+        });
+    </script>
+</body>
+</html>

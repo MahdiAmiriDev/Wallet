@@ -1,0 +1,88 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'شماره کارت'}" dataField="cardNumber">
+
+      <dxi-validation-rule type="required" message="شماره کارت اجباری می باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [min]="16" [max]="16"
+                           message="شماره کارت باید 16 رقمی باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="custom" message="شماره کارت معتبر نمی باشد"
+                           [validationCallback]="cardValidation"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'CVV2'}" dataField="cvv2">
+
+      <!--<dxi-validation-rule type="required" message="CVV2 اجباری می باشد"></dxi-validation-rule>-->
+      <dxi-validation-rule type="stringLength" [max]="4" message="CVV2 باید 3 یا 4 رقمی باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'رمز اول'}" dataField="firstPassword" [editorOptions]="{ mode: 'password' }">
+
+      <dxi-validation-rule type="required" message="رمز اول اجباری می باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [min]="4" [max]="4"
+                           message="رمز اول باید 4 رقمی باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'رمز دوم'}" dataField="secondPassword" [editorOptions]="{ mode: 'password' }">
+      <dxi-validation-rule type="stringLength" [max]="12"
+                           message="رمز دوم باید بین 6 تا 12 رقم باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item
+      itemType="group"
+      caption="تاریخ انقضا"
+      [colCount]="2">
+      <dxi-item [label]="{text: 'ماه'}" dataField="expireDateMonth">
+        <dxi-validation-rule type="stringLength" [min]="2" [max]="2"
+                             message="ماه را دو رقمی وارد کنید"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="فقط عدد وارد کنید"
+                             [validationCallback]="expireDateValidation"></dxi-validation-rule>
+        <dxi-validation-rule type="range" [max]="12" message="ماه را بین 01 تا 12 وارد کنید"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'سال'}" dataField="expireDateYear">
+        <dxi-validation-rule type="stringLength" [min]="4" [max]="4"
+                             message="سال را چهار رقمی وارد کنید"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="فقط عدد وارد کنید"
+                             [validationCallback]="expireDateValidation"></dxi-validation-rule>
+      </dxi-item>
+      <!--<dxi-validation-rule type="required" message="تاریخ انقضاء اجباری می باشد"></dxi-validation-rule>-->
+    </dxi-item>
+
+    <!--<dxi-item [label]="{text: 'تاریخ انقضاء'}" dataField="expireDate">
+        <dp-date-picker
+                [config]="datePickerConfig"
+                dir="rtl"
+                mode="day"
+                placeholder="ExpireDate"
+                theme="dp-material"
+                [ngModel]="entity.expireDate | intToStringDate"
+                (ngModelChange)="entity.expireDate=convertDateToInt($event)">
+        </dp-date-picker>
+
+        &lt;!&ndash;<dxi-validation-rule type="required" message="تاریخ انقضاء اجباری می باشد"></dxi-validation-rule>&ndash;&gt;
+
+    </dxi-item>-->
+    <dxi-item [label]="{text: 'موجودی اعتبار (ریال)'}" dataField="creditAmount" editorType='dxNumberBox'
+              [editorOptions]="{format: '#,##0', min: 0}">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'موجودی بن ریالی (ریال)'}" dataField="cashAmount" editorType='dxNumberBox'
+              [editorOptions]="{format: '#,##0', min: 0}">
+
+
+    </dxi-item>
+
+    <dxi-item dataField="cardType" editorType="dxSelectBox" [label]="{text: 'نوع کارت'}"
+              [editorOptions]="{ items: cardTypes,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="نوع کارت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+
+    <dxi-item dataField="personId" editorType="dxLookup" [label]="{text: 'دارنده'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: personDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="دارنده اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form></app-busy-indicator>

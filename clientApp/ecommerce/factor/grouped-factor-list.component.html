@@ -1,0 +1,14 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowEditInForm]="false"
+                    [customRowButtons]="customRowButtons"
+                    [wordWrapEnabled]="true"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [showEditForm]="false"
+                    style="white-space: unset !important;">
+</app-base-list-form>

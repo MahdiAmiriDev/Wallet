@@ -1,0 +1,29 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+
+    <dxi-item dataField="taxCategoryId" editorType="dxLookup" [label]="{text: 'دسته بندی مالیاتی'}"
+              [editorOptions]="{rtlEnabled:true, dropDownOptions:{closeOnOutsideClick:true},
+              dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="دسته بندی مالیاتی اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+
+    <dxi-item dataField="saleConfigurationId" editorType="dxLookup" [label]="{text: 'تنظیم فروش'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,value:saleConfigurationId , dataSource: saleConfigurationDataSource,displayExpr:'title',valueExpr:'id', readOnly:'true' }">
+      <dxi-validation-rule type="required" message="تنظیم فروش اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item colSpan="2" dataField="factorReportType" editorType="dxSelectBox"
+              [label]="{text: 'نوع گزارش فاکتور : با جزییات  - بدون جزییات'}"
+              [editorOptions]="{ items: factorReportTypes,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required"
+                           message="نوع گزارش فاکتور : با جزییات  - بدون جزییات اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item colSpan="2" [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+    </dxi-item>
+
+  </dx-form>
+
+
+</app-base-edit-form>

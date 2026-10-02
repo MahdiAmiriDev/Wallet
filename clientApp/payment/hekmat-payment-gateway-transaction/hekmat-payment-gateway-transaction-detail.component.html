@@ -1,0 +1,179 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'کد'}" dataField="code">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'قیمت'}" dataField="price" editorType='dxNumberBox'
+              [editorOptions]="{format: '#,##0', min: 0}">
+
+      <dxi-validation-rule type="required" message="قیمت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'قیمت'}" dataField="basePrice" editorType='dxNumberBox'
+              [editorOptions]="{format: '#,##0', min: 0}">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'قیمت'}" dataField="priceToPay" editorType='dxNumberBox'
+              [editorOptions]="{format: '#,##0', min: 0}">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کاربر'}" dataField="merchantId" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="کاربر اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'آدرس بازگشت'}" dataField="callBackUrl" editorType='dxTextArea'>
+
+      <dxi-validation-rule type="required" message="آدرس بازگشت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'داده های تکمیلی'}" dataField="additionalDate" editorType='dxTextArea'>
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.additionalDate=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="additionalDateDataValue"
+               style="float:right"
+               placeholder="داده های تکمیلی"
+               [ngModel]="entity.additionalDate  | intToStringDate"/>
+      </ng-persian-datepicker>
+      <!--      <dp-date-picker-->
+      <!--        [config]="datePickerConfig"-->
+      <!--        dir="rtl"-->
+      <!--        mode="day"-->
+      <!--        placeholder="داده های تکمیلی"-->
+      <!--        theme="dp-material"-->
+      <!--        [ngModel]="entity.additionalDate | intToStringDate"-->
+      <!--        (ngModelChange)="entity.additionalDate=convertDateToInt($event)">-->
+      <!--      </dp-date-picker>-->
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد رهگیری مشتری به ازای هر پرداخت'}" dataField="localReservationNumber">
+
+      <dxi-validation-rule type="required"
+                           message="کد رهگیری مشتری به ازای هر پرداخت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'وضعیت'}" dataField="statusCode" editorType='dxNumberBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد خطا'}" dataField="errorCode" editorType='dxNumberBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره کارت حکمت'}" dataField="hekmatCardNumber">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد ملی'}" dataField="nationalCode">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره همراه'}" dataField="mobile">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره تلفن'}" dataField="tell">
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentCount" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="تعداد اقساط اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'توکن حکمت'}" dataField="hekmatToken" editorType='dxTextArea'>
+
+
+    </dxi-item>
+
+    <dxi-item dataField="hekmatTerminalId" editorType="dxLookup" [label]="{text: 'ترمینال حکمت'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: hekmatTerminalDataSource,displayExpr:'title',valueExpr:'id' }">
+
+      <dxi-validation-rule type="required" message="ترمینال حکمت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'نتیجه تراکنش حکمت'}" dataField="hekmatTransactionResultMessage" editorType='dxTextArea'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'فاکتور شده؟'}" dataField="hasBeenInvoiced" editorType='dxCheckBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ تایید تراکنش'}" dataField="approveDate">
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.approveDate=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="approveDateDataValue"
+               style="float:right"
+               placeholder="تاریخ تایید تراکنش"
+               [ngModel]="entity.approveDate  | intToStringDate"/>
+      </ng-persian-datepicker>
+      <!--      <dp-date-picker-->
+      <!--        [config]="datePickerConfig"-->
+      <!--        dir="rtl"-->
+      <!--        mode="day"-->
+      <!--        placeholder="تاریخ تایید تراکنش"-->
+      <!--        theme="dp-material"-->
+      <!--        [ngModel]="entity.approveDate | intToStringDate" (ngModelChange)="entity.approveDate=convertDateToInt($event)">-->
+      <!--      </dp-date-picker>-->
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ تایید'}" dataField="approveDateInt" editorType='dxNumberBox'>
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.approveDateInt=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="approveDateIntDataValue"
+               style="float:right"
+               placeholder="تاریخ تایید"
+               [ngModel]="entity.approveDateInt  | intToStringDate"/>
+      </ng-persian-datepicker>
+      <!--      <dp-date-picker-->
+      <!--        [config]="datePickerConfig"-->
+      <!--        dir="rtl"-->
+      <!--        mode="day"-->
+      <!--        placeholder="تاریخ تایید"-->
+      <!--        theme="dp-material"-->
+      <!--        [ngModel]="entity.approveDateInt | intToStringDate"-->
+      <!--        (ngModelChange)="entity.approveDateInt=convertDateToInt($event)">-->
+      <!--      </dp-date-picker>-->
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد قدیمی درگاه پرداخت'}" dataField="oldHekmatId" editorType='dxNumberBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد رهگیری درگاه یاشیل'}" dataField="hekmatReservationNumber" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="کد رهگیری درگاه یاشیل اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'شناسه فاکتور'}" dataField="factorId" editorType='dxNumberBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+
+    </dxi-item>
+
+    <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+              [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

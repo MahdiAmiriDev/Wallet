@@ -1,0 +1,120 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderAddressViewModel
+@using Yashil.Common.Core.Classes;
+@using YashilCommerce.Core.Classes
+@inject ApplicationConfiguration ApplicationConfiguration
+
+
+<div class="rounded my-3">
+    <fieldset class="rounded myfieldset">
+        <legend class="myfieldset-in-order-address text-white p-1 rounded">
+            مشخصات تحویل گیرنده
+        </legend>
+        <div class="row mt-1">
+            <div class="col-9 col-sm-10 col-md-11">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="">
+                            <span>
+                                <strong class="fs-14">
+                                    @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientNationalCodeLabel):
+                                </strong>
+                            </span>
+                            <span>
+                                @Model.NationalCode
+                            </span>
+                        </div>
+                    </div>
+                @if (!string.IsNullOrWhiteSpace(Model.CardNumber))
+                {
+                    <div class="col-md-6">
+                        <span>
+                            <strong class="fs-14">
+                                شماره کارت:
+                            </strong>
+                        </span>
+                        <span>
+                            @Model.CardNumber
+                        </span>
+                    </div>
+                }
+                </div>
+            </div>
+            <!-- Go To recipient Tab -->
+            @if (Model.AllowEditAddress)
+            {
+                <div class="col-1 col-sm-2 col-md-1">
+                    <a href="#" onclick="openHomeTab()">
+                        <svg width="24" height="24" stroke="#000">
+                            <use href="../images/icons/general.svg#edit" />
+                        </svg>
+                    </a>
+                </div>
+            }
+
+        </div>
+        <!-- MobileNumber -->
+        @if (!string.IsNullOrWhiteSpace(Model.MobileNumber))
+        {
+            <div class="d-sm-block d-md-flex align-items-center gap-2 py-1">
+                <div class=" fs-14">
+                    <span>
+                        <strong>
+                            @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientMobileNumberLabel):
+                        </strong>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        @Model.MobileNumber
+                    </span>
+                </div>
+            </div>
+        }
+        @if (Model.AddressBased)
+        {
+            <div class="d-sm-block d-md-flex align-items-center gap-2 py-1">
+                <div class=" fs-14">
+                    <span>
+                        <strong>
+                            آدرس:
+                        </strong>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        @Model.CityTitle - @Model.FullAddress
+                    </span>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.SubsidyStatusTypeTitle))
+        {
+            <div class="d-sm-block d-md-flex align-items-center gap-2 py-1">
+                <div class=" fs-14">
+                    <span>
+                        <strong>
+                            وضعیت یارانه:
+                        </strong>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        <strong class="confirm-in-order-address">  @Model.SubsidyStatusTypeTitle </strong>
+                    </span>
+                </div>
+            </div>
+        }
+    </fieldset>
+</div>
+
+
+
+
+
+
+
+
+
+
+

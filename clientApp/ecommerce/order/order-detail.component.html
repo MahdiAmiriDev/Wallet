@@ -1,0 +1,299 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+        <dxi-item [label]="{text: 'شناسه سفارش'}" dataField="orderGuid">
+
+            <dxi-validation-rule type="required" message="شناسه سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="userId" editorType="dxLookup" [label]="{text: 'شناسه مشتری'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: userDataSource,displayExpr:'userName',valueExpr:'id' }">
+
+            <dxi-validation-rule type="required" message="شناسه مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="billingAddressId" editorType="dxLookup" [label]="{text: 'شناسه آدرس صورتحساب'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: billingAddressDataSource,displayExpr:'title',valueExpr:'id' }">
+
+
+        </dxi-item>
+
+        <dxi-item dataField="shippingAddressId" editorType="dxLookup" [label]="{text: 'شناسه آدرس حمل و نقل'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: shippingAddressDataSource,displayExpr:'title',valueExpr:'id' }">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه آدرس وانت'}" dataField="pickupAddressId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'گزینه حمل و نقل وانت'}" dataField="pickupInStore" editorType='dxCheckBox'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="orderStatusType" editorType="dxSelectBox" [label]="{text: 'شناسه وضعیت سفارش'}"
+                  [editorOptions]="{ items: orderStatusTypes,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="شناسه وضعیت سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="shippingStatusType" editorType="dxSelectBox" [label]="{text: 'شناسه وضعیت حمل و نقل'}"
+                  [editorOptions]="{ items: shippingStatusTypes,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="شناسه وضعیت حمل و نقل اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="paymentStatusType" editorType="dxSelectBox" [label]="{text: 'شناسه وضعیت پرداخت'}"
+                  [editorOptions]="{ items: paymentStatusTypes,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="شناسه وضعیت پرداخت اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="paymentMethodType" editorType="dxSelectBox" [label]="{text: 'نام سیستم روش پرداخت'}"
+                  [editorOptions]="{ items: paymentMethodTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد ارزی مشتری'}" dataField="customerCurrencyCode" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نرخ ارز'}" dataField="currencyRate" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="نرخ ارز اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه نوع نمایش مالیات مشتری'}" dataField="customerTaxDisplayTypeId"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="شناسه نوع نمایش مالیات مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مجموع زیر سفارش (شامل مالیات)'}" dataField="orderSubtotalInclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="مجموع زیر سفارش (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مجموع زیر سفارش (بدون مالیات)'}" dataField="orderSubtotalExclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="مجموع زیر سفارش (بدون مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تخفیف زیرمجموعه سفارش (شامل مالیات)'}" dataField="orderSubTotalDiscountInclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="تخفیف زیرمجموعه سفارش (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تخفیف زیرمجموعه سفارش (بدون مالیات)'}" dataField="orderSubTotalDiscountExclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="تخفیف زیرمجموعه سفارش (بدون مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال سفارش (شامل مالیات)'}" dataField="orderShippingInclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="ارسال سفارش (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ارسال سفارش (بدون مالیات)'}" dataField="orderShippingExclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="ارسال سفارش (بدون مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'هزینه پرداخت اضافی (شامل مالیات)'}" dataField="paymentMethodAdditionalFeeInclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="هزینه پرداخت اضافی (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'هزینه پرداخت اضافی (بدون مالیات)'}" dataField="paymentMethodAdditionalFeeExclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="هزینه پرداخت اضافی (بدون مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نرخ مالیات'}" dataField="taxRates" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مالیات سفارش'}" dataField="orderTax" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مالیات سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تخفیف سفارش را تعیین می کند (برای سفارش کل اعمال می شود)'}" dataField="orderDiscount"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="تخفیف سفارش را تعیین می کند (برای سفارش کل اعمال می شود) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مجموع سفارش'}" dataField="orderTotal" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مجموع سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نقدی یا اقساطی-نوع پرداخت'}" dataField="saleType" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="نقدی یا اقساطی-نوع پرداخت اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ بازپرداخت'}" dataField="refundedAmount" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مبلغ بازپرداخت اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="rewardPointsHistoryEntryId" editorType="dxLookup"
+                  [label]="{text: 'شناسه تاریخچه امتیاز پاداش'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: rewardPointsHistoryEntryDataSource,displayExpr:'title',valueExpr:'id' }">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات ویژگی پرداخت'}" dataField="checkoutAttributeDescription"
+                  editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ویژگی های پرداخت در قالب XML'}" dataField="checkoutAttributesXml"
+                  editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه زبان مشتری'}" dataField="customerLanguageId" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="شناسه زبان مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="affiliateId" editorType="dxLookup" [label]="{text: 'شناسه وابسته'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: affiliateDataSource,displayExpr:'friendlyUrlName',valueExpr:'id' }">
+
+            <dxi-validation-rule type="required" message="شناسه وابسته اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'آدرس IP مشتری'}" dataField="customerIp" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ذخیره شماره کارت اعتباری مجاز است یا خیر'}" dataField="allowStoringCreditCardNumber"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نوع کارت'}" dataField="cardType" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نام کارت'}" dataField="cardName" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شماره کارت'}" dataField="cardNumber" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شماره کارت اعتباری'}" dataField="maskedCreditCardNumber" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'CVV2'}" dataField="cardCvv2" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ماه انقضا کارت'}" dataField="cardExpirationMonth" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'سال انقضا کارت'}" dataField="cardExpirationYear" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه معاملات'}" dataField="authorizationTransactionId" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد معامله'}" dataField="authorizationTransactionCode" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نتیجه معامله'}" dataField="authorizationTransactionResult" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه معامله ضبط'}" dataField="captureTransactionId" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'نتیجه معامله ضبط'}" dataField="captureTransactionResult" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه معاملات مشترک'}" dataField="subscriptionTransactionId" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'روش حمل و نقل'}" dataField="shippingMethod">
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'روش محاسبه نرخ حمل و نقل'}" dataField="shippingRateComputationMethodSystemName"
+                  editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مقادیر مربوط درخواست پردازش پرداخت در قالب xml'}" dataField="customValuesXml"
+                  editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شماره سفارش سفارشی'}" dataField="customOrderNumber" editorType='dxTextArea'>
+
+            <dxi-validation-rule type="required" message="شماره سفارش سفارشی اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد'}" dataField="code">
+
+
+        </dxi-item>
+
+        <dxi-item dataField="salesPlanningId" editorType="dxLookup" [label]="{text: 'برنامه ریزی فروش'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: salesPlanningDataSource,displayExpr:'title',valueExpr:'id' }">
+
+            <dxi-validation-rule type="required" message="برنامه ریزی فروش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+            <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+
+        </dxi-item>
+
+        <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+                  [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>

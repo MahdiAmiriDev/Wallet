@@ -1,0 +1,21 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item dataField="merchantId" editorType="dxLookup" [label]="{text: 'نام پذیرنده'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: merchantDataSource,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="شناسه پذیرنده اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'کلید عمومی'}" dataField="publicKey" editorType='dxTextArea'>
+        <dxi-validation-rule type="required" message="کلید عمومی اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'آی پی'}" dataField="ip">
+        <dxi-validation-rule type="required" message="آی پی اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'پورت'}" dataField="port" editorType='dxNumberBox'>
+        <dxi-validation-rule type="required" message="پورت اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'آدرس سایت'}" dataField="url" editorType='dxTextArea'>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

@@ -1,0 +1,43 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.CompanyViewComponentViewModel
+
+@if (Model != null)
+{
+    <div class="sidebar-section overflow-hidden border">
+        <div class="sidebar-section__header">
+            <label class="sidebar-section__title">مراکز آموزشی</label>
+        </div>
+        <hr class="m-0" />
+        <div class="sidebar-section__content" id="panel">
+            @foreach (var company in Model.Companies)
+            {
+                <div>
+                    <div class="skeleton-loading--container w-100 h-100 d-flex flex-column align-items-center justify-content-between overflow-hidden" style="background: #F8F7FC; margin-bottom: 6px; padding: 8px 12px; border-radius: 15px">
+                        <div class="d-flex align-items-center gap-2 w-100">
+                            <div class="skeleton skeleton-circle"
+                                 style="--c-s: 40px;--c-p: 0px;"></div>
+                            <div class="skeleton skeleton-line"
+                                 style="
+            --lines: 2;
+                --l-h: 10px;
+--l-gap: 6px;
+        --c-w: 100%;
+        --c-p: 0px;
+    flex: 1
+          "></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-content--container d-none image-sidebar d-flex align-items-center p-2 gap-2" onclick="insertParam('company',@company.Id);">
+                        <img asp-append-version="true" alt="@company.Title" class="icons-sidebar lazy-img" src="~/images/placeholder/40.png" data-src="@Url.Action("GetCompanyIcon","PublicApi",new { cId = company.Id , modificationDate = company.ModificationDate})">
+                        <p class="mb-0 text-justify fw-bold fs-13" id="@company.Id">
+                            @company.Title
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+<script src="~/js/components/verticalSingleSelection.js" asp-append-version="true"></script>
+

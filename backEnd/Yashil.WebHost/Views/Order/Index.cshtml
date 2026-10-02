@@ -1,0 +1,226 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.ApplicationConfigurationViewModel
+@{
+    Layout = "_Layout";
+}
+
+<section id="tabs" class="mx-auto">
+    <div class="container custom-container pt-0 pt-lg-5 pt-xxl-0">
+        <div class="row">
+            <div class="my-2 bg-white rounded">
+                <div class="py-4 px-3 orderHistory-title">
+                    <h6 class="border-bottom py-1 fw-600 border-danger border-2 text-secondary">
+                        تاریخچه سفارشات
+                    </h6>
+                </div>
+                <ul class="nav nav-tabs text-nowrap" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="active nav-link text-secondary max-width" href="#currentOrder" aria-controls="currentOrder" role="tab" data-toggle="tab">
+                            <span>سفارشات جاری</span>
+                        </a>
+                    </li>
+                    @if (Model.SubsidyBased)
+                    {
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('waitingForSubsidy');" href="#waitingForSubsidy" aria-controls="waitingForSubsidy" role="tab" data-toggle="tab">
+                                <span> منتظر تایید یارانه</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('waitingForSupplierApproval');" href="#waitingForSupplierApproval" aria-controls="waitingForSupplierApproval" role="tab" data-toggle="tab">
+                            <span> منتظر تایید تامین کننده برای پرداخت</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('completePay');" href="#completePay" aria-controls="completePay" role="tab" data-toggle="tab">
+
+                            <span>پرداخت موفق</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('waitongForResult');" href="#waitongForResult" aria-controls="waitongForResult" role="tab" data-toggle="tab">
+                            <span>منتظر پاسخ درگاه پرداخت</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('refund');" href="#refund" aria-controls="refund" role="tab" data-toggle="tab">
+                            <span>مرجوعی</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-secondary max-width" onclick="setOrderListTabContent('canceledOrder');" href="#canceledOrder" aria-controls="canceledOrder" role="tab" data-toggle="tab">
+                            <span>انصرافی</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content bg-white" id="myTabContent">
+
+                    <div class="tab-pane fade show active" id="currentOrder" role="tabpanel" aria-labelledby="home-tab">
+                        @await Html.PartialAsync("_EmpityOrderListPartialView")
+                    </div>
+                    @if (Model.SubsidyBased)
+                    {
+                        <div class="tab-pane fade show " id="waitingForSubsidy" role="tabpanel" aria-labelledby="home-tab">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    }
+                    <div class="tab-pane fade show " id="completePay" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-md-12 ">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show " id="waitingForSupplierApproval" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-md-12 ">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show " id="waitongForResult" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-md-12 ">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show " id="refund" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-md-12 ">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show " id="canceledOrder" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-md-12 ">
+                            @await Html.PartialAsync("_EmpityOrderListPartialView")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div style="position:absolute" class="col-md-8 col-md-push-2">
+        <div id="alert" class="alert alert-warning alert-dismissible fade" style="margin:auto;text-align:right;" role="alert">
+            <strong id="Message"></strong>
+            <button type="button" class="close" onclick="closeCross()" aria-label="Close" style="float:right;top: -10px;">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius:0 !important;">
+                <div class="modal-body">
+                    <p id="Msg" style="text-align: right;font-size: 18px;padding-bottom: inherit;"></p>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>خطا!</strong> عملیات با خطا مواجه شد.
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="hidden" name="IdForActivity" id="idForActivity" />
+                    <input type="hidden" name="TypeOfActivity" id="typeOfActivity" />
+                    <div class="modal-footer" style="border-top: 1px solid white;">
+                        <a onclick="selectMethod($('#idForActivity').val(),$('#typeOfActivity').val())" class="btn btn-primary" style="background-color: #63d0df; width: 130px; color: white; border: solid 1px #63d0df">بله</a>
+                        <a class="btn btn-secondary" data-dismiss="modal" onclick="dissmissModal();" style="background-color: #979ba7; color: white; width: 130px;">خیر</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+@section scripts{
+    <script type="text/javascript">
+        $('#currentOrder').load('@Url.Action("CurrentOrderList", "Order")');
+        var waitongForResultLoaded = false;
+        var completePayLoaded = false;
+        var refundLoaded = false;
+        var canceledOrderLoaded = false;
+        var waitingForSubsidyLoaded = false;
+        var waitingForSupplierApproval = false;
+
+        function setOrderListTabContent(tabName) {
+
+            if (tabName === 'waitongForResult') {
+                if (!waitongForResultLoaded) {
+                    $('#waitongForResult').load('@Url.Action("WaitingForResultOrderList", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                waitongForResultLoaded = true;
+                            }
+                        }
+                    );
+
+                }
+            }
+            if (tabName === 'completePay') {
+                if (!completePayLoaded) {
+                    $('#completePay').load('@Url.Action("CompletePayOrderList", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                completePayLoaded = true;
+                            }
+                        });
+
+                }
+            }
+            if (tabName === 'refund') {
+                if (!refundLoaded) {
+                    $('#refund').load('@Url.Action("refundOrderList", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                refundLoaded = true;
+                            }
+                        }
+                    );
+
+                }
+            }
+            if (tabName === 'canceledOrder') {
+                if (!canceledOrderLoaded) {
+                    $('#canceledOrder').load('@Url.Action("canceledOrderList", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                canceledOrderLoaded = true;
+                            }
+                        });
+
+                }
+            }
+            if (tabName === 'waitingForSubsidy') {
+                if (!waitingForSubsidyLoaded) {
+                    $('#waitingForSubsidy').load('@Url.Action("WaitingForSubsidyOrderList", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                waitingForSubsidyLoaded = true;
+                            }
+                        });
+
+                }
+            }
+            if (tabName === 'waitingForSupplierApproval') {
+                if (!waitingForSupplierApproval) {
+                    $('#waitingForSupplierApproval').load('@Url.Action("WaitingForSupplierApproval", "Order")',
+                        function (response, status, xhr) {
+                            if (response === "") {
+                                window.location = "/user/login";
+                            } else {
+                                waitingForSupplierApproval = true;
+                            }
+                        });
+
+                }
+            }
+
+        }
+    </script>
+    }

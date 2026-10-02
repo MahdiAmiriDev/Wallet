@@ -1,0 +1,34 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.CategorySimpleViewModel>
+<section class=" container my-5">
+    <div class="">
+        <div class="d-flex flex-wrap justify-content-center align-items-center align-content-center cardii">
+            @foreach (var item in Model)
+            {
+                <div>
+                    <!-- Skeleton Loading Placeholder for Product Category Item -->
+                    <div class="skeleton-loading--container ">
+                        <div class="skeleton skeleton-circle mx-auto product-category--skeleton-circle"></div>
+                        <div class="skeleton skeleton-line product-category--skeleton-line"></div>
+                    </div>
+                    <!-- Skeleton Loading Placeholder for Product Category Item /-->
+
+                    <!-- Product Category Item -->
+                    <a class="skeleton-content--container d-none" href="@Url.Action("Index", "Company", new {categoryId=item.Id})">
+                        <div class="card-category align-items-center">
+                            <div class="text-center">
+                                <img alt="Secondary Color"
+                                     data-src="/api/PublicApi/GetCategoryIcon?CategoryId=@item.Id" style="width: 80px; margin-bottom: 8px; border-radius:20px">
+                                <div>
+                                    <div class="fw-bold fs-12 "><span class="">@item.Title</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </a>
+                    <!-- Product Category Item /-->
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

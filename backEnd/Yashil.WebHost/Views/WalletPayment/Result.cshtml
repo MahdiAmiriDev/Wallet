@@ -1,0 +1,64 @@
+﻿@model YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.WalletPaymentVerifyViewModel
+
+@{
+     
+    Layout = "_Layout";
+}
+ 
+ 
+
+<div class="boxed">
+    <div class="container">
+        <div id="cart-data" class="o-page__row" style="font-size:14px;font-weight:400;width:100%;background-color: white;">
+            <div class="c-checkout__tab-container js-cart-tab-main ">
+
+                <div class="col-md-12 paddingLeftMob paddingRightMob">
+                    <!-- Nav tabs -->
+                    <div class="card2" >
+                        <ul class="nav nav-tabs" role="tablist">
+
+                            <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  <span class="myTab">اطلاعات خرید</span></a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="profile">
+                                <div id="cart-data" style="margin-top: 20px;margin-bottom: 20px;">
+                                    <!--<div class="c-checkout__tab-container js-cart-tab-main ">-->
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <fieldset>
+                                                    <div style=" margin-top: 20px;color: #CC0000;text-align: center;">
+                                                        <label for="TRState">وضعیت تراکنش:</label>
+                                                        <label ID="TRState" runat="server">@Model.Status</label>
+                                                        <br />
+                                                        <label for="OrderId">  شماره سفارش:</label>
+                                                        <label ID="OrderId" runat="server">@Model.OrderId</label>
+                                                        <br />
+                                                        <label for="TransactionCode"> شماره تراکنش:</label>
+                                                        <label ID="TransactionCode" runat="server">@Model.ReservationNumber</label>
+                                                        <br />
+                                                        <a href="@Url.Action("Index","Order")">نمایش لیست سفارشات</a>
+                                                        <br />
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

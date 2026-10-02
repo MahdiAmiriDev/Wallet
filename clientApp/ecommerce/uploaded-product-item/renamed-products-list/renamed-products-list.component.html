@@ -1,0 +1,25 @@
+<div class="alert alert-info">
+  <span style="color: #ff0000"> کاربر گرامی، امکان تغییر نام یا توضیحات محصولات زیر به دلیل اینکه در سایت به فروش رفته است، وجود ندارد. </span>
+  <br/>
+  <span style="color: #ff0000"> در صورتی که می خواهید نام یا توضیحات این محصولات را تغییر دهید باید برای آنها کد بسته جدید تعریف نمایید. </span>
+  <br/>
+  <span style="color: #0ABC76"> در غیر اینصورت اگر نام یا توضیحات محصولات زیر را نمی خواهید تغییر دهید دکمه ادامه را کلیک کنید. </span>
+
+</div>
+
+
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      [showAddButton]="false"
+                      [gridHeight]="gridHeight"
+                      [fixHeight]="fixHeight"
+                      [loadAfterSetFilter]="loadAfterSetFilter"
+                      [wordWrapEnabled]="true"
+                      [columns]="columns"
+                      [entityName]="entityName"
+                      (customButtonClicked)="customButtonClicked($event)"
+                      [customButtons]="customButtons">
+  </app-base-list-form>
+</app-busy-indicator>

@@ -1,0 +1,23 @@
+<app-assignable-list
+                     [selectedGroupItemId]="companyId"
+                     [assignedColumns]="columns"
+                     groupEntityName="Company"
+                     assignableListName="CompanyMainCategory"
+                     [showGroupItemComponent]="false"
+                     [allowEditAssignedItems]="false"
+                     assignableListLabel="{{'shp.CompanyMainCategory.MainCategory' | translate}}"
+                     [(assignAffected)]="updateOrInsertAffected">
+    <div class="row">
+        <div class="col-1">
+            {{'shp.CompanyMainCategory.Company' | translate}} :
+        </div>
+        <div class="col-4 mb-2">
+            <app-company-select
+                    [selectedCompanyId]="companyId"
+                    [disabled] ="additionalUserProp && additionalUserProp.companyId"
+                    (selectedRowChanged)="onSelectedCompanyChanged($event);">
+            </app-company-select>
+        </div>
+    </div>
+
+</app-assignable-list>

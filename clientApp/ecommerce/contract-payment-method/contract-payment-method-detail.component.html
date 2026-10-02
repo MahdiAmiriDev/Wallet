@@ -1,0 +1,37 @@
+
+				<app-busy-indicator><app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+
+									<dxi-item dataField="contractId" editorType="dxLookup" [label]="{text: 'قرارداد'}"
+					[editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: contractDataSource,displayExpr:'title',valueExpr:'id' }">
+
+																				<dxi-validation-rule  type="required" message="قرارداد اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+
+									<dxi-item dataField="paymentMethodType" editorType="dxSelectBox" [label]="{text: 'روش پرداخت'}"
+					[editorOptions]="{ items: paymentMethodTypes,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="روش پرداخت اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'مبتنی بر قانون'}"  dataField="applyByExpression" editorType='dxCheckBox'>
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'قانون'}"  dataField="expression" >
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'>
+
+
+				</dxi-item>
+
+									<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+					[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+</dx-form>
+</app-base-edit-form></app-busy-indicator>

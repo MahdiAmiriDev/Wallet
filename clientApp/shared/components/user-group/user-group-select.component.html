@@ -1,0 +1,26 @@
+<dx-drop-down-box
+    #ddlUserGroup
+    [(value)]="selectedUserGroupId"
+    valueExpr="id"
+    displayExpr="title"
+    placeholder="انتخاب گروه کاربری..."
+    [showClearButton]="true"
+    [dataSource]="userGroupDataSource"
+    (onValueChanged)="userGroupValueChanged($event)">
+
+    <div *dxTemplate="let data of 'content'">
+        <dx-tree-view
+                [dataSource]="userGroupDataSource"
+                dataStructure="plain"
+                keyExpr="id"
+                parentIdExpr="parentId"
+                selectionMode="single"
+                displayExpr="title"
+                rtlEnabled="true"
+                [selectByClick]="true"
+                [searchEnabled]="true"
+                (onContentReady)="syncTreeViewSelection($event)"
+                (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlUserGroup.instance.close();">
+        </dx-tree-view>
+    </div>
+</dx-drop-down-box>

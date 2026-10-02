@@ -1,0 +1,64 @@
+﻿@using Yashil.Core.Enums
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderSummaryViewModel
+
+<div class="container-fluid ">
+    <div class="row ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-3 ">
+            @if (!string.IsNullOrEmpty(Model.CustomMessage))
+            {
+                <div class="invoice-alert-show text-justify">
+                    <div class="alert alert-danger" role="alert">
+                        <div class="d-flex flex-column">
+                            @Html.Raw(Model.CustomMessage)
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!Model.OrderId.HasValue)
+            {
+                @await Component.InvokeAsync("OrdersSubsidyWaitingToBePaidStatistics", new { Model.OrderAddressViewModel.CardNumber, checkOnlyCompletedOrders = false, checkForCurrentUser = false })
+                @await Component.InvokeAsync("OrdersSubsidyWaitingToBePaidStatistics", new { Model.OrderAddressViewModel.CardNumber, checkOnlyCompletedOrders = true, checkForCurrentUser = true })
+                @await Component.InvokeAsync("OrdersSubsidyWaitingToBePaidStatistics", new { Model.OrderAddressViewModel.CardNumber, checkOnlyCompletedOrders = true, checkForCurrentUser = false })
+            }
+
+            @await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.OrderSummeryDescriptionOfReceivingProduct, viewName = "_OrderSummeryDescriptions" })
+
+            @if (!Model.OrderIsComplete)
+            {
+                /*متن توافق نامه*/
+                @await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.OrderSummeryDescription, viewName = "_OrderSummeryDescriptions" })
+            }
+            @if (Model.IsWaitingResponseFromHekmatPaymentGateway)
+            {
+                @await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.OrderSummeryWaitingForHekmatConfirm, viewName = "_OrderSummeryDescriptions" })
+            }
+            @*Addresss View Location*@
+            @await Html.PartialAsync("_OrderAddressSummary", Model.OrderAddressViewModel)
+            @*Order Item List Location*@
+            @await Html.PartialAsync("_OrderItemListSummary", Model.OrderItemDetailPresentationViewModels)
+            <div style="text-align: center;font-weight: bold;font-size: 15px; margin-top:0.5rem;">
+                @Model.GuidanceText
+            </div>
+        </div>
+        <!-- left sidebar -->
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 p-3 ">
+            <div class="sticky-top sticky-top-ziro-index">
+                @if (Model.OrderId.HasValue && (Model.OrderStatusType == (int)OrderStatusTypesEnum.Complete) || Model.OrderStatusType == (int)OrderStatusTypesEnum.IncompletePayment ||
+                Model.OrderStatusType == (int)OrderStatusTypesEnum.IncompleteCashAndInstallmentPay)
+                {
+                    @await Html.PartialAsync("_OrderSuccessFulPaymentListSummary", Model.OrderSuccessFulPaymentListSummary)
+                }
+                @*Order Summery Location*@
+                @await Html.PartialAsync("_OrderSummaryForPay", Model.OrderSummaryForPayViewModel)
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    saleConfigurationAttributeSaleTypesIsNotCompatible = @(!Model.OrderSummaryForPayViewModel.SaleType.HasValue ? "true" : "false");
+    if (saleConfigurationAttributeSaleTypesIsNotCompatible === true) {
+        bootbox.alert('کاربر گرامی، با توجه به متفاوت بودن روش های پرداخت امکان پرداخت وجود ندارد، لطفا محصولات دیگری انتخاب نمایید.');
+    }
+
+
+</script>

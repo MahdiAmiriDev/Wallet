@@ -1,0 +1,41 @@
+<dx-drop-down-box
+    #ddlCompany
+    [readOnly]="readOnly"
+    [(value)]="selectedCompanyId"
+    [disabled]="disabled"
+    valueExpr="id"
+    placeholder="انتخاب..."
+    displayExpr="title"
+    [showClearButton]="true"
+    [dir]="'rtl'"
+    [rtlEnabled]="true"
+    [dataSource]="companyDataSource"
+    (onValueChanged)="onSelectedItemRemove($event)"
+>
+    <dx-validator>
+        <dxi-validation-rule type="required" [message]="requiredMessage" *ngIf="isRequired"></dxi-validation-rule>
+    </dx-validator>
+    <div *dxTemplate="let data of 'content'">
+        <dx-tree-view
+                [selectionMode]="selectionMode"
+                [dataSource]="companyDataSource"
+                dataStructure="plain"
+                keyExpr="id"
+                parentIdExpr="parentId"
+                displayExpr="title"
+                rtlEnabled="true"
+                [rootValue]="0"
+                [selectByClick]="true"
+                [searchEnabled]="true"
+                width="100%"
+                height="100%"
+                [rtlEnabled]="true"
+                (onContentReady)="syncTreeViewSelection($event)"
+                (onItemClick)="treeView_itemSelectionChanged($event);closeDDl(ddlCompany)">
+        </dx-tree-view>
+    </div>
+</dx-drop-down-box>
+<dx-toast displayTime="4000" [(visible)]="isVisible" [type]="type"
+          message="{{'shp.Company.Validation.SubCompanyShouldBeSelectedFromTheLowestSubCompany' | translate}}"
+          rtlEnabled="true" position="top"></dx-toast>
+

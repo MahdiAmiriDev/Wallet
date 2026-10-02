@@ -1,0 +1,5 @@
+﻿@model List<Yashil.Core.CustomViewModels.Cms.YashilCmsCustomViewModel>
+@if (Model != null && Model.Count > 0)
+{
+    @Html.Raw(Model.FirstOrDefault()?.SubTitle)
+}

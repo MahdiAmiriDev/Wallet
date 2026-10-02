@@ -1,0 +1,11 @@
+<app-assignable-list
+  [allowEditAssignedItems]="false"
+  [selectedGroupItemId]="userId"
+  [assignedColumns]="columns"
+  assignableListName="additionalUserPropCompanyGroup"
+  groupEntityName="User"
+  assignableListLabel="{{'um.UserApplication.AssignedApplicationId'|translate}}"
+  groupEntityLabel="{{'um.UserRole.UserId'|translate}}"
+  [(assignAffected)]="updateOrInsertAffected"
+>
+</app-assignable-list>

@@ -1,0 +1,38 @@
+
+				<app-busy-indicator><app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+
+									<dxi-item dataField="paymentMethodType" editorType="dxSelectBox" [label]="{text: 'روش پرداخت'}"
+					[editorOptions]="{ items: paymentMethodTypes,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="روش پرداخت اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+
+									<dxi-item dataField="customerClubId" editorType="dxLookup" [label]="{text: 'شناسه باشگاه مشتریان'}"
+					[editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: customerClubDataSource,displayExpr:'title',valueExpr:'id' }">
+
+																				<dxi-validation-rule  type="required" message="شناسه باشگاه مشتریان اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'کد'}"  dataField="code" >
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'عنوان'}"  dataField="title" >
+
+																<dxi-validation-rule  type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'>
+
+
+				</dxi-item>
+
+									<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+					[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+</dx-form>
+</app-base-edit-form></app-busy-indicator>

@@ -1,0 +1,20 @@
+<div *ngIf="isValidUploadedFactorPaymentFile" class="alert alert-primary" role="alert">
+  کاربر گرامی بارگذاری با موفقیت انجام شده است، جهت ثبت نهایی و بروزرسانی سامانه دکمه ثبت نهایی را بزنید
+</div>
+
+<div *ngIf="!isValidUploadedFactorPaymentFile" class="alert alert-danger" role="alert">
+  کاربر گرامی فایل بارگذاری شده دارای مشکلاتی میباشد لطفا پس از بررسی مجددا اقدام به بارگذاری نمایید
+</div>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [showAddButton]="false"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="transferUploadedFileToFactorPayment($event)"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

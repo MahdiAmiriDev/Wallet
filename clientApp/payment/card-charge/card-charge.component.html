@@ -1,0 +1,40 @@
+<!--[items]="items"-->
+<app-busy-indicator>
+  <section id="cardChargeSection">
+    <form (submit)="onSubmit()">
+      <dx-form id="form" [colCount]="2" #cardChargeForm [formData]="cardChargeModel">
+        <dxi-item dataField="OrganizationId" editorType="dxLookup" [label]="{text: 'سازمان'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: organizationDataSource,displayExpr:'title',valueExpr:'id' }">
+
+          <dxi-validation-rule type="required" message="سازمان را انتخاب نماببد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="CardTypeId" editorType="dxSelectBox" [label]="{text: 'نوع کارت'}"
+                  [editorOptions]="{ items: cardTypes,displayExpr:'title',valueExpr:'id' }">
+          <dxi-validation-rule type="required" message="نوع کارت را انتخاب نمایید"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item dataField="Amount" [label]="{text:'مبلغ'}" editorType='dxNumberBox'
+                  [editorOptions]="{format: '#,##0', min: 0}">
+
+        </dxi-item>
+        <dxi-item dataField="IsCredit" editorType="dxRadioGroup" [label]="{text: 'نوع شارژ'}"
+                  [editorOptions]="{ dataSource: chargeTypes, layout: 'horizontal', valueExpr: 'value', displayExpr: 'text', value: chargeTypes[0].value}">
+        </dxi-item>
+        <dxi-item editorType="dxButton"
+                  [editorOptions]="{text: 'ثبت', icon:'save', useSubmitBehavior: true, width: 120}">
+        </dxi-item>
+
+
+        <!--<dx-button
+          stylingMode="contained"
+          text="Contained"
+          type="default"
+          [width]="120"
+          (onClick)="click($event)">
+        </dx-button>-->
+      </dx-form>
+    </form>
+  </section>
+</app-busy-indicator>

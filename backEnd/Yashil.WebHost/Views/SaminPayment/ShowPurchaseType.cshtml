@@ -1,0 +1,125 @@
+﻿@using Yashil.Core.Enums
+@using YashilCommerce.Core.Enums
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.SaminPaymentModels.SaminPaymentViewModel
+@{
+    // پرداخت ثمین
+    var saminPaymentMethodType = (int)PaymentMethodTypesEnum.Samin;
+
+    //  پرداخت اعتباری
+    var creditType = (int)SaminPurchaseTypeEnum.Credit;
+
+    // پرداخت نقدی
+    var debitType = (int)SaminPurchaseTypeEnum.Debit;
+    
+    // اقساطی 
+    var installmentType = (int)SaminPurchaseTypeEnum.Installment;
+}
+
+<link href="~/css/components/saminPaymentModal.min.css" rel="stylesheet" asp-append-version="true" />
+
+<!-- dialog -->
+<div class="content-page-fullwidth-wrap clearfix pd-top-45">
+    <div class="container-fluid">
+        <div class="container mx-auto bg-white rounded-4">
+            <div class="row px-2 px-md-3">
+                <div class="col-12 col-lg-6 ">
+                    <div class="rounded-4 pt-0  p-4 bg-primary position-relative h-100">
+                        <img src="~/images/diamond-samin.webp" alt="samin payment" class="diamond-port d-block mx-auto">
+                        <div>
+                            <h2 class="fs-22 fw-800 pb-2 text-white ">پرداخت از طریق درگاه ثمین</h2>
+                            <p class="text-justify text-light">
+                                کاربر گرامی :
+
+                                با زدن دکمه پرداخت اعتباری، مبلغ پرداختی در قالب یک قسط از حقوق ماه بعد شما کسر خواهد شد.
+
+                                با زدن دکمه پرداخت بن ریالی، مبلغ پرداختی از بن ریالی شما کسر خواهد شد
+                            </p>
+                        </div>
+
+                        <div class="d-block d-md-flex justify-content-between align-items-start">
+                            <div class="w-100 pe-0  pe-md-2">
+
+
+                                <button id="btnCreditPayment" class="rounded-3 border border-1 p-3 my-2 bg-white payment-samin-port-btn w-100" onclick="doFinalPay(@Model.RecipientId ,@saminPaymentMethodType ,@creditType, '#btnCreditPayment')">
+                                    <span class="fw-bold fs-16 text-primary">
+                                        <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                                        پرداخت اعتباری
+                                    </span>
+
+                                </button>
+
+
+
+                                <button id="btnDebitPayment" class="rounded-3 border border-1 p-3 my-2 bg-white payment-samin-port-btn w-100" onclick="doFinalPay(@Model.RecipientId ,@saminPaymentMethodType ,@debitType, '#btnDebitPayment')">
+                                    <span class="fw-bold fs-16 text-primary">
+                                        <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                                        پرداخت بن ریالی
+                                    </span>
+
+                                </button>
+
+
+                                @if (Model.InstallmentCount > 1)
+                                {
+                                    <button id="btnInstallmentPayment" class="rounded-3 border border-1 p-3 my-2 bg-white payment-samin-port-btn w-100" onclick="doFinalPay(@Model.RecipientId ,@saminPaymentMethodType ,@installmentType, '#btnInstallmentPayment')">
+                                        <span class="fw-bold fs-16 text-primary">
+                                            <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                                            پرداخت اقساطی
+                                        </span>
+
+                                    </button>
+                                }
+
+                            </div>
+                            <div class="w-100 ps-0 ps-md-2 h-100">
+                                <img src="~/images/darga.webp" alt="samin payment" class="rounded-4 my-2 left-img-port-samin ">
+                            </div>
+                        </div>
+
+                        <div class="border border-3 mt-5 rounded-4 w-50 mx-auto">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6  pt-5 pt-lg-0">
+                    <div class="rounded-4 border border-1 p-4 h-100">
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/point-svg.svg" alt="svg in samin payment Institute Isiran"/>
+                            <h2 class="fs-26 fw-800 pb-2">درگاه ثمین</h2>
+                        </div>
+                        <p class="fs-16 text-muted lh-lg text-justify">
+                            کارت اعتباری ثمین با هدف ارائه ی خدمات تجارت و پرداخت الکترونیک با بکارگیری از جدیدترین فناوری ها با امکان ارائه ی خدمات اعتباری, اقساطی, تخفیف و … به کلیه سازمان های خصوصی, ارگان های ملی و بین المللی ایجاد گردیده است.
+
+                            در حال حاضر شرکت های دولتی و غیردولتی زیادی این کارت را به کارکنان شان اختصاص داده اند و کارمندان می توانند از مراکز طرف قرارداد با ثمین کارت قبل از واریز حقوق خود از آن استفاده نموده و در ماه بعد مبلغ از حقوق شان کسر شود که این مزیتی بسیار مناسب در شرایط اقتصادی حاضر می باشد.
+
+                            ثمین اولین کارت اعتباری در ایران است که در سال 1379 توسط شرکت ایزایران ارائه شد . پس از گذشت چندین سال این کارت اعتباری در قالب اپلیکیشن مجددا احیا گردید و کارت فیزیکی حذف شد.
+
+                            یکی دیگر از کاربردی ترین امکانات این کارت اعتباری این است که هر دارنده ثمین کارت می تواند از چندین کارت برای حساب خود برخوردار شود. یعنی برای یک حساب سه یا چهار کارت صادر شده و قابل استفاده برای اعضای خانواده است زیرا اغلب دارندگان کارت اعتباری ثمین در واقع سرپرست خانوار هستند.
+
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <img src="~/images/samin.webp" alt="" class="samin-logo-port-payment">
+
+                            <button type="button" class="btn btn-danger d-flex align-items-center gap-2 " id="saminPaymentCloseBtn" data-bs-dismiss="modal" data-dismiss="modal" onclick="closeSaminPaymentModal()">
+                               <span style="color:inherit">انصراف</span>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M10 10l4 4m0 -4l-4 4" />
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                    </svg>
+                                </div>
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

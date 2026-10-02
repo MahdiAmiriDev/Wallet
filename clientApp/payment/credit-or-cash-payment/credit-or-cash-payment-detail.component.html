@@ -1,0 +1,94 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item dataField="cardId" editorType="dxLookup" [label]="{text: 'اطلاعات کارت'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: cardDataSource,displayExpr:'cardTitle',valueExpr:'id' }">
+
+        <dxi-validation-rule type="required" message="اطلاعات کارت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+
+      <dxi-item dataField="merchantId" editorType="dxLookup" [label]="{text: 'پذیرنده'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: merchantDataSource,displayExpr:'title',valueExpr:'id' }">
+
+        <dxi-validation-rule type="required" message="پذیرنده اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره سفارش'}" dataField="orderId">
+
+        <dxi-validation-rule type="required" message="شماره سفارش اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ خرید'}" dataField="buyDate">
+
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.buyDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="buyDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ خرید"
+                 [ngModel]="entity.buyDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+
+
+        <!--            <dp-date-picker-->
+        <!--                    [config]="datePickerConfig"-->
+        <!--                    dir="rtl"-->
+        <!--                    mode="day"-->
+        <!--                    placeholder="تاریخ خرید"-->
+        <!--                    theme="dp-material"-->
+        <!--                    [ngModel]="entity.buyDate | intToStringDate"-->
+        <!--                    (ngModelChange)="entity.buyDate=convertDateToInt($event)">-->
+        <!--            </dp-date-picker>-->
+
+        <dxi-validation-rule type="required" message="تاریخ خرید اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'مبلغ کل'}" dataField="totalAmount" editorType='dxNumberBox'>
+
+        <dxi-validation-rule type="required" message="مبلغ کل اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentNumber" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+
+      <dxi-item dataField="status" editorType="dxSelectBox" [label]="{text: 'وضعیت'}"
+                [editorOptions]="{ items: statuss,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="وضعیت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'خرید اعتباری یا ریالی'}" dataField="creditOrCash" editorType='dxCheckBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ بازگشت مبلغ'}" dataField="returnedDate">
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.returnedDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="returnedDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ بازگشت مبلغ"
+                 [ngModel]="entity.returnedDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--            <dp-date-picker-->
+        <!--                    [config]="datePickerConfig"-->
+        <!--                    dir="rtl"-->
+        <!--                    mode="day"-->
+        <!--                    placeholder="تاریخ بازگشت مبلغ"-->
+        <!--                    theme="dp-material"-->
+        <!--                    [ngModel]="entity.returnedDate | intToStringDate"-->
+        <!--                    (ngModelChange)="entity.returnedDate=convertDateToInt($event)">-->
+        <!--            </dp-date-picker>-->
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'مبلغ بازگشت داده شده'}" dataField="returnedAmount" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

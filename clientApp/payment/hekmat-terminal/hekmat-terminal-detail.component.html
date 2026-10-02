@@ -1,0 +1,22 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره ترمینال مربوط به ای پی آی حکمت'}"
+              dataField="terminalNumber">
+      <dxi-validation-rule type="required" message="شماره ترمینال پردازش تراکنش های حکمت مربوط به ای پی آی حکمت
+ اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'سقف تعداد اقساط'}" dataField="maxInstallmentCount" editorType='dxNumberBox'>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا شماره ترمینال آموزشی می باشد؟'}" dataField="isLearn" editorType='dxCheckBox'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'فعال'}" dataField="isActive" editorType='dxCheckBox'>
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

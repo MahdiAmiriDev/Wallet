@@ -1,0 +1,16 @@
+﻿@model List<Yashil.Core.CustomViewModels.CityTitleOnlyViewModel>
+
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+
+<select id="city-list" name="city" style="width:100%;">
+    <option></option>
+    @foreach (var item in Model)
+    {
+        <option value="@item.Data">@item.Value</option>
+    }
+</select>

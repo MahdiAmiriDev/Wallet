@@ -1,0 +1,97 @@
+<app-busy-indicator>
+  <app-representation-filter
+    [showInOneRow]="true"
+    [showCategoryFilter]="false"
+    (selectedCompanyChanged)="onSelectedCompanyChange($event)"
+    (selectedRepresentationChanged)="onSelectedRepresentationChange($event)"
+    (additionalUserPropHasCompanyId)="onSelectedCompanyChange($event)"
+  >
+  </app-representation-filter>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="d-flex align-items-baseline gap-2">
+        <div>
+          <label style="padding: 8px 0 8px 8px">برنامه ریزی دوره:</label>
+
+        </div>
+        <dx-lookup
+          style="max-width:100%;width:82%;"
+          itemTemplate="productSalesPlanning"
+          [dataSource]="this.productSalesPlanningDataSource"
+          (onValueChanged)="onSelectedProductSalesPlanningChanged($event)"
+          displayExpr="title"
+          valueExpr="id"
+          rtlEnabled="true"
+          showClearButton="true">
+          <div *dxTemplate="let item of 'productSalesPlanning'">
+            {{ item.id }} - {{ item.title }}
+          </div>
+        </dx-lookup>
+      </div>
+
+    </div>
+  </div>
+
+
+  <app-base-list-form #listForm
+                      [entityName]="'Order'"
+                      [customListUrl]="'Order/GetOrdersWithWaitingForRequiredSupplierApprovalBeforePaymentStatus'"
+                      [columns]="columns"
+                      [customRowButtons]="customRowButton"
+                      allowAdd="false"
+                      allowDeleteInForm="false"
+                      allowEditInForm="false"
+                      showAddButton="false"
+                      [showExportToExcelButton]="true"
+
+  >
+
+  </app-base-list-form>
+
+
+  <dx-popup
+    *ngIf="showChangeProductSalesPlanningPopup"
+    [title]="'تغییر بسته'"
+    [rtlEnabled]="true"
+    [visible]="showChangeProductSalesPlanningPopup"
+    [closeOnOutsideClick]="true"
+    [deferRendering]="false"
+    [dragEnabled]="false"
+    (onHidden)="this.showChangeProductSalesPlanningPopup=false"
+    [fullScreen]="true"
+    class="popup">
+      <div class="d-flex align-items-center">
+        <span class="px-2">برنامه ریزی دوره:</span>
+
+        <dx-lookup
+          style="width:30%;"
+          [dataSource]="this.productSalesPlanningWithRequireSupplierApprovalBeforePaymentDataSource"
+          (onValueChanged)="onSelectedNewProductSalesPlanningChanged($event)"
+          valueExpr="id"
+          displayExpr="title"
+          itemTemplate="productSalesPlanningWithRequireSupplierApprovalBeforePayment"
+          rtlEnabled="true"
+          showClearButton="true">
+          <div *dxTemplate="let item of 'productSalesPlanningWithRequireSupplierApprovalBeforePayment'">
+            {{ item.id }} - {{ item.title }}
+          </div>
+        </dx-lookup>
+        <div class="px-2">
+          <span class="px-2">توضیحات:</span>
+          <input [(ngModel)]="description" type="text"
+                 style="
+                width: 500px;
+                height: 36px;
+                border: 1px solid #ddd;
+                border-radius: 4px;">
+        </div>
+
+        <button class="btn btn-primary px-2" [disabled]="disableConfirmChangeProductSalesPlanningButton" value="تایید"
+                style="font-family: 'iransans'; width: 100px;"
+                (click)="changeOrderItemProductSalesPlanningForWaitingForSupplierApprovalStatus()">تایید
+        </button>
+      </div>
+  </dx-popup>
+
+</app-busy-indicator>

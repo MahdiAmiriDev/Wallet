@@ -1,0 +1,29 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'factorGroup'" class="tab-content-edit-form">
+    <app-factor-group-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="factorGroup"
+      [parentId]="parentId"
+      [factorGroupStatus]="factorGroupStatus"
+      [closeAfterSave]="false"
+      #mainBaseEdit
+      (closeFormClick)="closeFormClick.emit($event)"
+    >
+    </app-factor-group-detail>
+  </div>
+  <!--  <div *dxTemplate="let company of 'factorGroupItems'" class="tab-content-edit-form">-->
+  <!--    <app-assignable-list assignableListName="Factor" groupEntityName="FactorGroup"-->
+  <!--                         [selectedGroupItemId]="selectedEntityId" assignableListLabel="فاکتور"-->
+  <!--                         [showGroupItemComponent]="false"-->
+  <!--                         groupEntityLabel="گروه فاکتور">-->
+  <!--    </app-assignable-list>-->
+  <!--  </div>-->
+</dx-tab-panel>

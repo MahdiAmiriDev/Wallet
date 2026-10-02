@@ -1,0 +1,142 @@
+﻿@using Yashil.Core.Entities
+@using YashilCommerce.Core.Classes
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.ProductListPartialViewModel
+
+
+@if (Model.ShowProductsByList == null)
+{
+    <div class="container">
+        <section class="flat-popular-courses mb-5 px-3 mx-3 mx-sm-auto">
+
+            @if (Model.CategoryViewModel != null)
+            {
+                <div class="d-flex align-items-center justify-content-between bg-white mb-2" style="border-radius: 10px; border: 1px solid rgb(199, 199, 199);">
+                    <div class="">
+                        <div class="m-3 me-0">
+                            <h2 class="title fs-16 text-right">
+                                <i class="@Model.CategoryViewModel.CssClass" aria-hidden="true"></i>
+                                <span class="grade">@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceCategoryPrefixLabel)</span>
+                                <span class="text-dark fs-16 fw-700"> @Model.CategoryViewModel.Title</span>
+                            </h2>
+                        </div>
+
+                    </div>
+                    <div>
+                        <a class="btn font-weight-500 text-nowrap" style="color:#e97c24" href="@Url.Action("Index", "Company", 
+                          new {
+                              categoryId=Model.CategoryViewModel.Id,
+                              cityId=Model.ProductFilter.CityId,
+                              representationId = Model.ProductFilter.RepresentationId,
+                              categoryGroupId =Model.ProductFilter.CategoryGroupId,
+                              company = Model.ProductFilter.Company
+                          })">
+                            <span class="fullProductList showing-all-in-company  fw-500">
+                                مشاهده همه
+                            </span>
+                            <svg viewBox="0 0 16 16" width="20" height="20" stroke="currentColor" stroke-width="2">
+                                <use href="../images/icons/general.svg#chevron-left" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            }
+            <div class="mt-0">
+                <div class="swiper swiper-container" style="position:relative;z-index:0;" id=@($"swiperContainer{Model.CategoryViewModel?.Id}")>
+                    <div class="swiper-wrapper">
+                        @if (Model.ShowNoResultOnEmpty == true)
+                        {
+                            @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter, showNoResultOnEmpty = true })
+                        }
+                        else
+                        {
+                            if (Model.CategoryViewModel != null)
+                            {
+                                @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter, groupedCategoryId = Model.CategoryViewModel.Id  })
+                            }
+                            else
+                            {
+
+                                @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter })
+                            }
+
+                        }
+                    </div>
+                    <div id=@($"next{Model.CategoryViewModel?.Id}") class="swiper-button-next d-none d-lg-flex"></div>
+                    <div id=@($"prev{Model.CategoryViewModel?.Id}") class="swiper-button-prev d-none d-lg-flex"></div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+}
+else if (Model.ShowProductsByList == true)
+{
+    @if (Model.ShowNoResultOnEmpty == true)
+    {
+        <div id="productsContainer" class="w-100">
+            @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter, showNoResultOnEmpty = true , showProductsByList = true})
+        </div>
+    }
+    else
+    {
+        if (Model.CategoryViewModel != null)
+        {
+            @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter, groupedCategoryId = Model.CategoryViewModel.Id })
+        }
+        else
+        {
+
+            @await Component.InvokeAsync("ProductsByFilter", new { productFilter = Model.ProductFilter })
+        }
+
+    }
+}
+
+
+@if (Model.SetSliderCustomConfig.HasValue && Model.SetSliderCustomConfig.Value == true)
+{
+    <script>
+        productListCarousel(@(Model.CategoryViewModel?.Id), 10, {
+            320: {
+                slidesPerView: 1.1
+            },
+            480: {
+                slidesPerView: 1.8
+            },
+            560: {
+                slidesPerView: 2.2
+            },
+            768: {
+                slidesPerView: 2.6
+            },
+            950: {
+                slidesPerView: 2.7
+            },
+            1200: {
+                slidesPerView: 3.5
+            },
+            1400: {
+                slidesPerView: 4.2
+            }
+        })
+    </script>
+}
+else if (Model.CategoryViewModel != null && Model.CategoryViewModel.Id != 0)
+{
+    <script>
+        productListCarousel(@(Model.CategoryViewModel?.Id), 10, {
+            320: {
+                slidesPerView: 1.5
+            },
+            480: {
+                slidesPerView: 2.5
+            },
+            768: {
+                slidesPerView: 3.5
+            },
+            950: {
+                slidesPerView: 4.5
+            }
+        })
+    </script>
+}

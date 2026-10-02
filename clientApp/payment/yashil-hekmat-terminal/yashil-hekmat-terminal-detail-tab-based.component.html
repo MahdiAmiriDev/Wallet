@@ -1,0 +1,25 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+    <div *dxTemplate="let company of 'yashilHekmatTerminal'" class="tab-content-edit-form">
+        <app-yashil-hekmat-terminal-detail
+                [selectedEntityId]="selectedEntityId"
+                (afterInsertRow)="rowInserted($event)"
+                entityName="yashilHekmatTerminal"
+                [hekmatTerminalId]="hekmatTerminalId"
+                [merchantId]="merchantId"
+                [closeAfterSave]="false"
+                #mainBaseEdit
+                (closeFormClick)="closeFormClick.emit($event)">
+        </app-yashil-hekmat-terminal-detail>
+    </div>
+    <div *dxTemplate="let pic of 'icon'" class="tab-content-edit-form">
+        <app-entity-document-upload [appEntityName]="entityName" [docCategoryId]="55"
+                                    [objectId]="selectedEntityId"></app-entity-document-upload>
+    </div>
+</dx-tab-panel>

@@ -1,0 +1,23 @@
+﻿@using Yashil.Core.CustomViewModels.ECommerce
+@model ProductsByFilterViewModel
+
+@if (Model.ProductSalePlannings.Any())
+{
+    <div class="d-flex flex-column gap-5">
+        <div class="container border border-2 my-3 slide-products-categories-sale-planning bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold fs-18 course-carousel__title" style="width: fit-content">
+                    دوره‌های مرتبط
+                </h4>
+            </div>
+            <div class="swiper  my-4 mb-0" id='swiperContainerCategoriesProductSalePlanning'>
+                <div class="swiper-wrapper">
+                    @await Html.PartialAsync("~/Views/Shared/Components/ProductsByFilter/_CategoriesCarouselProductSalePlanning.cshtml", Model)
+                </div>
+                <div id="next-related-products" class="swiper-button-next d-none d-lg-flex"></div>
+                <div id="previous-related-products" class="swiper-button-prev d-none d-lg-flex"></div>
+            </div>
+
+        </div>
+    </div>
+}

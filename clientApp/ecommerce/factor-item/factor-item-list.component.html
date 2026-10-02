@@ -1,0 +1,27 @@
+<ng-container *ngIf="areOtherDeductionsIncludeInSupplierInvoice!=null">
+  <div *ngIf="areOtherDeductionsIncludeInSupplierInvoice" class="alert alert-danger">
+      با توجه به تنظیم فروش،در این فاکتور قیمت با تخفیف = مبلغ پایه منهای تخفیف منهای سود منهای هزینه تبلیغات
+  </div>
+  <div *ngIf="!areOtherDeductionsIncludeInSupplierInvoice" class="alert alert-info">
+    با توجه به تنظیم فروش،در این فاکتور قیمت با تخفیف = مبلغ پایه منهای تخفیف منهای سود
+  </div>
+</ng-container>
+<app-base-list-form #listForm
+                    [showExportToExcelButton]="true"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [gridHeight]="gridHeight"
+                    title="آیتم های فاکتور"
+                    [fixHeight]="true"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    [allowGrouping]="false"
+                    [columnGrouping]="'quantity'"
+                    [summaryTypeGrouping]="'sum'"
+>
+</app-base-list-form>

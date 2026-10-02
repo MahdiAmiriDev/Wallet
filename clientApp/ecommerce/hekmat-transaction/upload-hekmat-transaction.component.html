@@ -1,0 +1,61 @@
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      entityName="HekmatTransaction"
+                      customListUrl="HekmatTransaction/GetTransactionFiles"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [customButtons]="customButtons"
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      [showAddButton]="false"
+                      (customButtonClicked)="customButtonClicked($event)">
+  </app-base-list-form>
+</app-busy-indicator>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری نتیجه تراکنش های حکمت"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetHekmatTransactionFileModel()">
+  <div *ngIf="!showList">
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="hekmatTransactionFileModel" enctype="multipart/form-data">
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+        <div *dxTemplate="let data of 'fileTemplate'">
+          <dx-file-uploader
+            #fileUploader
+            name="hekmatTransactionFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.csv']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="'api/hekmatTransaction/UploadHekmatTransactionFileAsync'"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+          </dx-file-uploader>
+        </div>
+
+      </dx-form>
+    </form>
+
+
+</div>
+  <app-hekmat-transaction-item *ngIf="showList" [invalidItem]="invalidItem"
+  (afterFinalRegistration)="afterFinalRegistration()">
+  </app-hekmat-transaction-item>
+</dx-popup>
+
+

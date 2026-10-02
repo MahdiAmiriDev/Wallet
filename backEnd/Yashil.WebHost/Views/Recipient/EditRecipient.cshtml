@@ -1,0 +1,331 @@
+﻿@using Yashil.Core.Enums
+@using YashilCommerce.Core.Classes
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.RecipientPresentationEditModel
+
+
+@{
+    var vezarat = (int)MembershipTypesEnum.Vezarat;
+    var sata = (int)MembershipTypesEnum.Sata;
+    var others = (int)MembershipTypesEnum.Others;
+
+    Layout = null;
+    if (Model == null)
+    {
+        return;
+    }
+
+    if (this.ViewContext.FormContext == null)
+    {
+        this.ViewContext.FormContext = new FormContext();
+    }
+}
+
+<link href="~/css/components/edit_recipient.css" rel="stylesheet" />
+
+<!-- dialog -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+            <form id="recipientForm" method="post" name="recipientForm">
+                <fieldset class="mt-2 edit-recipient-fieldset">
+                    <input type="number" id="stringId" name="stringId" style="display: none" />
+                    <legend class="fw-600">اطلاعات متقاضی</legend>
+                    <div class="row gx-4 p-3 edit-recipient-form">
+                        <div class="col-12 col-lg-6">
+                            @*@Html.LabelFor(x => x.NationalCode)*@
+                            <h4 class="recipient-input--title">
+                                @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientNationalCodeLabel)
+                            </h4>
+                            @Html.TextBoxFor(x => x.NationalCode, new { @type = "number", @class = "input-login input-login-page w-100 ss02", autocomplete = "off", name = "NationalCode", id = "NationalCode", maxlength = "10", inputmode = "decimal", oninput = "controlInputCharacters(this)" })
+                            @Html.ValidationMessageFor(x => x.NationalCode, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <h4 class="recipient-input--title">
+                                @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.YashilCommerceRecipientMobileNumberLabel)
+                            </h4>
+                            @Html.TextBoxFor(x => x.MobileNumber, new { type = "tel", @class = "input-login input-login-page w-100 ss02", autocomplete = "off", name = "MobileNumber", id = "MobileNumber", maxlength = "11", inputmode = "tel", oninput = "controlInputCharacters(this)" })
+                            @Html.ValidationMessageFor(x => x.MobileNumber, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <h4 class="recipient-input--title">
+                                تاریخ تولد
+                            </h4>
+                            <div id="birthday-input" class="d-flex gap-2">
+                                <select class="birth-day--select birthday-input--select ss03">
+                                    <option value="placeholder" selected>روز</option>
+                                </select>
+                                <select class="birth-month--select birthday-input--select">
+                                    <option value="placeholder" selected>ماه</option>
+                                </select>
+                                <select class="birth-year--select birthday-input--select ss03">
+                                    <option value="placeholder" selected>سال</option>
+                                </select>
+                            </div>
+                            @Html.TextBoxFor(x => x.BirthDateStr, new { type = "number", @readonly = "readonly", hidden = "true", @class = "input-login input-login-page w-100 ss02", name = "BirthDateStr", id = "birthday-hidden--input", maxLength = "8" })
+                            @Html.ValidationMessageFor(x => x.BirthDateStr, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <h4 class="recipient-input--title">
+                                جنسیت
+                            </h4>
+                            <div class="d-flex gap-4" style="height: 48px">
+                                @foreach (var item in Model.GenderTypes)
+                                {
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label class="radio-wrapper-8" for="@item.Id">
+                                            @if (Model.GenderType == 0)
+                                            {
+                                                @Html.RadioButton("GenderType", item.Id,
+                                                         (int)GenderEnum.Man == item.Id, new
+                                                         {
+                                                             name = "GenderType",
+                                                             id = item.Id,
+                                                             @class = "custom-control-input",
+                                                         })
+                                            }
+                                            else
+                                            {
+                                                @Html.RadioButton("GenderType", item.Id,
+                                                         new
+                                                         {
+                                                             name = "GenderType",
+                                                             id = item.Id,
+                                                             @class = "custom-control-input",
+                                                         })
+                                            }
+                                            <div class="custom-control-label" style="font-size: 14px">@item.Title</div>
+                                        </label>
+                                    </div>
+                                }
+                                @Html.ValidationMessageFor(x => x.GenderType, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <h4 class="recipient-input--title">
+                                @Html.LabelFor(x => x.CityId)
+                            </h4>
+                            <div id="cities-list--container">
+                                <select id="cities-list" name="CityId" style="width:100%">
+                                    <option></option>
+                                    @foreach (var item in Model.CityListModelViewModel)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                </select>
+                            </div>
+                            @Html.ValidationMessageFor(x => x.CityId, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                        </div>
+                        <div class="col-12 col-lg-6 @((Model.HekmatBased || Model.MembershipType == (int)MembershipTypesEnum.Vezarat || 
+                                                       Model.MembershipType == (int)MembershipTypesEnum.Sata) ? "":"d-none")" id="relationshipWithBuyer">
+                            <h4 class="recipient-input--title">
+                                نسبت صاحب حکمت کارت با تحویل گیرنده
+                            </h4>
+                            <div id="relationshipWithBuyer-list--container">
+                                <select id="relationshipWithBuyer-list" name="RelationshipWithBuyerType" style="width:100%">
+                                    <option></option>
+                                    @foreach (var item in Model.RelationshipWithBuyerList)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        @if (Model.AddressBased)
+                        {
+                            <div class="col-12 col-lg-6">
+                                <h4 class="recipient-input--title">
+                                    @Html.LabelFor(x => x.Name)
+                                </h4>
+                                @Html.TextBoxFor(x => x.Name, new { @class = "input-login input-login-page w-100 ss02", autocomplete = "off", name = "Name", id = "Name", maxlength = "100" })
+                                @Html.ValidationMessageFor(x => x.Name, "", new { @class = "validationMessage d-block", style = "height:25px" })
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h4 class="recipient-input--title">
+                                    @Html.LabelFor(x => x.LastName)
+                                </h4>
+                                @Html.TextBoxFor(x => x.LastName, new { @class = "input-login input-login-page w-100 ss02", autocomplete = "off", name = "LastName", id = "LastName", maxlength = "100" })
+                                @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "validationMessage d-block", style = "height:25px" })
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                <h4 class="recipient-input--title">
+                                    @Html.LabelFor(x => x.FullAddress)
+                                </h4>
+                                @Html.TextAreaFor(x => x.FullAddress, 1, 5, new { @class = "input-login input-login-page w-100 ss02", autocomplete = "off", name = "FullAddress", id = "FullAddress", maxlength = "300", style = "height:120px !important; padding:10px; resize:none" })
+                                @Html.ValidationMessageFor(x => x.FullAddress, "", new { @class = "validationMessage d-block", style = "height:25px" })
+                            </div>
+                            @Html.HiddenFor(x => x.AddressId)
+                        }
+                    </div>
+                </fieldset>
+                @if (Model.SubsidyBased || Model.HekmatBased)
+                {
+                    <fieldset class="mt-3 edit-recipient-form edit-recipient-fieldset">
+                        <legend class="w-auto fw-600 text-right ps-1 pe-2">اطلاعات صاحب حکمت کارت</legend>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                            <div class="row">
+                                <div class="col-12 d-flex">
+                                    <label class="fs-14" for="onwork">وضعیت :</label>
+                                    <div class="col-8 mx-2">
+                                        <div class="d-flex">
+                                            <div class="d-flex gap-4">
+                                                @foreach (var item in Model.MembershipTypes)
+                                                {
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <label class="radio-wrapper-8" for="@item.Id">
+                                                            @if (Model.MembershipType == 0)
+                                                            {
+                                                                @Html.RadioButton("MembershipType", item.Id,
+                                                                         new
+                                                                         {
+                                                                             name = "MembershipType",
+                                                                             id = item.Id,
+                                                                             @class = "custom-control-input",
+                                                                             onclick = "changeCardNumberLabel(this);"
+                                                                         })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.RadioButton("MembershipType", item.Id,
+                                                                         new
+                                                                         {
+                                                                             name = "MembershipType",
+                                                                             id = item.Id,
+                                                                             @class = "custom-control-input",
+                                                                             onclick = "changeCardNumberLabel(this);"
+                                                                         })
+                                                            }
+                                                            <div class="custom-control-label" style="font-size: 14px">@item.Title</div>
+                                                        </label>
+                                                    </div>
+                                                }
+                                                @Html.ValidationMessageFor(x => x.MembershipType, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                                            </div>
+
+
+
+                                        </div>
+                                        <div>
+                                            @Html.ValidationMessageFor(x => x.MembershipType, "", new { @class = "validationMessage  d-block", style = "height:25px" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group w-100 m-auto mt-2 text-right">
+                                    @if (Model.MembershipType == vezarat || Model.MembershipType == sata)
+                                    {
+                                        <label class="fs-14" id="lblCardNumber" for="CardNumber">شماره حکمت</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="fs-14" id="lblCardNumber" for="CardNumber">شماره کارت</label>
+                                    }
+                                    @if (Model.RequiredRecipientCardNumber)
+                                    {
+                                        <input autocomplete="off"
+                                               data-val="true"
+                                               data-val-length="حداکثر طول شماره کارت حداکثر 16 میباشد"
+                                               data-val-length-max="16" data-val-remote="شماره کارت نامعتبر است"
+                                               data-val-remote-additionalfields="*.MembershipType,*.CardNumber"
+                                               data-val-remote-url="/Recipient/VerifyCardNumber"
+                                               data-val-required="شماره کارت اجباری است"
+                                               id="CardNumber"
+                                               maxlength="16"
+                                               name="CardNumber"
+                                               inputmode="decimal"
+                                               type="text"
+                                               class="input-login input-login-page w-100 ss02"
+                                               value="@Model.CardNumber">
+                                        <span class="field-validation-valid" data-valmsg-for="CardNumber" data-valmsg-replace="true"></span>
+                                    }
+                                    else
+                                    {
+                                        <input autocomplete="off"
+                                               data-val="false"
+                                               data-val-length="حداکثر طول شماره کارت حداکثر 16 میباشد"
+                                               data-val-length-max="16"
+                                               id="CardNumber"
+                                               maxlength="16"
+                                               inputmode="decimal"
+                                               name="CardNumber"
+                                               type="text"
+                                               class="input-login input-login-page w-100 ss02"
+                                               value="@Model.CardNumber">
+
+                                        <span class="field-validation-valid" data-valmsg-for="CardNumber" data-valmsg-replace="true"></span>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                }
+                else
+                {
+                    <input type="hidden" value="@others" id="MembershipType" name="MembershipType" />
+
+
+
+                    <div class="row">
+                        <div class="form-group fullwidth d-flex mt-3 mb-2 ">
+                            <div class="checkboxes__row mr-2">
+                                <div class="checkboxes__item">
+                                    <label class="checkbox style-e border-0">
+                                        <input data-val="true" data-val-required="لطفا وضعیت دارا بودن کارت حکمت خود را مشخص نمایید" id="HasCardNumber" name="HasCardNumber" onclick="changeRequireCardNumber(this);" type="checkbox" value="true">
+                                        <div class="checkbox__checkmark"></div>
+                                        <div class="checkbox__body">حکمت کارت دارم</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group fullwidth" id="cardNumberInputAria"></div>
+                    </div>
+                }
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="row mt-3 mb-3">
+                        <div class="form-group w-100 m-auto text-right pb-2">
+                            <button type="submit" id="btnRecipientSubmit" class="loginButton d-flex alig-items-center justify-content-center w-100 gap-2" onclick="recipientFormSubmit(event, $('#recipientForm'),'#btnRecipientSubmit')">
+                                <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-md-4 col-lg-4 hidden-sm hidden-xs"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var cityId = "@Model.CityId";
+    var relationshipWithBuyerType = "@Model.RelationshipWithBuyerType";
+</script>
+
+<script type="text/javascript">
+    $('#textbox').on('change keyup', function () {
+        // Remove invalid characters
+        var sanitized = $(this).val().replace(/[^0-9]/g, '');
+        // Update value
+        $(this).val(sanitized);
+    });
+    $('#NationalCode').focus();
+
+    function controlInputCharacters(object) {
+        if (object.value.length > object.maxLength)
+            object.value = object.value.slice(0, object.maxLength)
+    }
+</script>
+<script src="~/js/components/dist/edit_recipient.min.js" asp-append-version="true"></script>

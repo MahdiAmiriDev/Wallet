@@ -1,0 +1,28 @@
+﻿@using YashilCommerce.Web.Areas.ECommerce.ViewModels;
+@model CategoryHierarchicallyModel
+
+
+<div class="sidebar-section overflow-hidden border mt-2">
+    <div class="sidebar-section__header">
+        <label class="sidebar-section__title">گروه های آموزشی</label>
+    </div>
+    <hr class="m-0" />
+    <div class="sidebar-section__content">
+        <!-- ******************** sidebarlist with dropdowns ************************* -->
+        <div class="sidebar sidebarlist list-group list-group-root well border-0 rounded-3">
+            <ul class="nav flex-column submenu" id="nav_accordion">
+                @await Html.PartialAsync("_CategoryHierarchicallyPartial",Model)
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    let categoryHierarchicalTreeFirstUl = document.querySelector("#nav_accordion > li > ul");
+    if (categoryHierarchicalTreeFirstUl) {
+        categoryHierarchicalTreeFirstUl.classList.add("show");
+    }
+
+</script>

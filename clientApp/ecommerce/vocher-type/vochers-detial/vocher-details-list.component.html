@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowAdd]="false"
+                    [showAddButton]="false"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [customListUrl]="this.customDataSourceUrl"
+                    [gridHeight]="screen.availHeight-200"
+>
+</app-base-list-form>

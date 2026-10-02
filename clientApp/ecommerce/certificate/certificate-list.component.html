@@ -1,0 +1,30 @@
+<div style="width: 100%;">
+  <div class="row" style="padding-bottom: 3px">
+    <div class="col-5">
+      <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+        <label>کد ملی : </label>
+      </div>
+      <div style="float: right; width: 20%">
+        <input type="text" [(ngModel)]="searchedNationalCode" (keyup.enter)="search()">
+      </div>
+    </div>
+
+    <div class="col-2">
+      <dx-button
+        (click)="search()"
+        icon="search"
+        style="margin: 3px 18px 3px 3px;"
+        text="جستجو"
+        hint="جستجو">
+      </dx-button>
+    </div>
+  </div>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

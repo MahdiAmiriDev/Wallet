@@ -1,0 +1,17 @@
+<dx-tab-panel
+  #tabPanel
+  rtlEnabled="true"
+  [dataSource]="tabs"
+  [selectedIndex]="0"
+  [loop]="false"
+  [animationEnabled]="false"
+  [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'certificate'" class="tab-content-edit-form">
+    <app-certificate-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="certificate"
+    >
+    </app-certificate-detail>
+  </div>
+</dx-tab-panel>

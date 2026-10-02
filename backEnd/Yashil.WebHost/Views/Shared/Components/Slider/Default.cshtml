@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.Slider.SliderSimpleViewModel>
+
+<link href="~/css/main_loading_skeleton.css" rel="stylesheet" asp-append-version="true" />
+
+
+@*Swiper Slider*@
+<section class="pt-2 pt-lg-5 pt-xxl-2">
+    <div class="baner-width">
+        <div class="swiper swiper-slider">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model)
+                {
+                    if (item.CategoryGroupImageObjectId.HasValue)
+                    {
+                        <a class="swiper-slide bg-transparent">
+                            <picture class="position-relative">
+                                <div class="position-absolute w-100 d-flex justify-content-center" style="z-index: 10; height: fit-content !important; top: 50%; transform: translateY(-50%);">
+                                    <span class="spinner-border text-dark" role="status" aria-hidden="true" style="z-index: 10; width: 2.5rem; height: 2.5rem; border-width: 0.3rem"></span>
+                                </div>
+                                <source class="lazy-source" srcset="~/images/placeholder/1000x500.png" data-srcset="/api/PublicApi/GetCategoryGroupSliderMobileModeImage?objectId=@item.CategoryGroupImageObjectId.Value" media="(max-width: 768px)" />
+                                <img class="banerPage lazy-img" alt="@item.Title" style="position: relative" src="~/images/placeholder/1000x500.png"
+                                     data-src="/api/PublicApi/GetCategoryGroupSliderImage?objectId=@item.CategoryGroupImageObjectId.Value" />
+                            </picture>
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-black"></div>
+                            <div class="title" id="title_#">
+                                @if (!string.IsNullOrEmpty(item.Title) && item.Title?.Trim() != ".")
+                                {
+                                    <h3 class="Slider_Title"> @item.Title </h3>
+                                    <h1 class="Slider_SubTitle"> @Html.Raw(@item.SubTitle) </h1>
+                                }
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="swiper-slide bg-transparent ">
+                            <!-- Skeleton Loading Placeholder for Slider Hero Banner -->
+                            <div class="skeleton-loading--container w-100 overflow-hidden rounded-3 ">
+                                <div class="skeleton skeleton-line hero-banner-image--skeleton d-block mx-auto overflow-hidden rounded-3"></div>
+                            </div>
+                            <!-- Skeleton Loading Placeholder for  Slider Hero Banner  /-->
+
+                            <!-- Slider Hero Banner -->
+                            <picture class="skeleton-content--container d-none position-relative ">
+                                @{
+                                    //آدرس ای پی ای  دریافت تصویر اسلایدر در حالت موبایل را بر اساس  این که  مربوط به درسته بندی است باشگاه مشتریان است
+                                    // یا نه ست می کنیم
+                                    var mobileModeApiUrl = (item.Url.Trim().ToLower().Contains("getcategorycustomerclubslider")) ? $"/api/PublicApi/GetCategoryCustomerCustomerClubMobileSliderImage?id={item.Id}&modificationDate={item.ModificationDate}" : $"/api/PublicApi/GetMainPageSliderMobileImage?id={item.Id}&modificationDate={item.ModificationDate}";
+                                }
+                                <source data-srcset="@(mobileModeApiUrl)" media="(max-width: 768px)"/>
+                                <img class="banerPage position-relative" alt="@item.Title" data-src="@($"{item.Url}&modificationDate={item.ModificationDate}")" />
+                            </picture>
+                            <!-- Slider Hero Banner /-->
+                            <div class="title" id="title_#">
+                                @if (item.Title?.Trim() != ".")
+                                {
+                                    <h3 class="Slider_Title"> @item.Title </h3>
+                                    <h1 class="Slider_SubTitle"> @Html.Raw(@item.SubTitle) </h1>
+                                }
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+            <span class="swiper-pagination"></span>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="~/js/swiper.min.js" asp-append-version="true"></script>
+<script src="~/js/heroSliderConfiguration.js" asp-append-version="true"></script>

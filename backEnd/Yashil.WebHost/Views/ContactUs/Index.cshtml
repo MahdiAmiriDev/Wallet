@@ -1,0 +1,132 @@
+﻿@using ApplicationConfigKey = YashilCommerce.Core.Classes.ApplicationConfigKey
+@{
+
+    Layout = "_Layout";
+}
+
+
+<link href="~/css/leaflet.min.css" rel="stylesheet" asp-append-version="true" />
+
+<style>
+    .sub-level-contacts{
+        font-size:smaller;
+    }
+</style>
+
+<div  class="boxed">
+    <div class="container h-100">
+        <div class="py-5 h-100">
+            <div class="d-flex flex-column flex-md-row gap-0 gap-md-2 h-100">
+                <div class="d-flex flex-column w-100 bg-white ss02 border-start border-5 border-in-contactus">
+                    <div class="d-flex align-items-center flex-grow-1 w-100 px-4 py-4  border-bottom">
+                        <div>
+                            <h6 class="fw-bold mb-4 ps-1 text-in-contactus lh-base ">
+                                فراگیران گرامی جهت ارتباط با مجموعه انستیتو ایزایران با شماره تلفن های زیر در ارتباط باشید:
+                                
+                            </h6>
+
+                            <h5 class="fw-bold mb-3 ps-1 text-in-contactus lh-base">
+                                واحد ثبت نام
+                            </h5>
+
+
+
+                            <div class="d-flex align-items-center gap-2 pb-2">
+                                <div class="mb-1">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <use href="../images/icons/general.svg#device-mobile" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0"> @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationRegistrationUnitPhone) </p>
+                            </div>
+
+                            <p>
+                                روزها و ساعات پاسخگویی :
+                                شنبه تا چهارشنبه از ساعت 8:00 الی 16:00 به غیر از روز های تعطیل
+
+                            </p>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center flex-grow-1 w-100 px-4 py-4  border-bottom">
+                        <div>
+
+                            <h6 class="fw-bold mb-4 ps-1 text-in-contactus lh-base ">
+                                کلیه شماره ها از طریق پیام رسان های بله، ایتا، سروش و روبیکا نیز آماده پاسخگویی به سوالات و ارائه راهنمایی های لازم هستند.
+
+                            </h6>
+                            <h5 class="fw-bold mb-3 ps-1 text-in-contactus">
+                                طرح باقرالعلوم (ع) و طرح اشتغال و مهارت افزایی
+                            </h5>
+
+                            <h6 class="fw-bold mb-3 ps-1 text-in-contactus">
+                                تحصیلی - زبان - مهارتی
+                            </h6>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="mb-1">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <use href="../images/icons/general.svg#device-mobile" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0"> @await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationPhone) </p>
+                            </div>
+
+                            <p class="pt-2">
+                                روزها و ساعات پاسخگویی :
+                                شنبه تا چهارشنبه از ساعت 8:00 الی 16:00 به غیر از روز های تعطیل
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center flex-grow-1 w-100 px-4 py-4  border-bottom">
+                        <div>
+                            <h5 class="fw-bold mb-3 ps-1 text-in-contactus">ایمیل</h5>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="mb-1">
+                                    <svg viewBox="0 0 24 24" width="22" height="22">
+                                        <use href="../images/icons/general.svg#email" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">tbao@isiran-net.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center flex-grow-1 w-100 px-4 py-4 ">
+                        <div>
+                            <h5 class="fw-bold mb-3 ps-1 text-in-contactus">آدرس</h5>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="mb-1 align-self-start">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor">
+                                        <use href="../images/icons/general.svg#map-pin" />
+                                    </svg>
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row">
+                                    <p class="mb-0" style="font-size: 13px !important;">تهران، اتوبان شهید صیاد شیرازی شمال، حسین آباد، بعد از مترو حسین آباد، خیابان مژده، شرکت انستیتو ایزایران</p>
+                                    <a class="btn show-map-in-contactus text-nowrap align-self-baseline text-white my-2 my-sm-0" style="font-size: 13px !important;" href="https://maps.app.goo.gl/T6JLSZUZ2pv7oLe17" target="_blank">نمایش روی نقشه</a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="mb-1">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <use href="../images/icons/general.svg#truck-delivery" />
+                                    </svg>
+                                </div>
+                                <p class="mb-0">کدپستی 1668649468</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div id="map" class="h-100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/js/components/dist/company_location.min.js" asp-append-version="true"></script>

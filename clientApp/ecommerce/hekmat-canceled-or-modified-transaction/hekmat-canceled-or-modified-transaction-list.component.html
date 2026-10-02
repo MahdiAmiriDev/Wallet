@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [lazyLoading]="false"
+                    [fixHeight]="false"
+                    [entityName]="entityName"
+                    [showAddButton]="false"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+>
+</app-base-list-form>

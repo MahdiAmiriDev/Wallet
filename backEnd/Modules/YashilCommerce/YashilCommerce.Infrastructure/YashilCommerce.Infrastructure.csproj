@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+		<FileVersion>5.0.3</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Classes\**" />
+		<EmbeddedResource Remove="Classes\**" />
+		<None Remove="Classes\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Data\Yashil.Infrastructure\Yashil.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\YashilBaseInfo\YashilBaseInfo.Core\YashilBaseInfo.Core.csproj" />
+		<ProjectReference Include="..\..\YashilDms\YashilDms.Core\YashilDms.Core.csproj" />
+		<ProjectReference Include="..\..\YashilLight\YashilLight.Core\YashilLight.Core.csproj" />
+		<ProjectReference Include="..\..\YashilTms\YashilTms.Core\YashilTms.Core.csproj" />
+		<ProjectReference Include="..\..\YashilUserManagement\YashilUserManagement.Core\YashilUserManagement.Core.csproj" />
+		<ProjectReference Include="..\YashilCommerce.Core\YashilCommerce.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="DevExpress.AspNetCore.Common.v20.2">
+			<HintPath>D:\Program Files (x86)\DevExpress 20.2\Components\Offline Packages\devexpress.aspnetcore.common\20.2.6\lib\netstandard2.0\DevExpress.AspNetCore.Common.v20.2.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.EntityFrameworkCore">
+		</Reference>
+		<Reference Include="System.ServiceModel" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="obj\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.28.3" />
+		<PackageReference Include="Grpc.Net.Client.Web" Version="2.66.0" />
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.66.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.67.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.5.0" />
+		<PackageReference Include="Minio" Version="6.0.3" />
+		<PackageReference Include="ncrontab" Version="3.3.3" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+		<PackageReference Include="System.Data.OleDb" Version="8.0.1" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.8" />
+		<PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+		<PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+		<PackageReference Include="System.ServiceModel.NetTcp" Version="8.0.0" />
+		<PackageReference Include="Yashil.Common.Web.Infrastructure" Version="9.8.45" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<WCFMetadata Include="Connected Services" />
+	</ItemGroup>
+
+</Project>

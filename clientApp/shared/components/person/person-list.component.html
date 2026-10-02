@@ -1,0 +1,19 @@
+<app-base-list-form [columns]="columns"
+                    [entityName]="entityName"
+                    [customRowButtons]="customRowButtons"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>
+
+<dx-popup
+        [title]="popUpTitle"
+        *ngIf="showPopUp"
+        [(visible)]="showPopUp"
+        [closeOnOutsideClick]="true"
+        [deferRendering]="false"
+        [dragEnabled]="false"
+        [fullScreen]="true"
+        rtlEnabled="true"
+        class="popup">
+    <app-person-economic-profile-list [personId]="personId" [personFullName]="personFullName">
+    </app-person-economic-profile-list>
+</dx-popup>

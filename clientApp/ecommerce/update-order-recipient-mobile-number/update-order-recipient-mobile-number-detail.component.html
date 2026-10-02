@@ -1,0 +1,13 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="submitForm()" [showCloseButton]="false">
+    <dx-form id="form" [colCount]="1" [formData]="entity">
+      <dxi-item [label]="{text: 'شماره موبایل دانشجو'}" dataField="recipientMobileNumber"
+                [editorOptions]="{valueChangeEvent:'keyup'}">
+        <dxi-validation-rule maxlength="11" minlength="11" type="required"
+                             message="شماره موبایل اجباری می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="فرمت شماره موبایل صحیح نیست"
+                             [validationCallback]="mobileNumberValidate"></dxi-validation-rule>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

@@ -1,0 +1,14 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [showAddButton]="false"
+                    title="توضیحات دلیل عدم تایید فاکتور"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [allowFilter]="false"
+                    [showFilterButton]="false"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

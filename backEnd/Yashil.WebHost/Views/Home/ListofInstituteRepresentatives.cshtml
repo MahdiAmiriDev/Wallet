@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<link href="~/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/responsive.dataTables.min.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/instituteRepresentatives.min.css" rel="stylesheet" asp-append-version="true" />
+
+<section class="container-fluid pb-5 pt-3">
+
+    <div class="p-4 bg-white rounded-3">
+        <h1 class="fs-20 fw-bold pb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list-check"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" /><path d="M3.5 11.5l1.5 1.5l2.5 -2.5" /><path d="M3.5 17.5l1.5 1.5l2.5 -2.5" /><path d="M11 6l9 0" /><path d="M11 12l9 0" /><path d="M11 18l9 0" /></svg>
+            لیست نمایندگی های انستیتو ایزایران
+        </h1>
+
+        <div id="loadingSpinner" class="d-block">
+            <div class="w-100 d-flex justify-content-center">
+                <div class="d-flex flex-column align-items-center gap-4">
+                    <span class="spinner-border text-dark" role="status" aria-hidden="true"></span>
+                    <span class="sr-only text-dark">درحال دریافت اطلاعات، لطفا منتظر بمانید...</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="overflow-x:auto;">
+            <table id="userTable" class="table table-striped table-bordered pt-3 d-none w-100  nowrap">
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام نمایندگی</th>
+                        <th>استان</th>
+                        <th>شهر</th>
+                        <th>موسس</th>
+                        <th>کد عضویت</th>
+                        <th>تاریخ انقضای مجوز</th>
+                        <th>جزئیات</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script src="~/js/listofInstituteRepresentatives.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery/jquery.dataTables.min.js" asp-append-version="true"></script>
+<script src="~/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+

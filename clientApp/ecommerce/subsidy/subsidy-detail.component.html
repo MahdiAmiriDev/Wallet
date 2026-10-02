@@ -1,0 +1,102 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item dataField="categoryGroupId" editorType="dxLookup" [label]="{text: 'گروه دسته بندی'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false},
+                 dataSource: categoryGroupDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="گروه دسته بندی اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف یارانه وزارت'}" dataField="vezaratCeiling" editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required" message="سقف یارانه وزارت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف یارانه ساتا'}" dataField="sataCeiling" editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required" message="سقف یارانه ساتا اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف یارانه وزارت به ازای هر شخص'}" dataField="vezaratCeilingPerHekmatCard"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required"
+                           message="سقف یارانه وزارت به ازای هر شخص اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف یارانه ساتا به ازای هر شخص'}" dataField="sataCeilingPerHekmatCard"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required"
+                           message="سقف یارانه ساتا به ازای هر شخص اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف تعداد یارانه وزارت به ازای هر شخص'}" dataField="vezaratSubsidyMaxCountPerHekmatCard"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required"
+                           message="سقف تعداد یارانه وزارت به ازای هر شخص اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سقف تعداد یارانه ساتا به ازای هر شخص'}" dataField="sataSubsidyMaxCountPerHekmatCard"
+              editorType='dxNumberBox'
+              [editorOptions]="{format:'#,##0'}">
+
+      <dxi-validation-rule type="required"
+                           message="سقف تعداد یارانه ساتا به ازای هر شخص اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'درصد سود یارانه وزارت'}" dataField="vezaratProfitPercentage"
+              editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="درصد سود یارانه وزارت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'درصد سود یارانه ساتا'}" dataField="sataProfitPercentage" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="درصد سود یارانه ساتا اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'سال'}" dataField="year" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required" message="سال اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'یارانه استفاده شده در وزارت'}" dataField="usedInVezarat" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required"
+                           message="یارانه استفاده شده در وزارت اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'یارانه استفاده شده در ساتا'}" dataField="usedInSata" editorType='dxNumberBox'>
+
+      <dxi-validation-rule type="required"
+                           message="یارانه استفاده شده در ساتا اجباری می باشد"></dxi-validation-rule>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'فعال'}" dataField="isActive" editorType='dxCheckBox'>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'فعال بودن یارانه وزارت'}" dataField="isVezaratActive" editorType='dxCheckBox'>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'فعال بودن یارانه ساتا'}" dataField="isSataActive" editorType='dxCheckBox'>
+
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا ضرایب اعمال بشود یا نه'}" dataField="applySubsidyFactor" editorType='dxCheckBox'>
+
+    </dxi-item>
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form></app-busy-indicator>

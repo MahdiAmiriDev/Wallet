@@ -1,0 +1,155 @@
+<app-busy-indicator>
+    <app-base-edit-form [showCloseButton]='false' (submitEvent)="formSubmit($event)"
+                        (cancelEditOrInsert)="onCloseFormClick()">
+        <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+             <dxi-item [template]="'company'" [label]="{text: 'shp.Company.Company' | translate}">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Company.Validation.Title' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'Code' | translate}" dataField="code">
+            </dxi-item>
+            <dxi-item [label]="{text: 'Title' | translate}" dataField="title">
+                <dxi-validation-rule type="required" message="{{'Validation.Title' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [template]="'cityTemplate'" dataField="address.cityId"
+                      [label]="{text: 'um.Address.CityId' | translate}">
+                <dxi-validation-rule type="required"
+                                     message="{{'um.Address.Validation.CityId' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [template]="'personGridTemplate'" [label]="{text: 'shp.Representation.FounderId' | translate}">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Representation.Validation.FounderId' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'licenseNumber'"  [label]="{text: 'shp.Representation.LicenseNumber' | translate}" dataField="licenseNumber">
+            </dxi-item>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'economicCode'"  [label]="{text: 'shp.Representation.EconomicCode' | translate}" dataField="economicCode">
+            </dxi-item>
+
+            <dxi-item [label]="{text: 'um.Address.FullAddress' | translate}" dataField="address.fullAddress">
+                <dxi-validation-rule type="required"
+                                     message="{{'um.Address.Validation.FullAddress' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'economicCode'" [label]="{text: 'um.Address.Telephone' | translate}" dataField="address.telephone">
+            </dxi-item>
+            <div *dxTemplate="let data of 'personGridTemplate'">
+                <dx-drop-down-box
+                    #ddlPerson
+                    valueExpr="id"
+                    displayExpr="title"
+                    placeholder="{{'shp.Representation.PersonSelection' | translate}}"
+                    [(value)]="entity.founderId"
+                    [dataSource]="personDataSource"
+                    [deferRendering]="false"
+                    [showClearButton]="true">
+                    <div *dxTemplate="let data of 'dropDownButton'">
+                        <dx-button icon="plus"></dx-button>
+                    </div>
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid id="gridContainer"
+                                      width="100%"
+                                      height="100%"
+                                      [dataSource]="personDataSource"
+                                      [showBorders]="true"
+                                      [rtlEnabled]="true"
+                                      [rowAlternationEnabled]="true"
+                                      [columns]="columns"
+                                      [wordWrapEnabled]="true"
+                                      [remoteOperations]="true"
+                                      (onSelectionChanged)="selectedPersonChanged($event);ddlPerson.instance.close();">
+                            <!--            <dxo-scrolling mode="virtual" rowRenderingMode="virtual"-->
+                            <!--                           columnRenderingMode="virtual"></dxo-scrolling>-->
+                            <dxo-filter-row visible="true"></dxo-filter-row>
+                            <dxo-header-filter visible="true"></dxo-header-filter>
+                            <dxo-selection mode="single"></dxo-selection>
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box>
+            </div>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'licenseType'" dataField="licenseType" editorType="dxSelectBox"
+                      [label]="{text: 'shp.Representation.LicenseType' | translate}"
+                      [editorOptions]="{ items: licenseTypes,displayExpr:'title',valueExpr:'id' }">
+            </dxi-item>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'ownershipType'" dataField="ownershipType" editorType="dxSelectBox"
+                      [label]="{text: 'shp.Representation.OwnershipType' | translate}"
+                      [editorOptions]="{ items: ownershipTypes,displayExpr:'title',valueExpr:'id', showClearButton:'true' }">
+            </dxi-item>
+            <dxi-item *ifHasAccess="entityName,PropertyName:'area'" [label]="{text: 'shp.Representation.Area' | translate}" dataField="area" editorType='dxNumberBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Representation.ShortName' | translate}" dataField="shortName">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Representation.Validation.ShortName' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item [label]="{text: 'shp.Representation.Confirmed' | translate}" dataField="confirmed"
+                      [editorOptions]="{value:true}"
+                      editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Representation.IsActive' | translate}" dataField="isActive"
+                      [editorOptions]="{value:true}"
+                      editorType='dxCheckBox'>
+            </dxi-item>
+          <dxi-item
+            dataField="isProvinceHub"
+            editorType="dxCheckBox"
+            [label]="{ text: 'نمایندگی مرکزی' }"
+            helpText="با فعال کردن این تنظیم امکان مشاهده تمامی برنامه ریزی دوره های مرکز خود را دارد.">
+          </dxi-item>
+
+          <dxi-item *ngIf="!lmsMode" [editorOptions]="{value:1 }" editorType='dxNumberBox'
+                      [label]="{text: 'shp.Representation.VezaratSubsidyFactor' | translate}"
+                      dataField="vezaratSubsidyFactor">
+                <dxi-validation-rule type="pattern" pattern="^\d{0,1}(\.\d{1,2})?$"
+                                     message="{{'shp.Representation.Validation.VezaratSubsidyFactor' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item *ngIf="!lmsMode" [editorOptions]="{value:1 }" editorType='dxNumberBox'
+                      [label]="{text: 'shp.Representation.SataSubsidyFactor' | translate}"
+                      dataField="sataSubsidyFactor">
+                <dxi-validation-rule type="pattern" pattern="^\d{0,1}(\.\d{1,2})?$"
+                                     message="{{'shp.Representation.Validation.SataSubsidyFactor' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item *ngIf="!lmsMode" [editorOptions]="{value:0 }" editorType='dxNumberBox'
+                      [label]="{text: 'shp.Representation.DisplayOrder' | translate}"
+                      dataField="displayOrder"
+                      helpText="ترتیب نمایش از عدد کم به زیاد، حداقل مقدار 0"
+            >
+            </dxi-item>
+            <div *dxTemplate="let data of 'cityTemplate'">
+                <dx-drop-down-box
+                    #ddlCity
+                    [(value)]="entity.address.cityId"
+                    valueExpr="id"
+                    displayExpr="title"
+                    placeholder="انتخاب شهر..."
+                    [showClearButton]="true"
+                    [dataSource]="cityDataSource"
+                    (onValueChanged)="syncTreeViewSelection($event)">
+
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-tree-view
+                                [dataSource]="cityDataSource"
+                                dataStructure="plain"
+                                keyExpr="id"
+                                parentIdExpr="parentId"
+                                selectionMode="single"
+                                displayExpr="title"
+                                rtlEnabled="true"
+                                [selectByClick]="true"
+                                [searchEnabled]="true"
+                                (onContentReady)="syncTreeViewSelection($event)"
+                                (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCity.instance.close();"
+
+                        >
+                        </dx-tree-view>
+                    </div>
+                </dx-drop-down-box>
+            </div>
+            <div *dxTemplate="let item of 'company'">
+                <app-company-select [readOnly]="allowSetCompany()"
+                                    (selectedRowChanged)="companySelectionChanged($event)"
+                                    [selectedCompanyId]="additionalUserProp &&  additionalUserProp.companyId ?  additionalUserProp?.companyId :  entity.companyId">
+                </app-company-select>
+            </div>
+
+        </dx-form>
+    </app-base-edit-form>
+</app-busy-indicator>

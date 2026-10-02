@@ -1,0 +1,25 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'citySubsidyFactor'" class="tab-content-edit-form">
+    <app-city-subsidy-factor-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="citySubsidyFactor"
+      [cityId]="cityId"
+      [closeAfterSave]="false"
+      #mainBaseEdit
+      (closeFormClick)="closeFormClick.emit($event)"
+    >
+    </app-city-subsidy-factor-detail>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="citySubsidyFactor" propertyName="Description"
+                        propertyLabel="توضیحات"></app-content-editor>
+  </div>
+</dx-tab-panel>

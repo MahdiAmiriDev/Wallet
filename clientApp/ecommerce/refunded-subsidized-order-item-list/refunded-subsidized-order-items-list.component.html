@@ -1,0 +1,58 @@
+<div dir="rtl">
+  <div class="col-12">
+    <div class="row" style="padding: 5px 0 5px 0">
+      <div class="col-4">
+        <div style="float: right; width: 25%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تاریخ ثبت از:</label>
+        </div>
+        <div style="float: right; width: 75%;">
+          <ng-persian-datepicker
+            (dateOnSelect)="orderCreationDateFilterFromDate=convertDateToInt($event);bindCustomDataSources();">
+            <input type="text"
+                   [formControl]="orderCreationDateFilterFromDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ شروع ثبت سفارش"
+                   [ngModel]="orderCreationDateFilterFromDate | intToStringDate"
+                   (ngModelChange)="bindCustomDataSources();"/>
+          </ng-persian-datepicker>
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div style="float: right; width: 20%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تا تاریخ:</label>
+        </div>
+        <div style="float: right; width: 80%;">
+          <ng-persian-datepicker
+            (dateOnSelect)="orderCreationDateFilterToDate=convertDateToInt($event);bindCustomDataSources();">
+            <input type="text"
+                   [formControl]="orderCreationDateFilterToDateDataValue"
+                   style="float:right"
+                   placeholder="تاریخ پایان ثبت سفارش"
+                   [ngModel]="orderCreationDateFilterToDate | intToStringDate"
+                   (ngModelChange)="bindCustomDataSources();"/>
+          </ng-persian-datepicker>
+        </div>
+      </div>
+      <div class="col-4">
+        <dx-radio-group [items]="radioButtonItems"
+                        displayExpr="text"
+                        valueExpr="value"
+                        layout="horizontal"
+                        class="customRadioBtn"
+                        (onValueChanged)="bindCustomDataSources()"
+                        [(value)]="subsidyType">
+        </dx-radio-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-base-list-form #listForm
+                    entityName="orderItem"
+                    isForSelectReadOnly="true"
+                    rowAlternationEnabled="true"
+                    [columns]="columns"
+                    showExportToExcelButton="true">
+</app-base-list-form>

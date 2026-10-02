@@ -1,0 +1,11 @@
+<app-base-list-form
+  #listForm
+  [allowEditInForm]="false"
+  [allowGrouping]="allowGrouping"
+  [showRoleResourceActionPopUp]="false"
+  [showResourceAppActionPopUp]="false"
+  [columns]="columns"
+  [entityName]="entityName"
+  [detailComponent]="detailComponent"
+  (afterInitialDetailComponent)="afterInitialDetailComponent($event)">
+</app-base-list-form>

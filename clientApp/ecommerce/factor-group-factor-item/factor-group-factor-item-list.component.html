@@ -1,0 +1,25 @@
+<!--<as-split direction="vertical" dir="ltr">-->
+<!--  <as-split direction="horizontal">-->
+<!--    <as-split-area size="100" #t2 dir="rtl">-->
+      <app-base-list-form #listForm
+                          [showExportToExcelButton]="true"
+                          [loadAfterSetFilter]="loadAfterSetFilter"
+                          (selectedRowChanged)="selectedRowChanged.emit($event)"
+                          [columns]="columns"
+                          [allowEditInForm]="false"
+                          [allowDeleteInForm]="false"
+                          [showAddButton]="false"
+                          [gridHeight]="gridHeight"
+                          [wordWrapEnabled]="true"
+                          [customButtons]="customButtons"
+                          (customButtonClicked)="downloadFactorGroupFactorItemReport($event)"
+                          title="ریزآیتم های فاکتور گروه"
+                          [fixHeight]="true"
+                          [entityName]="entityName"
+                          [allowGrouping]="true"
+                          [columnGrouping]="'quantity'"
+                          [summaryTypeGrouping]="'sum'">
+      </app-base-list-form>
+<!--    </as-split-area>-->
+<!--  </as-split>-->
+<!--</as-split>-->

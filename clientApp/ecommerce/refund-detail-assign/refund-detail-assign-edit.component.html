@@ -1,0 +1,20 @@
+<dx-form id="form" style="padding-top: 6px" [colCount]="1" #detailForm [formData]="entity">
+  <dxi-item dataField="assignee" editorType="dxLookup" [label]="{text: 'کاربر جهت انتصاب و پیگیری'}"
+            [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: assigneeListDataSource,displayExpr:'fullName',valueExpr:'id' }">
+    <dxi-validation-rule type="required"
+                         message="کد ملی اجباری می باشد"></dxi-validation-rule>
+
+  </dxi-item>
+</dx-form>
+<div class="row" style="justify-content: center;">
+
+  <div style="padding: 16px">
+    <dx-button  width="150" text="انتصاب" style="margin: 6px;" class="dx-button-success" (onClick)="assignRefundDetail()"></dx-button>
+  </div>
+  <div style="padding: 16px">
+    <dx-button width="150" text="انصراف" (onClick)="cancelForm()" class="dx-button-default"
+               style="margin: 6px;"></dx-button>
+  </div>
+</div>
+
+

@@ -1,0 +1,167 @@
+<app-busy-indicator>
+
+  <div class="row align-items-center mb-3" dir="rtl">
+
+    <!-- لیبل گروه دسته‌بندی -->
+    <div *ngIf="showCategoryGroupDxLookUp" class="col-auto text-end" style="font-size: 14px;">
+      <label for="categoryGroup">گروه دسته‌بندی:</label>
+    </div>
+
+    <!-- dx-lookup گروه دسته‌بندی -->
+    <div *ngIf="showCategoryGroupDxLookUp" class="col-3">
+      <dx-lookup
+        id="categoryGroup"
+        [dataSource]="categoryGroupDataSource"
+        [(value)]="categoryGroupId"
+        displayExpr="title"
+        valueExpr="id"
+        rtlEnabled="true"
+        (onSelectionChanged)="selectedCategoryGroupChanged($event)"
+        showClearButton="true">
+      </dx-lookup>
+    </div>
+
+    <!-- لیبل مرکز -->
+    <div class="col-auto text-end" *ngIf="!additionalUserProp || !additionalUserProp.companyId" style="font-size: 14px;">
+      <label for="company">مرکز:</label>
+    </div>
+
+    <!-- dx-lookup مرکز -->
+    <div class="col-3" *ngIf="!additionalUserProp || !additionalUserProp.companyId">
+      <dx-lookup
+        id="company"
+        [dataSource]="companyDataSource"
+        [(value)]="companyId"
+        displayExpr="title"
+        valueExpr="id"
+        rtlEnabled="true"
+        (onSelectionChanged)="selectedCompanyChanged($event)"
+        showClearButton="true">
+      </dx-lookup>
+    </div>
+
+    <!-- دکمه دانلود -->
+    <div class="col-3 text-end">
+      <dx-button
+        (click)="exportCompanyProductsToExcel()"
+        icon="download"
+        text="{{isLmsMode ? 'دانلود نمونه اکسل':'دانلود نمونه اکسل محصولات'}}"
+        type="default"
+        style="font-size: 11px;"
+        hint="دانلود نمونه اکسل محصولات">
+      </dx-button>
+    </div>
+
+  </div>
+
+
+
+
+
+<!--  لیست تاریخچه فایل های آپلود شده-->
+  <app-base-list-form #listForm
+                      entityName="UploadedProductItem"
+                      customListUrl="UploadedProductItem/GetTransactionFiles"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [customButtons]="customButtons"
+                      [allowEditInForm]="false"
+                      [allowDeleteInForm]="false"
+                      [showAddButton]="false"
+                      (customButtonClicked)="customButtonClicked($event)">
+  </app-base-list-form>
+
+
+</app-busy-indicator>
+
+
+<!--پاپ آپ آپلود فایل-->
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری اکسل محصولات"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetProductFileModel()">
+  <div *ngIf="!showList">
+
+
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+
+    <div *ngIf="!isLmsMode" class="alert alert-info">
+      کاربر گرامی قبل از بارگذاری فایل اکسل محصولات لطفا موارد زیر را رعایت فرمایید:
+      <br/>
+      <span
+        style="font-weight: bold">"واحد پولی مقادیر ستون های قیمت پایه کتاب، قیمت پایه آزمون، هزینه ارسال </span>
+      <span style="font-weight: bold;color: #ff0000"> ریال </span>
+      <span style="font-weight: bold">باشد."</span>
+      <br/>
+      <span style="font-weight: bold">"مقادیر ستون های </span>
+      <span
+        style="font-weight: bold;color: green"> قیمت پایه کتاب، قیمت پایه آزمون، هزینه ارسال، درصد تخفیف </span>
+      <span style="font-weight: bold">فقط به صورت عددی باشند و کارکتر های اضافی  </span>
+      <span style="font-weight: bold">  در این ستون ها وجود نداشته باشد."</span>
+      <br/>
+      <span
+        style="font-weight: bold">"درصورتی که نوع بسته کامل باشد، حتما ستون قیمت پایه کتاب و قیمت پایه آزمون دارای مقدار باشد."</span>
+      <br/>
+      <span
+        style="font-weight: bold">"درصورتی که نوع بسته آزمون باشد قیمت پایه آزمون دارای مقدار باشد، و حتما ستون قیمت پایه کتاب مقدار صفر باشد."</span>
+      <br/>
+      <span
+        style="font-weight: bold">"درصورتی که نوع بسته کتاب باشد قیمت پایه کتاب دارای مقدار باشد، و حتما ستون قیمت پایه آزمون مقدار صفر باشد."</span>
+      <br/>
+      <span style="font-weight: bold">"در صورتی که درصد تخفیف بسته ای با درصد تخفیف قرار داد تفاوت دارد حتما درصد تخفیف آن بسته در ستون درصد تخفیف وارد شود در غیر اینصورت مقدار این ستون خالی باشد."</span>
+      <br/>
+      <span style="font-weight: bold">"در صورتی مقدار ستون درصد تخفیف صفر باشد، درصد تخفیف برای آن بسته صفر درصد در نظر گرفته می شود."</span>
+      <br/>
+      <span style="font-weight: bold">"در صورتی میخواهید بسته ای در سایت نمایش داده نشود مقدار ستون وضعیت انتشار آن را منتشر نیافته انتخاب کنید، این ستون باید از لیست ستون وضعیت انتشار انتخاب شود."</span>
+      <br/>
+      <span style="font-weight: bold;color: #ff0000"> "در صورتی که فایل دارای خطا باشد بعد از بارگذاری فایل، سطرهای دارای خطا نمایش داده میشود." </span>
+      <br/>
+    </div>
+
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="productFileModel" enctype="multipart/form-data">
+
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+
+        <div *dxTemplate="let data of 'fileTemplate'">
+
+          <dx-file-uploader
+            #fileUploader
+            name="tempProductFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="uploadUrl"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+          </dx-file-uploader>
+
+        </div>
+
+      </dx-form>
+    </form>
+
+
+  </div>
+  <app-uploaded-product-item-list *ngIf="showList" [invalidItem]="invalidItem"
+                                  [companyId]="companyId"
+                                  (afterFinalRegistration)="afterFinalRegistration()">
+  </app-uploaded-product-item-list>
+</dx-popup>
+
+

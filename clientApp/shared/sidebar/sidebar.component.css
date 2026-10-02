@@ -1,0 +1,77 @@
+.search-menu-content {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  text-align: right;
+  overflow-y: scroll;
+  height: 200px;
+  width: 300px;
+}
+
+.search-menu-input {
+  background-color: white;
+  background-position: 10px 4px;
+  background-repeat: no-repeat;
+  padding: 3px;
+  border: 0;
+  border-radius:10px;
+  background-image: url('../../../assets/images/search-icon.png');
+  animation: fadeIn 1s;
+}
+
+.search-menu-input:focus {
+  box-shadow: -1px 2px 20px 0px rgba(255, 255, 255, 0.62);
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.help-button-container {
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  z-index: 5;
+}
+
+.help-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: white !important;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 16px 64px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  margin: 0 20px 0 0;
+  width: fit-content;
+}
+
+.help-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.help-button i {
+  font-size: 18px;
+}
+.sidebar-content dx-scroll-view {
+  height: calc(100% - 60px) !important;
+}
+
+.sidebar-content {
+  padding-bottom: 20px;
+}
+
+.sidebar-content dx-scroll-view {
+  height: calc(100% - 60px) !important;
+}

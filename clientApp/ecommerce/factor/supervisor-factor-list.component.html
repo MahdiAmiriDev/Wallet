@@ -1,0 +1,35 @@
+<div>
+  <app-representation-filter
+    (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+    (selectedCompanyChanged)="onSelectedCompanyChanged($event)">
+  </app-representation-filter>
+  <app-base-list-form #listForm
+                      [resourceName]="'SupervisorFactor'"
+                      (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                      [loadAfterSetFilter]="loadAfterSetFilter"
+                      (selectedRowChanged)="selectedRowChanged.emit($event)"
+                      [columns]="columns"
+                      [entityName]="entityName"
+                      [allowEditInForm]="false"
+                      [showAddButton]="false"
+                      [wordWrapEnabled]="true"
+                      (listRowPrepared)="onListRowPrepared($event)"
+                      [customRowButtons]="customRowButtons"
+                      [customDeleteActionName]="'DeleteFactor'">
+  </app-base-list-form>
+  <dx-popup
+    [title]="popUpTitle"
+    (onHidden)="showPopUp=false"
+    [(visible)]="showPopUp"
+    [closeOnOutsideClick]="true"
+    [deferRendering]="false"
+    [dragEnabled]="false"
+    [fullScreen]="true"
+    [rtlEnabled]="true"
+    class="popup">
+    <div *dxTemplate="let data = model of 'content'">
+      <ng-template appDetailComponentHost></ng-template>
+    </div>
+  </dx-popup>
+
+</div>

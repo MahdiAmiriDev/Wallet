@@ -1,0 +1,14 @@
+<app-busy-indicator>
+  <app-base-edit-form
+    (submitEvent)="formSubmit($event)"
+    (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+        <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="parentId" editorType="dxLookup" [label]="{text: 'گروه پدر'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: parentDataSource,displayExpr:'title',valueExpr:'id' }">
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

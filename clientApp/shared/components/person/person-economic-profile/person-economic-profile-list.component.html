@@ -1,0 +1,31 @@
+<div *ngIf="showFilter" class="alert alert-primary" style="padding-top: 15px; display: flex">
+       انتخاب وضعیت شخص:
+    <dx-radio-group [items]="radioButtonItems"
+                    displayExpr="text"
+                    valueExpr="value"
+                    layout="horizontal"
+                    class="customRadioBtn"
+                    style="margin-right: 10px"
+                    (onValueChanged)="setLegalPersonStatus()"
+                    [(value)]="isLegalPerson">
+        <style>
+            .customRadioBtn /deep/ .dx-radiobutton-icon-dot {
+                margin-right: 5px;
+                margin-left: 5px;
+            }
+        </style>
+    </dx-radio-group>
+</div>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [showAddButton]="showAddButton"
+                    [allowAdd]="showAddButton"
+                    [allowEditInForm]="showEditForm"
+                    [allowDeleteInForm]="allowDelete"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [customRowButtons]="customRowButtons"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="dx-field-item-label" style="padding: 5px 15px 5px 5px;">نمایش رکورد های بایگانی:</div>
+  <dx-radio-group [items]="radioButtonItems"
+                  displayExpr="text"
+                  valueExpr="value"
+                  layout="horizontal"
+                  class="customRadioBtn"
+                  (onValueChanged)="bindCustomDataSources()"
+                  [(value)]="archiveMode">
+    <style>
+      .customRadioBtn /deep/ .dx-radiobutton-icon-dot {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+
+    </style>
+  </dx-radio-group>
+</div>
+<app-busy-indicator>
+  <app-base-list-form #listForm
+                      [loadAfterSetFilter]="loadAfterSetFilter"
+                      [entityName]="entityName"
+                      [columns]="columns"
+                      [wordWrapEnabled]="true"
+                      [columnHidingEnabled]="true"
+                      [allowDeleteInForm]="false"
+                      [allowEditInForm]="false"
+                      [allowInsertInForm]="false"
+                      [customRowButtons]="customRowButtons"
+                      (selectedRowChanged)="selectedRefundDetailChanged($event)"
+                      [allowFilter]="true">
+  </app-base-list-form>
+</app-busy-indicator>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  [rtlEnabled]="true"
+  title="انتخاب شماره حساب شخص"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="showSelectBankAccountForm"
+  [deferRendering]="false">
+  <div *dxTemplate="let data = model of 'content'" style="direction: rtl">
+    <app-person-bank-account-search id="personBankAccountSearchComponent" *ngIf="showSelectBankAccountForm"
+                                    (afterSelectedPersonBankAccountChanged)="onSelectedPersonBankAccountChanged($event)"></app-person-bank-account-search>
+  </div>
+</dx-popup>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  [rtlEnabled]="true"
+  title="ثبت و نمایش رویداد"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="showIssueLogWork"
+  [deferRendering]="false">
+  <div *dxTemplate="let data = model of 'content'" style="direction: rtl">
+    <app-issue-log-work-detail [issueType]="issueType"
+                               [issueId]="null"
+                               [paymentId]="paymentId"
+                               [orderId]="orderId"
+                               *ngIf="showIssueLogWork"
+                               [customIssueTitle]="customIssueTitle"
+                               [fixHeight]="false"
+                               (afterInsertRow)="closeIssueLogWorkForm($event)"
+                               (closeFormClick)="closeIssueLogWorkForm($event)"></app-issue-log-work-detail>
+    <br/>
+    <app-issue-log-work-list id="issueLogWorkListForm"
+                             [showCustomButtons]="false"
+                             [allowDeleteInForm]="false"
+                             [issueType]="issueType"
+                             [paymentId]="paymentId"
+                             *ngIf="showIssueLogWork"
+                             [orderId]="orderId" [fixHeight]="false"></app-issue-log-work-list>
+  </div>
+</dx-popup>
+
+<dx-popup
+  (onHidden)="requestForArchive=false"
+  [(visible)]="requestForArchive"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  [rtlEnabled]="true"
+  [maxHeight]="300"
+  [maxWidth]="500"
+  title="بایگانی"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <ng-template appDetailComponentHost></ng-template>
+  </div>
+</dx-popup>
+
+

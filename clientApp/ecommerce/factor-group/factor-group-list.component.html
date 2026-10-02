@@ -1,0 +1,57 @@
+
+        <app-base-list-form #listForm
+                            [isForTree]="true"
+                            [fixHeight]="fixHeight"
+                            (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                            [loadAfterSetFilter]="loadAfterSetFilter"
+                            (selectedRowChanged)="rowSelected($event)"
+                            [columns]="columns"
+                            [customRowButtons]="customRowButtons"
+                            [showAddButton]="showAddButton"
+                            [entityName]="entityName"
+                            [gridHeight]="gridHeight"
+                            [wordWrapEnabled]="true"
+                            (listRowPrepared)="onListRowPrepared($event)"
+                            [detailComponent]="detailComponent">
+        </app-base-list-form>
+
+        <dx-popup
+                [title]="popupTitle"
+                [rtlEnabled]="true"
+                [(visible)]="showPopUp"
+                (onHidden)="closePopUpBtn()"
+                [closeOnOutsideClick]="true"
+                [deferRendering]="false"
+                [dragEnabled]="false"
+                [fullScreen]="true"
+                class="popup">
+            <div *dxTemplate="let data = model of 'content'">
+                <div class="row">
+                    <div class="col-5">
+                        <app-category-group-search *ngIf="showCategoryGroupDropDownLis"
+                                                   (categoryGroupChanged)="onCategoryGroupChanged($event)">
+                        </app-category-group-search>
+                    </div>
+                </div>
+                <ng-template appDetailComponentHost>
+                </ng-template>
+            </div>
+        </dx-popup>
+
+
+        <dx-popup
+                [rtlEnabled]="true"
+                [(visible)]="showConvertValidationPopUp"
+                [closeOnOutsideClick]="true"
+                [deferRendering]="false"
+                [dragEnabled]="false"
+                [fullScreen]="true"
+                class="popup">
+            <div *ngIf="convertValidationMessage" class="alert alert-danger">
+                <span>{{this.convertValidationMessage}}</span>
+            </div>
+            <app-factor-group-convert-item-list *ngIf="showConvertValidationPopUp" [showDownloadReportBtn]="false"
+                                                [factorGroupId]="factorGroupId"></app-factor-group-convert-item-list>
+        </dx-popup>
+
+

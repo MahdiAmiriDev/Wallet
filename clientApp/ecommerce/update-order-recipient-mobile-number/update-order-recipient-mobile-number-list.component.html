@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-12">
+    <app-representation-filter (selectedCompanyChanged)="setSelectedCompany($event)"
+                               (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)">
+
+    </app-representation-filter>
+  </div>
+</div>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="onSelectedRowChanged($event)"
+                    [columns]="columns"
+                    [customRowButtons]="customRowButtons"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [showAddButton]="false"
+                    [entityName]="entityName"
+                    [allowFilter]="true"
+>
+</app-base-list-form>
+
+<dx-popup
+  *ngIf="showPopUp"
+  [(visible)]="showPopUp"
+  (onHidden)="showPopUp =false"
+  [fullScreen]="true"
+  class="popup"
+>
+  <app-update-order-recipient-mobile-number-detail
+    [salesPlanningId]="selectedItemId"
+    [oldMobileNumber]="oldMobileNumber"
+    (closeFormClick)="closeMobileNumberPopup()"
+    (onMobileNumberChanges)="onMobileNumberChanges($event)"
+  >
+  </app-update-order-recipient-mobile-number-detail>
+</dx-popup>

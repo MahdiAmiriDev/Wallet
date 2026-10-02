@@ -1,0 +1,51 @@
+<dx-tab-panel
+  #tabPanel
+  rtlEnabled="true"
+  [dataSource]="tabs"
+  [selectedIndex]="0"
+  [loop]="false"
+  [animationEnabled]="false"
+  [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'company'" class="tab-content-edit-form">
+    <app-company-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="company"
+      [parentId]="parentId"
+      [establishedLicenseType]="establishedLicenseType"
+      [closeAfterSave]="false"
+      #mainBaseEdit
+      (closeFormClick)="closeFormClick.emit($event)">
+    </app-company-detail>
+  </div>
+  <div *dxTemplate="let company of 'mainCategories'" class="tab-content-edit-form">
+    <app-company-main-category-list [companyId]="selectedEntityId"></app-company-main-category-list>
+  </div>
+  <div *dxTemplate="let company of 'representation'" class="tab-content-edit-form">
+    <app-representation-list [companyId]="selectedEntityId"></app-representation-list>
+  </div>
+  <div *dxTemplate="let company of 'about'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="company" propertyName="About"
+                        propertyLabel="{{'shp.Company.About' | translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'goal'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="company" propertyName="Goal"
+                        propertyLabel="{{'shp.Company.Goal' | translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="company" propertyName="Description"
+                        propertyLabel="{{'Description' | translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let company of 'ability'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="company" propertyName="Ability"
+                        propertyLabel="{{'shp.Company.Ability' | translate}}"></app-content-editor>
+  </div>
+  <div *dxTemplate="let pic of 'icon'" class="tab-content-edit-form">
+    <app-entity-document-upload [appEntityName]="entityName" [docCategoryId]="24"
+                                [objectId]="selectedEntityId"></app-entity-document-upload>
+  </div>
+  <div *dxTemplate="let pic of 'logo'" class="tab-content-edit-form">
+    <app-entity-document-upload [appEntityName]="entityName" [docCategoryId]="41"
+                                [objectId]="selectedEntityId"></app-entity-document-upload>
+  </div>
+</dx-tab-panel>

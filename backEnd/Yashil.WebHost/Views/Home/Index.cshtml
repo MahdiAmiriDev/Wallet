@@ -1,0 +1,25 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using YashilCommerce.Web.Areas.ECommerce.ViewModels
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.IndexPageViewModel
+@{
+
+    Layout = "_Layout";
+    Model.ProductFilter.ControllerName = "Home";
+    Model.ProductFilter.ActionName = "Index";
+}
+
+
+@await Component.InvokeAsync("Slider", new { categoryId = Model?.ProductFilter?.CategoryId, categoryGroupId = Model?.ProductFilter?.CategoryGroupId})
+@await Component.InvokeAsync("Company", new { productFilter = Model?.ProductFilter })
+
+
+@await Html.PartialAsync("_MainCategories", Model?.FirstLevelCategories)
+
+@foreach (var item in Model.FirstLevelCategories)
+{
+    Model.ProductFilter.CategoryId = item.Id;
+    @await Html.PartialAsync("_ProductListByFilterPartial", new ProductListPartialViewModel { ProductFilter = Model.ProductFilter, CategoryViewModel = item })
+}
+
+
+

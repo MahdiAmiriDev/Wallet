@@ -1,0 +1,10 @@
+﻿@using Yashil.Core.Enums
+<div class="container-fluid parallax-division" >
+    <div class="row">
+        <div class="col-md-4 col-md-push-1 col-sm-12 col-xs-12">
+            <div class="footerParallax">
+                @await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.CorporationAbout })
+            </div>
+        </div>
+    </div>
+</div>

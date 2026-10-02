@@ -1,0 +1,83 @@
+<div class="alert alert-primary">
+    <div class="row">
+        <div class="col-12">
+            <div style="padding-right: 75px;padding-bottom: 10px;text-align: center;display: flex;">
+                <dx-button *ngIf=" showCustomButton" dir="ltr" [style]="customButtonStyle"
+                           [stylingMode]="customButtonStyle" [type]="customButtonType"
+                           (onClick)="onCustomButtonClick()" [icon]="customButtonIcon"
+                           [text]="customButtonText"></dx-button>
+            </div>
+            <dx-form *ngIf="showSelectedPersonInfo" id="form" [colCount]="2" #detailForm [formData]="entity">
+                <!--            <dxi-item [template]="'customButtonTemplate'" [label]="{text: ''}"></dxi-item>-->
+                <dxi-item [label]="{text: 'حقوقی است؟'}" dataField="isLegalPerson" editorType='dxCheckBox'
+                          [editorOptions]="{disabled:true }">
+                </dxi-item>
+                <dxi-item [label]="{text: 'نام شخص'}" dataField="fullName"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+                <dxi-item [label]="{text: 'نام حقیقی/ حقوقی'}" dataField="name"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+                <dxi-item *ngIf="entity.isLegalPerson" [label]="{text: 'کد اقتصادی'}" dataField="economicCode"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item *ngIf="!entity.isLegalPerson" [label]="{text: 'کد ملی'}" dataField="nationalCode"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'شهر'}" dataField="cityTitle"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'شماره تلفن'}" dataField="telephone"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'دور نگار'}" dataField="faxNumber"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'رایانامه (Email)'}" dataField="email"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item  [label]="{text: 'کد پستی'}" dataField="postalCode"
+                          [editorOptions]="{readOnly:true}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'آدرس'}" dataField="fullAddress"
+                          editorType="dxTextArea" colSpan="2"
+                          [editorOptions]="{readOnly:true}">
+
+                </dxi-item>
+
+                <div *dxTemplate="let data of 'customButtonTemplate'">
+
+                </div>
+            </dx-form>
+
+        </div>
+
+
+    </div>
+
+    <dx-popup *ngIf="showCustomButton"
+              [rtlEnabled]="true"
+              [(visible)]="showPopUp"
+              (onHidden)="closePopUpBtn()"
+              [closeOnOutsideClick]="true"
+              [deferRendering]="false"
+              [dragEnabled]="false"
+              [fullScreen]="true"
+              class="popup">
+        <app-person-economic-profile-list
+                [showFilter]="true"
+                [showAddButton]="false"
+                [showEditForm]="false"
+                [allowDelete]="false"
+                [showCustomButton]="true"
+                (selectedPerson)="onSelectedPerson($event)">
+        </app-person-economic-profile-list>
+    </dx-popup>
+</div>

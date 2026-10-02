@@ -1,0 +1,1567 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/resume.min.css" rel="stylesheet" asp-append-version="true" />
+
+<section id="resume" class="d-none w-100 container d-flex flex-column flex-lg-row gap-3 pt-4 pt-lg-5 pt-xl-5 pt-xxl-4 mb-5 ss02">
+    <div class="position-relative" style="flex: 1">
+        <!-- Steps -->
+        <div id="steps-wrapper" class="w-100 d-flex align-items-center position-relative" style="height: 80px; min-width: 100%; max-width: 640px; overflow-x:scroll">
+            <div class="d-flex mx-auto h-100">
+                <nav class="h-100" aria-label="Progress">
+                    <ol role="list" id="steps-container" class="d-flex border rounded bg-light h-100 ps-0 mb-0">
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- /Steps -->
+        <!-- Personal Information -->
+        <div class="resume-step section position-relative border rounded d-none">
+            <div class="border-bottom bg-light section-title gap-1 ps-3">
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="currentColor" stroke-width="1.5">
+                        <use href="../images/icons/header.svg#user" />
+                    </svg>
+                </div>
+                <h6 class="mb-0 mt-1">اطلاعات فردی</h6>
+            </div>
+            <div id="personal-information" class="position-relative p-3">
+                <button class="edit-info btn d-flex align-items-center justify-content-center gap-1 text-primary" data-section="personal-information">
+                    <div class="pe-none">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="icon icon-tabler icon-tabler-pencil"
+                             width="20"
+                             height="20"
+                             viewBox="0 0 24 24"
+                             stroke-width="2"
+                             stroke="currentColor"
+                             fill="none"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                            <path d="M13.5 6.5l4 4" />
+                        </svg>
+                    </div>
+                    <span class="pt-1 text-primary pe-none">ویرایش</span>
+                </button>
+                <div class="d-flex flex-wrap p-4">
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            کدملی
+                        </h4>
+                        <div class="national-id">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            آدرس رایانامه
+                        </h4>
+                        <div class="email-address">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            استان محل سکونت
+                        </h4>
+                        <div class="province">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            شهر محل سکونت
+                        </h4>
+                        <div class="city">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            شماره موبایل
+                        </h4>
+                        <div class="mobile-number">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            سال تولد
+                        </h4>
+                        <div class="birth-year">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            کدملی سرپرست
+                        </h4>
+                        <div class="guardian-national-id">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            شماره موبایل سرپرست
+                        </h4>
+                        <div class="guardian-mobile-number">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            وضعیت جسمانی
+                        </h4>
+                        <div class="physical-status">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div id="disability-type-container" class="col-12 col-md-6 mb-4 mb-3 d-none">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            نوع معلولیت
+                        </h4>
+                        <div class="disability-type">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            وضعیت تاهل
+                        </h4>
+                        <div class="marriage-status">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div id="children-count-container" class="col-12 col-md-6 mb-4 mb-3 d-none">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            تعداد فرزند
+                        </h4>
+                        <div class="children-count">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-4 mb-3">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            جنسیت
+                        </h4>
+                        <div class="gender">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div id="military-service-container" class="col-12 col-md-6 mb-4 mb-3 d-none">
+                        <h4 class="fw-bold mb-0"
+                            style="font-size: 14px; color: rgb(85, 85, 85)">
+                            وضعیت خدمت سربازی
+                        </h4>
+                        <div class="military-service">
+                            <span class="profile-item"></span>
+                            <div class="profile-add-item add-information-item text-decoration-none text-primary bg-transparent p-0"
+                                 style="font-size: 14px; width: fit-content" data-section="personal-information">
+                                مشخص کنید
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Personal Information Form -->
+            <form id="personal-information-form"
+                  class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                  style="
+              row-gap: 15px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                  data-tag="information"
+                  novalidate>
+                <div class="col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="national-id"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">کدملی</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="national-id"
+                           name="nationalId"
+                           maxlength="10"
+                           pattern="^([0-9]){10}$"
+                           placeholder="کدملی"
+                           style="font-size: 14px; direction: rtl"
+                           required />
+                    <div class="invalid-feedback">کدملی خود را وارد کنید.</div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="email"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">آدرس رایانامه</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="email"
+                           name="email"
+                           placeholder="مثلا: test@test.com"
+                           style="font-size: 14px" />
+                </div>
+                <div class="col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="province"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">استان محل سکونت</label>
+                    <select class="form-select p-2"
+                            id="province"
+                            name="province"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        استان محل سکونت خود را انتخاب کنید.
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="city"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">شهر محل سکونت</label>
+                    <select class="form-select p-2"
+                            id="city"
+                            name="city"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        شهر محل سکونت خود را انتخاب کنید.
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="mobile"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">شماره موبایل</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="mobile"
+                           name="mobile"
+                           pattern="[0]{1}[0-9]{10}"
+                           maxlength="11"
+                           placeholder="مثلا: 09121234567"
+                           style="font-size: 14px; direction: rtl"
+                           required />
+                    <div class="invalid-feedback">شماره تلفن خود را وارد کنید.</div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="birth-year"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">سال تولد</label>
+                    <select class="form-select p-2"
+                            id="birth-year"
+                            name="birthYear"
+                            pattern="[0-9]{4}"
+                            maxlength="4"
+                            placeholder="مثلا: 1372"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                    </select>
+                    <div class="invalid-feedback">سال تولد خود را وارد کنید.</div>
+                </div>
+                <div class="col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="guardian-national-id"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">کدملی سرپرست</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="guardian-national-id"
+                           name="guardianNationalId"
+                           maxlength="10"
+                           pattern="^([0-9]){10}$"
+                           placeholder="کدملی سرپرست"
+                           style="font-size: 14px; direction: rtl"
+                           required />
+                    <div class="invalid-feedback">کدملی سرپرست خود را وارد کنید.</div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="guardian-mobile"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">شماره موبایل سرپرست</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="guardian-mobile"
+                           name="guardianMobile"
+                           pattern="[0]{1}[0-9]{10}"
+                           maxlength="11"
+                           placeholder="مثلا: 09121234567"
+                           style="font-size: 14px; direction: rtl"
+                           required />
+                    <div class="invalid-feedback">شماره تلفن سرپرست خود را وارد کنید.</div>
+                </div>
+                <div id="physical-select-container" class="col-12 col-md-6 pe-0 pe-md-2 mb-2">
+                    <label class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">وضعیت جسمانی</label>
+                    <div class="position-relative">
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="normal"
+                                   name="physicalStatus"
+                                   value="normal"
+                                   required />
+                            <label class="form-check-label" for="normal">سالم</label>
+                        </div>
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="disabled"
+                                   name="physicalStatus"
+                                   value="disabled"
+                                   required />
+                            <label class="form-check-label" for="disabled">دارای معلولیت</label>
+                            <div class="invalid-feedback position-absolute"
+                                 style="right: 0">
+                                وضعیت جسمانی خود را انتخاب کنید.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="disability-type"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">نوع معلولیت</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="disability-type"
+                           name="disabilityType"
+                           placeholder="درصورت وجود معلولیت، نوع آن را بنویسید"
+                           style="font-size: 14px"
+                           disabled />
+                    <div class="invalid-feedback">نوع معلولیت خود را بنویسید.</div>
+                </div>
+                <div id="marriage-select-container" class="col-12 col-md-6 pe-0 pe-md-2 mb-2">
+                    <label class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">وضعیت تاهل</label>
+                    <div class="position-relative">
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="bachelor"
+                                   name="marriageStatus"
+                                   value="bachelor"
+                                   required />
+                            <label class="form-check-label" for="bachelor">مجرد</label>
+                        </div>
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="married"
+                                   name="marriageStatus"
+                                   value="married"
+                                   required />
+                            <label class="form-check-label" for="married">متاهل</label>
+                            <div class="invalid-feedback position-absolute"
+                                 style="right: 0">
+                                وضعیت تاهل را انتخاب کنید.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="children-count-select" class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="children-count"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">تعداد فرزند</label>
+                    <select class="form-select p-2"
+                            id="children-count"
+                            name="childrenCount"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            disabled>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                        <option value="0">فرزند ندارم</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        تعداد فرزندان خود را انتخاب کنید.
+                    </div>
+                </div>
+                <div id="gender-select-container"
+                     class="col-12 col-md-6 pe-0 pe-md-2 mb-2">
+                    <label class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">جنسیت</label>
+                    <div class="position-relative">
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="female"
+                                   name="gender"
+                                   value="female"
+                                   required />
+                            <label class="form-check-label" for="female">زن</label>
+                        </div>
+                        <div class="form-check align-self-baseline">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="male"
+                                   name="gender"
+                                   value="male"
+                                   required />
+                            <label class="form-check-label" for="male">مرد</label>
+                            <div class="invalid-feedback position-absolute"
+                                 style="right: 0">
+                                جنسیت خود را انتخاب کنید.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="military-service-select"
+                     class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="military-service"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">وضعیت خدمت سربازی</label>
+                    <select class="form-select p-2"
+                            id="military-service"
+                            name="militaryService"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            disabled>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        وضعیت خدمت سربازی خود را انتخاب کنید.
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end col-12 mt-4 ms-auto">
+                    <div>
+                        <button class="submit-button" type="submit">
+                            ذخیره
+                        </button>
+                        <button class="btn btn-danger cancel-form-button" type="button" data-section="personal-information">
+                            انصراف
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /Personal Information Form -->
+        </div>
+        <!-- /Personal Information -->
+        <!-- Education Records -->
+        <div class="resume-step section position-relative border rounded d-none">
+            <div class="border-bottom bg-light section-title gap-1 ps-3">
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="currentColor">
+                        <use href="../images/icons/mega-menu.svg#school" />
+                    </svg>
+                </div>
+                <h6 class="mb-0 mt-1">سوابق تحصیلی</h6>
+            </div>
+            <div id="education-records" class="position-relative p-3">
+                <ul id="education-list" class="list-group w-100 p-4"></ul>
+                <div class="no-education-found d-flex flex-wrap p-4 d-none"
+                     style="color: rgb(85, 85, 85); font-size: 14px">
+                    شما هنوز سوابق تحصیلی اضافه نکردید.
+                </div>
+            </div>
+            <!-- Education Records Form -->
+            <form id="education-records-form"
+                  class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                  style="
+              row-gap: 15px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                  data-tag="education"
+                  novalidate>
+                <div class="d-flex flex-column col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="major"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">رشته تحصیلی</label>
+                    <select id="major" name="major" style="width:100%;" required>
+                        <option></option>
+                    </select>
+                    <div class="invalid-feedback">رشته تحصیلی خود را وارد کنید.</div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="institution"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">نام دانشگاه یا موسسه آموزشی</label>
+                    <input type="text"
+                           class="form-control p-2"
+                           id="institution"
+                           name="institution"
+                           style="font-size: 14px"
+                           required />
+                    <div class="invalid-feedback">
+                        نام دانشگاه یا موسسه آموزشی را وارد کنید.
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 pe-0 pe-md-2">
+                    <label for="institution-type"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">نوع دانشگاه یا موسسه آموزشی</label>
+                    <select class="form-select p-2"
+                            id="institution-type"
+                            name="institutionType"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">-- انتخاب کنید --</option>
+                        <option value="1">دانشگاه سراسری (دولتی)</option>
+                        <option value="2">دانشگاه غیر انتفاعی</option>
+                        <option value="3">دانشگاه آزاد</option>
+                        <option value="4">دانشگاه علمی – کاربردی</option>
+                        <option value="5">دانشگاه پیام‌ نور</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        نام دانشگاه یا موسسه آموزشی را وارد کنید.
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 ps-0 ps-md-2">
+                    <label for="average"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">معدل</label>
+                    <input type="number"
+                           class="form-control p-2"
+                           id="average"
+                           name="average"
+                           max="20"
+                           min="1"
+                           step="any"
+                           style="font-size: 14px; direction: rtl"
+                           required />
+                    <div class="invalid-feedback">مقدار معدل صحیح نمی‌باشد.</div>
+                </div>
+                <div class="col-12 col-md-6 pe-0 pe-md-2 d-flex flex-column flex-md-row gap-0 gap-md-2 mt-2">
+                    <label class="fw-bold form-label text-nowrap"
+                           style="font-size: 14px; color: rgb(85, 85, 85); padding-top: 10px">بارگذاری مدرک</label>
+                    <div class="w-100">
+                        <label for="education-certificate" class="btn btn-dark text-nowrap w-100" style="height: 38px;font-size: 14px; margin-top: 2px">انتخاب فایل</label>
+                        <input type="file"
+                               class="form-control d-none p-2"
+                               id="education-certificate"
+                               name="attachments"
+                               style="font-size: 14px" />
+                        <input type="hidden" name="docTypeId" value="1078" />
+                        <div id="no-education--certificate">
+                            <div style="font-size: 12px; color: rgb(85, 85, 85); margin-top: 5px">درصورت وجود مدرک یا گواهینامه آن را آپلود کنید.</div>
+                            <div class="text-left" style="font-size: 12px; color: rgb(85, 85, 85);" dir="ltr">فرمت های مجاز: <span id="allowed-education--doctypes" class="allowed-doctypes" style="font-size: 12px !important; color: inherit !important">فرمت 1</span></div>
+                        </div>
+                        <span id="education-certificate--title" style="font-size: 12px !important; color: rgb(85, 85, 85);"></span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">مقطع تحصیلی</label>
+                    <div id="grades-container" class="position-relative d-flex flex-column flex-md-row gap-2 mb-3">
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="diploma"
+                                   name="grade"
+                                   value="diploma"
+                                   required />
+                            <label class="form-check-label" for="diploma">دیپلم</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="fogh-diploma"
+                                   name="grade"
+                                   value="foghDiploma"
+                                   required />
+                            <label class="form-check-label" for="fogh-diploma">فوق دیپلم</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="bachelors"
+                                   name="grade"
+                                   value="bachelors"
+                                   required />
+                            <label class="form-check-label" for="bachelors">کارشناسی</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="master"
+                                   name="grade"
+                                   value="master"
+                                   required />
+                            <label class="form-check-label" for="master">کارشناسی ارشد</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="phd"
+                                   name="grade"
+                                   value="phd"
+                                   required />
+                            <label class="form-check-label" for="phd">دکترا و بالاتر</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio"
+                                   class="form-check-input"
+                                   id="other"
+                                   name="grade"
+                                   value="other"
+                                   required />
+                            <label class="form-check-label" for="other">دیگر</label>
+                            <div class="position-absolute invalid-feedback"
+                                 style="right: 0">
+                                مقطع تحصیلی را انتخاب کنید.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">تاریخ شروع و پایان تحصیل</label>
+                    <div class="d-flex gap-2 align-items-center col-md-6">
+                        <label class="text-nowrap"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">از سال</label>
+                        <div class="d-flex flex-column w-100">
+                            <select class="form-select p-2"
+                                    id="education-start-year"
+                                    name="educationStartYear"
+                                    style="font-size: 14px; color: rgb(85, 85, 85)"
+                                    required>
+                                <option selected disabled value="">-- انتخاب کنید --</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                سال شروع به تحصیل را وارد کنید.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row col-12 mt-2">
+                        <div class="d-flex gap-2 align-items-center col-12 col-md-6">
+                            <label class="text-nowrap"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)">تا سال</label>
+                            <div class="d-flex flex-column w-100">
+                                <select class="form-select p-2"
+                                        id="graduation-year"
+                                        name="graduationYear"
+                                        style="font-size: 14px; color: rgb(85, 85, 85)"
+                                        disabled>
+                                    <option selected disabled value="">-- انتخاب کنید --</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    سال فارغ التحصیلی را وارد کنید.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check ms-2">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="still-educating"
+                                   name="stillEducating"
+                                   checked />
+                            <label class="form-check-label" for="still-educating">هنوز مشغول به تحصیل هستم</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="education-description"
+                           class="d-flex align-items-center gap-1 fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">
+                        <p class="mb-0">توضیحات</p>
+                        <span style="color: #aaa; font-weight: 400">(اختیاری)</span>
+                    </label>
+                    <textarea class="w-100 p-3 border rounded" rows="4" name="educationDescription" id="education-description"></textarea>
+                </div>
+                <input type="number" hidden name="docTypeId" value="1078" />
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-1 col-12 mt-4 ms-auto">
+                    <button class="submit-add-button" type="button">
+                        ذخیره و اضافه کردن سابقه تحصیلی جدید
+                    </button>
+                    <div>
+                        <button class="submit-button" type="submit">
+                            ذخیره
+                        </button>
+                        <button class="btn btn-danger cancel-form-button" type="button" data-section="education-records">
+                            انصراف
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /Education Records Form -->
+            <button id="add-education-record" class="add-record border border-0 w-100 p-3 fw-bold"
+                    style="background: #e7e7e7; color: #666; font-size: 15px"
+                    data-section="education-records">
+                + ایجاد سابقه تحصیلی
+            </button>
+        </div>
+        <!-- Education Records -->
+        <!-- Certificate Records -->
+        <div class="resume-step section position-relative border rounded d-none">
+            <div class="border-bottom bg-light section-title gap-1 ps-3">
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" heigth="20">
+                        <use href="../images/icons/header.svg#certificate" />
+                    </svg>
+                </div>
+                <h6 class="mb-0 mt-1">مدارک و گواهینامه‌ها</h6>
+            </div>
+            <div id="certificate-records" class="position-relative p-3">
+                <ul id="certificates-list" class="list-group w-100 p-4"></ul>
+                <div class="no-certificates-found d-flex flex-wrap p-4 d-none"
+                     style="color: rgb(85, 85, 85); font-size: 14px">
+                    شما هنوز مدرکی آپلود نکرده‌اید.
+                </div>
+            </div>
+            <!-- Certificate Records Form -->
+            <form id="certificate-records-form"
+                  class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                  style="
+              row-gap: 15px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                  data-tag="certificates"
+                  novalidate>
+                <div class="col-12 col-md-8 pe-0 pe-md-2">
+                    <label for="course-title"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">عنوان دوره یا مهارت طی شده</label>
+                    <div class="d-flex gap-2">
+                        <div class="d-flex flex-column w-100">
+                            <input type="text"
+                                   class="form-control p-2"
+                                   id="course-title"
+                                   name="title"
+                                   style="font-size: 14px"
+                                   placeholder="مثلا: دوره مبانی کامپیوتر"
+                                   required />
+                            <div class="invalid-feedback">عنوان دوره را وارد کنید.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ps-0 ps-md-2">
+                    <label for="course-level"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">سطح دوره</label>
+                    <div class="d-flex gap-2">
+                        <div class="d-flex flex-column w-100">
+                            <input type="text"
+                                   class="form-control p-2"
+                                   id="course-level"
+                                   name="courseLevel"
+                                   style="font-size: 14px"
+                                   placeholder="مثلا: مقدماتی، پیشرفته..."
+                                   required />
+                            <div class="invalid-feedback">سطح دوره را وارد کنید.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 pe-0 pe-md-2">
+                    <label for="course-location"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">محل طی دوره</label>
+                    <div class="d-flex gap-2">
+                        <div class="d-flex flex-column w-100">
+                            <input type="text"
+                                   class="form-control p-2"
+                                   id="course-location"
+                                   name="courseLocation"
+                                   style="font-size: 14px"
+                                   placeholder="مثلا: انستیتو ایزایران"
+                                   required />
+                            <div class="invalid-feedback">محل طی دوره را وارد کنید.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 ps-0 ps-md-2 d-flex flex-column">
+                    <label for="course-location"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">بارگذاری مدرک</label>
+                    <div>
+                        <label for="attachments" class="btn btn-dark text-nowrap w-100" style="height: 38px;font-size: 14px; margin-top: 2px">انتخاب فایل</label>
+                        <input type="file"
+                               class="form-control d-none p-2"
+                               id="attachments"
+                               name="attachments"
+                               style="font-size: 14px" />
+                        <input type="hidden" name="docTypeId" value="1076" />
+                        <div id="no-certificate">
+                            <div style="font-size: 12px; color: rgb(85, 85, 85); margin-top: 5px">درصورت وجود مدرک یا گواهینامه آن را آپلود کنید.</div>
+                            <div class="text-left" style="font-size: 12px; color: rgb(85, 85, 85);" dir="ltr">فرمت های مجاز: <span id="allowed-certificate--doctypes" class="allowed-doctypes" style="font-size: 12px !important; color: inherit !important">فرمت 1</span></div>
+                        </div>
+                        <span id="certificate-title" style="font-size: 12px !important; color: rgb(85, 85, 85);"></span>
+                    </div>
+                </div>
+                <input type="number" hidden name="docTypeId" value="1076" />
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-1 col-12 mt-4 ms-auto">
+                    <button class="submit-add-button" type="button">
+                        ذخیره و اضافه کردن دوره جدید
+                    </button>
+                    <div>
+                        <button class="submit-button" type="submit">
+                            ذخیره
+                        </button>
+                        <button class="btn btn-danger cancel-form-button" type="button" data-section="certificate-records">
+                            انصراف
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /Certificate Records Form -->
+            <button id="add-certificate-record" class="add-record border border-0 w-100 p-3 fw-bold"
+                    style="background: #e7e7e7; color: #666; font-size: 15px"
+                    data-section="certificate-records">
+                + افزودن مدرک
+            </button>
+        </div>
+        <!-- Certificate Records -->
+        <!-- Languages -->
+        <div class="resume-step section position-relative border rounded d-none">
+            <div class="border-bottom bg-light section-title gap-1 ps-3">
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="currentColor">
+                        <use href="../images/icons/mega-menu.svg#language" />
+                    </svg>
+                </div>
+                <h6 class="mb-0 mt-1">زبان‌ها</h6>
+            </div>
+            <div id="languages" class="position-relative p-3">
+                <ul id="languages-list"
+                    class="d-flex flex-column gap-2 w-100 p-4"></ul>
+                <div class="no-languages-found d-flex flex-wrap p-4 d-none"
+                     style="color: rgb(85, 85, 85); font-size: 14px">
+                    شما هنوز زبانی اضافه نکردید.
+                </div>
+            </div>
+            <!-- Languages Form -->
+            <form id="languages-form"
+                  class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                  style="
+              row-gap: 15px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                  data-tag="languages"
+                  novalidate>
+                <div class="col-12 col-md-5 pe-0 pe-md-2">
+                    <label for="language"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">نام زبان</label>
+                    <select class="form-select p-2"
+                            id="language"
+                            name="language"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">
+                            -- نام زبان را انتخاب کنید --
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">نام زبان را انتخاب کنید.</div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 px-0 pe-sm-2 px-md-2">
+                    <label for="mastery"
+                           class="fw-bold form-label"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">سطح تسلط</label>
+                    <select class="form-select p-2"
+                            id="mastery"
+                            name="mastery"
+                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                            required>
+                        <option selected disabled value="">
+                            -- سطح تسلط را انتخاب کنید --
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">سطح تسلط زبان را انتخاب کنید.</div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 ps-0 ps-sm-2">
+                    <label class="fw-bold form-label text-nowrap"
+                           style="font-size: 14px; color: rgb(85, 85, 85)">بارگذاری مدرک</label>
+                    <div>
+                        <label for="language-certificate" class="btn btn-dark text-nowrap w-100" style="height: 38px;font-size: 14px">انتخاب فایل</label>
+                        <input type="file"
+                               class="form-control d-none p-2"
+                               id="language-certificate"
+                               name="attachments"
+                               style="font-size: 14px" />
+                        <input type="hidden" name="docTypeId" value="1077" />
+                        <div id="no-language--certificate">
+                            <div style="font-size: 12px; color: rgb(85, 85, 85); margin-top: 5px">درصورت وجود مدرک یا گواهینامه آن را آپلود کنید.</div>
+                            <div class="text-left" style="font-size: 12px; color: rgb(85, 85, 85);" dir="ltr">فرمت های مجاز: <span id="allowed-language--doctypes" class="allowed-doctypes" style="font-size: 12px !important; color: inherit !important">فرمت 1</span></div>
+                        </div>
+                        <span id="language-certificate--title" style="font-size: 12px !important; color: rgb(85, 85, 85);"></span>
+                    </div>
+                </div>
+                <input type="number" hidden name="docTypeId" value="1077" />
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-1 col-12 mt-4 ms-auto">
+                    <button class="submit-add-button" type="button">
+                        ذخیره و اضافه کردن زبان جدید
+                    </button>
+                    <div>
+                        <button class="submit-button" type="submit">
+                            ذخیره
+                        </button>
+                        <button class="btn btn-danger cancel-form-button" type="button" data-section="languages">
+                            انصراف
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /Languages Form -->
+            <button id="add-language" class="add-record border border-0 w-100 p-3 fw-bold"
+                    style="background: #e7e7e7; color: #666; font-size: 15px"
+                    data-section="languages">
+                + افزودن زبان
+            </button>
+        </div>
+        <!-- /Languages -->
+        <!-- Career Profile -->
+        <div class="resume-step d-flex flex-column gap-4 d-none">
+            <h6 class="d-none">مشخصات شغلی</h6>
+            <div id="career-select-container"
+                 class="col-12 col-md-6 ps-3 mt-4">
+                <label class="fw-bold form-label"
+                       style="font-size: 16px; color: rgb(85, 85, 85)">وضعیت شغلی فعلی</label>
+                <div class="position-relative d-flex align-items-center gap-3">
+                    <div class="form-check align-self-baseline">
+                        <input type="radio"
+                               class="form-check-input"
+                               id="looking-for-job"
+                               name="careerStatus"
+                               value="lookingForJob"
+                               checked />
+                        <label class="form-check-label" for="looking-for-job">جویای کار</label>
+                    </div>
+                    <div class="form-check align-self-baseline">
+                        <input type="radio"
+                               class="form-check-input"
+                               id="looking-for-better-job"
+                               name="careerStatus"
+                               value="lookingForBetterJob" />
+                        <label class="form-check-label" for="looking-for-better-job">به دنبال شغل بهتر</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Job Records -->
+            <div class="section position-relative border rounded d-none">
+                <div class="border-bottom bg-light section-title gap-1 ps-3">
+                    <div>
+                        <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="currentColor">
+                            <use href="../images/icons/mega-menu.svg#briefcase" />
+                        </svg>
+                    </div>
+                    <h6 class="mb-0 mt-1">سوابق شغلی</h6>
+                </div>
+                <div id="job-records" class="position-relative p-3">
+                    <ul id="jobs-list" class="list-group w-100 p-4"></ul>
+                    <div class="no-jobs-found d-flex flex-wrap p-4 d-none"
+                         style="color: rgb(85, 85, 85); font-size: 14px">
+                        شما هنوز سوابق کاری خود را درج نکرده‌اید.
+                    </div>
+                </div>
+                <!-- Job Records Form -->
+                <form id="job-records-form"
+                      class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                      style="
+              row-gap: 15px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                      data-tag="jobs"
+                      novalidate>
+                    <div class="col-12 col-md-6 pe-0 pe-md-2">
+                        <label for="job-title"
+                               class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">عنوان شغل </label>
+                        <input type="text"
+                               class="form-control p-2"
+                               id="job-title"
+                               name="jobTitle"
+                               style="font-size: 14px"
+                               required />
+                        <div class="invalid-feedback">عنوان شغل را وارد کنید.</div>
+                    </div>
+                    <div class="col-12 col-md-6 ps-0 ps-md-2">
+                        <label for="company"
+                               class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">نام شرکت</label>
+                        <input type="text"
+                               class="form-control p-2"
+                               id="company"
+                               name="company"
+                               style="font-size: 14px"
+                               required />
+                        <div class="invalid-feedback">نام شرکت را وارد کنید.</div>
+                    </div>
+                    <div class="col-12 col-md-6 pe-0 pe-md-2">
+                        <label for="role"
+                               class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">سمت شغلی</label>
+                        <input type="text"
+                               class="form-control p-2"
+                               id="role"
+                               name="role"
+                               style="font-size: 14px"
+                               required />
+                        <div class="invalid-feedback">سمت شغلی را وارد کنید.</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">تاریخ اشتغال</label>
+                        <div class="d-flex gap-2 align-items-center col-md-8">
+                            <label for="mobile"
+                                   class="text-nowrap"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)">از</label>
+                            <div class="d-flex flex-column flex-md-row gap-2 w-100">
+                                <div style="flex: 1">
+                                    <select class="form-select p-2"
+                                            id="start-month"
+                                            name="startMonth"
+                                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                                            required>
+                                        <option selected disabled value="">
+                                            -- ماه شروع همکاری --
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        ماه شروع همکاری را وارد کنید.
+                                    </div>
+                                </div>
+                                <div style="flex: 1">
+                                    <select class="form-select p-2"
+                                            id="start-year"
+                                            name="startYear"
+                                            style="font-size: 14px; color: rgb(85, 85, 85)"
+                                            required>
+                                        <option selected disabled value="">-- انتخاب کنید --</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        سال شروع همکاری را وارد کنید.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row gap-2 col-md-12 mt-2">
+                            <div class="d-flex gap-2 align-items-center col-md-8">
+                                <label for="mobile"
+                                       class="text-nowrap"
+                                       style="font-size: 14px; color: rgb(85, 85, 85)">تا</label>
+                                <div class="d-flex flex-column flex-md-row gap-2 w-100">
+                                    <div style="flex: 1">
+                                        <select class="form-select p-2"
+                                                id="finish-month"
+                                                name="finishMonth"
+                                                style="font-size: 14px; color: rgb(85, 85, 85)"
+                                                disabled>
+                                            <option selected disabled value="">
+                                                -- ماه پایان همکاری --
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            ماه پایان همکاری را وارد کنید.
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1">
+                                        <select class="form-select p-2"
+                                                id="finish-year"
+                                                name="finishYear"
+                                                style="font-size: 14px; color: rgb(85, 85, 85)"
+                                                disabled>
+                                            <option selected disabled value="">-- انتخاب کنید --</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            سال پایان همکاری را وارد کنید.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       id="still-working"
+                                       name="stillWorking"
+                                       checked />
+                                <label class="form-check-label"
+                                       for="still-working"
+                                       style="font-size: 14px; font-weight: 500">هنوز مشغولم</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="job-description"
+                               class="d-flex align-items-center gap-1 fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">
+                            <p class="mb-0">توضیحات</p>
+                            <span style="color: #aaa; font-weight: 400">(اختیاری)</span>
+                        </label>
+                        <textarea class="w-100 p-3 border rounded" rows="4" name="jobDescription" id="job-description"></textarea>
+                    </div>
+                    <div class="d-flex flex-column flex-sm-row justify-content-between gap-1 col-12 mt-4 ms-auto">
+                        <button class="submit-add-button" type="button">
+                            ذخیره و اضافه کردن سابقه شغلی جدید
+                        </button>
+                        <div>
+                            <button class="submit-button" type="submit">
+                                ذخیره
+                            </button>
+                            <button class="btn btn-danger cancel-form-button" type="button" data-section="job-records">
+                                انصراف
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- /Job Records Form -->
+                <button id="add-job-record" class="add-record border border-0 w-100 p-3 fw-bold"
+                        style="background: #e7e7e7; color: #666; font-size: 15px"
+                        data-section="job-records">
+                    + ایجاد سابقه کاری
+                </button>
+            </div>
+            <!-- /Job Records -->
+            <!-- Job Preferences -->
+            <div class="section position-relative border rounded mb-4 mb-md-0">
+                <div class="border-bottom bg-light section-title gap-1 ps-3">
+                    <div>
+                        <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="currentColor">
+                            <use href="../images/icons/general.svg#star" />
+                        </svg>
+                    </div>
+                    <h6 class="mb-0 mt-1">علاقه‌مندی شغلی</h6>
+                </div>
+                <div id="job-preferences" class="position-relative p-3">
+                    <button class="edit-info btn d-flex align-items-center justify-content-center gap-1 text-primary" data-section="job-preferences">
+                        <div class="pe-none">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="icon icon-tabler icon-tabler-pencil"
+                                 width="20"
+                                 height="20"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="2"
+                                 stroke="currentColor"
+                                 fill="none"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                <path d="M13.5 6.5l4 4" />
+                            </svg>
+                        </div>
+                        <span class="pt-1 text-primary pe-none">ویرایش</span>
+                    </button>
+                    <div class="d-flex flex-wrap p-4 w-100">
+                        <div class="col-12 mb-4 mb-3">
+                            <h4 class="fw-bold mb-0"
+                                style="font-size: 14px; color: rgb(85, 85, 85)">
+                                استان و شهرهای مورد نظر برای کار
+                            </h4>
+                            <div class="preferred-locations">
+                                <ul id="locations-list"
+                                    class="profile-item list-group w-100 mt-2"></ul>
+                                <div class="profile-add-item add-preference-item border-0 px-0 text-decoration-none text-primary bg-transparent"
+                                     style="font-size: 14px" data-section="job-preferences">
+                                    انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-4 pe-0 pe-md-2">
+                            <h4 class="fw-bold mb-0"
+                                style="font-size: 14px; color: rgb(85, 85, 85)">
+                                دسته بندی شغلی و زمینه کاری
+                            </h4>
+                            <div class="fields">
+                                <ul id="fields-list"
+                                    class="profile-item list-group w-100 mt-2"></ul>
+                                <div class="profile-add-item add-preference-item border-0 px-0 text-decoration-none text-primary bg-transparent"
+                                     style="font-size: 14px" data-section="job-preferences">
+                                    انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-4 ps-0 ps-md-2">
+                            <h4 class="fw-bold mb-0"
+                                style="font-size: 14px; color: rgb(85, 85, 85)">
+                                عنوان دقیق شغل درخواستی
+                            </h4>
+                            <div class="exact-job-title">
+                                <span class="profile-item"></span>
+                                <div class="profile-add-item add-preference-item border-0 px-0 text-decoration-none text-primary bg-transparent"
+                                     style="font-size: 14px" data-section="job-preferences">
+                                    انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-4 pe-0 pe-md-2">
+                            <h4 class="fw-bold mb-0"
+                                style="font-size: 14px; color: rgb(85, 85, 85)">
+                                سطح سازمانی مورد نظر
+                            </h4>
+                            <div class="seniority-level">
+                                <ul class="profile-item list-group w-100 mt-2"></ul>
+                                <div class="profile-add-item add-preference-item border-0 px-0 text-decoration-none text-primary bg-transparent"
+                                     style="font-size: 14px" data-section="job-preferences">
+                                    انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-4 ps-0 ps-md-2">
+                            <h4 class="fw-bold mb-0"
+                                style="font-size: 14px; color: rgb(85, 85, 85)">
+                                تمایل به همکاری به صورت
+                            </h4>
+                            <div class="contract">
+                                <ul class="profile-item list-group w-100 mt-2"></ul>
+                                <div class="profile-add-item add-preference-item border-0 px-0 text-decoration-none text-primary bg-transparent"
+                                     style="font-size: 14px" data-section="job-preferences">
+                                    انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Preferences Form -->
+                <form id="job-preferences-form"
+                      class="flex-wrap p-4 needs-validation border border-2 border-primary hide-information"
+                      style="
+              row-gap: 25px;
+              margin-right: 5px;
+              background: rgba(13, 110, 253, 0.1);
+            "
+                      data-tag="jobPreferences"
+                      novalidate>
+                    <div class="d-flex col-12 flex-column gap-1"
+                         style="color: rgb(85, 85, 85); font-size: 14px">
+                        <ul id="locations-list-form" class="list-group w-100 pe-0"></ul>
+                        <input id="preferred-locations"
+                               type="hidden"
+                               name="preferredLocations" />
+                    </div>
+                    <div class="d-flex flex-column col-12 gap-2">
+                        <div class="d-flex flex-column flex-md-row col-md-12 gap-2 gap-md-0">
+                            <div class="col-12 col-md-6 pe-0 pe-md-2">
+                                <label for="preferred-province"
+                                       class="fw-bold form-label"
+                                       style="font-size: 14px; color: rgb(85, 85, 85)">استان مورد نظر برای کار</label>
+                                <select class="form-select p-2"
+                                        id="preferred-province"
+                                        name="preferredProvince"
+                                        style="font-size: 14px; color: rgb(85, 85, 85)">
+                                    <option selected disabled value="">
+                                        -- انتخاب کنید --
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6 ps-0 ps-md-2">
+                                <label for="preferred-city"
+                                       class="fw-bold form-label"
+                                       style="font-size: 14px; color: rgb(85, 85, 85)">شهر مورد نظر برای کار</label>
+                                <select class="form-select p-2"
+                                        id="preferred-city"
+                                        name="preferredCity"
+                                        style="font-size: 14px; color: rgb(85, 85, 85)">
+                                    <option selected disabled value="">
+                                        -- انتخاب کنید --
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="add-location-button" type="button" style="background: var(--bold-primary-blue-color); border: none;  border-radius: 6px; color: #fff; font-size: 15px; padding: 6px 15px; height: 35px;">
+                            ذخیره و اضافه کردن استان و شهر جدید
+                        </button>
+                    </div>
+                    <div class="d-flex flex-column col-12 col-md-6 pe-0 pe-md-2">
+                        <label for="field"
+                               class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">دسته بندی شغلی و زمینه کاری</label>
+                        <select id="job-fields" name="jobFields" style="width:100%;" multiple="multiple" required>
+                            <option></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            دسته بندی شغلی خود را وارد کنید.
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 ps-0 ps-md-2">
+                        <label for="exact-job-title"
+                               class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">عنوان دقیق شغل درخواستی</label>
+                        <input type="text"
+                               class="form-control p-2"
+                               id="exact-job-title"
+                               name="exactJobTitle"
+                               placeholder="مثلا: جوشکار..."
+                               style="font-size: 14px"
+                               required />
+                        <div class="invalid-feedback">عنوان دقیق شغل درخواستی را وارد کنید.</div>
+                    </div>
+                    <div id="seniority-level" class="col-12 col-md-6 ps-0 ps-md-2">
+                        <label class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">سطح سازمانی مورد نظر</label>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="junior"
+                                   value="junior"
+                                   name="seniorityLevels" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="junior">تازه کار</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="expert"
+                                   value="expert"
+                                   name="seniorityLevels" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="expert">متخصص</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="manager"
+                                   value="manager"
+                                   name="seniorityLevels" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="manager">مدیر</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="chief"
+                                   value="chief"
+                                   name="seniorityLevels" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="chief">مدیر ارشد</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="other-seniority-level"
+                                   value="otherSeniorityLevel"
+                                   name="seniorityLevels" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="other-seniority-level">سایر</label>
+                        </div>
+                        <div class="col-12 pe-0 pe-md-2 mb-3">
+                            <input type="text"
+                                   class="form-control p-2 d-none"
+                                   id="seniority-levels-description"
+                                   name="seniorityLevelsDescription"
+                                   placeholder="توضیحات مربوط به سطح سازمانی مورد نظر"
+                                   style="font-size: 14px" />
+                            <div class="invalid-feedback">توضیحات مربوط به سطح سازمانی مورد نظر را وارد کنید.</div>
+                        </div>
+                    </div>
+                    <div id="contract-preferences" class="col-12 col-md-6 ps-0 ps-md-2">
+                        <label class="fw-bold form-label"
+                               style="font-size: 14px; color: rgb(85, 85, 85)">تمایل به همکاری به صورت</label>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="full-time"
+                                   value="full-time"
+                                   name="contracts" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="full-time">تمام وقت</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="part-time"
+                                   value="part-time"
+                                   name="contracts" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="part-time">پاره وقت</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="remote"
+                                   value="remote"
+                                   name="contracts" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="remote">دورکاری</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="intern"
+                                   value="intern"
+                                   name="contracts" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="intern">کارآموزی</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="other-contract"
+                                   value="otherContract"
+                                   name="contracts" />
+                            <label class="form-check-label"
+                                   style="font-size: 14px; color: rgb(85, 85, 85)"
+                                   for="other-contract">سایر</label>
+                        </div>
+                        <div class="col-12 pe-0 pe-md-2 mb-3">
+                            <input type="text"
+                                   class="form-control p-2 d-none"
+                                   id="contracts-description"
+                                   name="contractsDescription"
+                                   placeholder="توضیحات مربوط به نحوه تمایل به همکاری"
+                                   style="font-size: 14px" />
+                            <div class="invalid-feedback">توضیحات مربوط به نحوه تمایل به همکاری را وارد کنید.</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end col-12 mt-4 ms-auto">
+                        <div>
+                            <button class="submit-button" type="submit">
+                                ذخیره
+                            </button>
+                            <button class="btn btn-danger cancel-form-button" type="button" data-section="job-preferences">
+                                انصراف
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Preferences Form -->
+            </div>
+            <!-- /Job Preferences -->
+        </div>
+        <!-- Career Profile -->
+        <button id="continue-button" class="btn d-flex align-items-center justify-content-center gap-1 position-absolute rounded fw-bold">
+            <p class="mb-0">مرحله بعد</p>
+            <svg viewBox="0 0 20 20" width="28" height="28" stroke="currentColor">
+                <use href="../images/icons/general.svg#arrow-narrow-left" />
+            </svg>
+        </button>
+    </div>
+    <div id="resume-sidebar" class="d-flex flex-column gap-2">
+        <div id="resume-rate" class="d-flex flex-column gap-3" style="flex: 1">
+            <div class="rounded border overflow-hidden">
+                <div class="border-bottom bg-light section-title justify-content-center">
+                    <h6 class="text-center mb-0">کیفیت رزومه‌ی شما</h6>
+                </div>
+                <div class="bg-white text-center position-relative p-3">
+                    <div class="resume-rate-loading--container d-none">
+                        <div class="spinner-border" role="status"></div>
+                    </div>
+                    <div class="d-flex position-relative justify-content-between">
+                        <div class="d-flex flex-column align-items-start"
+                             style="z-index: 2; margin-top: 10px">
+                            <div class="completion-percentage bg-white fw-bold mb-0 pe-2"
+                                 style="font-size: 12px; white-space: nowrap">
+                                <p class="d-inline"></p>
+                                % کامل شده
+                            </div>
+                            <p class="completion-percentage-message mb-0"
+                               style="font-size: 12px; white-space: nowrap; color: #aaa">
+                                رزومه‌ی خود را کامل‌تر کنید.
+                            </p>
+                        </div>
+                        <span class="completion-percentage-line d-block position-absolute"
+                              style="
+                  height: 1px;
+                  width: 95%;
+                  right: 0;
+                  top: 18px;
+                  bottom: 48px;
+                  z-index: 1;
+                "></span>
+                        <div class="position-relative overflow-hidden rounded-circle"
+                             style="
+                  height: 75px;
+                  width: 75px;
+                  background-color: #fafafa;
+                  border: 4px solid #ddd;
+                  z-index: 2;
+                ">
+                            <span class="completion-visual-status d-block position-absolute bottom-0 left-0 w-100"></span>
+                        </div>
+                    </div>
+                    <ul id="improvement-suggestions-list"
+                        class="d-flex flex-column align-items-start gap-2 mt-4 p-0"></ul>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="show-resume"
+           class="btn d-flex align-items-center justify-content-center gap-1 rounded fw-bold"
+           style="font-size: 12px; height: 50px">
+            <div>
+                <svg viewBox="0 0 20 20" width="24" height="24" stroke="currentColor">
+                    <use href="../images/icons/general.svg#eye" />
+                </svg>
+            </div>
+            <p class="mb-0">مشاهده رزومه</p>
+        </button>
+    </div>
+</section>
+<div id="loader-container">
+    <span class="loader"></span>
+    <p style="color: rgb(50,50,50)">درحال دریافت اطلاعات</p>
+</div>
+
+ <script src="~/js/components/dist/stepped_resume.min.js" asp-append-version="true"></script>

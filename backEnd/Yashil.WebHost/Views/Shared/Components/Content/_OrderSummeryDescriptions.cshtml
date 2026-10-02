@@ -1,0 +1,25 @@
+﻿@model List<Yashil.Core.CustomViewModels.Cms.YashilCmsCustomViewModel>
+@if (Model.Any())
+{
+    <div class="text-justify">
+        <div class="alert alert-danger" role="alert">
+            <div class="d-flex flex-column">
+                <span>
+                    @Html.Raw(Model.FirstOrDefault()?.SubTitle)
+                </span>
+
+                <div class=" mt-2">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           value=""
+                           id="approvement" name="approvement" />
+                    <label class="form-check-label  fw-bold"
+                           id="approvement-label"
+                           for="approvement" style="color:#000;">
+                        تایید توافقنامه
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+}

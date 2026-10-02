@@ -1,0 +1,53 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.MenuViewModel
+@{
+    int modelCount = Model.FirstLevelCategories.Count;
+}
+
+@for (var i = 0; i < modelCount; i = i + 3)
+{
+    var j = i;
+    var c = 1;
+    <li class="col-sm-3">
+        <ul>
+            @while (c <= 3 && j < modelCount)
+            {
+                <li class="dropdown-header HeaderDropDown">
+
+                    <a style="color: #6c757d;font-size:15px" href="@Url.Action("Index", "Company", new { categoryId = Model.FirstLevelCategories[j].Id })">
+                        <i class="@Model.FirstLevelCategories[j].CssClass" aria-hidden="true"></i>
+                        @Model.FirstLevelCategories[j].Title
+                    </a>
+                </li>
+                var parentNodeId = Model.FirstLevelCategories[j].Id;
+                var childs = Model.CategoryViewModels.Where(x => x.ParentId == parentNodeId);
+                c++;
+                if (childs.Any())
+                {
+
+                    var childsCount = childs.Count();
+                    var childsIndex = 0;
+                    foreach (var childCategory in childs)
+                    {
+                        childsIndex++;
+                        <li><a href="@Url.Action("Index", "Company", new { categoryId = childCategory.Id })"><span class="trainingLevel"> @childCategory.Title</span></a></li>
+                        if (childsIndex == 10 && childsIndex < childsCount)
+                        {
+                            <li><a href="@Url.Action("Index", "Company", new { categoryId = parentNodeId })" style="color:red"><span class="trainingLevel">بیشتر</span></a></li>
+                            break;
+                        }
+                    }
+                    if (c <= 3)
+                    {
+                        <li class="divider"></li>
+                    }
+                }
+                j++;
+            }
+        </ul>
+    </li>
+}
+
+
+
+
+

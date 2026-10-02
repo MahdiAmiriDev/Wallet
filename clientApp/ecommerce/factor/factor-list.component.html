@@ -1,0 +1,38 @@
+<ng-container *ngIf="isFactorWaitingForTheAdminToApprove!=null">
+  <div *ngIf="isFactorWaitingForTheAdminToApprove" class="alert alert-danger">
+    <span style="font-weight: bold;color: #ff0000">
+   کاربر گرامی، فاکتور در وضعیت ثبت اولیه منتظر تایید مدیر سایت می باشد.بعد از تایید مدیر سایت شما می توانید فاکتور دانلود شده به مهر و امضا را بارگذاری کنید.
+    </span>
+
+  </div>
+
+</ng-container>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    (listRowPrepared)="onListRowPrepared($event)"
+                    [allowEditInForm]="false"
+                    [customRowButtons]="customRowButtons"
+                    [wordWrapEnabled]="true"
+                    style="white-space: unset !important;">
+</app-base-list-form>
+
+<dx-popup
+  [title]="popUpTitle"
+  (onHidden)="showPopUp=false"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <ng-template appDetailComponentHost></ng-template>
+  </div>
+</dx-popup>
+

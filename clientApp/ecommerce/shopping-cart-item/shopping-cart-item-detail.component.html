@@ -1,0 +1,49 @@
+
+				<app-busy-indicator><app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+									<dxi-item [label]="{text: 'کد'}"  dataField="code" >
+
+																<dxi-validation-rule  type="required" message="کد اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+
+									<dxi-item dataField="representationId" editorType="dxLookup" [label]="{text: 'نمایندگی'}"
+					[editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: representationDataSource,displayExpr:'title',valueExpr:'id' }">
+
+																				<dxi-validation-rule  type="required" message="نمایندگی اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+
+									<dxi-item dataField="shoppingCartType" editorType="dxSelectBox" [label]="{text: 'کاربر'}"
+					[editorOptions]="{ items: shoppingCartTypes,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="کاربر اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+
+									<dxi-item dataField="productSalesPlanningId" editorType="dxLookup" [label]="{text: 'برنامه ریزی فروش'}"
+					[editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: productSalesPlanningDataSource,displayExpr:'title',valueExpr:'id' }">
+
+																				<dxi-validation-rule  type="required" message="برنامه ریزی فروش اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'AttributesXml'}"  dataField="attributesXml" editorType='dxTextArea'>
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'قیمت مشتری'}"  dataField="customerEnteredPrice" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="قیمت مشتری اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'تعداد'}"  dataField="quantity" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="تعداد اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'>
+
+
+				</dxi-item>
+</dx-form>
+</app-base-edit-form></app-busy-indicator>

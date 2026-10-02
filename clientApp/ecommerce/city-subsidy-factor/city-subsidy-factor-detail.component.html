@@ -1,0 +1,64 @@
+
+				<app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+									<dxi-item [label]="{text: 'کد'}"  dataField="code"     >
+
+
+				</dxi-item>
+
+    <dxi-item [template]="'cityTemplate'" dataField="cityId" [label]="{text: 'شهر'}">
+      <dxi-validation-rule type="required" message="شهر اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+      <div *dxTemplate="let data of 'cityTemplate'">
+        <dx-drop-down-box
+          #ddlCity
+          [(value)]="entity.cityId"
+          valueExpr="id"
+          displayExpr="title"
+          placeholder="انتخاب شهر..."
+          [showClearButton]="true"
+          [dataSource]="cityDataSource"
+          (onValueChanged)="syncTreeViewSelection($event)">
+
+          <div *dxTemplate="let data of 'content'">
+            <dx-tree-view
+              [dataSource]="cityDataSource"
+              dataStructure="plain"
+              keyExpr="id"
+              parentIdExpr="parentId"
+              selectionMode="single"
+              displayExpr="title"
+              rtlEnabled="true"
+              [selectByClick]="true"
+              [searchEnabled]="true"
+              (onContentReady)="syncTreeViewSelection($event)"
+              (onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCity.instance.close();"
+            >
+            </dx-tree-view>
+          </div>
+        </dx-drop-down-box>
+      </div>
+									<dxi-item [label]="{text: 'ضریب یارانه وزارت'}"  dataField="vezaratSubsidyFactor" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="ضریب یارانه وزارت اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'ضریب یارانه ساتا'}"  dataField="sataSubsidyFactor" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="ضریب یارانه ساتا اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'>
+
+
+				</dxi-item>
+
+									<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+					[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+</dx-form>
+</app-base-edit-form>

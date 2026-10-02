@@ -1,0 +1,78 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Yashil.Core.CustomViewModels.CityTitleOnlyViewModel>
+@{
+    Layout = "_Layout";
+}
+
+<link href="~/css/jquery.dataTables.min.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/responsive.dataTables.min.css" rel="stylesheet" asp-append-version="true" />
+
+<!-- tabs -->
+<section id="tabs" class="mx-auto py-5">
+    <div class="container custom-container">
+        <div class="row">
+            <ul class="nav nav-tabs bg-white rounded" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active text-secondary"
+                            id="home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#home"
+                            type="button"
+                            role="tab"
+                            aria-controls="home"
+                            aria-selected="true">
+                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                            <use href="../images/icons/general.svg#list-check" />
+                        </svg>
+                        لیست نمایندگی
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content bg-white" id="myTabContent">
+                <div class="tab-pane fade show active"
+                     id="home"
+                     role="tabpanel"
+                     aria-labelledby="home-tab">
+                    <!--End tabs -->
+                    <!-- content start-->
+                    <div class="container-fluid p-0 p-md-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="py-3">
+                                    <div class="row">
+                                        <div id="cities-province" class="col-12 col-md-6 my-2 ">
+                                            <select id="cities-province--list" name="cities-provience" style="width:100%;">
+                                                <option></option>
+                                            </select>
+                                        </div>
+
+                                        <div id="company-list" class="col-12 col-md-6 my-2">
+                                            <select id="representations--list" name="representation" style="width:100%;">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div></div>
+                                </div>
+
+                                <!-- table with search -->
+                                <div>
+                                    <div class="row">
+                                        <div id="representationTableContainer" class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ss02" style="margin-bottom: 20px; margin-top: 20px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/js/representationSearch.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery/jquery.dataTables.min.js" asp-append-version="true"></script>
+<script src="~/js/dataTables.responsive.min.js" asp-append-version="true"></script>

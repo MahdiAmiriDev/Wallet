@@ -1,0 +1,76 @@
+<app-base-list-form #listForm
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [customListUrl]='customListUrl'
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="customButtonClicked($event)">
+</app-base-list-form>
+
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  [rtlEnabled]="true"
+  title="بارگذاری فایل اکسل پرداختی های فاکتور"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false">
+  <div style="direction: rtl">
+    <app-busy-indicator>
+      <div *ngIf="!showUploadedItems">
+        <div class="alert alert-info">
+          کاربر گرامی قبل از بارگذاری فایل اکسل پراختی های فاکتور لطفا موارد زیر را رعایت فرمایید:
+          <br/>
+          <span style="font-weight: bold">از جایجایی ستون ها بپرهیزید.</span>
+          <br/>
+          <span style="font-weight: bold">مقدار</span>
+          <span style="font-weight: bold;color: #ff0000"> کد فاکتور </span>
+          <span style="font-weight: bold">باید دقیقا برابر مقدار شماره فاکتور تولید شده در سامانه و موجود در گزارش فاکتور باشد</span>
+          <br/>
+          <span style="font-weight: bold">واحد پولی مربوط به ستون مبلغ پرداخت</span>
+          <span style="font-weight: bold;color: #ff0000"> ریال </span>
+          <span style="font-weight: bold">می باشد.</span>
+          <br/>
+          <span style="font-weight: bold">ستون مبلغ پرداخت تنها به صورت عددی (صحیح یا اعشاری) باشد و استفاده از کاراکترهای  </span>
+          <span style="font-weight: bold;color: #ff0000"> جداکننده سه رقمی </span>
+          <span style="font-weight: bold">مجاز نمی باشد.</span>
+          <br/>
+          <span style="font-weight: bold">مقدار ستون </span>
+          <span style="font-weight: bold;color: green">تاریخ </span>
+          <span style="font-weight: bold">فقط به صورت عددی باشد و کارکتر های غیر عددی اضافی مانند </span>
+          <span style="font-weight: bold;color: #ff0000">  - . , / و غیره</span>
+          <span style="font-weight: bold">  در این ستونا وجود نداشته باشد.</span>
+          <br/>
+          <span style="font-weight: bold;color: #ff0000">تمامی عواقب اشتباه وارد کردن داده ها نظیر کد فاکتور، مبلغ، و موارد اینچنینی بر عهده فردی است که اقدام به بارگذاری نموده است.</span>
+
+          <br/>
+        </div>
+        <dx-file-uploader
+            #fileUploader
+            name="factorPaymentFile"
+            [rtlEnabled]="true"
+            selectButtonText="فایل اکسل پرداختی های فاکتور"
+            style="margin: 20px"
+            labelText="انتخاب فایل اکسل پرداختی های فاکتور"
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="valueFileUploader"
+            [uploadUrl]='uploadUrl'
+            (onUploaded)="afterUploadFile($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+        </dx-file-uploader>
+      </div>
+      <div *ngIf="showUploadedItems">
+        <app-uploaded-factor-payment-list
+          [isValidUploadedFactorPaymentFile]="isValidUploadedFactorPaymentFile"
+          (transformToFactorPaymentBtnClicked)="closePopUpAndRefreshList($event)"
+        ></app-uploaded-factor-payment-list>
+      </div>
+    </app-busy-indicator>
+  </div>
+</dx-popup>

@@ -1,0 +1,588 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/customCssStyle.css"
+
+    ],
+    "minify": {
+      "enabled": true,
+      "adjustRelativePaths": true,
+      "commentMode": "none"
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/home.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/homePageSlider.css",
+      "wwwroot/css/components/productCategory.css",
+      "wwwroot/css/components/courseCarouselWithImageHorizontal.css",
+      "wwwroot/css/components/mostPopularCompanyCenter.css",
+      "wwwroot/css/components/newsAndAnnouncements.css",
+      "wwwroot/css/homepage-tbao.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "adjustRelativePaths": true,
+      "commentMode": "none"
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/leaflet.min.css",
+    "inputFiles": [
+      "wwwroot/node_modules/leaflet/dist/leaflet.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/css-skeletons.min.css",
+    "inputFiles": [
+      "wwwroot/node_modules/css-skeletons/dist/css-skeletons.min.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/select2.min.css",
+    "inputFiles": [
+      "wwwroot/node_modules/select2/dist/css/select2.min.css"
+    ],
+    "minify": {
+      "enabled": false,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/placementTest.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/placementTest.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/talentExam.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/talentExam.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/jobOfferDetail.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/jobOfferDetail.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/employment.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/employment.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+
+  {
+    "outputFileName": "wwwroot/css/instituteRepresentatives.min.css",
+    "inputFiles": [
+      "wwwroot/css/instituteRepresentatives.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/saminPaymentModal.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/saminPaymentModal.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/resume.min.css",
+    "inputFiles": [
+      "wwwroot/css/resume.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/show_resume.min.css",
+    "inputFiles": [
+      "wwwroot/css/show_resume.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/site_util.min.js",
+    "inputFiles": [
+
+      "wwwroot/js/shrinktext.js",
+      "wwwroot/js/lazyload/lazyload.js",
+      "wwwroot/js/productlistcarousel.js"
+
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/node_modules/popper.js/dist/umd/popper.min.js",
+      "wwwroot/node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "wwwroot/js/jquery/jquery.autocomplete.min.js",
+      "wwwroot/js/components/product/fstdropdown.min.js",
+      "wwwroot/js/errorMessage.js",
+      "wwwroot/node_modules/bootbox/dist/bootbox.min.js",
+      "wwwroot/node_modules/bootbox/dist/bootbox.locales.min.js",
+      "wwwroot/js/customJs.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/select2.min.js",
+    "inputFiles": [
+      "wwwroot/node_modules/select2/dist/js/select2.min.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/select2-fa.js",
+    "inputFiles": [
+      "wwwroot/node_modules/select2/dist/js/i18n/fa.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/listofInstituteRepresentatives.min.js",
+    "inputFiles": [
+      "wwwroot/js/listofInstituteRepresentatives.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/representationSearch.min.js",
+    "inputFiles": [
+      "wwwroot/js/representationSearch.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/lazyload/lazyload.min.js",
+    "inputFiles": [
+      "wwwroot/js/lazyload/lazyload.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/product/innerProduct.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/product/innerProduct.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/authentication/forge.all.min.js",
+    "inputFiles": [
+      "wwwroot/node_modules/node-forge/dist/forge.all.min.js"
+    ],
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/navigateToTop.min.js",
+    "inputFiles": [
+      "wwwroot/js/navigateToTop.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/commerce.min.js",
+    "inputFiles": [
+      "wwwroot/js/commerce.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/product/preRegister.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/product/preRegister.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/jquery/jquery-print/jquery.print-preview.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery/jquery-print/jquery.print-preview.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/crypto-js.min.js",
+    "inputFiles": [
+      "wwwroot/node_modules/crypto-js/crypto-js.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/jquery/jquery.validate.unobtrusive.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/authentication/captcha.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/authentication/captcha.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/jquery/jquery.validate.min.js",
+    "inputFiles": [
+      "wwwroot/js/jquery/jquery-validate/jquery.validate.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/errorMessage.min.js",
+    "inputFiles": [
+      "wwwroot/js/errorMessage.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/ipg/hekmatIpg.min.js",
+    "inputFiles": [
+      "wwwroot/js/ipg/hekmatIpg.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/ipg/ipgBootstrap.min.js",
+    "inputFiles": [
+      "wwwroot/js/ipg/bootstrap.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/fullOfDiscountProducts/fullOfDiscountProducts.min.js",
+    "inputFiles": [
+      "wwwroot/js/fullOfDiscountProducts/fullOfDiscountProducts.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/num2persian.min.js",
+    "inputFiles": [
+      "wwwroot/js/num2persian.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/categorymenu/categoryMenuList.min.js",
+    "inputFiles": [
+      "wwwroot/js/categorymenu/categoryMenuList.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/categorymenu/categoryMenuListResponsive.min.js",
+    "inputFiles": [
+      "wwwroot/js/categorymenu/categoryMenuListResponsive.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/product/sidebarCategoryProducts.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/product/sidebarCategoryProducts.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/homePageSlider.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/homePageSlider.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/placementTest.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/placementTest.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/talentExam.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/talentExam.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/certificateSearch.min.js",
+    "inputFiles": [
+      "wwwroot/js/certificateSearch.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/validator.min.js",
+    "inputFiles": [
+      "wwwroot/js/validator.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/components/search_component.min.js",
+    "inputFiles": [
+      "wwwroot/js/components/search_component.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/service-selection-modal.min.css",
+    "inputFiles": [
+      "wwwroot/css/service-selection-modal.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/messageScreen.min.css",
+    "inputFiles": [
+      "wwwroot/css/messageScreen.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/service-selection-modal.min.js",
+    "inputFiles": [
+      "wwwroot/js/service-selection-modal.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/job-list.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/job-list.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/components/job-offer.min.css",
+    "inputFiles": [
+      "wwwroot/css/components/job-offer.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false,
+      "commentMode": "none"
+    },
+    "sourceMap": false
+  }
+]

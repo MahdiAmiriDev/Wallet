@@ -1,0 +1,15 @@
+<dx-form id="from" [colCount]="4" #assignedUsers [formData]="entity" >
+  <dxi-item
+    itemType="group"
+    name="selectedData"
+    *ngFor="let item of data; let i = index">
+    <dxi-item   [editorOptions]="{readOnly:true}"
+      [dataField]="'selectedData[' + i + '].assignedCount'">
+      <dxo-label [text]="item.assigneeFullName">
+      </dxo-label>
+    </dxi-item>
+     </dxi-item>
+</dx-form>
+
+
+

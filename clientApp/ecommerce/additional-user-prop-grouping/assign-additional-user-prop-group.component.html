@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-9">
+        <app-representation-filter
+                (selectedCompanyChanged)="onSelectedCompanyChanged($event)"
+                (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+                (selectedCategoryChanged)="onSelectedCategoryChanged($event)"
+                [showInOneRow]="true"
+                [showCategoryFilter]="true">
+        </app-representation-filter>
+            </div>
+            <div class="col-3">
+            <dx-lookup
+                    [(value)]="userGroupId"
+                    [dataSource]="userGroupDataSource"
+                    displayExpr="title"
+                    valueExpr="id"
+                    (onValueChanged)="onSelectedUserGroupChanged($event)"
+                    [showClearButton]="true"
+                    [rtlEnabled]="true">
+                <dxo-drop-down-options
+                        [closeOnOutsideClick]="true"
+                        [showTitle]="false">
+                </dxo-drop-down-options>
+            </dx-lookup>
+        </div>
+        </div>
+        <app-assignable-list [allowEditAssignedItems]="true"
+                             [selectedGroupItemId]="groupId"
+                             [columns]="columns"
+                             [assignedColumns]="columns"
+                             assignableListName="AdditionalUserProp"
+                             groupEntityName="ItemGroup"
+                             assignableListLabel="{{this.formLabels.usersLabel}}"
+                             groupEntityLabel="{{this.formLabels.groupLabel}}"
+                             selectedGroupItemTitle="{{groupTitle}}"
+                             [showGroupItemComponent]="false"
+                             (assignAffectedChange) = "onAssignAffectedChange($event)"
+                             [(assignAffected)]="updateOrInsertAffected">
+        </app-assignable-list>
+    </div>
+
+
+</div>

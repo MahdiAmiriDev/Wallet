@@ -1,0 +1,11 @@
+<app-assignable-list
+  [showGroupItemComponent]="true"
+  [assignedColumns]="columns"
+  [selectedGroupItemId]="resourceId"
+  [assignableListName]="'ResourceAppAction'"
+  [groupEntityName]="'Resource'"
+  [assignableListLabel]="'um.ResourceAppAction.AppActionId'|translate"
+  [groupEntityLabel]="'um.ResourceAppAction.ResourceId'|translate"
+  [(assignAffected)]="updateOrInsertAffected">
+</app-assignable-list>
+

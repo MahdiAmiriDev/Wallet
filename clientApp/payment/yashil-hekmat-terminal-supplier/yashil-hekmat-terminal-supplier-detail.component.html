@@ -1,0 +1,33 @@
+	<app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+			 
+	
+				<dxi-item dataField="parentId" editorType="dxLookup" [label]="{text: 'ParentId'}"
+				[editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: parentDataSource,displayExpr:'title',valueExpr:'id' }">	
+		</dxi-item>
+	<dxi-item [label]="{text: 'کد'}"  dataField="code"     >	
+		</dxi-item>
+	<dxi-item [label]="{text: 'ترمینال'}"  dataField="yashilHekmatTerminalId" editorType='dxNumberBox'    >
+					<dxi-validation-rule  type="required" message="ترمینال اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	
+				<dxi-item dataField="userId" editorType="dxLookup" [label]="{text: 'کاربر'}"
+				[editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: userDataSource,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="کاربر اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item [label]="{text: 'تامین کننده محصولات ترمینال'}"  dataField="supplierId" editorType='dxNumberBox'    >
+					<dxi-validation-rule  type="required" message="تامین کننده محصولات ترمینال اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item [label]="{text: 'تامین کننده محصولات ترمینال'}"  dataField="supplierTitle"     >	
+		</dxi-item>
+	<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'    >	
+		</dxi-item>
+	<dxi-item [label]="{text: 'CodePath'}"  dataField="codePath"     >	
+		</dxi-item>
+	<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"  
+				[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	
+</dx-form>
+</app-base-edit-form>

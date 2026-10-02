@@ -1,0 +1,25 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [customRowButtons]="customRowButtons"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>
+
+<dx-popup
+        [title]="popUpTitle"
+        *ngIf="showPopUp"
+        [(visible)]="showPopUp"
+        [closeOnOutsideClick]="true"
+        [deferRendering]="false"
+        [dragEnabled]="false"
+        [fullScreen]="true"
+        rtlEnabled="true"
+        class="popup">
+
+  <app-subsidy-list *ngIf="showPopUp" [subsidyGroupId]="subsidyGroupId">
+  </app-subsidy-list>
+
+</dx-popup>

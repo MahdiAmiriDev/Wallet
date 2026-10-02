@@ -1,0 +1,19 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+
+    <dxi-item dataField="parentId" editorType="dxLookup" [label]="{text: 'پدر'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: parentDataSource,displayExpr:'title',valueExpr:'id' }">
+    </dxi-item>
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+      <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item dataField="yashilHekmatTerminalId" editorType="dxLookup" [label]="{text: 'شناسه ترمینال درگاه انستیتو'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: yashilHekmatTerminalDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="شناسه ترمینال درگاه انستیتو اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

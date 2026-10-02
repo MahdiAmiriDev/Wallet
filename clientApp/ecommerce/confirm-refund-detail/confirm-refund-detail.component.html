@@ -1,0 +1,59 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)"
+                      (cancelEditOrInsert)="onCloseFormClick()"
+                      [showSaveButton]="false"
+                      [showCloseButton]="false"
+                      [fixHeight]="false"
+                      [customButtons]="customButtons"
+                      (customButtonClicked)="confirmOrRejectRefundDetail($event)">
+    <div class="alert alert-primary">
+      <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+        <dxi-item [label]="{text: 'نام محصول'}" [colSpan]="3" [editorOptions]="{readOnly:true}"
+                  dataField="productTitle">
+        </dxi-item>
+        <dxi-item [label]="{text: 'ردیف گردش ترمینال'}" [editorOptions]="{readOnly:true}"
+                  dataField="installmentTrackingCode">
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد سفارش'}" [editorOptions]="{readOnly:true}" dataField="orderTitle">
+        </dxi-item>
+        <dxi-item [label]="{text: 'نام طرح'}" [editorOptions]="{readOnly:true}" dataField="applicationName">
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد ملی داوطلب'}" [editorOptions]="{readOnly:true}" dataField="nationalCode">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'شهر'}" [editorOptions]="{readOnly:true}" dataField="cityTitle">
+        </dxi-item>
+        <dxi-item [label]="{text: 'شماره کارت'}" [editorOptions]="{readOnly:true}" dataField="cardNumber">
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ تراکنش ارسالی(ریال)'}"
+                  dataField="oldPaymentAmount" editorType='dxNumberBox'
+                  [editorOptions]="{readOnly:true, format:'#,##0'}">
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ تراکنش نهایی(ریال)'}"
+                  dataField="newPaymentAmount"
+                  editorType='dxNumberBox' [editorOptions]="{readOnly:true, format:'#,##0'}">
+        </dxi-item>
+        <dxi-item [label]="{text: 'تاریخ ثبت پرداخت'}" dataField="paidDateInt" [template]="'intDate'"
+                  [editorOptions]="{readOnly:true}">
+        </dxi-item>
+        <dxi-item *ngIf="!entity.allowAnnouncedRefundAmount" [label]="{text: 'مبلغ عودت اعلام شده(ریال)'}"
+                  dataField="refundAmount"
+                  editorType='dxNumberBox' [editorOptions]="{readOnly:true, format:'#,##0'}">
+        </dxi-item>
+
+        <dxi-item *ngIf="entity.allowAnnouncedRefundAmount" [label]="{text: 'مبلغ عودت (ریال)'}"
+                  dataField="announcedRefundAmount" editorType='dxNumberBox' [editorOptions]="{format:'#,##0'}">
+          <dxi-validation-rule type="required" message="مبلغ عودت اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+
+        <div *dxTemplate="let data of 'intDate'">
+          <dx-text-box value="  {{ data.component.option('formData')[data.dataField] | intToStringDate }}"
+                       readOnly="true">
+          </dx-text-box>
+        </div>
+      </dx-form>
+    </div>
+  </app-base-edit-form>
+</app-busy-indicator>
+

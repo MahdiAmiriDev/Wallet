@@ -1,0 +1,201 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+        <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+            <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه مورد سفارش'}" dataField="orderItemGuid">
+
+            <dxi-validation-rule type="required" message="شناسه مورد سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="orderId" editorType="dxLookup" [label]="{text: 'شناسه سفارش'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: orderDataSource,displayExpr:'title',valueExpr:'id' }">
+
+            <dxi-validation-rule type="required" message="شناسه سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه محصول'}" dataField="productId" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="شناسه محصول اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تعداد'}" dataField="quantity" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="تعداد اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'قیمت پایه محصول'}" dataField="unitPrice" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="قیمت پایه محصول اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد تخفیف'}" dataField="discountPercentage" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="درصد تخفیف اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'میزان تخفیف (شامل مالیات)'}" dataField="discountAmountInclTax"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="میزان تخفیف (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'میزان تخفیف (بدون مالیات)'}" dataField="discountAmountExclTax"
+                  editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'قیمت با تخفیف'}" dataField="priceIncDiscount" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="قیمت با تخفیف اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد کارمزد سایت از مشتری'}" dataField="wagePercentage" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="درصد کارمزد سایت از مشتری اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'میزان کارمزد  (شامل مالیات)'}" dataField="wageAmountIncTax" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="میزان کارمزد  (شامل مالیات) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'میزان کارمزد  (بدون مالیات)'}" dataField="wageAmountExcTax">
+
+
+        </dxi-item>
+
+        <dxi-item dataField="subsidyId" editorType="dxLookup" [label]="{text: 'شناسه یارانه'}"
+                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: subsidyDataSource,displayExpr:'title',valueExpr:'id' }">
+
+
+        </dxi-item>
+
+        <dxi-item dataField="subsidyType" editorType="dxSelectBox" [label]="{text: 'نوع یارانه'}"
+                  [editorOptions]="{ items: subsidyTypes,displayExpr:'title',valueExpr:'id' }">
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ یارانه'}" dataField="subsidyPrice" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مبلغ یارانه اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد سود یارانه'}" dataField="subsidyProfitPercentage" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="درصد سود یارانه اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ یارانه (شامل سود یارانه)'}" dataField="subsidyPriceIncPorfit"
+                  editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="مبلغ یارانه (شامل سود یارانه) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ یارانه (شامل مالیات و شامل سود یارانه)'}"
+                  dataField="subsidyPriceIncTaxIncPorfit" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="مبلغ یارانه (شامل مالیات و شامل سود یارانه) اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد مالیات'}" dataField="taxPercentage" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="درصد مالیات اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ مالیات مورد سفارش'}" dataField="taxPrice" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مبلغ مالیات مورد سفارش اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مجموع مبلغ پرداختی'}" dataField="priceTotal" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مجموع مبلغ پرداختی اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentCount" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="تعداد اقساط اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+
+        <dxi-item dataField="saleType" editorType="dxSelectBox" [label]="{text: 'نقدی یا اقساطی-نوع پرداخت'}"
+                  [editorOptions]="{ items: saleTypes,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required"
+                                 message="نقدی یا اقساطی-نوع پرداخت اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'قیمت هر قسط'}" dataField="pricePerInstallment" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="قیمت هر قسط اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'درصد سود از تامین کننده'}" dataField="profitPercentage" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="درصد سود از تامین کننده اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ سود از تامین کننده'}" dataField="profitPrice" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="مبلغ سود از تامین کننده اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'مبلغ عودت داده شده'}" dataField="refundedAmount" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'هزینه اصلی این مورد سفارش (در هنگام سفارش) ، تعداد 1'}"
+                  dataField="originalProductCost" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required"
+                                 message="هزینه اصلی این مورد سفارش (در هنگام سفارش) ، تعداد 1 اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شرح ویژگی'}" dataField="attributeDescription" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'ویژگی های محصول در قالب XML'}" dataField="attributesXml" editorType='dxTextArea'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تعداد دانلود'}" dataField="downloadCount" editorType='dxNumberBox'>
+
+            <dxi-validation-rule type="required" message="تعداد دانلود اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'آیا دانلود فعال شده است یا خیر'}" dataField="isDownloadActivated"
+                  editorType='dxCheckBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'شناسه مجوز دانلود'}" dataField="licenseDownloadId" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'وزن کل یک مورد'}" dataField="itemWeight" editorType='dxNumberBox'>
+
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'کد'}" dataField="code">
+
+
+        </dxi-item>
+
+        <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+                  [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+            <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+        </dxi-item>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>
+
+

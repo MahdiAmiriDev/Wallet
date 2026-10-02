@@ -1,0 +1,49 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item style="background-color: red" [label]="{text: 'کد ملی'}" dataField="nationalCode"
+                [editorOptions]="{valueChangeEvent:'keyup',onKeyUp: nationalCodeChanged,readOnly: selectedEntityId}">
+        <dxi-validation-rule maxlength="10" minlength="10" type="required"
+                             message="کد ملی اجباری می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="فرمت کد ملی صحیح نیست"
+                             [validationCallback]="commonValidatorService.nationalCodeValidate"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'نام'}" dataField="name" [editorOptions]="{readOnly:entity.personId}">
+        <dxi-validation-rule type="required" message="نام اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'نام خانوادگی'}" dataField="lastName"
+                [editorOptions]="{readOnly:entity.personId}">
+        <dxi-validation-rule type="required" message="نام خانوادگی اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'شماره موبایل'}" dataField="mobileNumber" [editorOptions]="{readOnly:entity.personId}">
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره کارت'}" dataField="cardNumber" maxlength="16" minlength="16"
+                [editorOptions]="{valueChangeEvent:'keyup',onKeyUp: personCardNumberChanged,readOnly: selectedEntityId}">
+      </dxi-item>
+      <dxi-item dataField="bankType" editorType="dxSelectBox" [label]="{text: 'بانک'}"
+                [editorOptions]="{ displayExpr:'title',valueExpr:'id' ,items:bankTypes} ">
+        <dxi-validation-rule type="required" message="بانک اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره حساب'}" dataField="accountNumber">
+        <dxi-validation-rule type="required" message="شماره حساب اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'شماره شبا'}" dataField="shebaNumber"
+                maxlength="26">
+        <dxi-validation-rule type="required" message="شماره شبا اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+
+
+      <dxi-item [label]="{text: 'نام شعبه'}" dataField="branchName">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'نام و نام خانوادگی صاحب حساب'}" dataField="fullName">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

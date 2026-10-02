@@ -1,0 +1,24 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'warehouse'" class="tab-content-edit-form">
+    <app-warehouse-detail
+      [selectedEntityId]="selectedEntityId"
+      (afterInsertRow)="rowInserted($event)"
+      entityName="warehouse"
+      [closeAfterSave]="false"
+      #mainBaseEdit
+      (closeFormClick)="closeFormClick.emit($event)"
+    >
+    </app-warehouse-detail>
+  </div>
+  <div *dxTemplate="let company of 'description'" class="tab-content-edit-form">
+    <app-content-editor [selectedEntityId]="selectedEntityId" entityName="warehouse" propertyName="Description"
+                        propertyLabel="توضیحات"></app-content-editor>
+  </div>
+</dx-tab-panel>

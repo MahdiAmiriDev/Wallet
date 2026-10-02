@@ -1,0 +1,38 @@
+<app-busy-indicator>
+
+  <div *ngIf="factorInstallmentCount" class="alert alert-primary">
+    <div class="d-flex align-items-center">
+      <span class="me-2">تعداد اقساط فاکتور : {{ factorInstallmentCount }}</span>
+    </div>
+
+    <div class="button-row mt-3">
+      <button class="btn btn-primary btn-sm w-auto px-3 rounded-pill shadow-sm custom-btn" (click)="updateInsurancePercentageFromSaleConfiguration()">
+        بروزرسانی درصد و مبلغ بیمه از تنظیم فروش
+      </button>
+      <button class="btn btn-secondary btn-sm w-auto px-3 rounded-pill shadow-sm custom-btn" (click)="updateOtherDeductionFromSaleConfiguration()">
+        بروزرسانی سایر کسورات از تنظیم فروش
+      </button>
+      <button class="btn btn-success btn-sm w-auto px-3 rounded-pill shadow-sm custom-btn" (click)="updateFactorItemIsIncludeInsurance()">
+        بروزرسانی شامل بیمه بودن از تنظیم فروش
+      </button>
+      <button class="btn btn-warning btn-sm w-auto px-3 rounded-pill shadow-sm custom-btn" (click)="UpdateFactorInstallmentCountFromSaleConfiguration()">
+        بروزرسانی تعداد اقساط فاکتور از تنظیم فروش
+      </button>
+    </div>
+  </div>
+
+
+
+  <app-base-list-form
+  #listForm
+  [entityName]="'factorItem'"
+  [customListUrl]="'factorItem/GetFactorItemPropertiesThatHaveNotEffectInFactorPrice?factorId=' + factorId"
+  [columns]="columns"
+  [showAddButton]="false"
+  [showEditForm]="false"
+  [allowDeleteInForm]="false"
+  [allowEditInForm]="false"
+>
+
+</app-base-list-form>
+</app-busy-indicator>

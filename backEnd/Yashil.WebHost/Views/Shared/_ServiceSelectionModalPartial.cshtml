@@ -1,0 +1,148 @@
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.HomeViewModel
+
+
+<link rel="stylesheet" href="~/css/service-selection-modal.min.css" asp-append-version="true" />
+<script src="~/js/num2persian.min.js" asp-append-version="true"></script>
+<div id="service-selection__modal">
+    <button class="close-modal__button">بستن</button>
+    <div id="sections-container">
+        <div class="section section-one">
+            <div class="section-image__container">
+                <img class="section-image" src="~/images/service-selection-modal/employment-system.webp" />
+            </div>
+            <div class="section-backdrop"></div>
+            <div class="section__wrapper">
+                <img class="section-title__icon" src="~/images/service-selection-modal/title-icon.png" />
+                <div class="section-content__container">
+                    <div class="section-title__container">
+                        <h2 class="section-title">سامانه اشتغال</h2>
+                        <p class="section-subtitle">
+                            فرزندان کارکنان و بازنشستگان نیروهای مسلح
+                        </p>
+                    </div>
+                    <div class="section-description__container">
+                        <p class="section-description">
+                            در راستای تحقق منویات مقام معظم رهبری و فرماندهی معظم کل قوا
+                            «مدظله العالی» معاونت نیروی انسانی ستاد کل ن.م-اداره خدمات و
+                            حکمت جهت ترویج و تقویت فرهنگ کار و حمایت از تولید داخلی و
+                            اشتغال آفرینی بر پایه دانش بنیان برای فرزندان کارکنان و
+                            بازنشستگان معزز نیروهای مسلح، در نظر است آموزش های مورد نظر
+                            توسط شرکت انستیتو ایزایران به عنوان مجری برگزار گردیده و پس از
+                            کسب مهارت های مورد تقاضا، زمینه اشتغال فراهم گردد. لذا سامانه
+                            اشتغال، در راستای جمع آوری رزومه متقاضیان، استعداد
+                            یابی،استعداد سنجی و برگزاری دوره های مهارتی متناسب با
+                            استعدادهای اشخاص طراحی گردیده است.
+                        </p>
+                        <a href="@Url.Action("Employment", "Home")" target="_blank" class="show-more__button" asp-append-version="true">
+                            <span>ورود به سامانه اشتغال</span>
+                        </a>
+                    </div>
+                    <a href="@Url.Action("Employment", "Home")" target="_blank" class="enter-employment-system__button" asp-append-version="true">
+                        <span>ورود به سامانه اشتغال</span>
+                    </a>
+                </div>
+            </div>
+            <div class="employment-cards__container">
+                <a href="@Url.Action("ResumeFillHelp", "Home")" target="_blank" class="employment-card" asp-append-version="true">
+                    <h3>ثبت رزومه</h3>
+                    <div>
+                        <p>استفاده از مزایای</p>
+                        <span>طرح اشتغال</span>
+                        <p>از طریق</p>
+                        <span>ثبت</span>
+                        <p>و</p>
+                        <span>تکمیل رزومه</span>
+                    </div>
+                </a>
+                <a href="@Url.Action("TalentExam", "Home")" target="_blank" class="employment-card" asp-append-version="true">
+                    <h3>شرکت در آزمون هدایت شغلی</h3>
+                    <div>
+                        <p>شناخت</p>
+                        <span>عمیق</span>
+                        <p>، کشف</p>
+                        <span>استعداد</span>
+                        <p>و ارتباط</p>
+                        <span>موثر</span>
+                    </div>
+                </a>
+                <a href="@Url.Action("Index", "main", new { categoryGroupId = @Model.EmploymentCategoryGroupId})" target="_blank" class="employment-card" asp-append-version="true">
+                    <h3>دوره‌های منجر به اشتغال</h3>
+                    <div>
+                        <p>تخفیف تا</p>
+                        <span>30درصد</span>
+                        <p>،  تا سقف</p>
+                        <span class="employment-subsidy-information"></span>
+                        <p style="font-size: 15px">(بلاعوض)</p>
+                        <p> - </p>
+                        <span>تقسیط</span>
+                        <p style="font-size: 15px">(بدون سود)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="section section-two">
+            <div class="section-image__container">
+                <img class="section-image" src="~/images/service-selection-modal/company.webp" />
+            </div>
+            <div class="section-backdrop"></div>
+            <div class="section__wrapper">
+                <img class="section-title__icon" src="~/images/service-selection-modal/title-icon.png" />
+                <div class="section-content__container">
+                    <div class="section-title__container">
+                        <h2 class="section-title">طرح باقرالعلوم</h2>
+                        <p class="section-subtitle">
+                            تسهیل در ارائه خدمات، بهره برداری از محصولات آموزشی و کمک
+                            آموزشی
+                        </p>
+                    </div>
+                    <div class="section-description__container">
+                        <p class="section-description">
+                            شرکت انستیتو ایزایران به عنوان بزرگترین شبکه آموزشی در گستره
+                            کشور و مجری برنامه توانمندسازی تحصیلی و مهارتی خانواده های
+                            محترم نیروهای مسلح در قالب طرح باقر العلوم(ع) و با همکاری
+                            موسسات و مراکز تراز اول و مطرح کشور در حوزه آموزش و با هدف
+                            تقویت بنیه علمی فرزندان کارکنان شاغل و بازنشستگان، خدمات ویژه
+                            آموزشی، ارائه می نماید. طرح باقر العلوم(ع) شامل تسهیل در ارائه
+                            خدمات، تسهیل در بهره برداری از محصولات آموزشی و کمک آموزشی
+                            موسسات، شرکتها و مراکز آموزشی معتبر کشور همراه با قیمت مقرون
+                            به صرفه به خانواده های محترم نیروهای مسلح می باشد.
+                        </p>
+                        <button class="show-more__button tbao-button">
+                            <span>ورود به طرح باقرالعلوم</span>
+                        </button>
+                    </div>
+                    <button class="enter-tbao__button tbao-button">
+                        <span>ورود به طرح باقرالعلوم</span>
+                    </button>
+                </div>
+            </div>
+            <ul class="tbao-information__container">
+                <li class="tbao-information__item">
+                    <p>تخفیف تا</p>
+                    <span>65%</span>
+                </li>
+                <li class="tbao-information__item">
+                    <p>یارانه تا سقف</p>
+                    <div style="display: flex; align-items: center; gap: 5px">
+                        <span>1</span><span style="font-size: 20px">میلیون تومان</span>
+                    </div>
+                </li>
+                <li class="tbao-information__item">
+                    <p>پرداخت اقساطی</p>
+                    <span>3 الی 12 ماهه</span>
+                </li>
+                <li class="tbao-information__item">
+                    <p>همکاری با برترین</p>
+                    <span>موسسات و مراکز آموزشی</span>
+                </li>
+                <li class="tbao-information__item">
+                    <p>تسهیل در ارائه خدمات به</p>
+                    <span>خانواده‌های محترم نیروهای مسلح</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/service-selection-modal.js" asp-append-version="true"></script>
+<script src="~/js/components/employmentSubsidyInformation.js" asp-append-version="true"></script>

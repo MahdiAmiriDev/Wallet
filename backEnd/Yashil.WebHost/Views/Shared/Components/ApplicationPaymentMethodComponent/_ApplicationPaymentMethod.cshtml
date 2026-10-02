@@ -1,0 +1,63 @@
+﻿@using Yashil.Core.Enums;
+@model List<Yashil.Core.CustomDomainModels.Commerce.PaymentMethodType>
+<div class="c-checkout-bill__digiclub" style="padding-bottom:0px !important">
+    <div class="c-payment_methods_container" style="text-align:right; direction:rtl;margin-bottom: 10px;">
+        <div class="row">
+            <div style="display:flex; flex-direction:column;flex-wrap:wrap-reverse">
+                @foreach (var item in Model)
+                {
+                    string imageSrc = "";
+                    switch (item.Id)
+                    {
+                        case (int)PaymentMethodTypesEnum.Ansar:
+                            imageSrc = "/images/payment-gateway-images/fanava.webp";
+                            break;
+                        case (int)PaymentMethodTypesEnum.Hekmat:
+                            imageSrc = "/images/payment-gateway-images/hekmat.webp";
+                            break;
+                        case (int)PaymentMethodTypesEnum.Saman:
+                            imageSrc = "/images/payment-gateway-images/saman.webp";
+                            break;
+                        case (int)PaymentMethodTypesEnum.Samin:
+                            imageSrc = "/images/payment-gateway-images/samin.webp";
+                            break;
+                        case (int)PaymentMethodTypesEnum.Saderat:
+                            imageSrc = "/images/payment-gateway-images/saderat.webp";
+                            break;
+                        case (int)PaymentMethodTypesEnum.Hybrid:
+                            imageSrc = "/images/payment-gateway-images/hybrid.png";
+                            break;
+                        case (int)PaymentMethodTypesEnum.HekmatOnline:
+                            imageSrc = "/images/payment-gateway-images/hekmat.webp";
+                            break;
+                    }
+                    string flexId = "flexRadioDefault" + item.Id;
+                    <label for="@flexId"
+                           class="typeofpayment d-flex align-items-center justify-content-start rounded-3 py-1 px-4 mt-2 gap-2"
+                           id="r_@item.Id">
+                        <div class="d-flex align-items-center">
+                            <input class="form-check-input p-0 m-0"
+                                   type="radio"
+                                   name="paymentMethodType"
+                                   value=@item.Id
+                                   id="@flexId"/>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <img src="@imageSrc"
+                                 alt="@item.Title"
+                                 class="image-payment" />
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-start">
+                            <label class="form-check-label"
+                                   for="@flexId">
+                                @item.Title
+                            </label>
+                        </div>
+                    </label>
+                }
+            </div>
+        </div>
+    </div>
+</div>

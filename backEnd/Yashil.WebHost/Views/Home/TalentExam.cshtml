@@ -1,0 +1,277 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.TalentExamViewModel;
+
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/components/talentExam.min.css" rel="stylesheet" asp-append-version="true" />
+@* Hero Section *@
+<section class="hero-wide-image-talent  p-4 py-lg-5 fill">
+    <div class="container ">
+        <div class="d-block d-lg-flex w-100">
+            <div class="w-100 w-lg-50">
+            </div>
+            <div class="w-100 w-lg-50 py-5 left-side-hero-section-talent">
+
+                <img src="~/images/talent-exam/layer-667-100x100.webp" class="absolute-pattern-one-talent" alt="dots" />
+                <h1 class="fw-bold fs-40 titles-talent">آزمون استعدادیابی</h1>
+                <h4 class="fw-bold fs-22 py-2">بسته هدایت شغلی</h4>
+                <p class="fs-18 lh-base text-align-justify">
+                    بسته راهنمای هدایت شغلی که شامل ۲ آزمون و یک گزارش بررسی مشاغل مناسب برای آزمون‌دهنده است. این بسته شامل گزارش خلاصه‌ای از وضعیت فعلی آزمون‌دهنده و دوره‌ها و مشاغلی که بیشتر با وضعیت استعدادی و روانی فرد همخوانی دارد می‌باشد.
+                </p>
+                <div class="d-block d-lg-flex align-items-center justify-content-start gap-3 pt-3 pb-5 ">
+                    @if (Model.HasUserPurchasedExam && !Model.HasUserTakenExamBefore)
+                    {
+                        <a href="@Url.Action("ParticipateInExam","Home")" target="_blank" asp-append-version="true">
+
+                            <button class="btn-primary-color-text-placement fs-18 px-5 py-2 rounded-3 mb-2 mb-lg-5">
+                                شرکت در آزمون
+                                <svg width="25" height="25" stroke="var(--primary-foreground-color)">
+                                    <use href="images/icons/general.svg#chevron-left" />
+                                </svg>
+                            </button>
+                        </a>
+                    }
+
+
+                    @if (!Model.HasUserPurchasedExam && !Model.HasUserTakenExamBefore)
+                    {
+                        <a href="@Model.Url" target="_blank" asp-append-version="true">
+                            <button class="btn-secondary-color-text-placement fs-18 px-5 py-2 rounded-3 mb-2 mb-lg-5">
+                                خرید آزمون
+                                <svg width="25" height="25" stroke="var(--primary-foreground-color)">
+                                    <use href="images/icons/general.svg#chevron-left" />
+                                </svg>
+                            </button>
+                        </a>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@* Wave Section *@
+<section class="wave-hero-section-talent ">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path class="path-insvg-wave-section-talent" fill="#F5F5F5" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,192C384,213,480,267,576,245.3C672,224,768,128,864,101.3C960,75,1056,117,1152,133.3C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+</section>
+
+
+
+@* Info Section *@
+<section class="mb-5 pb-5" id="gallery-in-talent-exam">
+    <div class="container w-100">
+        <div class="w-100 rounded-3 info-bg-one-section-talent  p-5 position-relative">
+            <div class="d-block d-lg-flex justify-content-between align-items-center w-50 text-align-justify w-100">
+                <div class="w-100">
+                    <h2 class="fw-bold fs-24 lh-base titles-talent">نقش آزمون هدایت شغلی در فرایند استخدام و ارزیابی</h2>
+                    <p class="text-muted lh-base fs-18">
+                        هدف از طراحی و ایجاد آزمون های استعدادیابی و توسعه مهارت حرفه‌ای، ارزیابی رفتار، توانایی‌ها و همچنین ویژگی‌های شخصیتی افراد بوده است. از طرف دیگر، شرکت‌ها می‌خواهند افرادی را استخدام کنند که دارای یک سری ویژگی‌ها شخصیتی و مهارت‌های خاص باشند. این تست‌ها به شرکت‌ها کمک می‌کند که افراد را بهتر بشناسند و متوجه شوند که این فرد برای شرکت یا سازمان آن‌ها و همچنین برای یک موقعیت شغلی، مناسب است یا خیر.
+                        انتخاب شغل، بهره‌مندی مادی و معنوی از اشتغال و نهایتاً رضایت شغلی موضوعی همگانی است که هر فردی به دنبال آن است. اگر شغلی که انتخاب می‌کنیم مطابق با استعدادهای ما باشد نه تنها سرعت پیشرفتمان زیاد خواهد بود بلکه درجه موفقیت بیشتر از حالتی است که در شغلی باشیم که صرفاً در رشته تحصیلی مرتبط درس خوانده‌ایم یا اطرافیان ما را به آن تشویق کرده باشند. شناسایی استعدادهای ما نه تنها به ما کمک میکند انتخابهای شغلی هوشمندانه‌تری خواهیم داشت و از آن مهمتر انتخاب رشته تحصیلی، تعیین زمینه‌های یادگیری و کسب تخصص هدفمندتر و با اعتماد به نفس بیشتری تحقق خواهد یافت.
+                    </p>
+                </div>
+                <div class=" text-center">
+                    <img src="~/images/talent-exam/abouteacademyimg2.png" class="rotate-circle" alt="blue circle" />
+                    <img src="~/images/talent-exam/abouteacademyimg2.png" class="rotate-circle2" alt="blue circle" />
+
+                    <img class="w-100 img-info-section-talent position-relative" src="./images/talent-exam/picture1.webp" alt="Career guidance test" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container w-100 my-5 py-5">
+        <div class="w-100 rounded-3 info-bg-two-section-talent ">
+            <div class="d-block d-lg-flex justify-content-between align-items-center w-50 text-align-justify w-100">
+                <div class="img-in-info-section p-5 pb-0 p-lg-0">
+                    <img src="./images/talent-exam/poster.webp" class="w-100 rounded-in-talent-exam" alt="employment plan Institute Isiran" />
+                </div>
+                <div class="w-100 w-lg-75 p-5">
+                    <h2 class="fw-bold fs-24 lh-base titles-talent">در راستای افزایش دقت آزمون لطفا کاملا صادقانه و در آرامش فکری به سوالات پاسخ دهید</h2>
+                    <p class="text-muted lh-base fs-18 pt-2">
+                        اگر شغل ما مطابق استعدادهای ما و شاکله شخصیت ما باشد ضمن موفقیت شغلی زندگی شخصی بهتری نیز خواهیم داشت زیرا کمتر به استرسهای شغلی و فرسودگی شغلی مبتلا میگردیم. به همین منظور، بر اساس تحقیق و توسعه و تجربه بیش از ده سال و سنجش بیش از ده هزار مبتنی سنجش خودشناسی مدلی برای شناسایی استعدادها و شاکله شخصیت قابل بهره‌برداری است. با شرکت در این سنجشها، گزارش تحلیلی چند بعدی برای هدایت شغلی ایجاد می‌شود. در همین راستا، توسعه شخصی برای محیط کار و ارتباطات اجتماعی، ارتقای مهارتهای حرفه‌ای و نهایتاً قرار گرفتن در مسیر ارتقای شغلی و نهایتاً ایفای نقش مناسب در جامعه، قابل برنامه‌ریزی خواهد بود. سنجشهایی که برای هدایت شغلی و هدایت تحصیلی در نظر گرفته شده است نقشه پایه شخصیتی و ترکیب نوع هوشمندی مبنای تحلیل، تصمیمگیری و مشاوره برای موفقیت شغلی و تحصیلی قرار خواهد گرفت. با شرکت در ازمون گزارش هدایت شغلی برای شما تولید و تقدیم خواهد شد که مورد بهره‌بردار شما قرار خواهد گرفت. مبتنی بر همین سنجشها گزارش هدایت تحصیلی و گزارش جامع تحلیل چندبعدی شخصیت، استعدادها و سبک رفتاری نیز به طور جداگانه قابل دریافت است.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* Gallery Section *@
+<section class="my-5 py-5 d-block gallary-talent position-relative">
+    <div class="container gallary-talent-container">
+
+        <div class="d-block d-md-flex w-100 gap-2">
+            <h6 class="fs-28 fw-bold titles-talent text-center pb-2">فرایند استعداد یابی و استعداد سنجی انستیتو ایزایران </h6>
+        </div>
+
+        <div class="d-block d-md-flex w-100 gap-2 ">
+
+            <div class="rounded-3 w-25 align-self-end  px-4 pt-4 pb-2 gallery-one-section-talent ">
+
+                <h5 class=" fw-bold text-white title-on-gallery-section-one-talent">سنجش هوشمندانه استعداد</h5>
+            </div>
+            <div class=" rounded-3 w-75 align-self-end  px-4 pt-4 pb-2 gallery-two-section-talent">
+                <h5 class=" fw-bold text-white title-on-gallery-section-one-talent">آموزش‌های هدفمندِ منحصر‌به‌فرد</h5>
+            </div>
+
+        </div>
+
+        <div class="d-block d-md-flex w-100 gap-2 mt-2">
+            <div class=" rounded-3 w-75 align-self-end  px-4 pt-4 pb-2 gallery-tree-section-talent">
+                <h5 class=" fw-bold text-white title-on-gallery-section-two-talent">تخصص، اشتغال، کارآفرینی و کسب درآمد</h5>
+            </div>
+            <div class=" rounded-3 w-25 align-self-end  px-4 pt-4 pb-2 gallery-four-section-talent">
+                <h5 class="fw-bold text-white title-on-gallery-section-two-talent">پرورش در‌ راستای توانمندی‌ها</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* Card Info Section *@
+<section class="my-5 py-5">
+    <div class="container rounded-3 card-info-section-talent">
+        <div class="d-block d-lg-flex justify-content-between align-items-end">
+            <div class="p-5 pb-2 w-100 w-lg-75">
+                <h3 class="fw-bold fs-26 title-card-info-section-talent">
+                    تست شخصیت شناسی چیست و چه کمکی به ما می کند؟
+                </h3>
+                <p class="text-muted text-align-justify lh-lg">
+                    همه ی ما انسان ها در تلاش هستیم تا شناخت بیشتری نسبت به شخصیت خودمان داشته باشیم. اینکه در شرایط گوناگون واکنش های رفتاری ما به چه شکل خواهد بود یا بعنوان مثال تمایل داریم در چه محیطی کار کنیم؟ چقدر اهل چالش یا ریسک هستیم؟ یا چقدر به فعالیت های تیمی و انفرادی علاقه داریم؟!، همه ی این موارد بخش کوچکی از پاسخ هایی است که با شرکت در تست استعداد سنجی و استعداد یابی به دست می آورید.
+                    تست های شخصیت شناسی به شما کمک می کند با شناخت کامل خود و نحوه رفتارتان با محیط اطراف و همچنین پی بردن به علاقه مندی ها و عوامل تاثیر گذار در روحیه ی شما، جایگاه شغلی مناسبی که با روحیات و رفتارهای شما سازگار است را بیابید.
+                    اگر تعاریف مختلف "سواد" را از یونسکو شنیده باشید احتمالا به این جمله رسیده اید: "شخصی باسواد تلقی می‌شود که بتواند با استفاده از خوانده ها و آموخته های خود، تغییری در زندگی ایجاد کند" جالب است بدانید که در علم روانشناسی، واژه ی یادگیری به "ایجاد تغییر "به صورت "پایدار" گفته می‌شود و رفتار مهم ترین مولفه ی باسواد بودن و تغییر پایدار است. انجام تست های خودشناسی یا شخصیت شناسی باعث می شوند در کمترین زمان ممکن به جزئیات رفتاری خود پی ببرید و هوشمندانه تغییرات درونی خود را آغاز کنید.
+                </p>
+
+            </div>
+            <div class="w-50 img-card-info-section-in-talent">
+                <img src="./images/talent-exam/3d-casual-life-workplace-with-stacks-of-books.png" class="w-100" alt="FAQ" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* Banner Section *@
+<section class="my-5 py-5">
+    <div class="banner-section-talent py-5">
+        <div class="container px-4">
+            <h2 class="fw-bold fs-28 text-center pb-4 titles-talent">چرا استعداد یابی و استعداد سنجی؟</h2>
+            <div class="row g-3 g-xl-5">
+                <div class="col-12 col-lg-6 col-xl-3 ">
+                    <div class="rounded-3 p-3 bg-white">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/5602594.webp" class="icons-banner-section-in-talent" alt="Deep Understanding" />
+                            <h4 class="banner-cards-talent fw-bold fs-22">شناخت عمیق</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">به شما کمک می کند تا رفتارها، روحیات و شخصیت خود را بیشتر بشناسید.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="rounded-3 p-3 bg-white">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/6041596.webp" class="icons-banner-section-in-talent" alt="talent discovery" />
+
+                            <h4 class="banner-cards-talent fw-bold fs-22">کشف استعداد</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">می توانید استعدادهای نهفته ی خود را شکوفا کنید.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="rounded-3 p-3 bg-white">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/reading-open-book-3d-icon-illustration-png.webp" class="icons-banner-section-in-talent" alt="Real knowledge" />
+                            <h4 class="banner-cards-talent fw-bold fs-22">دانش واقعی</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">با شناخت عمیق خود با دیگران ارتباط هدفمندی داشته باشید.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="rounded-3 p-3 bg-white">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/connection-3d-icon-png.webp" class="icons-banner-section-in-talent" alt="effective communication" />
+                            <h4 class="banner-cards-talent fw-bold fs-22">ارتباط موثر</h4>
+
+                        </div>
+                        <p class="text-align-justify text-muted">میتوانید شغل، رشته تحصیلی و علایق واقعی خود را پیدا کنید.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* FAQ Section *@
+<section class="my-5 py-5 mx-2 mx-lg-0">
+    <div class="container main-background-boy-in-placement-language rounded-4 py-2">
+        <div class="d-block d-lg-flex align-items-center justify-content-between px-3 px-md-5">
+            <div class=" my-5 py-4 px-0 px-lg-3  w-100">
+                <div class="d-flex align-items-center">
+                    <img src="~/images/point-svg.svg" alt="faq svg Institute Isiran" />
+                    <h2 class="title-faq-placement fs-30 fw-bold pb-2">
+                        سوالات متداول
+                    </h2>
+                </div>
+                <div>
+                    <button class="accordion"> آزمون‌های استعدادیابی و توسعه مهارت حرفه‌ای چیست و چگونه کار می‌کند؟ </button>
+                    <div class="panel">
+                        <p class="py-3 pb-0 text-align-justify">
+                            آزمون‌های استعدادیابی و توسعه مهارت حرفه‌ای روشی برای سنجش ویژگی‌های شخصیتی، رفتارها و همچنین توانایی داوطلبان و عملکرد آن‌ها در موقعیت‌های مختلف هستند. در واقع این تست‌ها طیف گسترده‌ای از مهارت‌ها، توانایی‌های شناختی، دانش و شخصیت افراد را اندازه‌گیری می‌کنند. این تست‌ها، ابزار محبوبی در فرایند خودشناسی و یا آموزش و استخدام افراد هستند. به همین خاطر ممکن است قبل از استخدام، از شما خواسته شود یک یا چند تست استعدادیابی را به‌عنوان بخش اولیه استخدام انجام دهید.
+                        </p>
+                    </div>
+
+                    <button class="accordion">تست‌های استعدادیابی و توسعه مهارت حرفه‌ای چه نقشی در فرایند استخدام دارد؟ </button>
+                    <div class="panel">
+                        <p class="py-3 pb-0 text-align-justify">هدف از طراحی و ایجاد آزمون های استعدادیابی و توسعه مهارت حرفه‌ای، ارزیابی رفتار، توانایی‌ها و همچنین ویژگی‌های شخصیتی افراد بوده است. از طرف دیگر، شرکت‌ها می‌خواهند افرادی را استخدام کنند که دارای یک سری ویژگی‌ها شخصیتی و مهارت‌های خاص باشند. این تست‌ها به شرکت‌ها کمک می‌کند که افراد را بهتر بشناسند و متوجه شوند که این فرد برای شرکت یا سازمان آن‌ها و همچنین برای یک موقعیت شغلی، مناسب است یا خیر.</p>
+                    </div>
+
+                    <button class="accordion">تست‌های استعدادیابی و توسعه مهارت حرفه‌ای چقدر سخت هستند؟  </button>
+                    <div class="panel">
+                        <p class="py-3 pb-0 text-align-justify">میزان دشواری آزمون‌های استعدادیابی و توسعه مهارت حرفه‌ای، بسته به تست و همچنین بر اساس یک موقعیت شغلی، می‌تواند بسیار متفاوت باشد. برای مثال آزمون‌های مربوط به نقش‌های مدیریتی، در مقایسه با نقش‌های دیگر، ممکن است سؤالات دشوارتری داشته ‌باشند و به نمره قبولی بالاتری هم نیاز دارند. بااین‌حال، سختی یا دشواری آزمون، کاملاً پدیده‌ای ذهنی است و فردبه‌فرد می‌تواند متفاوت باشد.</p>
+                    </div>
+
+                    <button class="accordion">آیا جواب درست یا غلطی در آزمون های استعدادیابی و توسعه مهارت حرفه‌ای وجود دارد؟</button>
+                    <div class="panel">
+                        <p class="py-3 pb-0 text-align-justify">این موضوع به نوع تست بستگی دارد؛ برای مثال در بیشتر تست‌های شخصیت‌شناسی جواب درست یا غلطی وجود ندارد؛ اما در تست‌های استعداد یا شناختی، یک گزینه درست وجود دارد.</p>
+                    </div>
+
+                    <button class="accordion">آیا آزمون های استعدادیابی و توسعه مهارت حرفه‌ای دقیق هستند؟ </button>
+                    <div class="panel ">
+                        <p class="py-3 pb-0 text-align-justify">بیشتر تست های استعدادیابی و توسعه مهارت حرفه‌ای شناخته ‌شده، دقت مطلوب و قابل ‌قبولی دارند و اگر صادقانه و در شرایط مطلوبی برگزار شوند، می‌توانند نتایجی بادقت مطلوب ارائه دهند. بااین ‌حال، تست‌ها فقط یک ‌تکه از پازل هستند و دقت آن‌ها به موارد دیگری هم بستگی دارد.</p>
+                    </div>
+
+                    <button class="accordion">محدودیت‌های تست های استعدادیابی و توسعه مهارت حرفه‌ای چیست؟  </button>
+                    <div class="panel ">
+                        <p class="py-3 pb-0 text-align-justify">با اینکه این تست‌ها در شناخت خودمان و بقیه به ما کمک می‌کنند، اما برای کسب شناخت کامل و بسیار دقیق نیستند. همچنین برخی از افراد ممکن است به‌درستی و صادقانه به سؤال‌ها پاسخ ندهند که باعث کاهش دقت تست می‌شود. همچنین اضطراب و ترس از برخی آزمون‌ها، ممکن است باعث کاهش عملکرد افراد در حین انجام تست شود.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 p-3">
+                <img src="~/images/talent-exam/3d-frequently-asked-questions-icon-illustration-render-png.webp" class="w-75  mx-auto d-block" alt="FAQ Placement test Institute Isiran" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="~/js/components/talentExam.min.js" asp-append-version="true"></script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        message = '@Html.Raw(Model.Message)';
+        if (message) {
+            bootbox.alert(message);
+        }
+    });
+
+</script>

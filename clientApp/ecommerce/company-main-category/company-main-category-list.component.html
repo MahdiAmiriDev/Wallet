@@ -1,0 +1,11 @@
+<app-base-list-form #listForm
+					[allowGrouping]="!companyId"
+                    title="{{'shp.CompanyMainCategory.CompanyMainCategory' | translate}}"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+					[allowEditInForm] = "false"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

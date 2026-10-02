@@ -1,0 +1,9 @@
+﻿ {
+   "configProperties": {
+     "System.GC.Server": true,
+     "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,
+     "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false,
+     "System.Drawing.EnableUnixSupport": true
+
+   }
+ }

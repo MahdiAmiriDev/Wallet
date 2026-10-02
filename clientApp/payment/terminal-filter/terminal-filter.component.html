@@ -1,0 +1,47 @@
+<div class="row" style="padding-bottom: 5px">
+  <div [ngClass]="showInOneRow?'col-6':'col-12'">
+    <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+      <label> پذیرنده: </label>
+    </div>
+    <div style="float: right; width: 80%">
+      <dx-lookup
+        [dataSource]="merchantDataSource"
+        [(value)]="selectedMerchantId"
+        displayExpr="title"
+        valueExpr="id"
+        rtlEnabled="true"
+        showCancelButton="true"
+        (onSelectionChanged)="onSelectedMerchantChanged($event)"
+        showClearButton="true">
+        <dxo-drop-down-options
+          [closeOnOutsideClick]="true"
+          [showTitle]="false">
+        </dxo-drop-down-options>
+        <dx-validator *ngIf="isRequired">
+          <dxi-validation-rule type="required" message="پذیرنده اجباری می باشد"></dxi-validation-rule>
+        </dx-validator>
+      </dx-lookup>
+    </div>
+  </div>
+  <div [ngClass]="showInOneRow?'col-6':'col-12'">
+    <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+      <label> ترمینال: </label>
+    </div>
+    <div style="float: right; width: 80%">
+      <dx-lookup
+        [dataSource]="terminalDataSource"
+        [(value)]="selectedYashilHekmatTerminalId"
+        displayExpr="title"
+        valueExpr="id"
+        rtlEnabled="true"
+        showCancelButton="true"
+        [showClearButton]="true"
+        (onSelectionChanged)="onSelectedYashilHekmatTerminalChanged($event)">
+        <dxo-drop-down-options
+          [closeOnOutsideClick]="true"
+          [showTitle]="false">
+        </dxo-drop-down-options>
+      </dx-lookup>
+    </div>
+  </div>
+</div>

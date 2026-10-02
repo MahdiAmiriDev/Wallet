@@ -1,0 +1,73 @@
+[
+  {
+    "id": "YashilBaseInfo.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilBaseInfo"
+  },
+  {
+    "id": "YashilDms.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilDms"
+  },
+  {
+    "id": "YashilTms.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilTms"
+  },
+  {
+    "id": "YashilNews.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilNews"
+  },
+  {
+    "id": "YashilUserManagement.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilUserManagement"
+  },
+  {
+    "id": "YashilDashboard.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilDashboard"
+  },
+  {
+    "id": "YashilReport.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilReport"
+  },
+  {
+    "id": "YashilPayment.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilPayment"
+  },
+  {
+    "id": "Yashil.Runtime",
+    "version": "1.0.0",
+    "subFolder": "",
+    "fullPath": "Yashil"
+  },
+  {
+    "id": "YashilCommerce.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilCommerce"
+  },
+  {
+    "id": "YashilLight.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilLight"
+  },
+  {
+    "id": "YashilLoanManager.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilLoanManager"
+  },
+  {
+    "id": "YashilJobJourney.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilJobJourney"
+  },
+  {
+    "id": "YashilCorporation.Web",
+    "version": "1.0.0",
+    "subFolder": "YashilCorporation"
+  }
+]

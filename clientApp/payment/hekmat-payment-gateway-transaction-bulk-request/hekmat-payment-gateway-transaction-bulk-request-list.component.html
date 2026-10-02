@@ -1,0 +1,72 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="customButtonClicked($event)"
+                    [customRowButtons]="customRowButton"
+                    [allowAdd]="false"
+                    [showAddButton]="false"
+                    [showEditForm]="false"
+                    [allowEditInForm]="false"
+                    [entityName]="entityName">
+</app-base-list-form>
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری اکسل تراگنش ها"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetFileModel()">
+  <div *ngIf="!showList">
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="hekmatTransactionBulkFileModel" enctype="multipart/form-data">
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+        <div *dxTemplate="let data of 'fileTemplate'">
+          <dx-file-uploader
+            #fileUploader
+            name="transactionFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="uploadUrl"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+          </dx-file-uploader>
+        </div>
+
+      </dx-form>
+    </form>
+  </div>
+  <app-hekmat-payment-gateway-transaction-bulk-request-validate *ngIf="showList" [hekmatPaymentGatewayTransactionBulkRequestId] = "hekmatPaymentGatewayTransactionBulkRequestId"
+                                                                [invalidItem]="invalidItem"
+                                                                (afterFinalRegistration)="afterFinalRegistration()">
+  </app-hekmat-payment-gateway-transaction-bulk-request-validate>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="ریز تراکنش ها"
+  [dragEnabled]="false"
+  [(visible)]="showTransaction"
+  [deferRendering]="false"
+  (onHiding)="resetFileModel()">
+  <app-hekmat-payment-gateway-transaction-bulk-request-detail-list *ngIf="showTransaction" [hekmatPaymentGatewayTransactionBulkRequestId]="hekmatPaymentGatewayTransactionBulkRequestId">
+  </app-hekmat-payment-gateway-transaction-bulk-request-detail-list>
+</dx-popup>

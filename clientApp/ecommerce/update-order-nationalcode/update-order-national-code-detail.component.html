@@ -1,0 +1,11 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item [label]="{text: 'کد ملی'}" dataField="nationalCode"
+                [editorOptions]="{valueChangeEvent:'keyup'}">
+        <dxi-validation-rule maxlength="10" minlength="10" type="required"
+                             message="کد ملی اجباری می باشد"></dxi-validation-rule>
+        <dxi-validation-rule type="custom" message="فرمت کد ملی صحیح نیست"
+                             [validationCallback]="nationalCodeValidate"></dxi-validation-rule>
+      </dxi-item>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>

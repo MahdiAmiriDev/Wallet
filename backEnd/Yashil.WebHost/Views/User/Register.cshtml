@@ -1,0 +1,397 @@
+﻿@using Yashil.Core.Enums
+@model Yashil.Core.CustomViewModels.UserRegisterEditModel
+@using Yashil.Common.Core.Classes;
+@inject ApplicationConfiguration ApplicationConfiguration;
+@addTagHelper *, DNTCaptcha.Core
+@{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "_BaseLayout";
+}
+
+
+
+<div class="d-flex align-items-center justify-content-center  ss02  py-3">
+    <div class="bg-white border-login p-4">
+
+        <form id="RegisterForm" method="post" class="LoginForm">
+            <div class="d-flex align-items-center justify-content-center">
+                @await Component.InvokeAsync("Logo")
+            </div>
+            <div class="mt-3">
+                <span class="fs-20 fw-800 text-danger"> ثبت نام</span>
+            </div>
+            <div class="mt-3">
+                <div class="alert alert-success">
+                    کاربر گرامی! برای ایجاد حساب کاربری جدید، رمز عبور دلخواه خود را در فرم زیر وارد کنید.
+                </div>
+            </div>
+            @if (Model.RegistrationMode != (int)RegistrationModeEnum.Minimal)
+            {
+                <div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Name, new { @class = "my-1 fs-12" })
+                        @Html.TextBoxFor(x => x.Name, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02", maxlength = "11", style = "border-radius: 8px; height:48px" })
+                        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "validationMessage span-danger-in-register", style = "height:25px;display:block" })
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group ">
+                        @Html.LabelFor(x => x.LastName, new { @class = "my-1 fs-12" })
+                        @Html.TextBoxFor(x => x.LastName, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02", maxlength = "11", style = "border-radius: 8px; height:48px" })
+                        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "validationMessage span-danger-in-register", style = "height:25px;display:block" })
+                    </div>
+                </div>
+            }
+
+            @if (Model.PasswordResetRecoveryMode == (int)PasswordResetRecoveryModeEnum.Email
+            || Model.RegistrationMode == (int)RegistrationModeEnum.Full
+            || Model.RegistrationMode == (int)RegistrationModeEnum.Medium)
+            {
+                <div>
+                    <div class="form-group ">
+                        @Html.LabelFor(x => x.Email, new { @class = "my-1 fs-12" })
+                        @Html.TextBoxFor(x => x.Email, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02", maxlength = "11", style = "border-radius: 8px; height:48px" })
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "validationMessage span-danger-in-register", style = "height:25px;display:block" })
+                    </div>
+                </div>
+            }
+
+            <div>
+                <div class="form-group">
+                    <input type="hidden" id="encryptedMobileNumber" name="encryptedMobileNumber" value="@Model.EncryptedMobileNumber" />
+                    @Html.LabelFor(x => x.UserName, new { @class = "my-1 fs-12" })
+                    @*@Html.TextBoxFor(x => x.UserName, new { autocomplete = "off" })*@
+                    @if (!string.IsNullOrEmpty(Model.UserName))
+                    {
+                        @Html.TextBoxFor(x => x.UserName, new { @readonly = "readonly", @class = "input-login input-login-page w-100 ss02 ", maxlength = "11", style = "border-radius: 8px; height:48px" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.UserName, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02", maxlength = "11", style = "border-radius: 8px; height:48px" })
+                    }
+                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "validationMessage span-danger-in-register", style = "height:25px;display:block" })
+                </div>
+            </div>
+            <div>
+                <div class="form-group ">
+                    @Html.LabelFor(x => x.PasswordStr, new { @class = "my-1 fs-12" })
+                    @Html.PasswordFor(x => x.PasswordStr, new { autocomplete = "off", autofocus = "autofocus", placeholder = "", @class = "input-login input-login-page w-100 ss02", style = "border-radius: 8px; height:48px" })
+                    @Html.ValidationMessageFor(x => x.PasswordStr, "", new { @class = "validationMessage span-danger-in-register mb-2 fs-12", style = "height:25px;display:block" })
+                </div>
+            </div>
+            <div>
+                <div class="form-group ">
+                    @Html.LabelFor(x => x.PasswordStrConfirm, new { @class = "my-1 fs-12" })
+                    @Html.PasswordFor(x => x.PasswordStrConfirm, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02", style = "border-radius: 8px; height:48px" })
+                </div>
+                <div style="height:25px;">
+                    <span style="display:none;" class="text-danger2  fs-12 " id="passwordAndPasswordConfirmErrorMessage">
+                        کاربر گرامی رمز عبور و تکرار رمز عبور باید یکسان باشد.
+                    </span>
+                </div>
+            </div>
+            @if (Model.RegistrationMode == (int)RegistrationModeEnum.Full
+            || Model.RegistrationMode == (int)RegistrationModeEnum.Medium)
+            {
+                <div class="row">
+                    <div class="form-group ">
+                        @Html.LabelFor(x => x.FullAddress)
+                        @Html.TextBoxFor(x => x.FullAddress, new { autocomplete = "off", @class = "input-login input-login-page w-100 ss02" })
+                        @Html.ValidationMessageFor(x => x.FullAddress, "", new { autocomplete = "off", @class = "validationMessage span-danger-in-register mb-2", style = "border-radius: 8px; height:48px" })
+                    </div>
+                </div>
+            }
+
+
+
+            <div>
+                <div class="form-group">
+                    <div class="checkboxes__row">
+                        <div class="checkboxes__item ">
+                            <label id="lable-switch-register" class="checkbox fs-12 d-flex form-switch mt-3 position-relative p-0">
+                                حکمت کارت دارم
+                                <input id="form-switch-register" class="form-check-input  mx-1" data-val="true" data-val-required="لطفا وضعیت دارا بودن کارت حکمت خود را مشخص نمایید" id="HasCardNumber" name="HasCardNumber" onclick="changeRequireCardNumber(this);" type="checkbox" value="true" inputmode="decimal" checked>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-group" id="cardNumberInputAria"></div>
+            </div>
+            <div class="py-3 px-0">
+                <div class="form-group  dntCaptcha mt-2">
+                    <div class="dntCaptcha d-flex align-items-center justify-content-between  w-100">
+                        <div class=" d-inline-block w-25">
+                            @Html.TextBoxFor(x => x.DNTCaptchaInputText, new { autocomplete = "off", maxlength = "4", inputmode = "decimal", @class = "input-login input-login-page w-100 ss02" })
+                        </div>
+                        <div class="d-inline-block" style="width:55%">
+                            <img alt="captcha"
+                                 id="dntCaptchaImg"
+                                 name="dntCaptchaImg" />
+                            <input asp-for=DNTCaptchaToken id="DNTCaptchaToken" name="DNTCaptchaToken" type="hidden" />
+                            <input asp-for=DNTCaptchaText id="DNTCaptchaText" name="DNTCaptchaText" type="hidden" />
+                        </div>
+
+                        <div class="" style="width:1%">
+                            <div class="svg-refresh" id="dntCaptchaRefreshButton"
+                                 name="dntCaptchaRefreshButton" onclick="doRefreshCaptcha()">
+                            </div>
+                        </div>
+
+
+                        <div style="display: inline-block">
+                            <i class="far fa-repeat" id="dntCaptchaRefreshButton"
+                               name="dntCaptchaRefreshButton" style="cursor:pointer" onclick="doRefreshCaptcha()"></i>
+                        </div>
+
+                    </div>
+                    @Html.ValidationMessageFor(x => x.DNTCaptchaInputText, "", new { @class = "validationMessage fs-12 span-danger-in-register" })
+
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="form-group">
+                    <div>
+                        <button id="registerBtn" type="submit" class="loginButton d-flex gap-2 align-items-center" onclick="registerFormSubmit(event, $('#recipientForm'))">
+                            <span class="spinner-border spinner-border-sm text-warning d-none my-auto" role="status" aria-hidden="true"></span>  ثبت نام
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<form method="POST" action="" id="frmRegister" style="display: none">
+    <input type="hidden" name="token" id="token" value="" />
+    <input type="hidden" name="serviceId" value="edus.ir" />
+    <input type="hidden" name="formId" value="emis-v3-mob-in-isiran-subscribe" />
+    <button style="display: none">برو</button>
+</form>
+<form style="display: none" method="POST" id="loginForm" action="/user/login">
+    <input type="hidden" name="_back"
+           value="@Model.BackUrl" />
+    <button style="display: none">برو</button>
+</form>
+
+
+
+@section Scripts {
+
+
+    <script>
+        const submitButton = document.querySelector('#registerBtn');
+        const spinnerElement = submitButton.querySelector('.spinner-border');
+        var passwordValue = document.querySelector('#PasswordStr');
+        var confirmPasswordValue = document.querySelector('#PasswordStrConfirm');
+        var useEngilishCharacterMessage = 'لطفا از اعداد و حروف انگلیسی استفاده نمایید';
+
+
+
+        passwordValue.addEventListener('input', function (event) {
+            const inputValue = this.value;
+
+            // آپدیت کردن مقدار placeholder بعد از تغییر ورودی رمز عبور
+            updatePlaceholderValue(inputValue, 'passwordValue');
+
+            // چک می کند ورودی به زبان انگلیسی باشد
+            if (!isEnglish(inputValue)) {
+                // اگر کاراکتر ها غیر انگلیسی باشد چیزی نمایش نمی دهد
+                this.value = inputValue.replace(/[^a-zA-Z\s]/g, '');
+
+            }
+        });
+
+
+        confirmPasswordValue.addEventListener('input', function (event) {
+            const inputValue = this.value;
+
+            // آپدیت کردن مقدار placeholder  بعد از تغییر ورودی تکرار رمز عبور
+            updatePlaceholderValue(inputValue, 'newPasswordConfirm');
+
+            // چک می کند ورودی به زبان انگلیسی باشد
+            if (!isEnglish(inputValue)) {
+                // اگر کاراکتر ها غیر انگلیسی باشد چیزی نمایش نمی دهد
+                this.value = inputValue.replace(/[^a-zA-Z\s]/g, '');
+
+            }
+        });
+
+
+
+        // آپدیت شدن مقدار placeholder در فیلد رمز عبور
+        function updatePlaceholderValue(value, inputName) {
+            switch (inputName) {
+
+                case 'passwordValue':
+                    if (value.trim() === '') {
+                        passwordValue.placeholder = '';
+                    } else {
+                        passwordValue.placeholder = useEngilishCharacterMessage;
+                    }
+                    break;
+
+                case 'newPasswordConfirm':
+                    if (value.trim() === '') {
+                        confirmPasswordValue.placeholder = '';
+                    } else {
+                        confirmPasswordValue.placeholder = useEngilishCharacterMessage;
+                    }
+                    break;
+            }
+        }
+
+
+
+        //چک کردن انگلیسی بودن کیبورد
+        function isEnglish(text) {
+            return /^[a-zA-Z0-9\s#$%^&*()@@_+=!~`{}\[\]\{\}\(\)\|\;\:\'\"\,\.\?\/\-\+\=\!\s]+$/.test(text);
+        }
+
+
+
+        hideErrorMessage($("#validationErrorMessage"));
+        var passwordAndConfirmPasswordEqual;
+        $('#PasswordStrConfirm,#PasswordStr').on('keyup', function () {
+
+            var passwordConfirmInputArea = document.getElementById("passwordAndPasswordConfirmErrorMessage");
+            if (!($('#PasswordStr').val() == $('#PasswordStrConfirm').val())) {
+                passwordAndConfirmPasswordEqual = false;
+                document.getElementById("passwordAndPasswordConfirmErrorMessage").style.display = "block";
+            } else {
+                passwordAndConfirmPasswordEqual = true;
+                document.getElementById("passwordAndPasswordConfirmErrorMessage").style.display = "none";
+            }
+        });
+
+        function registerFormSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            hideErrorMessage($("#validationErrorMessage"));
+            $("<input />").attr("type", "hidden")
+                .attr("name", 'backUrl')
+                .attr("value", '@Model.BackUrl')
+                .appendTo("#RegisterForm");
+            if ($("#RegisterForm").valid() && passwordAndConfirmPasswordEqual) {
+                spinnerElement.classList.remove('d-none');
+                submitButton.setAttribute('disabled', true);
+                fetch('/api/User/GetKeyForEncryption',
+                    {
+                        method: 'GET'
+                    }).then(response => response.json()).then(rsaKey => {
+                        registerUser(rsaKey, submitButton, spinnerElement);
+                    }).catch(data => {
+                        doRefreshCaptcha();
+                        $("#DNTCaptchaInputText").val('');
+                        bootbox.alert('مشکل در ثبت نام');
+                    });
+
+            } else {
+                document.getElementById("validationErrorMessage").style.display = "block";
+                spinnerElement.classList.add('d-none');
+                submitButton.removeAttribute('disabled');
+                bootbox.alert('ورودی ها را چک کنید.');
+
+                if (!passwordAndConfirmPasswordEqual) {
+                    document.getElementById("passwordAndPasswordConfirmErrorMessage").style.display = "block";
+                    spinnerElement.classList.add('d-none');
+                    submitButton.removeAttribute('disabled');
+                }
+            }
+        }
+
+        function goToPageWithPost(url) {
+            $('#loginForm').attr('action', url);
+            $('#loginForm').submit();
+        }
+
+        function registerUser(rsaKey, submit, spinner) {
+            var jsonObject = Object.fromEntries(new FormData($("#RegisterForm")[0]));
+            jsonObject.UserName = jsonObject.UserName.toEnglishDigit();
+            jsonObject.PasswordStr = encryptRsa(jsonObject.PasswordStr, rsaKey);
+            jsonObject.PasswordStrConfirm = encryptRsa(jsonObject.PasswordStrConfirm, rsaKey);
+            jsonObject.Key = rsaKey.entryKey;
+            jsonObject.AdditionalInfoList = {};
+
+            jsonObject.AdditionalInfoList.hasCardNumber = jsonObject.HasCardNumber;
+            jsonObject.AdditionalInfoList.cardNumber = jsonObject.CardNumber;
+
+            var formData = new FormData();
+            for (let key in jsonObject) {
+                formData.append(key, jsonObject[key]);
+            }
+            formData.append('AdditionalInfoList.hasCardNumber', jsonObject.HasCardNumber);
+            formData.append('AdditionalInfoList.cardNumber', jsonObject.CardNumber);
+
+            fetch('/api/user/registerPublicUser',
+                {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    $("#DNTCaptchaInputText").val('');
+                    doRefreshCaptcha();
+                    if (data.isSuccess === false) {
+                        spinner.classList.add('d-none');
+                        submit.removeAttribute('disabled');
+                        // showErrorMessage(data.result, $("#validationErrorMessage"));
+                        bootbox.alert(data.result);
+                    } else {
+                        if (data.returnUrl !== null) {
+                            $('#frmRegister').attr('action', data.returnUrl);
+                            $("#token").val(data.token);
+                            $('#frmRegister').submit();
+                        } else {
+                            window.location = '/';
+                        }
+                    }
+                })
+                .catch(data => {
+                    spinner.classList.add('d-none');
+                    submit.removeAttribute('disabled');
+                    bootbox.alert('لطفا مجددا تلاش کنید.');
+                    $("#DNTCaptchaInputText").val('');
+                    doRefreshCaptcha();
+                });
+        }
+
+
+        window.addEventListener("load", function () {
+            changeRequireCardNumber(formSwitchRegister);
+        });
+        var formSwitchRegister = document.getElementById("form-switch-register");
+
+
+        function changeRequireCardNumber(e) {
+            var carNumberInputArea = document.getElementById("cardNumberInputAria");
+            carNumberInputArea.innerHTML = '';
+            if (e.checked) {
+                carNumberInputArea.innerHTML = '<label class="fs-12 mt-3" for="CardNumber">شماره کارت حکمت</label>' +
+                    '<input autocomplete="off" ' +
+                    'class="input-login input-login-page w-100 ss02"  ' +
+                    'data-val="true" data-val-length="حداکثر طول شماره کارت حداکثر 16 میباشد" ' +
+                    'data-val-length-max="16" data-val-remote="شماره کارت نامعتبر است" ' +
+                    'data-val-required="شماره کارت اجباری است" ' +
+                    'id="CardNumber" maxlength="16"  ' +
+                    'name="CardNumber" ' +
+                    'type="text" ' +
+                    '><span class="field-validation-valid validationMessage span-danger-in-register" style="height:25px;display:block;" data-valmsg-for="CardNumber" data-valmsg-replace="true"></span>';
+            }
+            $("#RegisterForm").each(function () { $.data($(this)[0], 'validator', false); });
+            $.validator.unobtrusive.parse("#RegisterForm");
+        }
+
+    </script>
+    <script src="~/js/components/authentication/captcha.js" asp-append-version="true"></script>
+    <script src="~/js/components/authentication/forge.all.min.js" asp-append-version="true"></script>
+
+}
+
+
+

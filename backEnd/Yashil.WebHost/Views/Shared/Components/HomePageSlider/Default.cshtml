@@ -1,0 +1,42 @@
+﻿@model List<Yashil.Core.CustomViewModels.Cms.YashilCmsCustomViewModel>
+
+<section>
+    <div class="baner-width">
+        <div class="swiper swiper-slider">
+            <div class="swiper-wrapper">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <a class="swiper-slide bg-transparent" href="@(!string.IsNullOrEmpty(item.Url) ? @item.Url : '#')">
+                            <!-- Hero Slider Item -->
+                            <picture class="position-relative">
+                                <source srcset="@($"/api/PublicApi/GetSliderMobileImage?id={item.Id}&modificationDate={item.ModificationDate}")" media="(max-width: 768px)" />
+                                <img src="@($"/api/PublicApi/GetSliderImage?id={item.Id}&modificationDate={item.ModificationDate}")" class="banerPage" alt="@item.Title" style="position: relative" />
+                            </picture>
+                            <!-- Hero Slider Item /-->
+                        </a>
+                    }
+                }
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="position-absolute d-flex opacity-0 swiper-navigation-buttons">
+                <div class="swiper-button-prev">
+                    <svg viewBox="0 0 16 16" width="20" height="20" stroke="#424750" stroke-width="2.5">
+                        <use href="../images/icons/general.svg#chevron-right" />
+                    </svg>
+                </div>
+                <div class="swiper-button-next">
+                    <svg viewBox="0 0 16 16" width="20" height="20" stroke="#424750" stroke-width="2.5">
+                        <use href="../images/icons/general.svg#chevron-left" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/homePageSlider.min.js" asp-append-version="true"></script>

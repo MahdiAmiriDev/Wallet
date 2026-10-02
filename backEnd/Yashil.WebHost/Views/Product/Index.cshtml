@@ -1,0 +1,545 @@
+﻿@using Yashil.Core.Enums
+@using Yashil.Infrastructure.Util
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@using Yashil.Common.SharedKernel.Helpers
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.ProductPresentationViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+    ViewData["MetaDescription"] = Model.ProductSalePlanningPresentationViewModel.ProductTitle;
+    ViewData["Title"] = Model.ProductSalePlanningPresentationViewModel.ProductTitle;
+    var shoppingCartType = (int)ShoppingCartTypeEnum.ShoppingCart;
+    var productSalePlanning = Model.ProductSalePlanningPresentationViewModel;
+    var representationId = Model.ProductSalePlanningPresentationViewModel.RepresentationId ?? 0;
+    var discountPercentage = CurrencyUtility.RemoveDecimal((1 - Model.ProductSalePlanningPresentationViewModel.CalcedPrice
+                                                            / Model.ProductSalePlanningPresentationViewModel.Price) * 100);
+
+    var currentEncryptedUrl = CryptographyHelper.Base64Encode(CryptographyHelper.AesEncrypt(HttpContextAccessor.HttpContext?.Request.GetEncodedUrl()));
+}
+
+
+@section meta {
+    <meta name="twitter:title" content="@Html.Raw(Model.ProductSalePlanningPresentationViewModel.ProductTitle)">
+    <meta name="twitter:label1" content="قیمت به تومان">
+    <meta name="twitter:data1" content="@CurrencyUtility.FormatPrice(productSalePlanning.CalcedPrice)">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="@Model.ProductSalePlanningPresentationViewModel.ProductTitle">
+    <meta property="og:url" content="@Context.Request.Host@Context.Request.Path">
+    <meta property="product:condition" content="new">
+    <meta property="product:availability" content="in stock">
+    <meta property="product:price:amount" content="@CurrencyUtility.FormatPrice(productSalePlanning.CalcedPrice)">
+    <meta property="product:price:currency" content="IRR">
+}
+
+
+<div class="ss02 p-0 pt-3">
+    <div class="container">
+        <div id="pad1">
+            <!-- Nav tabs -->
+            <div class="d-flex flex-column bg-white mt-0 mt-lg-4 mt-xl-5 mt-xxl-2" id="myCard1">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li role="presentation" class="nav-link active p-3">
+                        <a href="#home" style="cursor:default!important" aria-controls="home" role="tab" class="" data-toggle="tab">
+                            <span class="fs-14 fw-700 information-product-title">اطلاعات محصول</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="d-flex flex-column flex-lg-row m-1 p-1 me-lg-3">
+                    <div class="col-lg-3 p-2">
+
+                        <div class="text-center">
+                            <img class="w-100 rounded-1"
+                                 title="@Model.ProductSalePlanningPresentationViewModel.ProductTitle"
+                                 alt="@Model.ProductSalePlanningPresentationViewModel.ProductTitle"
+                                 src="@Url.Action("GetProductSalesPlanningImage", "PublicApi", new { productSalesPlanningId = Model.ProductSalePlanningPresentationViewModel.Id, modificationDate = Model.ProductSalePlanningPresentationViewModel.ModificationDate })"
+                                 style="@(!Model.IsProductSalesPlanningActive ? "filter: grayscale(1);" : " ")">
+                        </div>
+
+
+                        <section class="">
+                            <div class="d-flex flex-wrap align-items-center my-2 p-1 fs-12 fw-700">
+                                <div class="">
+                                    <img style="width:40px; border-radius:4px" title="@Model.ProductSalePlanningPresentationViewModel.CompanyTitle"
+                                         alt="@Model.ProductSalePlanningPresentationViewModel.CompanyTitle"
+                                         src="@Url.Action("GetCompanyIcon","PublicApi",new { cId = @Model.ProductSalePlanningPresentationViewModel.CompanyId})">
+                                </div>
+                                <div class="text-center p-1 text-nowrap">
+                                    @Model.ProductSalePlanningPresentationViewModel.CompanyTitle
+                                </div>
+
+                                @if (Model.CourseBased)
+                                {
+                                    <span class="mx-1">/</span>
+                                    <div class="text-center p-1 text-nowrap">
+                                        @Model.ProductSalePlanningPresentationViewModel.ParentCategoryTitle
+
+                                    </div>
+                                    <span class="mx-1">
+                                        /
+                                    </span>
+                                    <div class="text-center p-1 text-nowrap">
+                                        @Model.ProductSalePlanningPresentationViewModel.CategoryTitle
+
+                                    </div>
+                                }
+                            </div>
+
+                        </section>
+
+                        @if (!Model.IsProductSalesPlanningActive)
+                        {
+                            <div class="border border-1  mb-3 " style="border-radius:5px;">
+                                <div class="p-3 progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%;border-radius: 5px 5px 0 0;">
+                                    <b>
+                                        کاربر گرامی دوره انتخابی
+                                        <br />
+                                        به یکی از دلایل زیر غیر فعال می باشد:
+                                    </b>
+                                </div>
+
+                                <ul class="p-3 ms-3 pb-0">
+                                    <li class="pb-2 "> تاریخ فعال بودن دوره به اتمام رسیده باشد. </li>
+                                    <li class="pb-2"> تنظیم فروش فعال نداشته باشد. </li>
+                                    <li class="pb-2"> تاریخ اعتبار تنظیم فروش آن گذشته باشد. </li>
+                                    <li class="pb-2"> دوره از حالت انتشار خارج شده باشد. </li>
+                                    <li class="pb-2"> تاریخ اعتبار تنظیم فروش آن گذشته باشد.  </li>
+                                </ul>
+
+                                <a href="@Url.Action("", "ContactUs")" asp-append-version="true">
+                                    <button class="p-2 add-to-card-index fs-14 fw-bold text-white" style="border-radius: 0px 0px 5px 5px ;">
+                                        جهت دریافت اطلاعات بیشتر با پشتیبانی سایت تماس حاصل فرمایید.
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                    </button>
+                                </a>
+                            </div>
+                        }
+                        @if (Model.ProductSalePlanningPresentationViewModel.IsEmployement)
+                        {
+                            @*  باکس دوره منجر به اشتغال سمت راست صفحه *@
+                            @await Html.PartialAsync("_LeadToEmploymentPartial")
+                        }
+                        <style>
+                            .cover-bg-shopping-cart-item-employment {
+                            }
+                        </style>
+                        @* برچسب های مرتبط با دوره ها  حالت دسکتاپ با جاوااسکریپت لود میشود*@
+                        <div class="d-none d-lg-block" id="inner-product-tags-desktop">
+                        </div>
+                    </div>
+                    <div class="col-lg-9 p-2">
+                        <div class="my-4">
+                            <h1 class="fs-20 fw-600">
+                                @Model.ProductSalePlanningPresentationViewModel.ProductTitle
+                            </h1>
+                        </div>
+                        <div class="d-flex flex-column flex-lg-row gap-1">
+                            <div class="col-lg-7 border-top me-2">
+                                <div class="d-flex flex-column">
+                                    <div class="expertReview my-2 position-relative">
+
+                                        @*  @if (!string.IsNullOrWhiteSpace(productSalePlanning.ExternalLink))
+                                        {
+                                        <a id="productFullDesc" target="_blank"
+                                        class="fs-14 showing-detail-in-product fw-600" href="@productSalePlanning.ExternalLink">
+                                        مشاهده جزییات کامل محصول
+                                        </a>
+                                        }*@
+                                        @if (!string.IsNullOrEmpty(productSalePlanning.FullDescription))
+                                        {
+                                            <p style="text-align: justify; padding-left: 11px; line-height: 35px;">
+                                                @Html.Raw(productSalePlanning.FullDescription)
+                                            </p>
+                                        }
+                                        @if (!string.IsNullOrEmpty(productSalePlanning.Description))
+                                        {
+                                            <div>
+                                                <p style="text-align: justify; padding-left: 11px; line-height: 35px;">
+                                                    @Html.Raw(productSalePlanning.Description)
+                                                </p>
+                                            </div>
+                                        }
+                                        @if (!string.IsNullOrEmpty(productSalePlanning.ShortDescription))
+                                        {
+                                            <p style="text-align: justify; padding-right: 11px; padding-left: 11px; line-height: 35px;">
+                                                @Html.Raw(productSalePlanning.ShortDescription)
+                                            </p>
+                                        }
+                                        <div class="expert-showMore d-inline-flex align-items-center my-3 position-absolute">
+                                            <span style="cursor: pointer; color: var(--dark-primary-yellow-color)">مشاهده بیشتر</span>
+                                            <div class="d-flex">
+                                                <svg width="24" height="24" stroke="var(--dark-primary-yellow-color)" stroke-width="2">
+                                                    <use href="../images/icons/general.svg#chevron-left" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.ProductQuickPromoDetail))
+                                {
+                                    <div class="card mt-3 ">
+                                        <div class="bg-shopping-cart-item-employment">
+                                            <div class="card-body cover-bg-shopping-cart-item-employment">
+                                                <p class="text-align-justify pt-2 text-muted fs-14 mb-0">
+                                                    @Html.Raw(Model.ProductQuickPromoDetail)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-lg-5 left-side-price-product-detail">
+
+                                @if (Model.ProductSalePlanningPresentationViewModel.IsEmployement)
+                                {
+                                    <span class="w-100 badge-above-left-side-inner-product badge  mx-auto d-block p-2 fw-bold d-flex justify-content-center align-items-center text-danger">
+
+                                        <span class="spinner-grow spinner-grow-sm text-white" role="status" aria-hidden="true"></span>
+                                        <span class="text-white ps-2"> دوره منجر به اشتغال </span>
+                                    </span>
+                                }
+                                <div class="d-flex card" style="background-color: #f5f5f5;">
+                                    <div class="p-1">
+                                        <div class="">
+                                            <div class="">
+                                                @*left box*@
+                                                <div class="" id="iconbox">
+                                                    <div>
+                                                        @if (!productSalePlanning.RepresentationId.HasValue)
+                                                        {
+                                                            <div class="my-3 mx-2">
+                                                                @await Html.PartialAsync("_City.cshtml", Model.CityListModelViewModel)
+                                                            </div>
+                                                            <div class="my-3 mx-2">
+                                                                <div id="representation-list--container" class="text-center"></div>
+                                                            </div>
+                                                        }
+                                                        @*
+                                                        @if (Model.CourseBased)
+                                                        {
+                                                        @await Component.InvokeAsync("CourseDetail", productSalePlanning.Id)
+                                                        }
+                                                        else
+                                                        {
+                                                        @await Component.InvokeAsync("ProductDetail", productSalePlanning.Id)
+                                                        }
+                                                        *@
+
+                                                        @await Component.InvokeAsync("ProductDetail", productSalePlanning.Id)
+                                                        @if (Model.SubsidyBased)
+                                                        {
+                                                            <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+                                                                <span>
+                                                                    <svg viewBox="0 0 20 20" width="20" height="20" stroke="red">
+                                                                        <use href="../images/icons/product.svg#money-bag" />
+                                                                    </svg>
+                                                                </span>
+                                                                <span class="ms-1">
+
+                                                                    @if (Model.ProductSalePlanningPresentationViewModel.IsEmployement &&
+                                                                   Model.ProductSalePlanningPresentationViewModel.IsResumeFillOutEnough)
+                                                                    {
+                                                                        <span class=" text-dark fw-600">
+                                                                            یارانه اشتغال شاغلین:
+                                                                        </span>
+                                                                        <span class="">
+                                                                            @CurrencyUtility.FormatPrice(Model.ProductSalePlanningPresentationViewModel.MaxEmploymentVezaratSubsidy)
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class=" text-dark fw-600">
+                                                                            یارانه شاغلین:
+                                                                        </span>
+                                                                        <span class="">
+                                                                            @CurrencyUtility.FormatPrice(Model.ProductSalePlanningPresentationViewModel.MaxVezaratSubsidy)
+                                                                        </span>
+                                                                    }
+                                                                    تومان
+
+                                                                </span>
+                                                            </div>
+                                                            <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+                                                                <span>
+                                                                    <svg viewBox="0 0 20 20" width="20" height="20" stroke="brown">
+                                                                        <use href="../images/icons/product.svg#coin" />
+                                                                    </svg>
+                                                                </span>
+                                                                <span class="ms-1">
+
+
+                                                                    @if (Model.ProductSalePlanningPresentationViewModel.IsEmployement &&
+                                                                   Model.ProductSalePlanningPresentationViewModel.IsResumeFillOutEnough)
+                                                                    {
+                                                                        <span class=" text-dark fw-600">
+                                                                            یارانه اشتغال بازنشستگان:
+                                                                        </span>
+                                                                        <span class="">
+                                                                            @CurrencyUtility.FormatPrice(Model.ProductSalePlanningPresentationViewModel.MaxEmploymentSataSubsidy)
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class=" text-dark fw-600">
+                                                                            یارانه بازنشستگان:
+                                                                        </span>
+                                                                        <span class="">
+                                                                            @CurrencyUtility.FormatPrice(Model.ProductSalePlanningPresentationViewModel.MaxSataSubsidy)
+                                                                        </span>
+                                                                    }
+                                                                    تومان
+
+                                                                </span>
+                                                            </div>
+
+                                                        }
+                                                        @if (!string.IsNullOrWhiteSpace(Model.ProductSalePlanningPresentationViewModel.FullAddress))
+                                                        {
+                                                            <div class="d-flex px-2 my-3 fs-14 fw-500">
+                                                                <span>
+                                                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="brown" stroke-width="2">
+                                                                        <use href="../images/icons/header.svg#home" />
+                                                                    </svg>
+                                                                </span>
+                                                                <span class="ms-1">
+                                                                    <span class=" text-dark fw-600">
+                                                                        آدرس:
+                                                                    </span>
+                                                                    <span class="">
+                                                                        @Model.ProductSalePlanningPresentationViewModel.FullAddress - تلفن @Model.ProductSalePlanningPresentationViewModel.Phone
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        }
+
+                                                        @if (Model.IsProductSalesPlanningActive)
+                                                        {
+                                                            @if (!Model.ProductSalePlanningPresentationViewModel.DisableBuyButton)
+                                                            {
+                                                                <div class="text-left px-2 my-3">
+                                                                    <div class="">
+                                                                        @if (discountPercentage != "0")
+                                                                        {
+                                                                            <div class="">
+
+                                                                                <div class="">
+                                                                                    <span class="">
+                                                                                        <del> @CurrencyUtility.FormatPrice(productSalePlanning.Discount)</del>
+                                                                                    </span>
+
+                                                                                    <span title="درصد تخفیف" class="badge discount-product-index">%@discountPercentage </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                        <div class="d-block d-sm-flex d-lg-block justify-content-between">
+                                                                            @if (discountPercentage != "0")
+                                                                            {
+                                                                                <div class="">
+                                                                                    <div class="">
+                                                                                        <span class="badge cost-in-product w-100 p-2 mt-1">
+                                                                                            قیمت پایه: <del>@CurrencyUtility.FormatPrice(productSalePlanning.Price) تومان</del>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                            <div class="">
+                                                                                <span title="قیمت با تخفیف" class="badge real-cost-in-product w-100 p-2 mt-1">
+                                                                                    @CurrencyUtility.FormatPrice(productSalePlanning.CalcedPrice) تومان
+                                                                                </span>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @{
+                                                if (Model.ProductSalePlanningPresentationViewModel.RemainingCapacity == 0)
+                                                {
+                                                    <div class="px-2 pb-2">
+                                                        <button class="btn btn-outline-secondary fs-8 w-100 rounded-2 p-2" disabled style="font-size: 14px">
+                                                            تکمیل ظرفیت
+                                                            <svg width="24" height="24" class="pb-1">
+                                                                <use href="../images/icons/general.svg#alert-circle" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                }
+
+                                                if ((Model.ProductSalePlanningPresentationViewModel.RemainingCapacity == null
+                                                || Model.ProductSalePlanningPresentationViewModel.RemainingCapacity > 0))
+                                                {
+                                                    if (!Model.ProductSalePlanningPresentationViewModel.DisableBuyButton)
+                                                    {
+                                                        <div class="">
+                                                            <div class="">
+                                                                <div>
+                                                                    @if (Model.IsProductSalesPlanningActive)
+                                                                    {
+                                                                        <button onclick="confirmBeforeAddToCart(@productSalePlanning.Id, @representationId, @shoppingCartType, '.add-to-card-index')" id="purchase" class="add-to-card-index w-100 border-0 rounded-2 p-2 text-white fw-bold">
+                                                                            <span class="spinner-border text-warning spinner-border-sm d-none my-auto" role="status" aria-hidden="true"></span>
+                                                                            افزودن به سبد خرید
+                                                                            <svg width="24" height="24" stroke="currentColor" style="transform: scale(-1, 1)">
+                                                                                <use href="../images/icons/header.svg#shopping-cart" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    }
+                                                                    @if (!Model.IsProductSalesPlanningActive)
+                                                                    {
+                                                                        <button disabled id="purchase" class=" bg-secondary w-100 border-0 rounded-2 p-2 text-white fw-bold disabled">
+                                                                            <span class="spinner-border text-warning spinner-border-sm d-none my-auto" role="status" aria-hidden="true"></span>
+                                                                            محصول در دسترس نیست
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+                                                                        </button>
+                                                                    }
+
+                                                                    <!-- Bootstrap Modal -->
+                                                                    <div class="modal fade" id="apiModal" tabindex="-1" aria-labelledby="apiModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="apiModalLabel">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-square-rounded"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+                                                                                        توجه
+                                                                                    </h5>
+                                                                                </div>
+                                                                                <div class="modal-body" id="modalBody" style="
+                                                                                                text-align: justify;
+                                                                                                                                                                                                                                                                                    ">
+                                                                                    در حال لود...
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="confirm-inner-product--button" id="modalOkBtn">
+                                                                                        تایید
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else if (Model.ProductSalePlanningPresentationViewModel.IsPreRegistration)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <div style="">
+                                                                    <button id="preRegister" class="loginButton">
+                                                                        پیش ثبت نام
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <article class="c-product" style="border: solid 1px white !important;">
+                        </article>
+                        <br />
+                        @* فایل های پیوست - دانلود  *@
+                        @await Component.InvokeAsync("ProductInformationTabBased", productSalePlanning.Id)
+                    </div>
+                </div>
+                @* برچسب های مرتبط با دوره ها حالت موبایل با جاوااسکریپت لود میشود*@
+                <div class="d-block d-lg-none p-3 " id="inner-product-tags-mobile">
+                </div>
+            </div>
+        </div>
+    </div>
+    @* محصولات با تگ مرتبط  *@
+    @await Component.InvokeAsync("RelatedProduct", Model.RelatedTagIds)
+</div>
+
+<form method="POST" action="/user/login" id="frmConfirm" style="display: none">
+    <input type="hidden" name="_back" value="@currentEncryptedUrl" />
+</form>
+
+
+<div class="modal fade rtl" id="preRegisterModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg ">
+        <div class="modal-content">
+
+            <!-- Modal Header-->
+            <div class="modal-header modal-header-pre-register">
+                <h4 class="modal-title modal-title modal-title-pre-register">تایید نهایی پیش ثبت نام</h4>
+                <button type="button" id="btn-close-pre-register" class="btn-close m-0" data-bs-dismiss="modal" data-dismiss="modal" onclick="$('#preRegisterModal').collapse('hide')"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body p-2">
+                <div class="px-3 pt-2">
+                </div>
+                <div class="input-group px-3 mb-3">
+
+
+
+                    <fieldset class="mt-2 edit-recipient-fieldset w-100">
+
+                        <legend class="fw-600 ">اطلاعات متقاضی</legend>
+                        <p>
+                            کاربر گرامی شما در حال پیش ثبت نام <b> @Model.ProductSalePlanningPresentationViewModel.ProductTitle </b>می باشید.
+
+                        </p>
+                        <p>  برای پیش ثبت نام لطفا کد ملی خود را در کادر زیر وارد کنید و دکمه تایید را کلیک نمایید.</p>
+
+                        <label for="national_code">
+                            <b class="fs-15">
+                                کد ملی فراگیر:
+                            </b>
+                        </label>
+                        <input type="text" class="input-login input-login-page text-left w-100 ss02 input-validation-error" id="national_code" placeholder="
+" aria-label="Username" name="national_code" onkeypress=" return isNumber(event)" aria-describedby="basic-addon1" pattern="[0-9]+" maxlength="10" min="10" max="9999999999" required="required">
+                        <span class="text-danger2 d-none" id="error-text-national-code">کاربر گرامی فرمت  کد ملی صحیح نمی باشد</span>
+                    </fieldset>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelingPreRegister()">انصراف</button>
+                <button type="button" class="btn confirm-index-product  px-5" onclick="preRegister(@Model.ProductSalePlanningPresentationViewModel.Id)">تایید</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        const companyId = @productSalePlanning.CompanyId;
+        const representionComponentUrl = '@Url.Action("CityRepresentations", "Representation")';
+
+        $('.tabdown').first().addClass('active');
+        $('.on').first().addClass('active');
+    </script>
+
+    <script src="~/js/components/product/preRegister.js" asp-append-version="true"></script>
+    <script src="~/js/components/product/innerProduct.min.js" asp-append-version="true"></script>
+
+}
+
+@* بخش تگ های مرتبط از اکشن کنترلر فراخوانی میشود و وقتی حالت دسکتاپ باشد یک بار درخواست ارسال میشود + در حالت موبایل پنهان میشود همچنین در حالت موبایل درخواست جداگانه برای لود کامپوننت ارسال میشود + در حالت دسکتاپ مخفی میشود *@
+<script type="text/javascript">
+    function generateUrl() {
+        return '@Url.Action("GetProductTag", "ProductSalesPlanning")' + '?productSalesPlanningId=' + @Model.ProductSalePlanningPresentationViewModel.Id;
+    }
+</script>

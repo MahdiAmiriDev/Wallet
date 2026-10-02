@@ -1,0 +1,257 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <div class="alert alert-info">
+      با تنظیم پارامترهای
+      <span style="font-weight: bold">"گواهی ارزش افزوده"</span>،
+      <span style="font-weight: bold">"معاف از مالیات"</span>،
+      <span style="font-weight: bold">"اجبار به صدور فاکتور با دسته بندی مالیاتی"</span>
+      شرایط زیر برای صدور فاکتور اتفاق می‌افتد:
+      <br/>
+      <span style="font-weight: bold">نکته</span>
+      : کالاهای فروخته شده با درصد سود و درصد تخفیف متفاوت در فاکتورهای مجزا صادر می‌شود.
+      <br/>
+      - اگر گزینه
+      <span style="font-weight: bold">"معاف از مالیات"</span>
+      <span style="font-weight: bold; color: green;"> انتخاب شده باشد</span>
+      ، دسته بندی مالیاتی در نظر گرفته شده برای صدور فاکتور، دسته بندی مالیاتی پیش فرض معاف از مالیات در نظر گرفته
+      می‌شود.
+      <br/>
+      - اگر
+      <span style="font-weight: bold">"گواهی ارزش افزوده"</span>
+      <span style="font-weight: bold; color: red;"> انتخاب نشده باشد</span>
+      بدون در نظر گرفتن اینکه کالای فروخته شده دارای مالیات است یا خیر، دسته بندی مالیاتی برای صدور فاکتور، دسته
+      بندی
+      مالیاتی پیش فرض معاف از مالیات در نظر گرفته می‌شود.
+      <br/>
+      - اگر
+      <span style="font-weight: bold">"اجبار به صدور فاکتور با دسته بندی مالیاتی"</span>
+      <span style="font-weight: bold; color: green"> انتخاب شده باشد</span>
+      و <span style="font-weight: bold">"گواهی ارزش افزوده"</span>
+      <span style="font-weight: bold; color: red;"> انتخاب نشده باشد </span>
+      ، به ازای دسته بندی مالیاتی کالاهای فروخته شده فاکتور صادر می شود اما دسته بندی مالیاتی فاکتورها، دسته بندی
+      مالیاتی پیش فرض معاف از مالیات در نظر گرفته می‌شود.
+
+    </div>
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item itemType="group" caption="انتخاب مرکز و نمایندگی" [colCount]="2">
+
+        <dxi-item colSpan="2">
+          <app-representation-filter [showInOneRow]="false"
+                                     [selectedRepresentationId]="entity.representationId"
+                                     [selectedCompanyId]="entity.companyId"
+                                     [isRequired]="true"
+                                     (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+                                     (selectedCompanyChanged)="onSelectedCompanyChanged($event)"></app-representation-filter>
+        </dxi-item>
+        <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxHtmlEditor' [colSpan]="2"
+                  rowspan="4"
+                  [editorOptions]="{height:'200px'}">
+        </dxi-item>
+      </dxi-item>
+      <dxi-item itemType="group" caption="تنظیمات فروش" [colCount]="2">
+        <dxi-item [label]="{text: 'عنوان'}" dataField="title" colSpan="2">
+          <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'تاریخ شروع'}" dataField="fromDate" editorType='dxNumberBox'>
+          <dxi-validation-rule type="required" message="تاریخ شروع اجباری می باشد">
+          </dxi-validation-rule>
+          <ng-persian-datepicker [dateInitValue]="false"
+                                 (dateOnSelect)="entity.fromDate=convertDateToInt($event);">
+            <input type="text"
+                   [formControl]="fromDateDataValue"
+                   style="float:right;width: 120px;"
+                   placeholder="تاریخ شروع"
+                   [ngModel]="entity.fromDate  | intToStringDate"/>
+          </ng-persian-datepicker>
+
+        </dxi-item>
+        <dxi-item [label]="{text: 'تاریخ پایان'}" dataField="toDate" editorType='dxNumberBox'>
+          <dxi-validation-rule type="required" message="تاریخ پایان اجباری می باشد">
+          </dxi-validation-rule>
+          <ng-persian-datepicker [dateInitValue]="false"
+                                 (dateOnSelect)="entity.toDate=convertDateToInt($event);">
+            <input type="text"
+                   [formControl]="toDateDataValue"
+                   style="float:right;width: 120px;"
+                   placeholder="تاریخ پایان"
+                   [ngModel]="entity.toDate  | intToStringDate"/>
+          </ng-persian-datepicker>
+
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'حداقل مبلغ خرید ریال'}" dataField="minimumPurchasePrice"
+                  editorType='dxNumberBox'>
+        </dxi-item>
+
+        <dxi-item [label]="{text:'فروش بدون مالیات ارزش افزوده'}" dataField="isTaxExempt"
+                  editorType='dxCheckBox' colSpan="2">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'درصد بیمه'}" dataField="insurancePercentage" editorType='dxNumberBox'>
+          <dxi-validation-rule type="required" message="درصد بیمه اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'محاسبه هزینه ارسال بر اساس فرمول'}" dataField="additionalShippingChargeExpression">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'فعال'}" dataField="isActive" editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'گواهی ارزش افزوده'}" dataField="hasTaxCertificate" editorType='dxCheckBox'>
+        </dxi-item>
+      </dxi-item>
+
+        <dxi-item itemType="group" caption="مشخصات مؤسس حقیقی / حقوقی"
+                  [colSpan]="2"  [colCount]="1">
+            <dxi-item [template]="'personGridTemplate'" colSpan="2" [label]="{text: 'مؤسس'}" dataField="founderId">
+                <dxi-validation-rule type="required"
+                                     message="انتخاب موسس اجباری میباشد"></dxi-validation-rule>
+            </dxi-item>
+        </dxi-item>
+
+
+      <dxi-item itemType="group" caption="جزئیات فاکتور و صورتحساب" colCount="2" colSpan="2">
+        <dxi-item dataField="factorReportType" editorType="dxSelectBox" [label]="{text: 'نوع گزارش فاکتور'}"
+                  [editorOptions]="{ items: factorReportTypes,displayExpr:'title',valueExpr:'id', onValueChanged: checkValidationByFactorReportType }">
+          <dxi-validation-rule type="required"
+                               message="نوع گزارش فاکتور اجباری می باشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'پیش عنوان نام محصول در فاکتور'}" dataField="factorItemPrefix">
+        </dxi-item>
+        <dxi-item [template]="'yashilSchedulerGridTemplate'" [label]="{text: 'زمانبندی صدور فاکتور'}"
+                  dataField="yashilSchedulerId">
+          <dxi-validation-rule type="required"
+                               message="انتخاب زمانبندی صدور فاکتور اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [template]="'personBankAccountGridTemplate'" [label]="{text: 'اطلاعات حساب فاکتور'}"
+                  dataField="personBankAccountId">
+          <dxi-validation-rule type="required"
+                               message="انتخاب اطلاعات حساب برای پرداخت صورت حساب اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'بیمه شامل همه محصولات باشد'}" dataField="allProductsIncludeInsurance"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'کانورت بر اساس دسته بندی مالیاتی'}" dataField="isGroupedByTaxCategory"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'اجبار صدورفاکتور با دسته بندی مالیاتی'}"
+                  dataField="forcedToGenerateFactorByTaxCategory" editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'صدور فاکتور بر اساس باشگاه مشتریان'}"
+                  dataField="forcedToGenerateFactorByCustomerClubId"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text: 'نام کالا با مالیات فاکتور و کانورت'}"
+                  *ngIf="entity.isGroupedByTaxCategory || withoutDetailFactorReportTypeSelected"
+                  dataField="taxTitleForFactor">
+          <dxi-validation-rule type="required"
+                               message="نام کالا با مالیات برای فاکتور و کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'کدکالا با مالیات کانورت'}" *ngIf="entity.isGroupedByTaxCategory"
+                  dataField="taxCodeForFactor">
+          <dxi-validation-rule type="required"
+                               message="کدکالا با مالیات برای کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'واحدسنجش با مالیات کانورت'}" *ngIf="entity.isGroupedByTaxCategory"
+                  dataField="taxUnitOfMeasurementForFactor">
+          <dxi-validation-rule type="required"
+                               message="واحدسنجش با مالیات برای کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'نام کالا معاف ازمالیات فاکتور و کانورت'}"
+                  *ngIf="entity.isGroupedByTaxCategory || withoutDetailFactorReportTypeSelected"
+                  dataField="taxExemptTitleForFactor">
+          <dxi-validation-rule type="required"
+                               message="عنوان دسته معاف از مالیات برای فاکتور و کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'کدکالا معاف ازمالیات کانورت'}" *ngIf="entity.isGroupedByTaxCategory"
+                  dataField="taxExemptCodeForFactor">
+          <dxi-validation-rule type="required"
+                               message="کدکالا معاف از مالیات برای کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item [label]="{text: 'واحدسنجش معاف ازمالیات کانورت'}" *ngIf="entity.isGroupedByTaxCategory"
+                  dataField="taxExemptUnitOfMeasurementForFactor">
+          <dxi-validation-rule type="required"
+                               message="واحدسنجش معاف از مالیات برای کانورت اجباری میباشد"></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'هزینه کسورات در فاکتور آورده شود'}"
+                  dataField="isOtherDeductionsIncludeInSupplierInvoice"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'ویرایش اطلاعات فروشنده در فاکتور'}"
+                  dataField="needModifyAfterGenerateFactor"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+        <dxi-item [label]="{text:'فیلتر صدور فاکتور بر اساس شناسه محصول'}"
+                  dataField="allowFilterByProductSalesPlanningIdInGenerateFactor"
+                  editorType='dxCheckBox'>
+        </dxi-item>
+
+        <dxi-item [label]="{text:'استفاده از گروه محصول برای کانورت'}" dataField="useProductGroupForConvert"
+                  editorType='dxCheckBox' colSpan="1">
+        </dxi-item>
+
+        <dxi-item [label]="{text:'استفاده از گروه محصول برای فاکتور'}" dataField="useProductGroupForFactor"
+                  editorType='dxCheckBox' colSpan="1">
+        </dxi-item>
+
+      </dxi-item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <dxi-item itemType="group" caption="تنظیمات ویژه" colCount="2" colSpan="2">
+        <dxi-item [label]="{text:'تایید تامین کننده قبل از پرداخت'}" dataField="requireSupplierApprovalBeforePayment"
+                  editorType='dxCheckBox' [colSpan]="1">
+        </dxi-item>
+        <dxi-item [label]="{text: 'عنوان دکمه تایید تامین کننده'}" dataField="buttonTextRequireSupplierApprovalBeforePayment" [colSpan]="1"
+                  [editorOptions]="{disabled: !entity.requireSupplierApprovalBeforePayment}">
+        </dxi-item>
+
+        <dxi-item [label]="{text: 'پیام به کاربر جهت تایید تامین کننده'}" dataField="messageToUserInRequireSupplierApprovalBeforePayment"
+                  [editorOptions]="{disabled: !entity.requireSupplierApprovalBeforePayment, height:'200px'}"
+                  editorType='dxHtmlEditor' [colSpan]="2"
+                  rowspan="4">
+        </dxi-item>
+
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'yashilSchedulerGridTemplate'">
+        <app-yashil-scheduler-select (selectedRowChanged)="selectedSchedulerChanged($event)" [isRequired]="true"
+                                     [requiredMessage]="'انتخاب زمانبندی صدور فاکتور اجباری می باشد'"
+                                     [selectedItemId]="entity.yashilSchedulerId"></app-yashil-scheduler-select>
+      </div>
+
+      <div *dxTemplate="let data of 'personGridTemplate'">
+<!--        <app-person-select (selectedRowChanged)="selectedPersonChanged($event)"-->
+<!--                           [isRequired]="true"-->
+<!--                           [requiredMessage]="'انتخاب موسس اجباری می باشد'"-->
+<!--                           [selectedItemId]="entity.founderId"></app-person-select>-->
+          <app-person-search (selectedPerson)="selectedPersonChanged($event)"
+                             [personEconomicProfileId]="entity.founderId">
+          </app-person-search>
+      </div>
+
+      <div *dxTemplate="let data of 'personBankAccountGridTemplate'">
+        <app-person-bank-account-select (selectedRowChanged)="selectedPersonBankAccountChanged($event)"
+                                        [isRequired]="true"
+                                        [requiredMessage]="'انتخاب اطلاعات حساب بانکی صورت حساب اجباری می باشد'"
+                                        [selectedItemId]="entity.personBankAccountId"></app-person-bank-account-select>
+      </div>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

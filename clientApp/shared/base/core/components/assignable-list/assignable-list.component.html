@@ -1,0 +1,113 @@
+<ng-content></ng-content>
+<div class="row mb-2" *ngIf="showGroupItemComponent">
+    <div class="col-1">
+        {{groupEntityLabel}} :
+    </div>
+    <div class="col-4">
+        <dx-lookup
+                [(value)]="selectedGroupItemId"
+                [dataSource]="itemDataSource"
+                (onValueChanged)="selectedGroupItemChanged($event)"
+                displayExpr="title"
+                valueExpr="id"
+                [rtlEnabled]="true">
+        </dx-lookup>
+    </div>
+    <div class="col-7"></div>
+</div>
+
+<div *ngIf="!showGroupItemComponent && groupEntityLabel && groupEntityLabel.length > 0"  class="d-flex justify-content-center my-2 ng-star-inserted">
+    <div  class="d-flex justify-content-center align-items-center w-25 py-2 px-5" style=" background: #33b5e5 !important; gap: 8px;">
+        <div  class="ng-star-inserted" style="font-family: 'iransans' !important;padding-top: 4px;">
+            {{groupEntityLabel}}:
+        </div>
+        <div  style="font-weight: 600;">
+            {{selectedGroupItemTitle}}
+        </div>
+    </div>
+</div>
+
+<div class="row" dir="rtl">
+    <div class="col-5">
+        <div style="text-align: right;background: #8689c8;" class="p-1">
+            <span style="color: white">
+                {{assignableListLabel}} های اختصاص داده نشده
+            </span>
+        </div>
+        <dx-data-grid #notSelectedItemsGrid
+                      width="100%"
+                      [dataSource]="notAssignedItemDataSource"
+                      [showBorders]="true"
+                      [rtlEnabled]="true"
+                      [rowAlternationEnabled]="true"
+                      [height]="gridHeight"
+                      [columns]="columns"
+                      [wordWrapEnabled]="true"
+                      [remoteOperations]="true">
+            <dxo-selection
+                    selectAllMode="allPages"
+                    showCheckBoxesMode="onClick"
+                    mode="multiple"
+            ></dxo-selection>
+            <dxo-summary>
+                <dxi-group-item
+                        column="id"
+                        summaryType="count">
+                </dxi-group-item>
+            </dxo-summary>
+            <dxo-filter-row
+                    [visible]="true"></dxo-filter-row>
+            <dxo-header-filter
+                    [visible]="true"></dxo-header-filter>
+        </dx-data-grid>
+    </div>
+    <div class="col-2 center" style="margin-top: 100px">
+        <div class="text-center align-middle">
+            <div class="pb-1">
+                <dx-button icon="chevronleft" (onClick)="assignItemsToGroup()">
+                </dx-button>
+            </div>
+            <div>
+                <dx-button icon="chevronright" (onClick)="removeAssignItemsFromGroup()">
+                </dx-button>
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+
+        <div style="text-align: right;background: #8689c8;" class="p-1">
+            <span style="color: white">
+                 {{assignableListLabel}} های موجود در  {{groupEntityLabel}} {{selectedGroupItemTitle}}
+            </span>
+        </div>
+        <dx-data-grid width="100%"
+                      #selectedItemsGrid
+                      [dataSource]="assignedItemDataSource"
+                      [showBorders]="true"
+                      [rtlEnabled]="true"
+                      [rowAlternationEnabled]="true"
+                      [height]="gridHeight"
+                      [columns]="assignedColumns"
+                      [wordWrapEnabled]="true"
+                      [remoteOperations]="true">
+            <dxo-editing mode="row" [allowUpdating]="allowEditAssignedItems" [useIcons]="true"
+                         *ngIf="allowEditAssignedItems">
+            </dxo-editing>
+            <dxo-selection
+                    selectAllMode="allPages"
+                    showCheckBoxesMode="onClick"
+                    mode="multiple"></dxo-selection>
+
+            <dxo-summary>
+                <dxi-group-item
+                        column="id"
+                        summaryType="count">
+                </dxi-group-item>
+            </dxo-summary>
+            <dxo-filter-row
+                    [visible]="true"></dxo-filter-row>
+            <dxo-header-filter
+                    [visible]="true"></dxo-header-filter>
+        </dx-data-grid>
+    </div>
+</div>

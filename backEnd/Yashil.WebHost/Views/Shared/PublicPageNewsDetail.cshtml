@@ -1,0 +1,68 @@
+﻿@using YashilNews.Web.Areas.NewsAdminApi.ViewModels;
+@model NewsStoreDetailViewModel;
+@{
+    Layout = "_Layout";
+}
+<div class="container pt-0 pt-lg-3">
+    <div class="d-block d-lg-flex gap-3 pt-2 pt-lg-0 mx-2 mx-lg-0">
+        <div class="col-12 col-lg-9">
+            <div class="bg-white rounded-3 my-2 my-lg-0 p-3 p-lg-4">
+
+                <h1 class="fw-bold fs-30 lh-base title-in-news">@Model.Title</h1>
+
+
+                <h3 class="fs-20 text-secondary pt-2 lh-base led-in-news">
+                    @Model.Led
+                </h3>
+                <div class="p-2">
+                    <img class="w-50 mx-auto d-block featured-images-news" alt="featured images news" src="/api/PublicApi/GetPublicPageNewsPicture?newsStoreId=@Model.Id" />
+                </div>
+
+                <p class="fs-18 text-secondary pt-3 lh-base">
+                    @Model.Deck
+                </p>
+
+
+                <p class="fs-18 text-secondary pt-2 lh-base">
+                    @Model.Kicker
+                </p>
+
+
+                <p class="fs-18 text-secondary pt-2 lh-base">
+                    @Model.SubTitle
+                </p>
+
+
+
+                @if (Model.Docs != null && Model.Docs.Any())
+                {
+                    foreach (var item in Model.Docs)
+                    {
+                   
+                        <img src="/api/PublicApi/GetNewsDetailPagePicture?pictureId=@item.Id" title="@item.Title" alt="News Images"  />
+                
+                    }
+                }
+
+                <div class="fs-17 pt-2 lh-lg text-justifyed text-body-news" >
+                    @Html.Raw(Model.Body)
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 left-aside-news">
+            <div class="bg-white rounded-3 p-3 p-lg-4 my-2 my-lg-0" >
+                <div>
+                    <span class="fs-20 fw-bold">برچسب ها:</span>
+                    <p class="pt-2 ">
+                        <a href="#" class="fs-16">@Model.KeywordStr</a>
+                    </p>
+
+                </div>
+
+
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿@model string
+<section>
+    <div class="container bg-white p-2 p-md-3 rounded-3">
+        <div class="p-1 pt-2">
+            <h3 class="fw-bold fs-24">مشاهده در اپلیکیشن</h3>
+            <p>برای مشاهده دوره ها ابتدا پلیر را با توجه به سیستم عامل خود دانلود و نصب نمایید. پس از اجرای پلیر، در صفحه ثبت دوره جدید کلید لایسنس را وارد، مکان ذخیره سازی را انتخاب و سپس فرم را تایید کنید.</p>
+        </div>
+
+        <div class="d-flex gap-2 mt-5">
+            <span class="rounded-circle fw-bold fs-20 text-white text-center number-spot-player">1</span>
+            <h4 class="fw-bold fs-22  ">دانلود و نصب پلیر</h4>
+        </div>
+
+        <div class="row rounded-3 bg-apps-spot-player mx-1 p-2">
+            <a href="https://app.spotplayer.ir/assets/bin/spotplayer/setup.exe" target="_blank" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+
+                <img class="rounded-3 w-75" src="~/images/spotplayer/win.png" alt="Windows App" />
+                <h5 class="fw-bold fs-20 pt-2 text-center title-apps-spot-player">Windows</h5>
+                <span class="text-muted ">5.3.2.32</span>
+            </a>
+
+            <a href="https://app.spotplayer.ir/assets/bin/spotplayer/setup.dmg" target="_blank" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+                <img class="rounded-3 w-75" src="~/images/spotplayer/mac.png" alt="MacOS App" />
+                <h5 class="fw-bold fs-20 pt-2 title-apps-spot-player">MacOS</h5>
+                <span class="text-muted ">5.3.2.32</span>
+            </a>
+
+            <div href="#" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+                <img class="rounded-3 w-75" src="~/images/spotplayer/ubuntu.png" alt="Ubuntu App" />
+                <h5 class="fw-bold fs-20 pt-2 title-apps-spot-player">Ubuntu</h5>
+                <span class="text-muted">به زودی</span>
+            </div>
+
+            <a href="https://app.spotplayer.ir/assets/bin/spotplayer/setup.apk" target="_blank" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+                <img class="rounded-3 w-75" src="~/images/spotplayer/android.png" alt="Android App" />
+                <h5 class="fw-bold fs-20 pt-2 title-apps-spot-player">Android</h5>
+                <span class="text-muted ">5.2.0.28</span>
+            </a>
+
+            <div href="#" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+                <img class="rounded-3 w-75" src="~/images/spotplayer/ios.png" alt="iOS App" />
+                <h5 class="fw-bold fs-20 pt-2 title-apps-spot-player">iOS</h5>
+                <span class="text-muted ">به زودی</span>
+            </div>
+
+            <a href="https://app.spotplayer.ir/" target="_blank" class="col-6 col-md-4 col-lg-2 text-center p-3 rounded-3 box-apps-spot-player">
+                <img class="rounded-3 w-75" src="~/images/spotplayer/web.png" alt="web" />
+                <h5 class="fw-bold fs-20 pt-2 title-apps-spot-player">Web</h5>
+                <span class="text-muted ">5.0.3.24</span>
+
+            </a>
+        </div>
+
+        <div class="d-flex gap-2 mt-5 ">
+            <span class="rounded-circle fw-bold fs-20 text-white text-center number-spot-player">2</span>
+            <h4 class="fw-bold fs-22  "> کپی و وارد نمودن کلید در پلیر</h4>
+        </div>
+
+        <textarea disabled type="text" row="5" class="w-100 text-left p-1 p-md-2 text-muted textarea-spot-player" id="InputLicenseSpotPlayer">
+            @Model
+        </textarea>
+        <div class="d-grid">
+            <button class="btn btn-copy-spot-player" type="button" onclick="copySpotPlayerLicense()">
+                کپی کلید
+            </button>
+        </div>
+
+        <div class="d-block d-xxl-flex align-items-center justify-content-between mt-5">
+            <div class="d-flex gap-2 w-100 w-lg-50">
+                <span class="rounded-circle fw-bold fs-20 text-white text-center number-spot-player">3</span>
+                <h4 class="fw-bold fs-22  ">راهنمای پخش کننده امن تحت وب</h4>
+            </div>
+
+            <div class="d-block d-xl-flex align-items-center justify-content-between w-100 w-lg-50 text-center download-help-file-spotplayer">
+                <span class="fs-16 text-dark">برای راهنمایی بیشتر می توانید فایل راهنما را دانلود کنید:</span>
+                <a href="./pdf/Methodology-of-media-and-IT.pdf" target="_blank">
+                    <button class="btn-primary-color-text-placement px-3 py-2 rounded-3  mt-2 mt-lg-0">
+                        دانلود فایل راهنما
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="#fff">
+                            <use href="../images/icons/general.svg#download" />
+                        </svg>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <video controls="controls" class="w-100 rounded-3 mt-4">
+            <source src="~/images/spotplayer/spot-player.mp4" type="video/mp4" />
+        </video>
+
+    </div>
+</section>
+
+

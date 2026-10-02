@@ -1,0 +1,26 @@
+<div dir="rtl" *ngIf="showRepresentationFilter">
+
+  <app-representation-filter
+    (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)"
+      ></app-representation-filter>
+</div>
+<app-base-list-form #listForm
+                    [showEditForm]="false"
+                    [fixHeight]="false"
+                    [gridHeight]="gridHeight"
+                    [allowFilter]="true"
+                    [showListHeader]="false"
+                    [wordWrapEnabled]="true"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [allowInsertInForm]="false"
+                    [showExportToExcelButton]="true"
+                    [customRowButtons]="customRowButtons"
+                    [isForSelectReadOnly]="true"
+                    [allowGrouping]="false">
+</app-base-list-form>
+

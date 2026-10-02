@@ -1,0 +1,42 @@
+﻿@using Yashil.Core.Enums
+@{
+
+    Layout = "_Layout";
+}
+
+
+<div class="boxed">
+    <div class="container">
+        <div class="card2">
+            <div class="col-md-12">
+                <!-- Nav tabs -->
+                <div class="pt-3 pt-md-5 pt-xl-5 pt-xxl-2">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li id="trec" role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-home"></i>  <span class="myTab fs-22 fw-bold">درباره ما</span></a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="w-100 gap-3 d-block d-xl-flex align-items-center justify-content-between">
+                                <div class=" w-100 pt-1">
+                                    <div  id="67903210935"><script type="text/JavaScript" src="https://www.aparat.com/embed/sdiSY?data[rnddiv]=67903210935&data[responsive]=yes&autoplay=true"></script></div>
+                                </div>
+                                <div class=" w-100 pt-1">
+                                    <img src="~/images/why.choose.webp" alt="Isiran Institute building" class="w-100  py-2 Institute-building"/>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-3 mt-2 p-4 text-right w-100 span-content-about">
+
+                                @await Component.InvokeAsync("Content", new { pagePosition = PagePositionTypeEnum.SiteAbout })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+

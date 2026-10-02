@@ -1,0 +1,54 @@
+﻿@using Yashil.Infrastructure.Util
+@model YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.OrderSubsidyStatusViewModel
+
+@if (Model != null && (Model.SubsidySum > 0 || Model.OrdersCount > 0))
+{
+            <div class="invoice-alert-show text-justify">
+                    <div class="alert alert-danger" role="alert" style="text-align: justify;">
+                        <div class="d-flex flex-column">
+                            <span>
+                                کاربر گرامی،<br />
+                                @if (Model.CheckForCurrentUser)
+                                {
+                                    <div>
+                                        شما به تعداد
+                                        <b>@Model.OrdersCount</b>
+                                        @if (Model.CheckOnlyCompletedOrders)
+                                        {
+                                            @: سفارش تکمیل شده با پرداخت موفق دارید و در مجموع
+                                            <b>@CurrencyUtility.FormatPrice(Model.SubsidySum)</b>
+                                            @: تومان یارانه استفاده کرده اید.
+                                        }
+
+                                        @if (!Model.CheckOnlyCompletedOrders)
+                                        {
+                                            @: سفارش منتظر پرداخت و یا منتظر تایید یارانه دارید و در مجموع
+                                            <b>@CurrencyUtility.FormatPrice(Model.SubsidySum)</b>
+                                            @: تومان یارانه استفاده کرده اید.
+                                            <br />
+                                            @:پیشنهاد می گردد قبل از تکمیل این سفارش، سفارش های قبلی خود را تعیین تکلیف نمایید.
+                                            <div class="c-checkout-bill__digiclub" style="padding-bottom: 0px;">
+                                                <span class="c-checkout__OrderAlert directionLtr">
+                                                    <a href="/order/" id="ContinuePurchase" class="orderListButton">
+                                                        سفارش های من
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        مجموع یارانه استفاده شده برای این شماره کارت توسط کاربری به غیر از شما
+                                        <b>@CurrencyUtility.FormatPrice(Model.SubsidySum)</b>
+                                        تومان می باشد. در صورتی که این مقدار یارانه توسط شما استفاده نشده است، می توانید با شرکت انستیتو ایزایران (طرح حکمت) به شماره 75205701-021 تماس حاصل فرمایید.
+                                        <br />
+                                    </div>
+                                }
+                            </span>
+                        </div>
+                    </div>
+            </div>
+}

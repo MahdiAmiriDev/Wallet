@@ -1,0 +1,41 @@
+<app-base-list-form #listForm
+                    title="{{'shp.Company.Company' | translate}}"
+                    [isForTree]="true"
+                    [customRowButtons]="customRowButton"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="onRowSelect($event)"
+                    [showAddButton]="!canUserSeeOtherCompany"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>
+
+<dx-popup
+  *ngIf="showPopUp"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  rtlEnabled="true"
+  class="popup">
+  <div class="alert alert-primary">
+    <dx-form id="infoForm" [colCount]="2" [formData]="companyInformation">
+      <dxi-item [label]="{text:'نمایش مرکز در صفحه ی اصلی'}"
+                [editorOptions]="{readOnly:true}" dataField="showInMainPage">
+      </dxi-item>
+      <dxi-item [label]="{text: 'برنامه ریزی دوره فعال'}"
+                [editorOptions]="{readOnly:true}" dataField="hasActiveProductSalesPlanning">
+      </dxi-item>
+      <dxi-item [label]="{text: ' قرارداد فعال'}"
+                [editorOptions]="{readOnly:true}" dataField="hasActiveContract">
+      </dxi-item>
+      <dxi-item [label]="{text: 'تصویر حالت موبایل و دسکتاب'}"
+                [editorOptions]="{readOnly:true}" dataField="hasDesktopAndMobileModeImage">
+      </dxi-item>
+    </dx-form>
+  </div>
+
+</dx-popup>
+

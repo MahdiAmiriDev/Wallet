@@ -1,0 +1,39 @@
+<dx-data-grid id="gridContainer"
+              width="100%"
+              style="padding-bottom: 6px"
+              [showRowLines]="true"
+              [columnAutoWidth]="true"
+              [dataSource]="hekmatTransaction"
+              [showBorders]="true"
+              [rtlEnabled]="true"
+              [rowAlternationEnabled]="true"
+              [height]="500"
+              [allowColumnReordering]="false"
+              [columns]="columns"
+              [columnHidingEnabled]="false"
+              [wordWrapEnabled]="true"
+              [remoteOperations]="true"
+              (onExporting)="onExporting($event)">>
+  <dxo-scrolling mode="virtual" rowRenderingMode="virtual"
+                 columnRenderingMode="virtual"></dxo-scrolling>
+
+  <dxo-paging
+    [pageSize]="2"
+    [pageIndex]="1"> <!-- Shows the second page -->
+  </dxo-paging>
+  <dxo-header-filter
+    [visible]="false">
+
+  </dxo-header-filter>
+  <dxo-export
+    [enabled]="true">
+
+  </dxo-export>
+  <div *dxTemplate="let data of 'number'" style="direction: ltr !important;">
+    {{data.displayValue | number}}
+  </div>
+  <div *dxTemplate="let data of 'numberInt'" style="direction: ltr !important;">
+    {{data.displayValue | number: '1.0-0' }}
+  </div>
+</dx-data-grid>
+

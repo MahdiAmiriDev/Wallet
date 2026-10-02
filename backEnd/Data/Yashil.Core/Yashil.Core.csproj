@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFramework>net8.0</TargetFramework>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+<FileVersion>5.0.3</FileVersion>  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\hekmatIPG.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="21.6.0" />
+    <PackageReference Include="EntityFrameworkCore.Scaffolding.Handlebars" Version="8.0.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.28.3" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.66.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.66.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.67.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="Yashil.Common.Core" Version="9.8.45" />
+    <PackageReference Include="Yashil.Common.SharedKernel" Version="9.8.45" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="8.103.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\hekmatIPG.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CustomViewModels\IranKishPaymentModels\" />
+    <Folder Include="Export\" />
+  </ItemGroup>
+
+</Project>

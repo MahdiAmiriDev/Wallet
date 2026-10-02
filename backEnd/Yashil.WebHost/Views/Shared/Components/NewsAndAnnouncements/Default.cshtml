@@ -1,0 +1,140 @@
+﻿@using Yashil.Core.CustomViewModels;
+@model List<NewsStorePublicPageViewModel>
+
+@{
+    var slidesCount = Model.Count();
+}
+
+@if (Model != null && Model.Any())
+{
+    <!-- Blog Section Start -->
+    <section class="blog-section pt-100 mb-5">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2 class="py-5 fw-600">اخبار و اطلاعیه ها</h2>
+            </div>
+            <div class="ss02 position-relative mx-3 mx-sm-0">
+                @if (Model.Count() <= 4)
+                {
+                    <div id="news-container" class="w-100">
+                        @foreach (var item in Model)
+                        {
+                            <div class="w-100">
+                                <!-- Skeleton Loading Placeholder for News Card -->
+                                <div class="skeleton-loading--container w-100 d-flex flex-column align-items-center justify-content-between gap-4" style="background: #F8F7FC; padding: 15px">
+                                    <div class="skeleton skeleton-rect news-card--skeleton"></div>
+                                </div>
+                                <!-- Skeleton Loading Placeholder for News Card /-->
+
+                                <!-- News Card -->
+                                <a class="blog-card skeleton-content--container d-none d-flex flex-column h-100" href="@Url.Action("GetPublicPageNewsDetail","Cms",new{newsId = item.Id,entityName = "newsStore"})">
+                                    <div class="blog-img" style="flex: 1">
+                                        <img data-src="/api/PublicApi/GetPublicPageNewsPicture?newsStoreId=@item.Id" alt="blog image" class="w-100 h-100" />
+                                    </div>
+                                    <div class="blog-text">
+                                        <div>
+                                            <h5 class="fw-bolder">@item.Title</h5>
+                                            <p style="text-align: justify;color:#707070" class="fs-6 lh-baseline">@item.Led</p>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1 blog-btn" href="@Url.Action("GetPublicPageNewsDetail","Cms",new{newsId = item.Id,entityName = "newsStore"})">
+                                            بیشتر
+                                            <div class="plus_spinner">
+                                                <svg width="20" height="20" stroke="var(--bold-primary-yellow-color)">
+                                                    <use href="../images/icons/general.svg#plus" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!-- News Card /-->
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="swiper swiper-container newsSwiperContainer">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <div>
+                                        <div class="blog-card">
+                                            <a href="#">
+                                                <div class="blog-img">
+                                                    <img data-src="/api/PublicApi/GetPublicPageNewsPicture?newsStoreId=Id" alt="blog image" class="w-100 h-100" />
+                                                </div>
+                                                <div class="blog-text">
+                                                    <h5 class="fw-bolder">Title</h5>
+                                                    <p style="text-align: justify;color:#707070" class="fs-6 lh-baseline">Led</p>
+                                                    <div class="d-flex align-items-center gap-1 blog-btn" href="#">
+                                                        بیشتر
+                                                        <div class="plus_spinner">
+                                                            <svg width="20" height="20" stroke="var(--bold-primary-yellow-color)">
+                                                                <use href="../images/icons/general.svg#plus" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div id="nextNews" class="swiper-button-next d-none d-lg-flex"></div>
+                    <div id="pervNews" class="swiper-button-prev d-none d-lg-flex"></div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+}
+
+<script>
+    const newsSwiper = new Swiper(".newsSwiperContainer", {
+        navigation: {
+            nextEl: "#pervNews",
+            prevEl: "#nextNews"
+        },
+        keyboard: {
+            enabled: false
+        },
+        scrollbar: { draggable: true },
+        breakpoints: {
+            320: {
+                slidesPerView: 1.1,
+                spaceBetween: 10
+
+            },
+            425: {
+                slidesPerView: 1.5,
+                spaceBetween: 10
+
+            },
+            480: {
+                slidesPerView: 1.8,
+                spaceBetween: 10
+
+            },
+            992: {
+                slidesPerView: 2.5,
+                spaceBetween: 10
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 10
+            },
+            1280: {
+                slidesPerView: 4,
+                spaceBetween: 10
+            },
+            1440: {
+                slidesPerView: 4.5,
+                spaceBetween: 10
+            }
+        }
+    });
+</script>

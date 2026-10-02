@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<link href="~/css/components/job_offer_landing.css" rel="stylesheet" asp-append-version="true" />
+<div id="job-offer-search--container">
+    @await Component.InvokeAsync("CorporationJobCoHeaderSearch",new {showActiveJobPositionCount = true})
+</div>
+<div id="job-offers-landing--container" class="px-2">
+    <section id="corporation-requirements--container">
+        @await Component.InvokeAsync("CorporationRequirementsSlider")
+    </section>
+    <section class="d-flex flex-column flex-lg-row align-items-start gap-3 mb-3 pt-md-2 pt-lg-5 pt-xxl-2">
+        <!-- Sidebar -->
+        <aside class="job-offer-landing--sidebar">
+            <!-- User Resume Status -->
+            @await Component.InvokeAsync("UserResumeStatus")
+        </aside>
+        <main id="job-offers--container" class="w-100 position-relative" style="flex: 1">
+            @await Component.InvokeAsync("JobOfferList", new {showJobOfferFilterSection = false})
+            <div class="loading-spinner--container position-fixed d-none"><span class="loader"></span></div>
+        </main>
+    </section>
+</div>
+
+<script src="~/js/components/job_offer_landing.js" asp-append-version="true"></script>

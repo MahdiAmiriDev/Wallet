@@ -1,0 +1,80 @@
+<app-busy-indicator #busyIndicatorComponent></app-busy-indicator>
+<span style="font-size: 16px">{{'shp.ProductSalesPlanningManagement.SelectionTitle'|translate}}</span>
+<hr style="width: 97%"/>
+<div class="alert alert-warning {{simpleMode?'row':''}}"
+     style="color:#dc6b1b;background-color:#ec9532;border-color:#e8a21e">
+  <div *ngIf="simpleMode" class="col-1" style="margin-top: 5px">
+    <dx-button *ngIf="simpleMode && productId"
+               [visible]="productId && productId>0" dir="ltr"
+               [hint]="'نمایش اطلاعات بیشتر'"
+               (onClick)="showProductInfo()" [icon]="'info'"></dx-button>
+  </div>
+  <div class="{{simpleMode?'col-11':''}}">
+    <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+      <dxi-item *ngIf="!simpleMode" [label]="{text:'Code' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="code">
+      </dxi-item>
+      <dxi-item [label]="{text:'tms.Course.Title' | translate}" colSpan="{{simpleMode?2:3}}"
+                [editorOptions]="{readOnly:true}" dataField="title">
+      </dxi-item>
+      <dxi-item *ngIf="!simpleMode" [label]="{text: 'shp.ProductSalesPlanningManagement.Company' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="companyTitle">
+      </dxi-item>
+      <dxi-item *ngIf="!simpleMode" [label]="{text: 'shp.Product.Duration' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="duration">
+      </dxi-item>
+      <dxi-item *ngIf="!simpleMode && isCourse" [label]="{text: 'tms.Course.EvaluationMethod' | translate}"
+                 [editorOptions]="{readOnly:true}" dataField="evaluationMethodTitle">
+      </dxi-item>
+      <dxi-item *ngIf="!simpleMode && isCourse" [label]="{text: 'tms.Course.CertificateType' | translate}"
+                 [editorOptions]="{readOnly:true}" dataField="certificateTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="!simpleMode && isCourse" [label]="{text: 'tms.Course.SkillType' | translate}"
+                dataField="skillTypeTitle" [editorOptions]="{readOnly:true}">
+      </dxi-item>
+      <dxi-item [template]="'customButtonTemplate'" [label]="{text: ''}"></dxi-item>
+      <div *dxTemplate="let data of 'customButtonTemplate'">
+        <div style="float: right; padding-right: 16px">
+          <dx-button *ngIf="showCustomButton" dir="ltr" [style]="customButtonStyle"
+                     [stylingMode]="customButtonStylingMode" [type]="customButtonType"
+                     (onClick)="onCustomButtonClick()" [icon]="customButtonIcon" [text]="customButtonText"></dx-button>
+        </div>
+      </div>
+    </dx-form>
+  </div>
+</div>
+<dx-popup
+  [rtlEnabled]="true"
+  [(visible)]="showPopUp"
+  (onHidden)="showPopUp=false"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  class="popup">
+  <div class="alert alert-primary">
+    <dx-form id="infoForm" [colCount]="3" #infoForm [formData]="entity">
+      <dxi-item [label]="{text:'tms.Course.Title' | translate}" colSpan="3"
+                [editorOptions]="{readOnly:true}" dataField="title">
+      </dxi-item>
+      <dxi-item [label]="{text:'Code' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="code">
+      </dxi-item>
+      <dxi-item [label]="{text: 'shp.ProductSalesPlanningManagement.Company' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="companyTitle">
+      </dxi-item>
+      <dxi-item [label]="{text: 'shp.Product.Duration' | translate}"
+                [editorOptions]="{readOnly:true}" dataField="duration">
+      </dxi-item>
+      <dxi-item *ngIf="isCourse" [label]="{text: 'tms.Course.EvaluationMethod' | translate}"
+                 [editorOptions]="{readOnly:true}" dataField="evaluationMethodTitle">
+      </dxi-item>
+      <dxi-item *ngIf="isCourse" [label]="{text: 'tms.Course.CertificateType' | translate}"
+                 [editorOptions]="{readOnly:true}" dataField="certificateTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="isCourse" [label]="{text: 'tms.Course.SkillType' | translate}"
+                dataField="skillTypeTitle" [editorOptions]="{readOnly:true}">
+      </dxi-item>
+    </dx-form>
+  </div>
+</dx-popup>

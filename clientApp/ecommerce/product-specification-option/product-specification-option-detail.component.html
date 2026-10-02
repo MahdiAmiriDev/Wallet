@@ -1,0 +1,40 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+        <dxi-item itemType="group" colCount="2" colSpan="2">
+            <dxi-item dataField="productId" editorType="dxLookup" [label]="{text: 'محصول'}"
+                      [editorOptions]="{readOnly: productId, rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: productDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="محصول اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="specificationId" editorType="dxLookup" [label]="{text: 'مشخصات'}"
+                      [editorOptions]="{onValueChanged:selectedSpecificationValueChanged,rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: specificationDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="مشخصات اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="specificationOptionId" editorType="dxLookup" [label]="{text: 'ويژگي مشخصات'}"
+                      [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: specificationOptionDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="ويژگي مشخصات اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'ترتیب نمایش'}" dataField="displayOrder" editorType='dxNumberBox'>
+                <dxi-validation-rule type="required" message="ترتیب نمایش اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="attributeType" editorType="dxSelectBox" [label]="{text: 'نوع ویژگی'}"
+                      [editorOptions]="{onSelectionChanged:selectedAttributeTypeChanged, items: attributeTypes,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="نوع ویژگی اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+
+        </dxi-item>
+        <dxi-item itemType="group" colSpan="2" *ngIf="selectedAttributeType['code']!=='3'">
+            <dxi-item [label]="{text: 'مقدار متنی'}"
+                      [height]="200"
+                      dataField="customValue"
+                      editorType='dxHtmlEditor'
+                      [editorOptions]="{readOnly: selectedAttributeType['code']==='3'}">
+            </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group" colCount="2">
+            <dxi-item [label]="{text: 'اجازه فیلتر'}" dataField="allowFiltering" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'نمایش در جزییات محصول'}" dataField="showOnProductPage" editorType='dxCheckBox'>
+            </dxi-item>
+        </dxi-item>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>

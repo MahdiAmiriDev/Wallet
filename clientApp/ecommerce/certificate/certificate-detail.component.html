@@ -1,0 +1,74 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2"  [formData]="entity">
+    <dxi-item [label]="{text: 'شماره گواهینامه'}" dataField="number">
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ صدور'}" dataField="issueDateInt">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام'}" dataField="name">
+      <dxi-validation-rule type="required"
+                           message="نام الزامی می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام خانوادگی'}" dataField="lastName">
+      <dxi-validation-rule type="required"
+                           message="نام خانوادگی اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'جنسیت'}" dataField="sexTitle">
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد ملی'}" dataField="nationalCode">
+      <dxi-validation-rule maxlength="10" minlength="10" type="required"
+                           message="کد ملی الزامی می باشد"></dxi-validation-rule>
+      <dxi-validation-rule type="custom" message="فرمت کد ملی صحیح نیست"
+                           [validationCallback]="commonValidatorService.nationalCodeValidate"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره شناسنامه'}" dataField="identityNumber">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام پدر'}" dataField="fatherName">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام لاتین'}" dataField="latinName">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام خانوادگی لاتین'}" dataField="latinLastName">
+    </dxi-item>
+    <dxi-item [label]="{text: 'محل صدور'}" dataField="placeOfIssue">
+    </dxi-item>
+    <dxi-item [label]="{text: 'موبایل'}" dataField="mobileNumber">
+    </dxi-item>
+    <dxi-item [label]="{text: 'تلفن'}" dataField="tell">
+    </dxi-item>
+    <dxi-item [label]="{text: 'ایمیل'}" dataField="email">
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ تولد'}" dataField="dateOfBirthInt">
+    </dxi-item>
+    <dxi-item [label]="{text: 'آخرین مدرک'}" dataField="lastEvidence">
+    </dxi-item>
+    <dxi-item [label]="{text: 'رشته تحصیلی'}" dataField="fieldOfStudy">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام دوره'}" dataField="courseTitle">
+      <dxi-validation-rule type="required"
+                           message="نام دوره الزامی می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'نوع دوره'}" dataField="courseType">
+      <dxi-validation-rule type="required"
+                           message="نوع دوره الزامی می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'مدت دوره'}" dataField="courseDuration">
+      <dxi-validation-rule type="required"
+                           message="مدت دوره الزامی می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'نمره'}" dataField="score" >
+      <dxi-validation-rule type="required"
+                           message="نمره الزامی می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'شهر'}" dataField="cityTitle">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام نمایندگی'}" dataField="representationTitle">
+    </dxi-item>
+    <dxi-item [label]="{text: 'نام استاد'}" dataField="teacherName">
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد دوره'}" dataField="courseCode">
+    </dxi-item>
+    <dxi-item [label]="{text: 'هزینه دوره'}" dataField="coursePrice" >
+    </dxi-item>
+    <dxi-item [label]="{text: 'موبایل استاد'}" dataField="teacherMobile">
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

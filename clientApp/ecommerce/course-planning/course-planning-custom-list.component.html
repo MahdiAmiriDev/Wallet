@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-12">
+    <app-representation-filter (selectedCompanyChanged)="setSelectedCompany($event)"
+                               (selectedRepresentationChanged)="onSelectedRepresentationChanged($event)">
+
+    </app-representation-filter>
+  </div>
+</div>
+<div class="row" *ngIf="customRowButtons">
+  <div class="col-12">
+    <as-split direction="horizontal" dir="ltr">
+      <as-split direction="horizontal">
+        <as-split-area size="75" #t1 dir="rtl">
+
+          <app-base-list-form loadAfterSetFilter="true"
+                              [showAddButton]="companyId && companyId>0"
+                              [title]="title | translate"
+                              (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                              [columns]="columns"
+                              [entityName]="entityName"
+                              [showExportToExcelButton]="true"
+                              [gridHeight]="gridHeight"
+                              #frmCourse
+                              [detailComponent]="detailComponent"
+                              [customRowButtons]="customRowButtons"
+                              wordWrapEnabled="true"
+                              [allowGrouping]="false"
+                              [allowDeleteInForm] = "false"
+                              [allowArchiveInForm]= "true"
+                              [customArchiveActionName]="customArchiveActionName"
+                              [customRestoreActionName]="customRestoreActionName"
+                              [customButtonCheckBoxTitle]="customButtonCheckBoxTitle"
+                              [showCustomCheckBox]="true"
+                              (customCheckBoxEvent)="onCustomCheckBoxChange($event)"
+                             >
+          </app-base-list-form>
+
+        </as-split-area>
+        <as-split-area size="25" #t2 dir="rtl">
+          <app-category-list [allowEdit]="false" #categoryListComponent
+                             [loadAfterSetFilter]="true"
+                             [companyId]="companyId"
+                             [representationId]="representationId"
+                             [gridHeight]="gridHeight"
+                             [showFullColumns]="false"
+                             [showAddButton]="false"
+                             [allowEditInForm]="false"
+                             [allowDeleteInForm]="false"
+                             (selectedRowChanged)="selectedCategoryChanged($event)"></app-category-list>
+        </as-split-area>
+      </as-split>
+
+    </as-split>
+  </div>
+</div>
+
+
+<dx-popup
+  [title]="popUpTitle"
+  *ngIf="showPopUp"
+  [(visible)]="showPopUp"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  rtlEnabled="true"
+  class="popup">
+
+  <app-product-sales-planning-discount-list [productSalesPlanningId]="productSalePlanningId"
+  ></app-product-sales-planning-discount-list>
+
+</dx-popup>

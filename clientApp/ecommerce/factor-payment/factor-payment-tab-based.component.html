@@ -1,0 +1,16 @@
+<dx-tab-panel
+    #tabPanel
+    rtlEnabled="true"
+    [dataSource]="tabs"
+    [selectedIndex]="0"
+    [loop]="false"
+    [animationEnabled]="false"
+    [swipeEnabled]="false">
+  <div *dxTemplate="let company of 'factorPaymentList'" class="tab-content-edit-form">
+    <app-factor-payment-list [showAddButton]="false" [factorId]="factorId"></app-factor-payment-list>
+  </div>
+  <div *dxTemplate="let company of 'factorDeductionList'" class="tab-content-edit-form">
+    <app-factor-deduction-list [showAddButton]="false" [allowEditInForm]="false" [allowDeleteInForm]="false"
+                               [factorId]="factorId"></app-factor-deduction-list>
+  </div>
+</dx-tab-panel>

@@ -1,0 +1,533 @@
+﻿@using Yashil.Infrastructure.Util
+@using Yashil.Common.SharedKernel.Helpers
+@using Yashil.Common.Core.Classes;
+@inject ApplicationConfiguration _applicationConfiguration;
+
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderSummaryViewModel
+@{
+
+    if (Model == null)
+    {
+        return;
+    }
+
+    Layout = "_Layout";
+    var orderId = Context.Request.Cookies["OId"];
+
+}
+
+<!--start shopping-cart-->
+
+<div>
+    <!-- tabs -->
+    <section id="tabs" class="mx-auto my-3 pt-2 pt-lg-5 pt-xxl-2">
+        <div class="container custom-container ss02">
+            <div class="row">
+                <ul class="nav nav-tabs bg-white rounded mt-3 mt-sm-3 mt-md-3 mt-lg-0" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-secondary"
+                                id="home-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#home"
+                                type="button"
+                                role="tab"
+                                aria-controls="home"
+                                aria-selected="true">
+                            <?xml version="1.0" standalone="no" ?>
+                            <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="currentColor" style="transform:scale(-1, 1)">
+                                <use href="../images/icons/header.svg#shopping-cart" />
+                            </svg>
+                            سبد خرید
+                        </button>
+                    </li>
+                </ul>
+
+                @if (orderId != null)
+                {
+                    @*Modal error Message*@
+                    <div class="position-absolute col-md-8 col-md-push-2">
+                        <div class="position-absolute col-md-8 col-md-push-2">
+                            <div id="alert" class="alert alert-warning m-auto text-right alert-dismissible fade" role="alert">
+                                <strong id="Message"></strong>
+                                <button type="button" class="close" onclick="closeCross()" aria-label="Close" style="float:right;top: -10px;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="tab-content bg-white px-2 px-sm-2 px-md-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+                        <div id="cart-data" class="my-3">
+
+                            <!-- content start-->
+
+                            <div class="container-fliud">
+                                @if (Model.OrderSummaryForPayViewModel != null && Model.OrderItemDetailPresentationViewModels != null && Model.OrderItemDetailPresentationViewModels.Count > 0)
+                                {
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 p-2">
+                                            <!-- product 1-->
+                                            @if (Model.OrderSummaryForPayViewModel.SubsidyBased)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12  checkoutAlert">
+                                                        <div class="alert alert-warning checkoutAlertSuccesses" role="alert">
+                                                            کاربر گرامی شایان ذکر است قیمت یارانه نشان داده شده سقف یارانه می باشد و از مقدار یارانه استفاده شده کم خواهد شد . با فشردن دکمه ادامه از میزان یارانه و مبلغ قابل پرداخت آگاه خواهید شد
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @foreach (var item in Model.OrderItemDetailPresentationViewModels)
+                                            {
+
+                                                <div class="detail-dis-product cart-item-@item.ShoppingCartItemId position-relative rounded " data-discount="@CurrencyUtility.RemoveDecimal(item.DiscountPercentage)%">
+
+                                                    @if (item.EmploymentSubsidyDto != null &&
+                                                   item.EmploymentSubsidyDto.IsEmploymentProduct.HasValue
+                                                   && item.EmploymentSubsidyDto.IsEmploymentProduct.Value)
+                                                    {
+                                                        <div class="main-signboard-wrapper">
+                                                            <div class="signboard-wrapper">
+                                                                <div class="signboard">طرح اشتغال</div>
+                                                                <div class="string"></div>
+                                                                <div class="pin pin1"></div>
+                                                                <div class="pin pin2"></div>
+                                                                <div class="pin pin3"></div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                    <div class="row p-3 content-product-in-shopping-card-item">
+                                                        <div class="col-12 col-md-4 position-relative">
+
+                                                            <img src=" @Url.Action("GetProductSalesPlanningImage", "PublicApi", new { productSalesPlanningId = @item.ProductSalesPlanningId, modificationDate = item.ModificationDate })"
+                                                                 alt="Product Image"
+                                                                 class=" w-100 rounded" />
+                                                        </div>
+
+                                                        <div class="col-12 col-md-8">
+                                                            <h4 class="mt-5 mt-md-0 mb-2 pe-0 pe-md-4">
+                                                                <strong class="fs-5">@item.Title</strong>
+                                                            </h4>
+
+                                                            <div class="d-md-flex d-sm-block base-price gap-2">
+                                                                <div class="base-price1">
+                                                                    <span class="badge badge-secondary my-1">قیمت پایه: <del> @CurrencyUtility.FormatPrice(item.UnitPrice) تومان</del></span>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="badge yellow-badge-in-card my-1">تخفیف: @CurrencyUtility.FormatPrice(item.DiscountAmountInclTax) تومان</span>
+                                                                </div>
+                                                            </div>
+                                                            @if (Model.OrderSummaryForPayViewModel.SubsidyBased)
+                                                            {
+                                                                <div class="d-xxl-flex d-sm-block base-price gap-2">
+                                                                    <div class="base-price1">
+
+
+                                                                        <span class="badge subsist-blue-in-card g my-1 ">
+                                                                            @if (item.EmploymentSubsidyDto != null &&
+                                                                           item.EmploymentSubsidyDto.IsEmploymentProduct.HasValue
+                                                                           && item.EmploymentSubsidyDto.IsEmploymentProduct.Value
+                                                                           && Model.IsResumeFillOutEnough)
+                                                                            {
+                                                                                <label>یارانه اشتغال شاغلین:</label>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <label>یارانه شاغلین</label>
+                                                                            }
+                                                                            @CurrencyUtility.FormatPrice(item.MaxVezaratSubsidyPrice) تومان
+                                                                        </span>
+                                                                    </div>
+                                                                    <div>
+
+                                                                        <span class="badge subsist-blue-in-card my-1">
+
+                                                                            @if (item.EmploymentSubsidyDto != null &&
+                                                                           item.EmploymentSubsidyDto.IsEmploymentProduct.HasValue
+                                                                           && item.EmploymentSubsidyDto.IsEmploymentProduct.Value
+                                                                           && Model.IsResumeFillOutEnough)
+                                                                            {
+                                                                                <label>یارانه اشتغال بازنشستگان:</label>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <label>یارانه بازنشستگان:</label>
+                                                                            }
+                                                                            @CurrencyUtility.FormatPrice(item.MaxSataSubsidyPrice) تومان
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            <div class="d-md-flex d-sm-block align-items-center gap-5">
+                                                                @if (!Model.OrderSummaryForPayViewModel.SubsidyBased)
+
+                                                                {
+                                                                    <div>
+                                                                        <span class="badge blue-badge-in-card">
+                                                                            قیمت با تخفیف:
+                                                                            @CurrencyUtility.FormatPrice(item.CalcPrice) تومان
+
+                                                                        </span>
+                                                                    </div>
+                                                                }
+                                                                <div class="final-price-tem2 pt-1">
+                                                                    <span class="dark-orange-in-card">
+                                                                        <strong>
+                                                                            تعداد:
+                                                                        </strong>
+                                                                        <strong>
+                                                                            @item.Quantity
+                                                                        </strong>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="date-time d-md-flex d-sm-block flex-column">
+                                                                @if (!string.IsNullOrEmpty(item.CoursePlanningSchedule))
+                                                                {
+                                                                    <div class="date-time-child1 pt-2 d-flex align-items-center gap-1">
+                                                                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                                                            <use href="../images/icons/product.svg#calendar-time" />
+                                                                        </svg>
+                                                                        <span class="date-time-child1-txt">
+                                                                            روزهای @item.CoursePlanningSchedule
+                                                                        </span>
+                                                                    </div>
+                                                                }
+                                                                @if (item.StartDate.HasValue)
+                                                                {
+                                                                    <div class="date-time-child2 pt-2 d-flex align-items-center gap-1">
+                                                                        <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                                                            <use href="../images/icons/general.svg#calendar" />
+                                                                        </svg>
+                                                                        <span class="date-time-child2-text">
+                                                                            از تاریخ @DateFunction.GetDateFromIntReverse(item.StartDate) تا @DateFunction.GetDateFromIntReverse(item.EndDate)
+                                                                        </span>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                            <div class="departemen d-md-flex d-sm-block align-items-center gap-5">
+                                                                <div class="pt-2 departemen-item1">
+                                                                    <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                                                        <use href="../images/icons/product.svg#building-store" />
+                                                                    </svg>
+                                                                    <span class="departemen-item1-text">
+                                                                        @item.CompanyTitle
+                                                                    </span>
+                                                                </div>
+                                                                <div class="pt-2 departemen-item2">
+                                                                    <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                                                        <use href="../images/icons/product.svg#building-store" />
+                                                                    </svg>
+                                                                    @item.RepresentationTitle -
+                                                                    <span style="display: inline-block;">@item.StateTitle / @item.CityTitle</span>
+                                                                </div>
+                                                            </div>
+                                                            @if (!string.IsNullOrEmpty(item.RepresentationAddress))
+                                                            {
+                                                                <div class="pt-2">
+                                                                    <svg viewBox="0 0 24 24" width="22" heigth="22" stroke="#6c757d">
+                                                                        <use href="../images/icons/general.svg#map-pin" />
+                                                                    </svg>
+                                                                    <span class="locaton">
+                                                                        <span>
+                                                                            @item.RepresentationAddress
+                                                                        </span>
+                                                                        -
+                                                                        <span>@item.RepresentationTelephone</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            <div class="d-flex justify-content-start pt-2 mt-2">
+                                                                <button type="button"
+                                                                        class="btn btn-outline-danger d-flex align-items-center fs-14"
+                                                                        onclick="openShoppingCartItemDeleteModal(@item.ShoppingCartItemId)">
+
+                                                                    <div class="pe-1">
+                                                                        <svg viewBox="0 0 24 24" width="18" heigth="18" stroke="currentColor">
+                                                                            <use href="../images/icons/general.svg#trash" />
+                                                                        </svg>
+                                                                        حذف
+                                                                    </div>
+                                                                    <span class="spinner-border text-danger spinner-border-sm d-none my-auto" role="status" aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <!-- left sidebar -->
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 p-2">
+                                            <div class="detail p-3 rounded sticky-top" style="z-index:0!important">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>
+                                                        قیمت پایه
+                                                        (@Model.OrderSummaryForPayViewModel.OrderItemsCount)
+
+                                                    </span>
+                                                    <span>
+                                                        @CurrencyUtility.FormatPrice(Model.OrderSummaryForPayViewModel.SumPrice)
+                                                        <span class="currency">تومان</span>
+                                                    </span>
+                                                </div>
+
+                                                <div class=" d-flex justify-content-between mt-2">
+                                                    <span class="dark-orange-in-card">تخفیف</span>
+                                                    <span class="dark-orange-in-card">
+                                                        @CurrencyUtility.FormatPrice(Model.OrderSummaryForPayViewModel.SumDiscount)
+                                                        <span class="currency dark-orange-in-card">تومان</span>
+                                                    </span>
+                                                </div>
+
+                                                @if (Model.OrderSummaryForPayViewModel.SubsidyBased)
+                                                {
+                                                    <div class=" d-flex justify-content-between mt-2">
+                                                        <span class="dark-orange-in-card">
+                                                            سقف یارانه ساتا
+                                                        </span>
+                                                        <span class="dark-orange-in-card">
+                                                            @CurrencyUtility.FormatPrice(Model.OrderSummaryForPayViewModel.SumMaxSubsidySata)
+                                                            <span class="currency dark-orange-in-card">تومان</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class=" d-flex justify-content-between mt-2">
+                                                        <span class="dark-orange-in-card">
+                                                            سقف یارانه وزارت
+                                                        </span>
+                                                        <span class="dark-orange-in-card">
+                                                            @CurrencyUtility.FormatPrice(Model.OrderSummaryForPayViewModel.SumMaxSubsidyVezarat)
+                                                            <span class="currency dark-orange-in-card">تومان</span>
+                                                        </span>
+                                                    </div>
+
+                                                }
+
+                                                @if (Model.MinimumPurchaseAmountErrorMessages.Any())
+                                                {
+                                                    <div class="payment-btn d-grid gap-2 p-2 mt-3">
+                                                        <button disabled="true" class="d-flex alig-items-center justify-content-center w-100 p-2 add-to-card-index gap-2 text-white">
+                                                            <span class="spinner-border text-warning spinner-border-sm  d-none" role="status" aria-hidden="true" style="margin-top:3px"></span>
+                                                            عدم امکان ادامه فرآیند خرید
+                                                        </button>
+                                                    </div>
+                                                }
+                                                else if (orderId == null)
+                                                {
+                                                    <div class="payment-btn d-grid gap-2 p-2 mt-3">
+                                                        <button class="d-flex alig-items-center justify-content-center w-100 p-2 add-to-card-index gap-2 text-white" onclick="goToCheckout()">
+                                                            <span class="spinner-border text-warning spinner-border-sm  d-none" role="status" aria-hidden="true" style="margin-top:3px"></span>
+                                                            ادامه فرآیند خرید
+                                                        </button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="payment-btn d-grid gap-2 p-2 mt-3">
+                                                        <button class="btn btn-danger p-2" type="button" onclick="goToCheckout();">
+                                                            ادامه ویرایش سفارش
+                                                        </button>
+                                                        <div class="payment-btn d-grid gap-2 p-2 mt-3">
+                                                            <button class="btn btn-danger p-2" type="button" onclick="goToCheckout();">
+                                                                انصراف از ویرایش سفارش
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                                <p class="" style="display: none;">
+                                                    کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش مراحل بعدی را تکمیل کنید.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="py-3">
+                                        <img src="./images/shop/shoppingCart.webp"
+                                             alt="Shopping Card"
+                                             class="mx-auto d-block"
+                                             width="200px"
+                                             height="150px" />
+                                        <p class="text-center fs-16 fw-700">سبد خرید شما خالی است!</p>
+                                        <p class="text-center fs-14">می‌توانید برای مشاهده محصولات بیشتر به <a style=" color:var(--dark-primary-yellow-color);" href="/"> صفحه اصلی </a>مراجعه نمایید.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade"
+                         id="profile"
+                         role="tabpanel"
+                         aria-labelledby="profile-tab">
+                        page2
+                    </div>
+                    <div class="tab-pane fade"
+                         id="contact"
+                         role="tabpanel"
+                         aria-labelledby="contact-tab">
+                        page3
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- The Spinner Modal -->
+<div class="modal fade" id="deleteItemSpinnerModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <object id="deleteRecipientLoading" type="image/svg+xml" data="~/images/svg/loading.svg" style="position:absolute;left: 50%; top:50%;  transform: translate(-50%, -50%) scale(0.8); z-index: 1000;"></object>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal For MinimumPurchaseAmount Validation Message-->
+<div class="modal fade" id="minimumPurchaseAmountValidationModal" tabindex="-1" aria-labelledby="apiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="apiModalLabel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-square-rounded"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+                    توجه
+                </h5>
+            </div>
+            <div class="modal-body" id="modalBody" style="text-align: justify;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="confirm-inner-product--button" id="hideMinimumPurchaseAmountValidationModalBtn">
+                    تایید
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--End shopping-cart-->
+@section scripts {
+    <script>
+
+
+        validateMinimumPurchaseAmount();
+
+        if ('@orderId' != '') {
+            $('#Message').html("کاربر گرامی شما در حال ویرایش آیتم های سفارش خود هستید و زمان باقیمانده برای ویرایش سفارش 30 دقیقه میباشد ");
+            $('#alert').removeClass('fade');
+            $('#alert').addClass('show');
+            loadModalAlert()
+        }
+        $('#pluss').click(function () {
+            var count = $('#productCount').html();
+            count++;
+            $('#productCount').html(count);
+            if ($('#productCount').html() > 0) {
+                $('#trahs').css('display', 'none');
+                $('#minesss').css('visibility', 'visible');
+                $('#minesss').css('display', '');
+            }
+        });
+        $('#minesss').click(function () {
+            var count = $('#productCount').html();
+            count--;
+            $('#productCount').html(count);
+            if ($('#productCount').html() == 1) {
+                $('#minesss').css('display', 'none');
+                $('#trahs').css('visibility', 'visible');
+                $('#trahs').css('display', '');
+            }
+        });
+
+        function goToCheckout() {
+            const leftSideBar = document.querySelector('.detail');
+            const submitButton = leftSideBar.querySelector('.add-to-card-index');
+            const spinnerElement = leftSideBar.querySelector('.spinner-border');
+            spinnerElement.classList.remove('d-none');
+            submitButton.setAttribute('disabled', true);
+        @if (User.Identity.IsAuthenticated)
+        {
+            @:window.location = "/order/checkout";
+        }
+        else
+        {
+            @:window.location = "/user/login";
+        }
+                                            return false;
+        }
+
+        function cancelOfEditOrder() {
+            fetch('/api/shoppingCartItem/cancelOfEditOrder',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.errors && data.isSuccess === true) {
+                        window.location = "/order";
+
+                    } else {
+
+                        window.location = "/";
+                    }
+
+                })
+                .catch(x => {
+                    $('#Message').html("خطا در لغو ویرایش محصول");
+                    $('#alert').removeClass('fade');
+                    $('#alert').addClass('show');
+                    loadModalAlert();
+                });
+
+        }
+
+        //این متد در صورتی که پیام خطا برای حداقل مبلغ خرید داشته باشیم
+        //پیام های خطا را نمایش می دهد.
+        function validateMinimumPurchaseAmount() {
+            var messages = @Html.Raw(Json.Serialize(Model.MinimumPurchaseAmountErrorMessages));
+            if (messages && messages.length > 0) {
+                var modalElement = new bootstrap.Modal(document.getElementById('minimumPurchaseAmountValidationModal'));
+                var hideModalBtn = document.getElementById('hideMinimumPurchaseAmountValidationModalBtn');
+                var message = '';
+                for (var i = 0; i < messages.length; i++) {
+                    message += messages[i] + '<br> <br>';
+                }
+                document.getElementById('modalBody').innerHTML = message;
+                modalElement.show();
+                hideModalBtn.onclick = function () {
+                    modalElement.hide();
+                };
+            }
+        }
+
+    </script>
+    <script>
+        function loadModalAlert() {
+            setInterval(function () {
+                $('#alert').removeClass('show');
+                $('#alert').addClass('fade');
+            },
+                5000);
+            clearInterval();
+        }
+
+        function closeCross() {
+
+            $('#alert').removeClass('show');
+            $('#alert').addClass('fade');
+        }
+    </script>
+
+}
+
+
+

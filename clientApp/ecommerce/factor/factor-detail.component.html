@@ -1,0 +1,40 @@
+<div class="col-12">
+    <div [hidden]="showSaveBtn" class="alert alert-danger" [textContent]="validationMessage">
+    </div>
+</div>
+<div style="width: 100%;" [style.height.px]="contentHeight">
+    <as-split direction="horizontal">
+        <as-split-area [size]="100" dir="ltr">
+            <as-split direction="vertical">
+                <as-split-area #t1 [size]="25">
+                    <app-busy-indicator>
+                        <app-base-edit-form [fixHeight]="false"
+                                            [showCloseButton]='false'
+                                            [showSaveButton]="showSaveBtn"
+                                            (submitEvent)="formSubmit($event)"
+                                            (cancelEditOrInsert)="onCloseFormClick()">
+                            <dx-form id="form" #detailForm [formData]="entity">
+                                <dxi-item [label]="{text: 'توضیحات'}" dataField="description"
+                                          editorType='dxTextArea'
+                                          [editorOptions]="{height:50}">
+                                </dxi-item>
+                            </dx-form>
+                            <br/>
+                        </app-base-edit-form>
+                    </app-busy-indicator>
+                </as-split-area>
+                <as-split-area [size]="75" #t2>
+                    <app-current-user-un-factored-order-item-list
+                            [productSalesPlanningIds]="productSalesPlanningIds"
+                            [gridHeight]="t2.offsetHeight -40"
+                            [fixHeight]="false"
+                            (productSalesPlanningItem)="onItemSelect($event)"
+                    >
+                    </app-current-user-un-factored-order-item-list>
+                </as-split-area>
+            </as-split>
+        </as-split-area>
+    </as-split>
+</div>
+
+

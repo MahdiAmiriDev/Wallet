@@ -1,0 +1,40 @@
+<app-base-list-form
+  #listForm
+  [entityName]="entityName"
+  [columns]="columns"
+  [showExportToExcelButton]="true"
+  [wordWrapEnabled]="true"
+  [showAddButton]="false"
+  [showEditForm]="false"
+  [allowEditInForm]="false"
+  [allowDeleteInForm]="false"
+  [allowAdd]="false"
+  [showFilterButton]="true"
+  [showCustomCheckBox]="false"
+  [customRowButtons]="customRowButtons">
+</app-base-list-form>
+
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="لیست جزییات"
+  [dragEnabled]="false"
+  [(visible)]="showReferenceDetails"
+  [deferRendering]="false"
+  (onHidden)="closePopUp()"
+>
+
+  <dxi-item *ngIf="showReferenceDetails">
+  </dxi-item>
+
+  <app-factor-payment-installment-Reference-Detail *ngIf="showReferenceDetails"
+                                                   [yearMonth]="yearMonth"
+                                                   [paymentReferenceDate]="paymentReferenceDate"
+                                                   [creationDate]="creationDate"
+                                                   [paymentReferenceId]="paymentReferenceId"
+  >
+  </app-factor-payment-installment-Reference-Detail>
+</dx-popup>

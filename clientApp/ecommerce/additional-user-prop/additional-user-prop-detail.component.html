@@ -1,0 +1,19 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+
+    <dxi-item dataField="userId" editorType="dxLookup" [label]="{text: 'کاربر'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: userDataSource,displayExpr:'userName',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="کاربر اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item dataField="companyId" editorType="dxLookup" [label]="{text: 'مرکز'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: companyDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="مرکز اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item dataField="representationId" editorType="dxLookup" [label]="{text: 'نمایندگی'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: representationDataSource,displayExpr:'title',valueExpr:'id' }">
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form></app-busy-indicator>

@@ -1,0 +1,15 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [title]="'لیست ریزپرداخت های آیتم فاکتور'"
+                    [showAddButton]="false"
+                    [wordWrapEnabled]="true"
+                    [showExportToExcelButton]="true"
+                    [additionalData]="entity"
+>
+</app-base-list-form>
+

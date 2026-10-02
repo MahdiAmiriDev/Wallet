@@ -1,0 +1,50 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderSimplePresentationViewModel
+@{
+
+    Layout = "_Layout";
+}
+
+
+<div class="boxed">
+    <div class="container">
+        <div class="">
+
+            <div class="col-md-12 paddingLeftMob paddingRightMob">
+                <!-- Nav tabs -->
+                <div class="card2" >
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-home"></i>  <span class="myTab">وضعیت ثبت سفارش</span></a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <section class="c-checkout-empty__container">
+                                <div class="c-checkout-empty">
+                                    <div class="c-checkout-empty__empty-sfl-icon">
+                                        <img src="~/images/06d51c65.png" alt="Check List" />
+                                    </div>
+                                    <div class="c-checkout-empty__title">
+                                        کاربر گرامی سفارش شما ثبت شد.
+                                    </div>
+                                    @if (Model.SubsidyStatusType != 0)
+                                    {
+                                        <p class="c-checkout-empty__sfl-content" style="line-height: 30px;">
+                                            کاربر گرامی سفارش شما با کد <b style="color:red">@Model.Title</b>
+                                            ثبت شده و  منتظر تایید یارنه می باشد                                         
+                                            شما می توانید وضعیت سفارش خود را از طریق لینک زیر مشاهده نمایید
+                                        </p>
+                                    }
+                                    <p class="c-checkout-empty__sfl-content">
+                                        <a href="/order/" style="width: 60%;margin: auto;" class="loginButton">لیست سفارش های من</a>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

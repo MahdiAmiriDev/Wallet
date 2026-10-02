@@ -1,0 +1,35 @@
+<dx-drop-down-box
+    #ddlPerson
+    [(value)]="selectedItemId"
+    valueExpr="id"
+    displayExpr="title"
+    placeholder="{{'um.Person.PersonSelection'|translate}}"
+    [dataSource]="personDataSource"
+    [readOnly]="isReadOnly"
+    [deferRendering]="false"
+    [showClearButton]="true">
+
+  <div *dxTemplate="let data of 'dropDownButton'">
+    <dx-button icon="plus"></dx-button>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <dx-data-grid id="gridContainer"
+                  width="100%"
+                  height="100%"
+                  [dataSource]="personDataSource"
+                  [showBorders]="true"
+                  [rtlEnabled]="true"
+                  [rowAlternationEnabled]="true"
+                  [columns]="columns"
+                  [wordWrapEnabled]="true"
+                  [remoteOperations]="lazyLoading"
+                  [selectedRowKeys]="selectedItemId"
+                  (onRowClick)="ddlPerson.instance.close();"
+                  (onSelectionChanged)="selectedPersonChanged($event);">
+      <dxo-filter-row visible="true"></dxo-filter-row>
+      <dxo-header-filter visible="true"></dxo-header-filter>
+      <dxo-selection mode="single"></dxo-selection>
+    </dx-data-grid>
+  </div>
+</dx-drop-down-box>
+

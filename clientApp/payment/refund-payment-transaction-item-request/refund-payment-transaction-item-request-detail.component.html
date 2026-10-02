@@ -1,0 +1,38 @@
+	<app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+			 
+	
+				<dxi-item dataField="parentId" editorType="dxLookup" [label]="{text: 'ParentId'}"
+				[editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: parentDataSource,displayExpr:'title',valueExpr:'id' }">	
+		</dxi-item>
+	
+				<dxi-item dataField="yashilHekmatTerminalId" editorType="dxLookup" [label]="{text: 'شناسه ترمینال'}"
+				[editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: yashilHekmatTerminalDataSource,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="شناسه ترمینال اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item [label]="{text: 'شناسه تراکنش پدیرنده'}"  dataField="reservationNumber"     >
+					<dxi-validation-rule  type="required" message="شناسه تراکنش پدیرنده اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item [label]="{text: 'کد'}"  dataField="code"     >	
+		</dxi-item>
+	<dxi-item dataField="refundPaymentTransactionItemRequestType" editorType="dxSelectBox" [label]="{text: 'نوع درخواست'}"  
+				[editorOptions]="{ items: refundPaymentTransactionItemRequestTypes,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="نوع درخواست اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item dataField="refundPaymentTransactionItemRequestStatus" editorType="dxSelectBox" [label]="{text: 'وضعیت درخواست'}"  
+				[editorOptions]="{ items: refundPaymentTransactionItemRequestStatuss,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="وضعیت درخواست اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'    >	
+		</dxi-item>
+	<dxi-item [label]="{text: 'دلیل رد'}"  dataField="rejectRreason" editorType='dxTextArea'    >	
+		</dxi-item>
+	<dxi-item [label]="{text: 'CodePath'}"  dataField="codePath"     >	
+		</dxi-item>
+	<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"  
+				[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>	
+		</dxi-item>
+	
+</dx-form>
+</app-base-edit-form>

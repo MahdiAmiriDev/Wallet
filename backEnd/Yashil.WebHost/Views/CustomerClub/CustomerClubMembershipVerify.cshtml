@@ -1,0 +1,31 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.CustomerClubMembershipVerifyViewModel
+
+<div class="form-group">
+    @if (Model.HasCustomCode)
+    {
+        @*<div class="form-group">*@
+            <div class="row form-group fullwidth">
+                <label class="customLable" for="CardNumber">@Model.CardNumberLabel</label>
+                @Html.TextBoxFor(x => x.CardNumber, new { autocomplete = "off" })
+
+                <div class="customLable">
+                    @Html.ValidationMessageFor(x => x.CardNumber, "", new { @class = "validationMessage" })
+                </div>
+            </div>
+        @*</div>*@
+    }
+    @if (Model.HasNationalCode)
+    {
+        @*<div class="form-group">*@
+            <div class="row form-group fullwidth">
+                <div class="customLable">
+                    @Html.LabelFor(x => x.NationalCode)
+                </div>
+                @Html.TextBoxFor(x => x.NationalCode, new { autocomplete = "off" })
+                <div class="customLable">
+                    @Html.ValidationMessageFor(x => x.NationalCode, "", new { @class = "validationMessage" })
+                </div>
+            </div>
+        @*</div>*@
+    }
+</div>

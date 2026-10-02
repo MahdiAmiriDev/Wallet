@@ -1,0 +1,179 @@
+﻿@using Yashil.Common.SharedKernel.Helpers
+@using Yashil.Core.Enums;
+@model Yashil.Core.CustomViewModels.ECommerce.ProductSalesPlanningCustomViewModel
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+}
+@if (Model.StartDate.HasValue && Model.StartDate > 0)
+{
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg viewBox="0 0 24 24" width="20" heigth="20" stroke="navy">
+                <use href="../images/icons/product.svg#calendar-time" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class="text-dark fw-600"> تاریخ: </span>
+            از
+            <span>@DateFunction.GetDateFromIntReverse(Model.StartDate)</span> تا
+            <span>@DateFunction.GetDateFromIntReverse(Model.EndDate)</span>
+        </span>
+    </div>
+}
+
+@if (Model.Duration.HasValue)
+{
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="20" height="20" stroke="green">
+                <use href="../images/icons/product.svg#clock" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                مدت زمان:
+            </span>
+            <span class="">
+                @Model.Duration ساعت
+            </span>
+        </span>
+    </div>
+
+}
+
+@if (Model.CustomGender == (int)CustomGenderTypeEnum.Male || Model.CustomGender == (int)CustomGenderTypeEnum.Female)
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="24" height="24" stroke="deeppink">
+                <use href="../images/icons/product.svg#man" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                ویژه:
+            </span>
+            <span class="">
+                @Model.CustomGenderTitle
+            </span>
+        </span>
+    </div>
+
+}
+
+@if (Model.RemainingCapacity != null && Model.RemainingCapacity > 0)
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="20" height="20" stroke="rgb(211, 47, 47)">
+                <use href="../images/icons/product.svg#capacity" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                ظرفیت باقی مانده:
+            </span>
+            <span class="">
+                @Model.RemainingCapacity نفر
+            </span>
+        </span>
+    </div>
+
+}
+
+
+@if (!string.IsNullOrWhiteSpace(Model.CoursePlanningSchedule))
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span class="align-self-start">
+            <svg width="20" height="20" stroke="teal">
+                <use href="../images/icons/product.svg#watch" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                روزهای تشکیل:
+            </span>
+            <span class="">
+                @Model.CoursePlanningSchedule
+            </span>
+        </span>
+    </div>
+
+}
+
+
+@if (!string.IsNullOrEmpty(Model.CityTitle))
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="20" height="20" stroke="var(--dark-primary-yellow-color)">
+                <use href="../images/icons/general.svg#map-pin" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                شهر:
+            </span>
+            <span class="">
+                @Model.CityTitle
+            </span>
+        </span>
+    </div>
+
+}
+
+
+
+@if (Model.InstallmentCount != null)
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="20" height="20" stroke="purple">
+                <use href="../images/icons/product.svg#money-bag" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                تعداد اقساط:
+            </span>
+            <span class="">
+                @Model.InstallmentCount
+            </span>
+        </span>
+    </div>
+
+}
+
+
+
+@if (!string.IsNullOrEmpty(Model.RepresentationTitle))
+{
+
+    <div class="d-flex align-items-center px-2 my-3 fs-14 fw-500">
+        <span>
+            <svg width="20" height="20" stroke="var(--primary-blue-color)">
+                <use href="../images/icons/product.svg#building-store" />
+            </svg>
+        </span>
+        <span class="ms-1">
+            <span class=" text-dark fw-600">
+                نمایندگی:
+            </span>
+            <span class="">
+                @Model.RepresentationTitle
+            </span>
+        </span>
+    </div>
+
+}
+

@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/fonts/yekan_bakh/fontface.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/hekmatIpg.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap5/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap5/bootstrap-v5.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap5/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/yashilIpgStyle.css" asp-append-version="true" />
+    @await RenderSectionAsync("css", false)
+</head>
+<body style="background-color: #F3F4F6">
+    <div>
+        @RenderBody()
+        <script src="~/js/jquery/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/components/authentication/captcha.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery/jquery-validate/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+        <script src="~/js/errorMessage.min.js" asp-append-version="true"></script>
+        <script src="~/js/ipg/hekmatIpg.min.js" asp-append-version="true"></script>
+        <script src="~/js/ipg/hekmatIpg.min.js" asp-append-version="true"></script>
+        <script src="~/js/ipg/ipgBootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/validator.min.js"></script>
+        @await RenderSectionAsync("scripts", false)
+    </div>
+</body>
+</html>

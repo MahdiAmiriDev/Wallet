@@ -1,0 +1,56 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.HomePageAdvertisingImageViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <!-- four section (four image) -->
+    <div class="container">
+        <div class="four_skills--container mx-3 mx-sm-0">
+
+            @foreach (var item in Model)
+            {
+                if (item.DeskTopModeAppDocumentId != 0)
+                {
+                    <div class="homepage-banner__container">
+                        <div class="d-none d-md-block">
+                            <!-- Skeleton Loading Placeholder for Learning Image Item in Desktop /-->
+                            <div class="skeleton-loading--container">
+                                <div class="skeleton skeleton-line learnin-skill-image--skeleton"
+                                     style="
+    --l-h: 160px;
+--c-w: 100%;
+--c-p: 0px
+  "></div>
+                            </div>
+                            <!-- Skeleton Loading Placeholder for Learning Image Item in Desktop -->
+                            
+                            <!-- Learning Image Item in Desktop -->
+                            <div class="skeleton-content--container d-none">
+                                <a href="@(string.IsNullOrEmpty(item.Url) ? "#" : item.Url)">
+                                    <img class="banners-homepage border w-100 pe-none"
+                                         data-src="/api/publicApi/GetHomePageAdvertisingImage?appDocumentId=@item.DeskTopModeAppDocumentId"
+                                         alt="@item.Title" />
+                                </a>
+                            </div>
+                            <!-- Learning Image Item in Desktop /-->
+                        </div>
+                        <div class="d-block d-md-none">
+                            <!-- Skeleton Loading Placeholder for Learning Image Item in Mobile -->
+                            <div class="skeleton-loading--container">
+                                <div class="skeleton skeleton-line learnin-skill-image--skeleton"></div>
+                            </div>
+                            <!-- Skeleton Loading Placeholder for Learning Image Item in Mobile /-->
+                            
+                            <!-- Learning Image Item in Mobile -->
+                            <div class="skeleton-content--container d-none">
+                                <a href="@(string.IsNullOrEmpty(item.Url) ? "#" : item.Url)">
+                                    <img class="rounded-3 w-100" alt="@item.Title" data-src="/api/publicApi/GetHomePageAdvertisingImage?appDocumentId=@item.MobileModeAppDocumentId" />
+                                </a>
+                            </div>
+                            <!-- Learning Image Item in Mobile /-->
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

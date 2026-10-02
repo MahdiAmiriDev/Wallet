@@ -1,0 +1,14 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [gridHeight]="gridHeight"
+                    [fixHeight] = "true"
+                    [allowAdd] =  "allowAdd"
+                    [showAddButton] = "showAddButton"
+                    [allowDeleteInForm] = "allowDeleteInForm"
+                    [allowEditInForm] = "allowEditInForm"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

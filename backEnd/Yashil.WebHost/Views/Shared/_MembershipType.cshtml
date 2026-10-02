@@ -1,0 +1,91 @@
+﻿@using Yashil.Core.Enums
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.RecipientPresentationEditModel
+<fieldset class="mt-2 edit-recipient-form edit-recipient-fieldset">
+    <legend class="w-auto fw-600 text-right ps-1 pe-2">اطلاعات صاحب حکمت کارت</legend>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-12 d-flex">
+                @*<label class="fs-14" for="onwork">وضعیت :</label>*@
+                <div class="col-8 mx-2">
+                    <div class="d-flex flex-column flex-sm-row">
+
+                        @foreach (var item in Model.MembershipTypes)
+                        {
+                            @* <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 pl-0"> *@
+                            @*     @Html.RadioButtonFor(model => model.MembershipType, item.Id, new { name = "MembershipType", id = item.Id, onclick = "changeCardNumberLabel(this);" }) *@
+                            @*     <label class="" for="@item.Id">@item.Title</label><br /> *@
+                            @* </div> *@
+
+                            <div class="d-flex align-items-center col-4 gap-1 p-0 fs-14">
+                                @if (Model.MembershipType == item.Id)
+                                {
+                                    <input checked data-val="true" data-val-required="وضعیت اجباری می باشد" id="@item.Id" name="MembershipType" onclick="changeCardNumberLabel(this);" type="radio" value="@item.Id">
+                                }
+                                else
+                                {
+                                    @if(item.Code == "1")
+                                    {
+                                        <input checked data-val="true" data-val-required="وضعیت اجباری می باشد" id="@item.Id" name="MembershipType" onclick="changeCardNumberLabel(this);" type="radio" value="@item.Id">
+                                    }
+                                    else
+                                    {
+                                        <input data-val="true" data-val-required="وضعیت اجباری می باشد" id="@item.Id" name="MembershipType" onclick="changeCardNumberLabel(this);" type="radio" value="@item.Id">
+                                    }
+                                }
+                                <label class="fs-14" for="@item.Id">@item.Title</label><br />
+                            </div>
+                        }
+                        @* @Html.ValidationMessageFor(x => x.MembershipType, "", new { @class = "validationMessage" }) *@
+                        <span class="validationMessage field-validation-valid" data-valmsg-for="MembershipType" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group fullwidth-pr mt-1 text-right">
+                @if (Model.MembershipType == (int)MembershipTypesEnum.Vezarat || Model.MembershipType == (int)MembershipTypesEnum.Sata)
+                {
+                    <label class="fs-14" id="lblCardNumber" for="CardNumber">شماره حکمت</label>
+                }
+                else
+                {
+                    <label class="fs-14" id="lblCardNumber" for="CardNumber">شماره کارت</label>
+                }
+                @if (Model.RequiredRecipientCardNumber)
+                {
+                    <input autocomplete="off"
+                           data-val="true"
+                           data-val-length="حداکثر طول شماره کارت حداکثر 16 میباشد"
+                           data-val-length-max="16" data-val-remote="شماره کارت نامعتبر است"
+                           data-val-remote-additionalfields="*.MembershipType,*.CardNumber"
+                           data-val-remote-url="/Recipient/VerifyCardNumber"
+                           data-val-required="شماره کارت اجباری است"
+                           id="CardNumber"
+                           maxlength="16" name="CardNumber"
+                           type="text"
+                           class="input-login input-login-page w-100 ss02"
+                           value="@Model.CardNumber">
+                    <span class="field-validation-valid" data-valmsg-for="CardNumber" data-valmsg-replace="true"></span>
+                }
+                else
+                {
+                    <input autocomplete="off"
+                           data-val="false"
+                           data-val-length="حداکثر طول شماره کارت حداکثر 16 میباشد"
+                           data-val-length-max="16"
+                           id="CardNumber"
+                           maxlength="16"
+                           name="CardNumber"
+                           type="text"
+                           class="input-login input-login-page w-100 ss02"
+                           value="@Model.CardNumber">
+
+                    <span class="field-validation-valid" data-valmsg-for="CardNumber" data-valmsg-replace="true"></span>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</fieldset>

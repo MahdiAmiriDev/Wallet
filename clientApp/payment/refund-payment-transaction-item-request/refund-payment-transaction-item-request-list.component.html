@@ -1,0 +1,31 @@
+<div class="row mb-2">
+  <div class="col-1">
+    انتخاب کاربر:
+  </div>
+  <div class="col-4">
+    <dx-lookup
+      [dataSource]="vendorDataSource"
+      displayExpr="title"
+      valueExpr="id"
+      [showClearButton]="true"
+      [rtlEnabled]="true">
+      <dxo-drop-down-options
+        [closeOnOutsideClick]="true"
+        [showTitle]="false">
+      </dxo-drop-down-options>
+    </dx-lookup>
+  </div>
+</div>
+
+
+
+
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowLoadData]="false"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

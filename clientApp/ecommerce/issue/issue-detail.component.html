@@ -1,0 +1,95 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+
+        <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+
+      <dxi-item dataField="issueType" editorType="dxSelectBox" [label]="{text: 'نوع مسئله(پدر)'}"
+                [editorOptions]="{ items: issueTypes,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="نوع مسئله(پدر) اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شرح مسئله'}" dataField="description" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'راه حل'}" dataField="solution" editorType='dxTextArea'>
+
+
+      </dxi-item>
+
+      <dxi-item dataField="resolutionType" editorType="dxSelectBox" [label]="{text: 'نتیجه مسئله'}"
+                [editorOptions]="{ items: resolutionTypes,displayExpr:'title',valueExpr:'id' }">
+
+      </dxi-item>
+
+      <dxi-item dataField="priorityType" editorType="dxSelectBox" [label]="{text: 'اولویت'}"
+                [editorOptions]="{ items: priorityTypes,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="اولویت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تخمین زمان انجام(دقیقه)'}" dataField="estimate" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ سررسید'}" dataField="dueDate">
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.dueDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="dueDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ سررسید"
+                 [ngModel]="entity.dueDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          placeholder="تاریخ سررسید"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="entity.dueDate | intToStringDate" (ngModelChange)="entity.dueDate=convertDateToInt($event)">-->
+        <!--        </dp-date-picker>-->
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ حل مسئله'}" dataField="resolvedDate">
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.resolvedDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="resolvedDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ حل مسئله"
+                 [ngModel]="entity.resolvedDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          placeholder="تاریخ حل مسئله"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="entity.resolvedDate | intToStringDate"-->
+        <!--          (ngModelChange)="entity.resolvedDate=convertDateToInt($event)">-->
+        <!--        </dp-date-picker>-->
+
+
+      </dxi-item>
+
+      <dxi-item dataField="issueStateType" editorType="dxSelectBox" [label]="{text: 'وضعیت مسئله'}"
+                [editorOptions]="{ items: issueStateTypes,displayExpr:'title',valueExpr:'id' }">
+
+      </dxi-item>
+
+      <dxi-item dataField="assignee" editorType="dxLookup" [label]="{text: 'انجام دهنده'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: assigneeDataSource,
+              displayExpr:'fullName',valueExpr:'id' }">
+
+        <dxi-validation-rule type="required" message="انجام دهنده کار اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

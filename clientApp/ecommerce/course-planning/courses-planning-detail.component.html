@@ -1,0 +1,321 @@
+<app-busy-indicator>
+
+    <div [ngSwitch]="true">
+        <div *ngSwitchCase="showConfirm && hasFinalDiscountPercentageChanged" class="alert alert-danger">
+            کاربر گرامی، درصد تخفیف برنامه ریزی دوره تغییر کرده است و با درصد تخفیف قرار داد متفاوت می باشد.
+        </div>
+
+        <div *ngSwitchCase="!pointsRequirement" class="alert alert-danger">
+            کاربر گرامی، برای استفاده از تعیین سطح مهارت دروس دانشجویان، مقادیر امتیازات را وارد کنید.
+        </div>
+
+        <div *ngSwitchCase="pointsRequirement && !sumOfPointsIsValid" class="alert alert-danger">
+            کاربر گرامی، مجموع امتیازات داده شده نباید بیشتر از 100 باشد.
+        </div>
+    </div>
+
+    <app-base-edit-form [loadForm]="loadForm" [showCloseButton]='false' (submitEvent)="formSubmit($event)"
+                        (cancelEditOrInsert)="onCloseFormClick()">
+
+
+      <app-product-search
+        [showCustomButton]="!selectedEntityId"
+        [companyId]="entity.companyId"
+        [productId]="entity.productId"
+        (selectedProductChanged)="setProduct($event)"
+        [categoryId]="categoryId">
+      </app-product-search>
+
+
+      <div *ngIf="disableSelectingRepresentationDropDown" class="alert alert-warning" role="alert">
+        .کاربر گرامی، در حالتی که نوع فروش دوره انتخابی به صورت فروش در همه نمایندگی ها باشد نیازی به انتخاب نمایندگی برای برنامه ریزی دوره نمی باشد
+      </div>
+        <dx-form id="form" #detailForm [formData]="entity" style="padding: 15px">
+            <style type="text/css">
+                .custom_warning input {
+                    border-color: red !important;
+                }
+            </style>
+            <dxi-item *ngIf="!isCourse" itemType="group" [caption]="(selectedEntityId ? ('tms.Course.ProductInfo' | translate) : ('tms.Course.CreateProduct' | translate))"
+                      [colCount]="isCourse?2:3">
+                <dxi-item [label]="{text: 'Code' | translate}" dataField="product.code"
+                          [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                </dxi-item>
+                <dxi-item [label]="{text: 'tms.Course.Title' | translate}" dataField="product.title"
+                          [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                    <dxi-validation-rule type="required"
+                                         message="{{'tms.Course.Validation.Title' | translate}}"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [template]="'categoryTree'" dataField="product.categories"
+                          [label]="{text: 'shp.Category.Subcategory' | translate}"
+                          [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.Category.Validation.Subcategory' | translate}}"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" dataField="product.course.skillType" editorType="dxSelectBox"
+                          [label]="{text: 'tms.Course.SkillType' | translate}"
+                          [editorOptions]="{ items: skillTypes,displayExpr:'title',valueExpr:'id', readOnly:selectedEntityId || entity.productId }">
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" dataField="product.course.certificateType" editorType="dxSelectBox"
+                          [label]="{text: 'tms.Course.CertificateType' | translate}"
+                          [editorOptions]="{ items: certificateTypes,displayExpr:'title',valueExpr:'id', readOnly:selectedEntityId || entity.productId }">
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" dataField="product.course.evaluationMethod" editorType="dxSelectBox"
+                          [label]="{text: 'tms.Course.EvaluationMethod' | translate}"
+                          [editorOptions]="{ items: evaluationMethods,displayExpr:'title',valueExpr:'id', readOnly:selectedEntityId || entity.productId }">
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" [label]="{text: 'shp.Product.Duration' | translate}"
+                          dataField="product.duration"
+                          editorType='dxNumberBox' [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.Product.Validation.Duration' | translate}}"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" [label]="{text: 'shp.Product.ShortDescription' | translate}"
+                          dataField="product.shortDescription" editorType='dxHtmlEditor' colSpan="2"
+                          [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                </dxi-item>
+                <dxi-item [label]="{text: 'shp.Product.FullDescription' | translate}"
+                          dataField="product.fullDescription"
+                          editorType='dxHtmlEditor' colSpan="{{isCourse?2:3}}"
+                          [editorOptions]="{readOnly:selectedEntityId || entity.productId}">
+                </dxi-item>
+            </dxi-item>
+
+            <dxi-item itemType="group" caption="{{'Specification'| translate }}" [colCount]="2">
+
+                <dxi-item dataField="title"
+                          editorType="dxTextBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.Title'|translate}"
+                ></dxi-item>
+                <dxi-item dataField="representationId" editorType="dxLookup"
+                          [label]="{text: 'shp.ProductSalesPlanning.RepresentationId'|translate}"
+                          *ngIf="!userRepresentationId"
+                          [editorOptions]="{readOnly:disableSelectingRepresentationDropDown,
+                          rtlEnabled:true,onValueChanged:selectedRepresentationValueChanged,
+                          dropDownOptions:{closeOnOutsideClick:true, showTitle:false,disabled:!isProductSelected}, dataSource: representationDataSource,
+                          displayExpr:'title',valueExpr:'id' }">
+                                        <dxi-validation-rule *ngIf="!disableSelectingRepresentationDropDown && !this.disableSelectRepresentation" type="required"
+                                                             message="{{'shp.ProductSalesPlanning.Validation.Representation'|translate}}">
+                                        </dxi-validation-rule>
+                </dxi-item>
+
+                <dxi-item dataField="courseStatus" editorType="dxSelectBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.CourseStatus'|translate}"
+                          [editorOptions]="{  readOnly:showConfirm, items: courseStatus,displayExpr:'title',valueExpr:'id',disabled:!isProductSelected }">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.CourseStatus'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item *ngIf="!lmsMode" [label]="{text: 'shp.ProductSalesPlanning.Price'|translate}" dataField="price"
+                          editorType='dxNumberBox'
+                          [editorOptions]="{ readOnly:showConfirm,format:'#,##0',disabled:!isProductSelected}">
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" dataField="ageCategory" editorType="dxSelectBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.AgeCategory'|translate}"
+                          [editorOptions]="{  readOnly:showConfirm, items: ageCategorys,displayExpr:'title',valueExpr:'id' ,disabled:!isProductSelected}">
+                </dxi-item>
+                <dxi-item dataField="implementationType" editorType="dxSelectBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.ImplementationType'|translate}"
+                          [editorOptions]="{ readOnly:showConfirm, items: implementationTypes,displayExpr:'title',valueExpr:'id',disabled:!isProductSelected }">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.ImplementationType'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="courseType" editorType="dxSelectBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.CourseType'|translate}"
+                          [editorOptions]="{ readOnly:showConfirm, items: courseTypes,displayExpr:'title',valueExpr:'id',disabled:!isProductSelected }">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.CourseType'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="runType" editorType="dxSelectBox"
+                          [label]="{text: 'shp.ProductSalesPlanning.RunType'|translate}"
+                          [editorOptions]="{ readOnly:showConfirm, items: runTypes,displayExpr:'title',valueExpr:'id',disabled:!isProductSelected }">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.runType'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [disabled]="!isProductSelected" [label]="{text: 'shp.ProductSalesPlanning.StartDate'|translate}" dataField="startDate"
+                          editorType='dxNumberBox'
+                          [editorOptions]="{ readOnly:showConfirm ,disabled:!isProductSelected}">
+                    <ng-persian-datepicker [dateInitValue]="false"
+                                           (dateOnSelect)="entity.startDate=convertDateToInt($event);">
+                        <input type="text"
+                               [formControl]="startDateDataValue"
+                               style="float:right"
+                               placeholder="{{'shp.ProductSalesPlanning.StartDate'|translate}}"
+                               [ngModel]="entity.startDate  | intToStringDate"/>
+                    </ng-persian-datepicker>
+
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.StartDate'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [disabled]="!isProductSelected" [label]="{text: 'shp.ProductSalesPlanning.EndDate'|translate}" dataField="endDate"
+                          editorType='dxNumberBox'
+                          [editorOptions]="{ readOnly:showConfirm ,disabled:!isProductSelected}">
+                    <ng-persian-datepicker [dateInitValue]="false"
+                                           (dateOnSelect)="entity.endDate=convertDateToInt($event);">
+                        <input type="text"
+                               [formControl]="endDateDataValue"
+                               style="float:right"
+                               placeholder="{{'shp.ProductSalesPlanning.EndDate'|translate}}"
+                               [ngModel]="entity.endDate  | intToStringDate"/>
+                    </ng-persian-datepicker>
+
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.EndDate'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="considerEndDate" editorType="dxCheckBox"
+                          [label]="{text: 'اعمال تاریخ پایان برای نمایش'}"
+                          [editorOptions]="{disabled:!isProductSelected}">
+                </dxi-item>
+                <dxi-item dataField="customGender" editorType="dxSelectBox"
+                          [label]="{text:'shp.ProductSalesPlanning.CustomGender'|translate}"
+                          [editorOptions]="{  readOnly:showConfirm, items: customGenders,displayExpr:'title',valueExpr:'id',disabled:!isProductSelected }">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.customGender'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text:'shp.ProductSalesPlanning.MaxCapacity'| translate }" dataField="maxCapacity"
+                          editorType='dxNumberBox'
+                          [editorOptions]="{  readOnly:showConfirm ,disabled:!isProductSelected}">
+                    <dxi-validation-rule type="required"
+                                         message="{{'shp.ProductSalesPlanning.Validation.MaxCapacity'|translate}}">
+                    </dxi-validation-rule>
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" [label]="{text:'shp.ProductSalesPlanning.CoursePlanningSchedule'|translate}"
+                          dataField="coursePlanningSchedule"
+                          [editorOptions]="{  readOnly:showConfirm , maxLength:'45',disabled:!isProductSelected}">
+                </dxi-item>
+                <dxi-item [label]="{text:'shp.Product.Duration'|translate}" dataField="duration"
+                          editorType='dxNumberBox'
+                          [editorOptions]="{  readOnly:showConfirm ,disabled:!isProductSelected}">
+
+                </dxi-item>
+
+
+              <dxi-item *ngIf="lmsMode" dataField="classRoomId" editorType="dxLookup" [label]="{text: 'tms.Course.ClassRoomId'|translate}"
+                        [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false},
+                 dataSource: classRoomDataSource,displayExpr:'title',valueExpr:'id' }">
+              </dxi-item>
+
+              <dxi-item *ngIf="lmsMode" dataField="sessionCount" editorType="dxNumberBox" [label]="{text: 'تعداد جلسات'}">
+              </dxi-item>
+
+              <dxi-item *ngIf="lmsMode" dataField="sessionDuration" editorType="dxNumberBox" [label]="{text: 'مدت زمان هر جلسه'}">
+              </dxi-item>
+
+                <dxi-item [label]="{text: 'shp.ProductSalesPlanning.Published'| translate}" dataField="published"
+                          editorType='dxCheckBox' [editorOptions]="{value:(!this.selectedEntityId) ? true:this.entity.published,disabled:!isProductSelected}">
+                </dxi-item>
+                <dxi-item *ngIf="isCourse"
+                          [label]="{text:'shp.ProductSalesPlanning.DisableBuyButton'|translate}"
+                          [editorOptions]="{disabled: entity.isPreRegistration,readOnly:!isProductSelected}"
+                          dataField="disableBuyButton"
+                          editorType='dxCheckBox'>
+                </dxi-item>
+                <dxi-item *ngIf="isCourse" [label]="{text:'فعال کردن دکمه پیش ثبت نام'}"
+                          [editorOptions]="{onValueChanged : changeDisableBuyButtonValue,disabled:!isProductSelected}"
+                          dataField="isPreRegistration"
+                          editorType='dxCheckBox'>
+                </dxi-item>
+
+                <dxi-item *ngIf="isCourse" [label]="{text: 'shp.ProductSalesPlanning.Organizational'|translate}"
+                          dataField="organizational"
+                          [editorOptions]="{disabled:!isProductSelected}"
+                          editorType='dxCheckBox'>
+                </dxi-item>
+                <dxi-item *ngIf="canUserSeeOtherCompany && lmsMode" [label]="{text: 'shp.ProductSalesPlanning.IsPublic'|translate}" dataField="isPublic"
+                          editorType='dxCheckBox' [editorOptions]="{disabled:!isProductSelected}">
+                </dxi-item>
+              <dxi-item *ngIf="lmsMode" [label]="{text: 'shp.ProductSalesPlanning.isPublicOnlyForCurrentCompanyUsers' | translate}" dataField="isPublicOnlyForCurrentCompanyUsers"
+                        editorType='dxCheckBox' [editorOptions]="{disabled:!isProductSelected}">
+              </dxi-item>
+
+              <dxi-item *ngIf="!lmsMode" [label]="{text: 'shp.ProductSalesPlanning.AssignToAllRepresentation' | translate}"
+                        dataField="assignProductSalesPlanningToAllRepresentation"
+                        editorType='dxCheckBox' [editorOptions]="{disabled:!isProductSelected,
+                        onValueChanged:assignProductSalesPlanningToAllRepresentationChanged}">
+              </dxi-item>
+              <dxi-item *ngIf="isAdmin" [label]="{text:'ترتیب نمایش'}"
+                        editorType="dxNumberBox"
+                        dataField="displayOrder"
+                        [editorOptions]="{hint:'مقدار کمتر در ابتدای لیست نمایش داده می شود'}" >
+              </dxi-item>
+
+            </dxi-item>
+
+
+
+
+
+
+
+
+
+
+            <dxi-item [template]="'productSalePlanningDiscount'" itemType="group">
+            </dxi-item>
+
+                    <dxi-item *ngIf="lmsMode && usingAbilitySkillLevel" itemType="group" caption="امتیاز"  [colCount]="3">
+                        <dxi-item
+                                  dataField="classPoint"
+                                  editorType="dxNumberBox"
+                                  [label]="{text: 'shp.ProductSalesPlanning.classPoint' | translate}"
+                                 >
+                        </dxi-item>
+                        <dxi-item
+                                  dataField="examPoint"
+                                  editorType="dxNumberBox"
+                                  [label]="{text: 'shp.ProductSalesPlanning.examPoint' | translate}"
+                                  >
+                        </dxi-item>
+                        <dxi-item
+                                  dataField="homeWorkPoint"
+                                  editorType="dxNumberBox"
+                                  [label]="{text: 'shp.ProductSalesPlanning.homeWorkPoint' | translate}"
+                                  >
+                        </dxi-item>
+                    </dxi-item>
+
+            <dxi-item *ngIf="isCourse && !lmsMode || lmsMode && isAdminApproval" itemType="group" caption="{{'tms.CoursePlaning.Confirm'|translate}}" colSpan="2"
+                      [colCount]="2">
+                <dxi-item [label]="{text:'tms.CoursePlanning.Validation.Confirm'|translate}">
+                    <dx-radio-group [readOnly]="!showConfirm" displayExpr="title" valueExpr="id" [items]="confirmStates"
+                                    [(value)]="entity.confirmed">
+                    </dx-radio-group>
+                </dxi-item>
+                <dxi-item [label]="{text: 'shp.ProductSalesPlanning.RejectReason'|translate}" dataField="rejectReason"
+                          editorType='dxTextArea' colSpan="2" [editorOptions]="{readOnly:!showConfirm}">
+                </dxi-item>
+            </dxi-item>
+
+            <div *dxTemplate="let data of 'categoryTree'">
+                <app-category-select
+                        (selectedRowChanged)="selectedCategoryChanged($event);"
+                        [selectedCategoryId]="entity.product?entity.product.categories: null"
+                        [isRequired]="true"
+                        [readOnly]="selectedEntityId || entity.productId"
+                        [requiredMessage]="'shp.Category.Validation.SubcategorySelection' | translate"
+                        [companyId]="companyId"></app-category-select>
+            </div>
+
+
+            <div *dxTemplate="let data of 'productSalePlanningDiscount'">
+                <div *ngIf="hasFinalDiscountPercentageChanged && isCourse && showConfirm">
+                    <app-product-sales-planning-discount-list
+                            [allowAdd]="false" [allowDeleteInForm]="false"
+                            [allowEditInForm]="false" [showAddButton]="false"
+                            [productSalesPlanningId]="productSalePlanningId"
+                            [fixHeight]="false" [gridHeight]="gridHeight">
+                    </app-product-sales-planning-discount-list>
+                </div>
+
+            </div>
+
+        </dx-form>
+    </app-base-edit-form>
+
+</app-busy-indicator>

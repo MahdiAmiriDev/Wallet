@@ -1,0 +1,24 @@
+<app-busy-indicator>
+
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item dataField="customerClubId" editorType="dxLookup" [label]="{text: 'شناسه باشگاه مشتریان'}"
+                [editorOptions]="{disabled:entity.id,readOnly:entity.id ,rtlEnabled:true,
+                  dropDownOptions:{closeOnOutsideClick:true, showTitle:false},
+                  dataSource: customerClubDataSource,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required"
+                             message="شناسه باشگاه مشتریان اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'درصد تخفیف'}" dataField="discountPercentage" editorType='dxNumberBox'
+                [editorOptions]="{max:99,min:0,format:'#0'}">
+        <dxi-validation-rule type="range"
+                             [min]="1"
+                             [max]="99"
+                             message="حداکثر تعداد ورود ناموفق بین 1 الی 100 می باشد">
+        </dxi-validation-rule>
+
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

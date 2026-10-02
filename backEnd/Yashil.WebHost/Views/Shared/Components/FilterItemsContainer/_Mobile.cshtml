@@ -1,0 +1,62 @@
+﻿@model Yashil.Core.CustomViewModels.ECommerce.ProductFilter
+@if (Model != null && (Model.CityId.HasValue || Model.CategoryId.HasValue || !string.IsNullOrEmpty(Model.CompanyTitle)))
+{
+    <div class="row hidden-md hidden-lg" style="margin-top: 6px;padding-right: 5px;padding-left: 5px;">
+        <div class="col-xs-12 col-sm-12">
+            <div class="hidden-lg hidden-md">
+                <div class="widget-categories border-f-e6f3ff" style="margin-bottom: 5px;">
+                    <!--jQuery slideToggle()-->
+
+                    <div class="content">
+                        @if (Model.CityId.HasValue)
+                        {
+                            <div class="c-listing-options__label filter-c">
+                                <a href="#" onclick="removeParam('cityId')">
+                                    <img src="~/images/cross.png" alt="Close" style="float:left;width: 10px;" />
+                                </a>
+                                <span style="padding-left:10px;">@Model.CityName</span>
+                            </div>
+                        }
+                        @if (Model.CategoryId.HasValue)
+                        {
+                            <div class="c-listing-options__label filter-c">
+                                <a href="#" onclick="removeParam('categoryId')">
+                                    <img src="~/images/cross.png" alt="Close" style="float:left;width: 10px;" />
+                                </a>
+                                <span style="padding-left:10px;">@Model.CategoryTitle</span>
+                            </div>
+                        }
+                        @if (Model.CategoryGroupId.HasValue)
+                        { 
+                            <div class="c-listing-options__label filter-c">
+                                <a href="#" onclick="removeParam('categoryId')">
+                                    <img src="~/images/cross.png" alt="Close" style="float:left;width: 10px;" />
+                                </a>
+                                <span style="padding-left:10px;">@Model.CategoryGroupTitle</span>
+                            </div>
+                            
+                        }
+                        @if (!string.IsNullOrEmpty(Model.CompanyTitle))
+                        {
+                            <div class="c-listing-options__label filter-c">
+                                <a href="#" onclick="removeParam('company')">
+                                    <img src="~/images/cross.png" alt="Close" style="float:left;width: 10px;" />
+                                </a>
+                                <span style="padding-left:10px;">@Model.CompanyTitle</span>
+                            </div>
+                        }
+                        @if (Model.RepresentationId.HasValue)
+                        {
+                            <div class="c-listing-options__label filter-c">
+                                <a href="#" onclick="removeParam('company')">
+                                    <img src="~/images/cross.png" alt="Close" style="float:left;width: 10px;" />
+                                </a>
+                                <span style="padding-left:10px;">@Model.RepresentationTitle</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

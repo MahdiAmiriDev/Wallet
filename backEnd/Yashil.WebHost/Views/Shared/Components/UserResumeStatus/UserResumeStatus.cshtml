@@ -1,0 +1,48 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourney.ViewModels
+@model UserResumeStatusViewModel
+
+<link href="~/css/components/user_resume_status.css" rel="stylesheet" asp-append-version="true" />
+
+<article class="bg-white rounded-3 border px-4 pb-4">
+    <h4 class="resume-status--title border-bottom">رزومه من</h4>
+    <ul class="resume-status--details d-flex flex-column align-items-center gap-4 pt-2 pb-4 border-bottom">
+        <li class="resume-status-icon--container">
+            <svg viewBox="0 0 24 24" width="40" height="40">
+                <use href="../images/icons/general.svg#user-filled" />
+            </svg>
+        </li>
+        <li class="align-self-baseline text-start w-100">
+            @if (!string.IsNullOrEmpty(Model.FullName))
+            {
+                <p class="resume-status--username">@Model.FullName</p>
+            }
+            else
+            {
+                <p class="resume-status--username">@Model.UserName</p>
+            }
+            <div class="resume-status-completion--container">
+                <progress class="resume-status--completion" max="100" value="0"></progress>
+                <p class="resume-status-rate--container"><span class="ss02 resume-status-rate">0</span>% کامل شده</p>
+            </div>
+        </li>
+        <li class="w-100">
+            <a class="resume-status--button" href="home/showResume">
+                <p class="mb-0">مشاهده و دریافت رزومه</p>
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2">
+                    <use href="../images/icons/general.svg#chevron-left" />
+                </svg>
+            </a>
+        </li>
+    </ul>
+    <a class="resume-status--button complete-resume--button mt-4" href="/resume">
+        <p class="mb-0">تکمیل رزومه</p>
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2">
+            <use href="../images/icons/general.svg#chevron-left" />
+        </svg>
+    </a>
+</article>
+
+<script type="text/javascript">
+    const resumeCompletionPercentage = "@Model.ResumeCompletionPercentage";
+    const userName = "@Model.UserName"
+</script>

@@ -1,0 +1,35 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerceAdminApi.ViewModels.CategorySimpleViewModel>
+
+<div class="all"></div>
+<div class="w-100 mx-auto d-flex flex-column justify-content-center align-items-center overflow-hidden">
+    <div class="text-category-title">دسته بندی ها</div>
+    @if (Model != null && Model.Any())
+    {
+        <div class="details-category mt-1 m-3">
+            @foreach (var item in Model)
+            {
+                <div class="category-skeleton--container">
+                    <!-- Skeleton Loading Placeholder for Product Category Item -->
+                    <div class="skeleton-loading--container d-flex flex-column align-items-center gap-3">
+                        <div class="skeleton skeleton-circle category-image--skeleton"></div>
+                        <div class="skeleton skeleton-line category-title--skeleton"></div>
+                    </div>
+                    <!-- Skeleton Loading Placeholder for Product Category Item /-->
+
+                    <!-- Product Category Item -->
+                    <div class="skeleton-content--container d-none">
+                        <a href="/main/@item.Id" style="color: #707070" target="_self"
+                           class="d-flex flex-column flex-nowrap align-items-center my-1 gap-1">
+                            <div class="category-image__container">
+                                <img class="image-category" style="width:100%; object-fit:cover;" alt="Secondary Color"
+                                     src="" data-src="@($"/api/PublicApi/GetCategoryIcon?categoryId={item.Id}&modificationDate={item.ModificationDate}")">
+                            </div>
+                            <div class="text-category">@item.Title</div>
+                        </a>
+                    </div>
+                    <!-- Product Category Item /-->
+                </div>
+            }
+        </div>
+    }
+</div>

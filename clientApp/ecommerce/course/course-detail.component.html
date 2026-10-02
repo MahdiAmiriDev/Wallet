@@ -1,0 +1,161 @@
+<app-busy-indicator>
+    <div *ngIf="!lmsMode" class="alert alert-warning">
+        کاربر گرامی، در صورتی که در قرارداد گزینه فروش بدون مالیات ارزش افزوده تیک زده شده باشد تمام محصولات آن مرکز
+        معاف از مالیات بوده و مالیاتشان از قرارداد خوانده می شود در غیر این صورت مالیات محصول از فرم دوره خوانده می شود.
+    </div>
+    <app-base-edit-form [showCloseButton]='false' (submitEvent)="formSubmit($event)"
+                        (cancelEditOrInsert)="onCloseFormClick()">
+        <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+            <dxi-item [label]="{text: 'Code' | translate}" dataField="code">
+            </dxi-item>
+            <dxi-item [label]="{text: 'tms.Course.Title' | translate}" dataField="title">
+                <dxi-validation-rule type="required"
+                                     message="{{'tms.Course.Validation.Title' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item dataField="companyId" editorType="dxLookup" [label]="{text: 'shp.Company.Title' | translate}"
+                      [editorOptions]="{rtlEnabled:true,onSelectionChanged:selectedCompanyChanged,readOnly:allowSetCompany(),dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: companyDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Company.Validation.Title' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [template]="'categoryTree'" dataField="categories"
+                      [label]="{text: 'shp.Category.Subcategory' | translate}">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Category.Validation.Subcategory' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item *ifHasAccess="entityName,PropertyName:'skillType'" dataField="course.skillType"
+                      editorType="dxSelectBox" [label]="{text: 'tms.Course.SkillType' | translate}"
+                      [editorOptions]="{ items: skillTypes,displayExpr:'title',valueExpr:'id', showClearButton:'true'}">
+            </dxi-item>
+
+            <dxi-item *ifHasAccess="entityName,PropertyName:'certificateType'" dataField="course.certificateType"
+                      editorType="dxSelectBox" [label]="{text: 'tms.Course.CertificateType' | translate}"
+                      [editorOptions]="{ items: certificateTypes,displayExpr:'title',valueExpr:'id', showClearButton:'true' }">
+
+            </dxi-item>
+
+            <dxi-item *ifHasAccess="entityName,PropertyName:'evaluationMethod'" dataField="course.evaluationMethod"
+                      editorType="dxSelectBox" [label]="{text: 'tms.Course.EvaluationMethod' | translate}"
+                      [editorOptions]="{ items: evaluationMethods,displayExpr:'title',valueExpr:'id', showClearButton:'true' }">
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Product.Duration' | translate}" dataField="duration"
+                      editorType='dxNumberBox'>
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Product.Validation.Duration' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item *ngIf="!lmsMode" [label]="{text: 'معاف از مالیات'}" dataField="isTaxExempt" editorType='dxCheckBox'>
+            </dxi-item>
+            <!--      <dxi-item dataField="taxCategoryId"-->
+            <!--                editorType="dxLookup" [label]="{text: 'دسته مالیات'}"-->
+            <!--                [editorOptions]="{rtlEnabled:true,readOnly:entity.isTaxExempt,-->
+            <!--                dropDownOptions:{closeOnOutsideClick:true, showTitle:false},-->
+            <!--                dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">-->
+            <!--      </dxi-item>-->
+            <dxi-item *ngIf="!lmsMode" dataField="taxCategoryId" [label]="{text: 'tms.Course.TaxCategory' | translate}"
+                      [template]="'taxCategoryTemplate'"></dxi-item>
+            <div *dxTemplate="let data of 'taxCategoryTemplate'">
+                <dx-lookup [dataSource]="taxCategoryDataSource"
+                           [(value)]="entity.taxCategoryId"
+                           searchMode="contains"
+                           displayExpr="title"
+                           valueExpr="id"
+                           [rtlEnabled]="true"
+                           showCancelButton="true">
+                </dx-lookup>
+            </div>
+
+
+            <dxi-item itemType="group" caption="تنظیمات مربوط به گروه محصول برای فاکتور و کانورت" colCount="2"
+                      colSpan="2" *ngIf="!lmsMode">
+                <dxi-item colSpan="1" [template]="'productGroupTemplate'">
+
+                </dxi-item>
+
+                <dxi-item colSpan="1" dataField="productGroupId" editorType="dxLookup"
+                          [label]="{text: 'گروه محصول بدون مالیات'}"
+                          [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false,value:entity.productGroupId,
+                 dataSource: productGroupDataSource,displayExpr:getProductGroupDisplayExpr,valueExpr:'id',readOnly:true}">
+                    <dxi-validation-rule type="required"
+                                         message="مقدار گروه محصول اجباری می باشد"></dxi-validation-rule>
+                </dxi-item>
+
+
+                <dxi-item colSpan="1" [template]="'productGroupIncludeTaxTemplate'">
+
+                </dxi-item>
+
+                <dxi-item colSpan="1" dataField="productGroupIdIncludeTax" editorType="dxLookup"
+                          [label]="{text: 'گروه محصول شامل مالیات'}"
+                          [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false,value:entity.productGroupIdIncludeTax,
+                 dataSource: productGroupDataSource,displayExpr:getProductGroupDisplayExpr,valueExpr:'id',readOnly:true}">
+                    <dxi-validation-rule type="required"
+                                         message="مقدار گروه محصول با مالیات اجباری می باشد"></dxi-validation-rule>
+                </dxi-item>
+
+            </dxi-item>
+
+            <dxi-item *ngIf="showProductTypeDropDown" dataField="productType" editorType="dxSelectBox"
+                      [label]="{text: 'tms.Course.ProductType' | translate}"
+                      [editorOptions]="{ items: productType,displayExpr:'title',valueExpr:'id',value:(this.entity.productType != undefined) ? this.entity.productType:2883 }">
+                <dxi-validation-rule type="required" message="نوع کنترل اجباری می باشد"></dxi-validation-rule>
+
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Product.ShortDescription' | translate}" dataField="shortDescription"
+                      editorType='dxHtmlEditor' colSpan="2">
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Product.FullDescription' | translate}" dataField="fullDescription"
+                      editorType='dxHtmlEditor' colSpan="2">
+            </dxi-item>
+
+            <dxi-item itemType="group" caption="تنظیمات ویژه" colCount="2" colSpan="2" *ngIf="!lmsMode">
+                <dxi-item [label]="{text:'تایید تامین کننده قبل از پرداخت'}"
+                          dataField="requireSupplierApprovalBeforePayment"
+                          editorType='dxCheckBox' [colSpan]="1">
+                </dxi-item>
+                <dxi-item [label]="{text: 'عنوان دکمه تایید تامین کننده'}"
+                          dataField="buttonTextRequireSupplierApprovalBeforePayment" [colSpan]="1"
+                          [editorOptions]="{disabled: !entity.requireSupplierApprovalBeforePayment}">
+                </dxi-item>
+
+                <dxi-item [label]="{text: 'پیام به کاربر جهت تایید تامین کننده'}"
+                          dataField="messageToUserInRequireSupplierApprovalBeforePayment"
+                          [editorOptions]="{disabled: !entity.requireSupplierApprovalBeforePayment, height:'200px'}"
+                          editorType='dxHtmlEditor' [colSpan]="2"
+                          rowspan="4">
+                </dxi-item>
+
+            </dxi-item>
+
+
+            <div *dxTemplate="let data of 'categoryTree'">
+                <app-category-select
+                        (selectedRowChanged)="selectedCategoryChanged($event);"
+                        (categoryGroupIdSelected)="onCategoryGroupIdSelected($event)"
+                        [selectedCategoryId]="entity.categories"
+                        [isRequired]="true"
+                        [requiredMessage]="'shp.Category.Validation.SubcategorySelection' | translate"
+                        [companyId]="companyId"></app-category-select>
+            </div>
+
+            <div *dxTemplate="let data of 'productGroupTemplate'">
+                <app-product-group-search
+                        [isIncludeTax]="false"
+                        (onProductGroupSelected)="productGroupSelected($event)"
+                        [showIncludeTaxFilter]="false">
+
+                </app-product-group-search>
+            </div>
+
+            <div *dxTemplate="let data of 'productGroupIncludeTaxTemplate'">
+                <app-product-group-search
+                        (onProductGroupSelected)="productGroupIncludeTaxSelected($event)"
+                        [showIncludeTaxFilter]="false"
+                        [isIncludeTax]="true">
+                </app-product-group-search>
+            </div>
+
+        </dx-form>
+    </app-base-edit-form>
+</app-busy-indicator>
+
+

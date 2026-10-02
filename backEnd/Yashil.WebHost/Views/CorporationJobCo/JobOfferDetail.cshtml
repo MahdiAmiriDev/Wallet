@@ -1,0 +1,264 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model JobOfferDetailViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<style>
+    .send-resume-error-result-box {
+        width: 97%;
+        background: #d76e6e2e;
+        border-radius: 3px;
+        padding: 5px 10px;
+        color: #000000;
+        font-weight: 300;
+        margin-top: 5px;
+        margin-right: 8px;
+        z-index: 100;
+        cursor: default;
+        justify-content: center;
+        margin-top: 7px;
+    }
+</style>
+
+
+@* JobOffer Detail section *@
+@await Component.InvokeAsync("CorporationDetailHeader", new { id = Model.CorporationId, showCorporationIntroduction = false })
+
+@if (Model != null)
+{
+    @* body section *@
+    <section class=" my-4 gap-3">
+        <div class="container">
+            <div class="d-block d-lg-flex">
+                <div class="col-12 col-lg-8 bg-white border border-2">
+                    <div class="p-4">
+                        @if (!string.IsNullOrEmpty(Model.CorporationJobCoTitle))
+                        {
+                            <h2 class="fs-24 text-muted fw-300 main-title-job-offer-detail pt-3 lh-base fw-300">
+                                @Model.CorporationJobCoTitle
+                            </h2>
+                        }
+                        <div class="info-job-offer-detail pb-5">
+
+                            <div class="info-job-offer-detail-text">
+
+                                @if (!string.IsNullOrEmpty(Model.JobCoCategoryTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">دسته بندی شغلی</p>
+                                        <span class="badge bg-secondary ss02 my-1">@Model.JobCoCategoryTitle</span>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.CityTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">موقعیت مکانی</p>
+                                        <span class="badge bg-secondary ss02 my-1">
+                                            @Model.CityTitle
+                                        </span>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.CooperationTypeTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">نوع همکاری</p>
+                                        <span class="badge bg-secondary ss02 my-1">@Model.CooperationTypeTitle</span>
+                                    </div>
+                                }
+                                @if (Model.MinimumWorkExperience.HasValue && Model.MinimumWorkExperience != 0)
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">حداقل سابقه کار</p>
+                                        <span class="badge bg-secondary ss02 my-1">
+                                            @Model.MinimumWorkExperience سال
+                                        </span>
+                                    </div>
+
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SalaryTypeTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">حقوق</p>
+                                        <span class="badge bg-secondary ss02 my-1">@Model.SalaryTypeTitle</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CorporationJobCoDescription))
+                        {
+                            <p class="fw-bold fs-16 m-0 pt-3">
+                                شرح موقعیت شغلی
+                            </p>
+                            <p class="text-muted lh-lg text-justify">
+                                @Model.CorporationJobCoDescription
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.CorporationDescription))
+                        {
+                            <p class="fw-bold fs-16 m-0 pt-3">معرفی شرکت</p>
+                            <p class="text-muted lh-lg text-justify">
+                                @Model.CorporationDescription
+                            </p>
+                        }
+                        <div class="info-job-offer-detail pt-5">
+                            <div class="info-job-offer-detail-text">
+                                @if (Model.JobCoSkills != null && Model.JobCoSkills.Any())
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">
+                                            مهارت‌های مورد نیاز
+                                        </p>
+                                        @foreach (var skill in @Model.JobCoSkills)
+                                        {
+                                            <span class="badge bg-secondary ss02 my-1">
+                                                @skill
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.GenderTypeTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">جنسیت</p>
+                                        <span class="badge bg-secondary ss02 my-1">
+                                            @Model.GenderTypeTitle
+                                        </span>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.MilitaryServiceStatusTypeTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">
+                                            وضعیت نظام وظیفه
+                                        </p>
+                                        <span class="badge bg-secondary ss02 my-1">
+                                            @Model.MilitaryServiceStatusTypeTitle
+                                        </span>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.EducationGradeTypeTitle))
+                                {
+                                    <div>
+                                        <p class="fw-bold fs-12 m-0 pt-3">
+                                            حداقل مدرک تحصیلی
+                                        </p>
+                                        <span class="badge bg-secondary ss02 my-1">
+                                            @Model.EducationGradeTypeTitle
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* sidebar section *@
+                <div class="col-12 col-lg-4 ps-0 ps-lg-3 pt-4 pt-lg-0">
+                    <aside class="bg-white border border-2 rounded  sticky-top aside-job-offer-detail">
+
+                        @* JobCo Tags section *@
+                        @if (Model.JobCoTagTitles != null && Model.JobCoTagTitles.Any())
+                        {
+                            <div class="bg-light p-3 border-bottom  border-2 text-center">
+                                <span class="fw-bold ">
+                                    برچسب های مرتبط
+                                </span>
+                            </div>
+                            <div class="p-4 border-bottom border-2">
+                                @foreach (var Tag in Model.JobCoTagTitles)
+                                {
+
+                                    <p href="#" asp-append-version="true" class="m-1 badge bg-secondary tags-joboffer-detail">
+                                        # @Tag
+                                    </p>
+
+
+                                }
+                            </div>
+                        }
+
+                        @if (Model.HasCurrentUserSendResumeForJobPosition.HasValue && Model.HasCurrentUserSendResumeForJobPosition.Value)
+                        {
+                            <div class="p-4 ">
+                                <div class="alert alert-success p-3 border-bottom  border-2 text-center">
+                                    <span class="fw-bold ">
+                                        کاربر گرامی، رزومه شما برای موقعیت شغلی @Model.CorporationJobCoTitle با موفقیت ارسال شده است
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="bg-light p-3 border-bottom  border-2 text-center">
+                                <span class="fw-bold ">
+                                    از اینجا شروع کنید
+                                </span>
+                            </div>
+                            <div class="p-4 ">
+                                <button id="sendResumeButton" type="button" class="btn btn-success w-100 py-2 rounded">ارسال رزومه</button>
+
+                                <p id="sendResumeErrorResultBox" class="d-none fs-13"></p>
+
+                                <div id="sendResumeSuccessfulResultBox" class="alert alert-success p-3 border-bottom d-none border-2 text-center">
+                                    <span class="fw-bold" id="succssfulResultSpan">
+                                    </span>
+                                </div>
+
+
+                            </div>
+                        }
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            @await Component.InvokeAsync("RelatedProduct", Model.JobCoTagIds)
+        </div>
+    </section>
+}
+
+
+<!-- کانفیگ سوییپر اسلایدر دوره های مرتبط به شغل-->
+<script type="text/javascript">
+
+    const jobCoId = "@Model.JobCoId";
+    const corporationJobCoId = '@Model.CorporationJobCoId';
+
+    productListCarousel("CategoriesProductSalePlanning", 0, {
+        320: {
+            slidesPerView: 1.2
+        },
+
+        360: {
+            slidesPerView: 1.5
+        },
+        402: {
+            slidesPerView: 1.8
+        },
+        502: {
+            slidesPerView: 2.1
+        },
+        640: {
+            slidesPerView: 2.2
+        },
+        768: {
+            slidesPerView: 2.5
+        },
+        992: {
+            slidesPerView: 3.7
+        },
+        1024: {
+            slidesPerView: 3.9
+        },
+        1200: {
+            slidesPerView: 4.5
+        },
+        1400: {
+            slidesPerView: 5.1
+        }
+    })
+</script>
+
+<script src="~/js/components/job_offer_detail.js" asp-append-version="true"></script>

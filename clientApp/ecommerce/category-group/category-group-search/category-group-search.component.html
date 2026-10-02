@@ -1,0 +1,18 @@
+<div style="float: right;width: 40%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+    <label> گروه دسته بندی محصول </label>
+</div>
+<div style="float: right; width: 60%">
+    <dx-lookup
+            [(value)]="selectedItemId"
+            [dataSource]="categoryGroupDataSource"
+            displayExpr="title"
+            valueExpr="id"
+            (onSelectionChanged)="onSelectedCategoryGroupChanged($event)"
+            [showClearButton]="true"
+            [rtlEnabled]="true">
+        <dxo-drop-down-options
+                [closeOnOutsideClick]="true"
+                [showTitle]="false">
+        </dxo-drop-down-options>
+    </dx-lookup>
+</div>

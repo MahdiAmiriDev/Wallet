@@ -1,0 +1,40 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.CompanyViewComponentViewModel
+
+<section>
+    <div class="container my-5 mx-auto ">
+        <div class="mx-3 mx-md-0 text-center align-items-center bg-white border-1" style="border-radius:8px; box-shadow: 0px 0px 1px 0px rgba(0,0,0,.2), 0px 0px 1px 0px rgba(0,0,0,.19);">
+            <div id="large-2" class="d-flex flex-wrap justify-content-center p-4 my-1" style="row-gap: 16px;column-gap: 20px;">
+                @foreach (var company in Model.Companies)
+                {
+                    <div>
+                        <div>
+                            <div>
+                                <!-- Skeleton Loading Placeholder for Educational centers Logo Item -->
+                                <div class="d-block skeleton-loading--container w-100 overflow-hidden">
+                                    <div class="skeleton skeleton-circle mx-auto educational-centers--skeleton-circle"></div>
+                                    <div class="skeleton skeleton-line educational-centers--skeleton-line"></div>
+                                </div>
+                                <!-- Skeleton Loading Placeholder for Educational centers Logo  Item /-->
+                                <!-- Educational Centers Logo Item -->
+                                <a class="skeleton-content--container d-none" href="@Url.Action("Index", "Company", new { company = new List<int> { company.Id }, categoryId = Model.ProductFilter.CategoryId })">
+                                    <div>
+                                        <img asp-append-version="true" alt="@company.Title" src="~/images/placeholder/40.png" data-src="@Url.Action("GetCompanyIcon", "PublicApi", new { cId = company.Id, modificationDate = company.ModificationDate })" class="companyImage" />
+                                    </div>
+                                    <div class="pt-1">
+                                        <h6 style="width:110px"><span class="CompanyName">@company.ShortName</span></h6>
+
+                                    </div>
+                                </a>
+
+                                <!-- Educational Centers Logo Item /-->
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

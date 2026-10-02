@@ -1,0 +1,99 @@
+<div dir="rtl">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-7">
+        <app-terminal-filter
+          (selectedMerchantChanged)="onSelectedMerchantChange($event)"
+          (selectedTerminalChanged)="onSelectedTerminalChange($event)"
+        ></app-terminal-filter>
+      </div>
+      <div class="col-5">
+        <div style="float: right;width: 20%;margin-top: 0.5rem; font-size: 14px;text-align: right">
+          <label> وضعیت تراکنش پرداخت: </label>
+        </div>
+        <div style="float: right; width: 80%">
+          <dx-lookup
+            [dataSource]="statusDataSource"
+            [(value)]="selectedStatus"
+            displayExpr="title"
+            valueExpr="id"
+            rtlEnabled="true"
+            showCancelButton="true"
+            (onSelectionChanged)="onSelectedStatusChanged($event)"
+            showClearButton="true">
+            <dxo-drop-down-options
+              [closeOnOutsideClick]="true"
+              [showTitle]="false">
+            </dxo-drop-down-options>
+          </dx-lookup>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-3" style="margin-left: 55px;">
+        <div style="float: right; width: 25%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تاریخ ثبت از: </label>
+        </div>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="fromDateFilter=convertDateToInt($event);bindCustomDataSources();">
+          <input type="text"
+                 [formControl]="fromDateFilterDataValue"
+                 style="float:right"
+                 placeholder="تاریخ ثبت"
+                 [ngModel]="fromDateFilter  | intToStringDate"
+                 (ngModelChange)="bindCustomDataSources();"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          [dir]="'rtl'"-->
+        <!--          placeholder="تاریخ ثبت"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="fromDateFilter | intToStringDate"-->
+        <!--          (ngModelChange)="fromDateFilter=convertDateToInt($event);bindCustomDataSources();">-->
+        <!--        </dp-date-picker>-->
+      </div>
+      <div class="col-3" style="margin-left: 55px;">
+        <div style="float: right; width: 25%; margin-top: 0.5rem; font-size: 14px; text-align: right;">
+          <label>تا تاریخ:</label>
+        </div>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="toDateFilter=convertDateToInt($event);bindCustomDataSources();">
+          <input type="text"
+                 [formControl]="toDateFilterDataValue"
+                 style="float:right"
+                 placeholder="تاریخ پایان ثبت"
+                 [ngModel]="toDateFilter  | intToStringDate"
+                 (ngModelChange)="bindCustomDataSources();"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          placeholder="تاریخ پایان ثبت"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="toDateFilter | intToStringDate"-->
+        <!--          (ngModelChange)="toDateFilter=convertDateToInt($event);bindCustomDataSources();">-->
+        <!--        </dp-date-picker>-->
+      </div>
+    </div>
+  </div>
+</div>
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [gridHeight]="gridHeight"
+                    [showAddButton]="false"
+                    [allowDeleteInForm]="false"
+                    [allowEditInForm]="false"
+                    [wordWrapEnabled]="true"
+                    [columnAutoWidth]="true"
+                    [showExportToExcelButton]="true"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

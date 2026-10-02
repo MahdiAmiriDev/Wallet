@@ -1,0 +1,104 @@
+<app-busy-indicator><app-base-edit-form [showCloseButton]="false" (submitEvent)="formSubmit($event)"
+                    (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [rtlEnabled]="true" [colCount]="2" #detailForm [formData]="entity"
+             style="margin-left: 10px;margin-right: 10px">
+        <dxi-item itemType="group" caption="کالا" colCount="2" colSpan="2" >
+            <dxi-item dataField="companyId" editorType="dxLookup" [label]="{text: 'مرکز'}"
+                      [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: companyDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="مرکز اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [template]="'categoryTree'" dataField="categories" [label]="{text: 'زیرگروه'}"
+                      [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="دسته بندی محصول"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'کد'}" dataField="code">
+            </dxi-item>
+            <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+                <dxi-validation-rule type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'توضیحات کوتاه'}" dataField="shortDescription" editorType='dxHtmlEditor'
+                      colSpan="2">
+            </dxi-item>
+            <dxi-item [label]="{text: 'توضیحات کامل'}" dataField="fullDescription" editorType='dxHtmlEditor' colSpan="2">
+            </dxi-item>
+            <dxi-item [label]="{text: 'ارسال رایگان'}" dataField="isFreeShipping" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'فروش مستقل'}" dataField="visibleIndividually" editorType='dxCheckBox'>
+            </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group" caption="تنظیمات فروش" colCount="2" colSpan="2">
+
+           <dxi-item [label]="{text: 'shp.Representation.VezaratSubsidyFactor' | translate}"
+                      dataField="vezaratSubsidyFactor">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Representation.Validation.VezaratSubsidyFactor' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'shp.Representation.SataSubsidyFactor' | translate}" dataField="sataSubsidyFactor">
+                <dxi-validation-rule type="required"
+                                     message="{{'shp.Representation.Validation.SataSubsidyFactor' | translate}}"></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item dataField="salesModelType" editorType="dxSelectBox" [label]="{text: 'مدل فروش'}"
+                      [editorOptions]="{ items: salesModelTypes,displayExpr:'title',valueExpr:'id' }">
+                <dxi-validation-rule type="required" message="مدل فروش اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+            <dxi-item [label]="{text: 'تعیین قیمت توسط نمایندگی'}" dataField="allowSetPriceByRepresentation"
+                      editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'مدیریت موجودی توسط نمایندگی'}" dataField="allowManageInventoryByRepresentation"
+                      editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item [label]="{text: 'مدیریت تخفیف توسط نمایندگی'}" dataField="allowManageInventoryByRepresentation"
+                      editorType='dxCheckBox'>
+            </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group" caption="فروش گروهی" colSpan="2">
+            <dxi-item [label]="{text: 'محصول گروهی'}" dataField="isGroupProduct" editorType='dxCheckBox'>
+            </dxi-item>
+            <dxi-item *ngIf="entity.isGroupProduct" [template]="'dependentProductsTemplate'"
+                      dataField="dependentProducts" [label]="{text: 'محصولات وابسته'}">
+                <dxi-validation-rule type="required" message="محصولات وابسته اجباری می باشد"></dxi-validation-rule>
+            </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group" *ngIf="!entity.isGroupProduct" colSpan="2" colCount="3">
+            <dxi-item itemType="group" caption="قیمت">
+                <dxi-item [label]="{text: 'حداقل قیمت(ریال) مجاز برای فروش'}" dataField="minPrice" editorType='dxNumberBox' [editorOptions]="{format:'#,##0'}">
+                    <dxi-validation-rule type="required"
+                                         message="حداقل قیمت مجاز برای فروش اجباری می باشد"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item [label]="{text: 'حداکثر قیمت(ریال) مجاز برای فروش'}" dataField="maxPrice" editorType='dxNumberBox' [editorOptions]="{format:'#,##0'}">
+                    <dxi-validation-rule type="required"
+                                         message="حداکثر قیمت مجاز برای فروش اجباری می باشد"></dxi-validation-rule>
+                </dxi-item>
+            </dxi-item>
+            <dxi-item itemType="group" caption="مالیات">`
+                <dxi-item [label]="{text: 'معاف از مالیات'}" dataField="isTaxExempt" editorType='dxCheckBox'>
+                </dxi-item>
+                <dxi-item dataField="taxCategoryId" editorType="dxLookup" [label]="{text: 'دسته مالیات'}"
+                          *ngIf="!entity.isTaxExempt"
+                          [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: taxCategoryDataSource,displayExpr:'title',valueExpr:'id' }">
+                    <dxi-validation-rule type="required" message="دسته مالیات اجباری می باشد"></dxi-validation-rule>
+                </dxi-item>
+            </dxi-item>
+        </dxi-item>
+        <div *dxTemplate="let data of 'dependentProductsTemplate'">
+            <app-product-selector [selectedItems]="entity.dependentProducts"
+                                  (onSelectionChanged)="selectedDependentProductsChanged($event)"></app-product-selector>
+        </div>
+        <div *dxTemplate="let data of 'specificationCategoryTemplate'">
+            <app-product-type-select
+                    (onSelectionChanged)="selectedSpecificationCategoryChanged($event);"></app-product-type-select>
+        </div>
+
+      <div *dxTemplate="let data of 'yashilSchedulerGridTemplate'">
+      </div>
+        <div *dxTemplate="let data of 'categoryTree'">
+            <app-category-select
+              (selectedRowChanged)="selectedCategoryChanged($event);"
+              [selectedCategoryId]="entity.categories"
+              [isRequired]="true"
+              [requiredMessage]="'انتخاب زیر گروه اجباری می باشد'"
+              [companyId]="entity.companyId"></app-category-select>
+        </div>
+    </dx-form>
+</app-base-edit-form></app-busy-indicator>

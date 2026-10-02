@@ -1,0 +1,125 @@
+﻿@model YashilPayment.Web.Areas.Payment.ViewModels.PurchaseResult
+@{
+    Layout = "_HekmatIpgLayout";
+}
+<div class="container">
+    <div class="row">
+
+        <div class="container dir-rtl  mt-3  mb-3">
+            <div class="bg-white d-flex pt-1 ps-1 pe-1 rounded-2 justify-content-between align-items-center flex-column position-relative">
+                <div class="order-0 top-lg-40">
+                    <div class="pt-3 pt-lg-0 text-center">
+                        <span class="fs-20-px">درگاه پرداخت اینترنتی شرکت انستیتوایزایران</span>
+                    </div>
+                </div>
+                <div class="order-1 d-flex justify-content-between  align-items-center w-100 mt-2 mt-lg-0">
+                    <img src="/images/HekmatIpg/hekmat.jpg" alt="Hekmat Logo" class="w-50-m-1 w-lg-auto ms-1 img-fluid" />
+                    <img src="/images/HekmatIpg/inst.png" alt="Institute Isiran Logo" class="w-50-m-1 w-lg-auto me-1 img-fluid" />
+                </div>
+                <div class="order-2 overflow-hide h-50-px w-100 position-relative d-flex justify-content-center align-items-end">
+                    <div class="bg-svg">
+                        <span class="text-white">www.tbao.ir</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="beh-card carddetail">
+                <div class="background-overflow">
+                    <span class="shape"></span>
+                </div>
+                <div class="card-headerr">
+                    <h3>تکمیل اطلاعات پرداخت</h3>
+                    <div style=" display: flex; ">
+                        <div style=" width: 45px; color:darkred"><span id="remaining-time"></span></div>
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form class="card-info" id="completePaymentForm" method="post" action="@Model.CallBackUrl" oncopy="return false" oncut="return false" onpaste="return false">
+                        <div class="form-group row" style="direction: rtl">
+                            <div class="col-sm-4" style="text-align: right;">
+                                <label for="message" class="col-form-label"> نتیجه پرداخت</label>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-12 mobile-justify keypad-parent text-right">
+                                <label for="messageValue" class="col-form-label"> @Model.Message</label>
+                                <input type="hidden" id="message" name="message" value="@Model.Message" />
+                            </div>
+                        </div>
+                        <div class="form-group row" style="direction: rtl">
+                            <div class="col-sm-4" style="text-align: right;">
+                                <label for="reservationNumber" class="col-form-label"> کد رهگیری مشتری به ازای هر پرداخت </label>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-12 mobile-justify keypad-parent text-right">
+                                <label for="reservationNumberValue" class="col-form-label"> @Model.ReservationNumber</label>
+                                <input type="hidden" id="reservationNumber" name="reservationNumber" value="@Model.ReservationNumber" />
+                            </div>
+                        </div>
+                        <div class="form-group row" style="direction: rtl">
+                            <div class="col-sm-4" style="text-align: right;">
+                                <label for="refrenceNumber" class="col-form-label"> شناسه پیگیری سفارش</label>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-12 mobile-justify keypad-parent text-right">
+                                <label for="refrenceNumberValue" class="col-form-label"> @Model.RefrenceNumber</label>
+                                <input type="hidden" id="refrenceNumber" name="refrenceNumber" value="@Model.RefrenceNumber" />
+                            </div>
+                        </div>
+                        <input id="status" name="status" type="hidden" value="@Model.Status" />
+                        <div class="form-group row" style="text-align: center; direction: rtl;">
+                            <div class="col-sm-4"></div>
+                            <div class="col-md-8 col-sm-12 col-12 mobile-justify btn-submit-form">
+                                <input type="submit" value="بازگشت به سایت پذیرنده" class="btn btn-perches" onclick="returnToMerchantSite()" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var intervalId;
+        setTimeInterval(10);
+        function setTimeInterval(expireTimeValue) {
+            var minute = 0;
+            var sec = 0;
+            if (expireTimeValue >= 60) {
+                minute = parseInt(expireTimeValue / 60);
+                sec = expireTimeValue % 60;
+            }
+            else {
+                sec = expireTimeValue;
+            }
+
+            intervalId = setInterval(function () {
+
+                if (sec > 0) {
+                    sec = sec - 1;
+                }
+                if (sec == 0 && minute > 0) {
+                    minute = minute - 1;
+                    sec = 59;
+                }
+                if (sec == 0 && minute == 0) {
+                    returnToMerchantSite();
+
+                }
+
+                $('#remaining-time').html(minute + ":" + sec);
+
+            }, 1000);
+
+        }
+
+
+        function returnToMerchantSite() {
+            document.getElementById("completePaymentForm").submit();
+            clearInterval(intervalId);
+
+        }
+
+    </script>
+    }

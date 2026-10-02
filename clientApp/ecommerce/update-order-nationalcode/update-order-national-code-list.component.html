@@ -1,0 +1,10 @@
+<app-base-list-form #listForm
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [entityName]="entityName"
+                    [allowFilter]="true"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

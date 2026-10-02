@@ -1,0 +1,76 @@
+<div class="dx-field d-flex">
+<div class="dx-field-label" style="margin-left: -26%">{{label}}</div>
+  <div class="dx-field-value">
+<dx-drop-down-box
+  #ddlUser
+  [(value)]="selectedItemId"
+  valueExpr="id"
+  displayExpr="userName"
+  placeholder="{{'um.User.UserSelection'|translate}}"
+  [dataSource]="userDataSource"
+  [readOnly]="isReadOnly"
+  [deferRendering]="false"
+  [showClearButton]="true">
+
+  <div *dxTemplate="let data of 'dropDownButton'">
+    <dx-button icon="plus"></dx-button>
+  </div>
+  <div *dxTemplate="let data of 'content'">
+    <dx-data-grid id="gridContainer"
+                  width="100%"
+                  height="100%"
+                  [dataSource]="userDataSource"
+                  [showBorders]="true"
+                  [rtlEnabled]="true"
+                  [rowAlternationEnabled]="true"
+                  [columns]="columns"
+                  [wordWrapEnabled]="true"
+                  [remoteOperations]="lazyLoading"
+                  [selectedRowKeys]="selectedItemId"
+                  (onRowClick)="ddlUser.instance.close();"
+                  (onSelectionChanged)="selectedUserChanged($event);">
+      <dxo-filter-row visible="true"></dxo-filter-row>
+      <dxo-header-filter visible="true"></dxo-header-filter>
+      <dxo-selection mode="single"></dxo-selection>
+      <div *dxTemplate="let data of 'selectCellTemplate'">
+        <dx-radio-group [items]="[{id:data.data.id}]" [value]="selectedItemId" valueExpr="id">
+        </dx-radio-group>
+      </div>
+    </dx-data-grid>
+
+  </div>
+</dx-drop-down-box>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--<dx-data-grid id="gridContainer"-->
+<!--              width="100%"-->
+<!--              height="100%"-->
+<!--              [dataSource]="userDataSource"-->
+<!--              [showBorders]="true"-->
+<!--              [rtlEnabled]="true"-->
+<!--              [rowAlternationEnabled]="true"-->
+<!--              [columns]="columns"-->
+<!--              [wordWrapEnabled]="true"-->
+<!--              [remoteOperations]="lazyLoading"-->
+<!--              [selectedRowKeys]="selectedItemId"-->
+<!--              (onSelectionChanged)="selectedUserChanged($event);">-->
+<!--  <dxo-filter-row visible="true"></dxo-filter-row>-->
+<!--  <dxo-header-filter visible="true"></dxo-header-filter>-->
+<!--  <dxo-selection mode="single"></dxo-selection>-->
+
+
+<!--  <div *dxTemplate="let data of 'selectCellTemplate'">-->
+<!--    <dx-radio-group [items]="[{id:data.data.id}]" [value]="selectedItemId" valueExpr="id">-->
+<!--    </dx-radio-group>-->
+<!--  </div>-->
+<!--</dx-data-grid>-->

@@ -1,0 +1,54 @@
+<app-busy-indicator #busyIndicatorComponent></app-busy-indicator>
+<div style=": 5px;">
+  <div class="alert alert-primary">
+    <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+      <dxi-item [label]="{text: 'کد پیگیری'}" [editorOptions]="{readOnly:true}"
+                dataField="title">
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره کارت'}" [editorOptions]="{readOnly:true}" dataField="cardNumber">
+      </dxi-item>
+      <dxi-item [label]="{text: 'کد ملی تحویل گیرنده'}" [editorOptions]="{readOnly:true}" dataField="nationalCode">
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره موبایل'}" [editorOptions]="{readOnly:true}" dataField="userTitle">
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره موبایل دانشجو'}" [editorOptions]="{readOnly:true}"
+                dataField="recipientMobileNumber">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'نوع یارانه'}" [editorOptions]="{readOnly:true}" dataField="subsidyTypeTitle">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'تاریخ ثبت'}" dataField="creationDateInt" [template]="'intDate'"  [editorOptions]="{readOnly:true}">
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ تعیین وضعیت'}"  dataField="modificationDate" [template]="'modificationDate'" [editorOptions]="{readOnly:true}">
+      </dxi-item>
+      <dxi-item *ngIf="orderHasSubsidy && orderSubsidyConfirmed" [label]="{text: 'وضعیت یارانه'}" [editorOptions]="{readOnly:true, inputAttr: {style: 'background-color: #78C4D4 ; text-transform: uppercase'}}"
+                dataField="subsidyStatusTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="orderHasSubsidy && !orderSubsidyConfirmed" [label]="{text: 'وضعیت یارانه'}" [editorOptions]="{readOnly:true, inputAttr: {style: 'background-color: #F2B4B4 ; text-transform: uppercase'}}"
+                dataField="subsidyStatusTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="!orderHasSubsidy" [label]="{text: 'وضعیت یارانه'}" [editorOptions]="{readOnly:true}"
+                dataField="subsidyStatusTypeTitle">
+      </dxi-item>
+      <dxi-item  *ngIf="!this.orderConfirmed" [label]="{text: 'وضعیت سفارش'}"  [editorOptions]="{readOnly:true}" dataField="orderStatusTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="this.orderConfirmed" [label]="{text: 'وضعیت سفارش'}"  [editorOptions]="{readOnly:true, inputAttr: {style: 'background-color: #60d394 ; text-transform: uppercase'}}" dataField="orderStatusTypeTitle">
+      </dxi-item>
+      <dxi-item *ngIf="this.orderIncompletePayment" [label]="{text: 'مبلغ باقیمانده'}" [editorOptions]="{readOnly:true, format:'#,##0', inputAttr: {style: 'background-color: #fff3cd ; text-transform: uppercase'}}" dataField="remainingAmountToPay">
+      </dxi-item>
+
+      <div *dxTemplate="let data of 'intDate'">
+        <dx-text-box value="  {{ data.component.option('formData')[data.dataField] | intToStringDate }}" readOnly="true">
+        </dx-text-box>
+      </div>
+
+      <div *dxTemplate="let data of 'modificationDate'">
+        <dx-text-box value="{{data.component.option('formData')[data.dataField] | jalali}}" readOnly="true">
+        </dx-text-box>
+      </div>
+    </dx-form>
+
+
+  </div>
+</div>

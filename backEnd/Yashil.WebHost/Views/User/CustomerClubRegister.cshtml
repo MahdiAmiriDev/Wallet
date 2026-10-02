@@ -1,0 +1,288 @@
+﻿@using Yashil.Common.Core.Classes
+@using Yashil.Core.Enums
+@model Yashil.Core.CustomViewModels.UserRegisterEditModel
+@inject ApplicationConfiguration _applicationConfiguration;
+
+@addTagHelper *, DNTCaptcha.Core
+@{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "_BaseLayout";
+}
+<div class="content-wrap">
+    <div class="content-page-fullwidth-wrap clearfix pd-top-45">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="col-md-4 col-lg-4 hidden-sm hidden-xs"></div>
+                        <form id="registerForm" onsubmit="registerFormSubmit(event);" method="post" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 LoginForm">
+                            <div class="row">
+                                <img src="~/images/logo/login_logo.png" alt="Logo Institute ISIRAN" style="margin: auto; margin-top: 25px; height: 90px;" />
+                            </div>
+                            <div class="row" style="margin-top: 30px;">
+                                <div class="form-group fullwidth">
+                                    <label>باشگاه مشتریان</label>
+                                </div>
+                            </div>
+                            <div>
+                                @await Component.InvokeAsync("CustomerClubRegister")
+                            </div>
+
+                            @if (Model.RegistrationMode != (int)RegistrationModeEnum.Minimal)
+                            {
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <div class="row form-group fullwidth">
+                                        <div class="customLable"> @Html.LabelFor(x => x.Name)</div>
+                                        @Html.TextBoxFor(x => x.Name, new { autocomplete = "off" })
+                                        <div class="customLable"> @Html.ValidationMessageFor(x => x.Name, "", new { @class = "validationMessage" })</div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <div class="row form-group fullwidth">
+                                        <div class="customLable">
+                                            @Html.LabelFor(x => x.LastName)
+                                        </div>
+                                        @Html.TextBoxFor(x => x.LastName, new { autocomplete = "off" })
+                                        <div class="customLable">
+                                            @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "validationMessage" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.PasswordResetRecoveryMode == (int)PasswordResetRecoveryModeEnum.Email
+|| Model.RegistrationMode == (int)RegistrationModeEnum.Full
+|| Model.RegistrationMode == (int)RegistrationModeEnum.Medium)
+                            {
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <div class="row form-group fullwidth">
+                                        <div class="customLable">
+                                            @Html.LabelFor(x => x.Email)
+                                        </div>
+                                        @Html.TextBoxFor(x => x.Email, new { autocomplete = "off" })
+                                        <div class="customLable">
+                                            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "validationMessage" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <div class="row form-group fullwidth">
+                                    <input type="hidden" id="encryptedMobileNumber" name="encryptedMobileNumber" value="@Model.EncryptedMobileNumber" />
+                                    <div class="customLable">
+                                        @Html.LabelFor(x => x.UserName)
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.UserName))
+                                    {
+                                        @Html.TextBoxFor(x => x.UserName, new { @readonly = "readonly" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(x => x.UserName, new { autocomplete = "off" })
+                                    }
+                                    <div class="customLable">
+                                        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "validationMessage" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row form-group fullwidth">
+                                    <div class="customLable">
+                                        @Html.LabelFor(x => x.PasswordStr)
+                                    </div>
+                                    @Html.PasswordFor(x => x.PasswordStr)
+                                    <div class="customLable">
+                                        @Html.ValidationMessageFor(x => x.PasswordStr, "", new { @class = "validationMessage" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="">
+                                <div class=" row form-group fullwidth">
+                                    <div class="customLable">
+                                        @Html.LabelFor(x => x.PasswordStrConfirm)
+                                    </div>
+                                    @Html.PasswordFor(x => x.PasswordStrConfirm)
+                                    <div class="customLable">
+                                        @Html.ValidationMessageFor(x => x.PasswordStrConfirm, "", new { @class = "validationMessage" })
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Model.RegistrationMode == (int)RegistrationModeEnum.Full
+|| Model.RegistrationMode == (int)RegistrationModeEnum.Medium)
+                            {
+                                <div class="form-group">
+                                    <div class="row form-group fullwidth">
+                                        <div class="customLable">
+                                            @Html.LabelFor(x => x.Address)
+                                        </div>
+                                        @Html.TextBoxFor(x => x.Address, new { autocomplete = "off" })
+                                        <div class="customLable">
+                                            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "validationMessage" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <div class="row form-group fullwidth dntCaptcha">
+                                    <div class="dntCaptcha" style="width: 100%">
+                                        <div style="display: inline-block; width: 41%;">
+                                            @Html.TextBoxFor(x => x.DNTCaptchaInputText, new { autocomplete = "off" })
+
+                                        </div>
+                                        <div style="display: inline-block;">
+                                            <img alt="captcha"
+                                                 id="dntCaptchaImg"
+                                                 name="dntCaptchaImg" style="width: 100px; height: 36px" />
+                                            <input asp-for=DNTCaptchaToken id="DNTCaptchaToken" name="DNTCaptchaToken" type="hidden" />
+                                            <input asp-for=DNTCaptchaText id="DNTCaptchaText" name="DNTCaptchaText" type="hidden" />
+                                        </div>
+                                        <div style="display: inline-block">
+                                            <img id="dntCaptchaRefreshButton"
+                                                 alt="Captcha Refresh Button"
+                                                 name="dntCaptchaRefreshButton"
+                                                 onclick="doRefreshCaptcha()" style="width: 35px; height: 25px" src="~/images/refresh.png" />
+                                        </div>
+                                    </div>
+                                    <div class="customLable">
+                                        @Html.ValidationMessageFor(x => x.DNTCaptchaInputText, "", new { @class = "validationMessage" })
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(x => x.BackUrl)
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <div class="row form-group fullwidth">
+                                    <div style="width: 100%">
+                                        <button type="submit" class="loginButton">
+                                            <i id="spinner" style="display:none" class="fas fa-spinner fa-spin"></i> ثبت نام
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="form-group fullwidth" style="text-align:center;">
+                                    <a href="/user/loginByPassword">
+                                        <label class="customLable" for="username" style="color:#12b4cd;cursor:pointer;">
+                                            ورود با رمز عبور
+                                            <i class="fas fa-angle-right" style="color:#12b4cd;height:10px !important;">
+                                            </i>
+                                        </label>
+                                    </a>
+                                </div>
+                            </div>
+                            @if (_applicationConfiguration.SmsBased)
+                            {
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="form-group fullwidth">
+                                        <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8" style="width:100%;text-align:right">
+                                            <a href="/user/LoginRegister" style="font-size: 12px;color: #12b4cd;">ورود با رمز عبور یکبار مصرف</a>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xs-4 col-sm-4" style="width:100%;text-align:left">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group" style="margin-top: 5px; margin-bottom: 20px;">
+                                <div class=" row form-group fullwidth">
+                                    <div style="width: 100%">
+                                        <span class="loginError">
+                                            با ورود و یا ثبت نام در شما سایت شرایط و قوانین استفاده از سرویس های سایت و قوانین حریم خصوصی آن را می‌پذیرید.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 20px;">
+                                <div class="form-group fullwidth">
+                                    <div class="alert alert-warning hide" style="text-align: right" id="validationErrorMessage" role="alert">
+                                        <strong>خطا!</strong> لطفا ورودی ها را چک کنید.
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-md-4 col-lg-4 hidden-sm hidden-xs"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <form method="POST" action="" id="frmLogin" style="display:none">
+        <input type="hidden" name="token" id="token" value="" />
+        <input type="hidden" name="serviceId" value="edus.ir" />
+        <input type="hidden" name="formId" value="emis-v3-mob-in-isiran-subscribe" />
+        <button style="display:none">برو</button>
+    </form>
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        hideErrorMessage($("#validationErrorMessage"));
+        function registerFormSubmit(e) {
+            hideErrorMessage($("#validationErrorMessage"));
+            disableButton($('.loginButton'));
+            showSpinner($('#spinner'));
+            e.preventDefault();
+            var jsonData = Object.fromEntries(new FormData(e.target));
+            jsonData.KeyValues = [];
+            jsonData.AdditionalInfoList = {};
+
+            jsonData.AdditionalInfoList.customerClubId = jsonData.CustomerClubId;
+            jsonData.AdditionalInfoList.nationalCode = jsonData.NationalCode;
+            jsonData.AdditionalInfoList.cardNumber = jsonData.CardNumber;
+            jsonData.AdditionalInfoList.mobileNumber = jsonData.UserName;
+
+            let formData = new FormData();
+            for (let key in jsonData) {
+                formData.append(key, jsonData[key]);
+            }
+
+            formData.append('AdditionalInfoList.customerClubId', jsonData.CustomerClubId);
+            formData.append('AdditionalInfoList.nationalCode', jsonData.NationalCode);
+            formData.append('AdditionalInfoList.cardNumber', jsonData.CardNumber);
+            formData.append('AdditionalInfoList.mobileNumber', jsonData.UserName);
+
+            if ($("#registerForm").valid()) {
+                fetch('/api/user/RegisterPublicUser',
+                    {
+                        method: 'POST',
+                        body: formData
+
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.isSuccess === true) {
+                            if (data.returnUrl !== null && data.returnUrl !== undefined) {
+                                $('#frmLogin').attr('action', data.returnUrl);
+                                $("#token").val(data.token);
+                                $('#frmLogin').submit();
+                            } else {
+                                window.location = '/';
+                            }
+                        } else {
+                            bootbox.alert(data.result);
+                        }
+                    })
+                    .catch(data => {
+                        bootbox.alert('لطفا مجددا تلاش کنید.');
+                    })
+                    .finally(() => {
+                        $('#DNTCaptchaInputText').val('');
+                        hideSpinner($('#spinner'));
+                        doRefreshCaptcha();
+                        enableButton($('.loginButton'));
+
+                    });
+            } else {
+                hideSpinner($('#spinner'));
+                enableButton($('.loginButton'));
+            }
+        }
+    </script>
+    <script src="~/js/components/authentication/captcha.js" asp-append-version="true"></script>
+}

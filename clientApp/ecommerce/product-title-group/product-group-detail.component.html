@@ -1,0 +1,32 @@
+	<app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+
+    <dxi-item [label]="{text: 'عنوان'}"  dataField="title"     >
+      <dxi-validation-rule  type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+	<dxi-item [label]="{text: 'کد'}"  dataField="code"     >
+    <dxi-validation-rule  type="required" message="مقار کد اجباری می باشد"></dxi-validation-rule>
+		</dxi-item>
+
+    <dxi-item [label]="{text: 'کد اصلی'}"  dataField="mainCode"     >
+      <dxi-validation-rule  type="required" message="مقار کد اصلی اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item dataField="categoryGroupId" editorType="dxLookup" [label]="{text: 'دسته بندی'}"
+              [editorOptions]="{rtlEnabled:true,closeOnOutsideClick:true,showPopupTitle:false, dataSource: categoryGroupDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule  type="required" message="دسته بندی اجباری است"></dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'شامل بیمه می شود'}" editorType='dxCheckBox'  dataField="isIncludeInsurance"     >
+    </dxi-item>
+
+    <dxi-item [label]="{text: 'شامل مالیات می شود'}" editorType='dxCheckBox'  dataField="isIncludeTax"     >
+    </dxi-item>
+
+	<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'    >
+		</dxi-item>
+
+</dx-form>
+</app-base-edit-form>

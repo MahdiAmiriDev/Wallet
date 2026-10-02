@@ -1,0 +1,45 @@
+
+<dx-button [text]="isIncludeTax ? 'انتخاب گروه محصول شامل مالیات':'انتخاب گروه محصول بدون مالیات'" type="default"
+           (onClick)="this.showPopup = true"></dx-button>
+
+
+<dx-popup *ngIf="showPopup"
+          [rtlEnabled]="true"
+          [(visible)]="showPopup"
+          (onHidden)="this.showPopup = false"
+          [closeOnOutsideClick]="true"
+          [deferRendering]="false"
+          [dragEnabled]="false"
+          [fullScreen]="true"
+          class="popup">
+  <div *ngIf="showIncludeTaxFilter"  class="alert alert-primary" style="padding-top: 15px; display: flex">
+    انتخاب وضعیت مالیات:
+    <dx-radio-group [items]="radioButtonItems"
+                    displayExpr="text"
+                    valueExpr="value"
+                    layout="horizontal"
+                    class="customRadioBtn"
+                    style="margin-right: 10px"
+                    (onValueChanged)="isIncludeTaxChanged($event)"
+                    [(value)]="isIncludeTax">
+      <style>
+        .customRadioBtn /deep/ .dx-radiobutton-icon-dot {
+          margin-right: 5px;
+          margin-left: 5px;
+        }
+      </style>
+    </dx-radio-group>
+  </div>
+  <app-product-group-list
+    [allowDeleteInForm]="false"
+    [allowEditInForm]="false"
+    [showAddButton]="false"
+    [showChoseRowButton]="true"
+    [isIncludeTax]="isIncludeTax"
+    (onUserSelectRow)="selectedProductGroupItemChanged($event)"
+  >
+
+  </app-product-group-list>
+
+
+</dx-popup>

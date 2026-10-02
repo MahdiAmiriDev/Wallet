@@ -1,0 +1,80 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item [label]="{text: 'Code' | translate}" dataField="code">
+      </dxi-item>
+      <dxi-item [label]="{text: 'Title' | translate}" dataField="title">
+        <dxi-validation-rule type="required" message="{{'Validation.Title' | translate}}"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'shp.Company.ShortName' | translate}" dataField="shortName">
+      </dxi-item>
+      <dxi-item dataField="parentId" [template]="'company'" [label]="{text: 'shp.Company.Title' | translate}">
+        <dxi-validation-rule type="required"
+                             message="{{'shp.Company.Validation.Title' | translate}}"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item
+                dataField="establishedLicenseType"
+                editorType="dxSelectBox"
+                *ifHasAccess="entityName,PropertyName:'establishedLicenseType'"
+                [label]="{text: 'shp.Company.EstablishedLicenseType' | translate}"
+                [editorOptions]="{ items: establishedLicenseTypes,displayExpr:'title',valueExpr:'id', showClearButton:'true' }">
+      </dxi-item>
+
+      <dxi-item [label]="{text: 'ترتیب نمایش'}" dataField="displayOrder" editorType='dxNumberBox'>
+        <dxi-validation-rule type="required" message="ترتیب نمایش اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item *ifHasAccess="entityName,PropertyName:'showInMainPage'" [label]="{text: 'shp.Company.ShowInMainPage' | translate}" dataField="showInMainPage"
+                editorType='dxCheckBox'>
+      </dxi-item>
+
+      <dxi-item dataField="companyGroupId" editorType="dxLookup" [label]="{text: 'shp.Company.CompanyGroupId' | translate}"
+                [editorOptions]="{ items: companyGroupDataSource,
+                      displayExpr:'title',valueExpr:'id',showCancelButton:'true',showClearButton:'true' }">
+      </dxi-item>
+      <dxi-item [label]="{text: 'shp.Company.IsActive' | translate}" dataField="isActive" editorType='dxCheckBox'>
+      </dxi-item>
+      <dxi-item [label]="{text: 'shp.Company.Confirmed' | translate}" dataField="confirmed"
+                editorType='dxCheckBox'>
+      </dxi-item>
+
+      <div *dxTemplate="let item of 'company'">
+        <dx-drop-down-box
+                #ddlCompany
+                [readOnly]="readOnly"
+                [(value)]="_selectedCompanyId"
+                [disabled]="disabled"
+                valueExpr="id"
+                placeholder="انتخاب..."
+                displayExpr="title"
+                [showClearButton]="true"
+                [dir]="'rtl'"
+                [rtlEnabled]="true"
+                [dataSource]="companyDataSource"
+                (onValueChanged)="onSelectedItemRemove($event)">
+          <div *dxTemplate="let data of 'content'">
+            <dx-tree-view
+                    [selectionMode]="selectionMode"
+                    [dataSource]="companyDataSource"
+                    dataStructure="plain"
+                    keyExpr="id"
+                    parentIdExpr="headId"
+                    displayExpr="title"
+                    rtlEnabled="true"
+                    [rootValue]="0"
+                    [selectByClick]="true"
+                    [searchEnabled]="true"
+                    width="100%"
+                    height="100%"
+                    [rtlEnabled]="true"
+                    (onContentReady)="syncTreeViewSelection($event)"
+                    (onItemClick)="treeView_itemSelectionChanged($event);closeDDl(ddlCompany)">
+            </dx-tree-view>
+          </div>
+        </dx-drop-down-box>
+      </div>
+    </dx-form>
+  </app-base-edit-form>
+
+</app-busy-indicator>

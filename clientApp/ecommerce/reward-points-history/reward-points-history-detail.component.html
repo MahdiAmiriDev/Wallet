@@ -1,0 +1,57 @@
+
+				<app-busy-indicator><app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+
+									<dxi-item [label]="{text: 'شناسه مشتری'}"  dataField="customerId" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="شناسه مشتری اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'شناسه فروشگاه'}"  dataField="storeId" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="شناسه فروشگاه اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'امتیاز اضافه شده است'}"  dataField="points" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="امتیاز اضافه شده است اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'تعادل امتیاز'}"  dataField="pointsBalance" editorType='dxNumberBox'>
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'مقدار استفاده شده'}"  dataField="usedAmount" editorType='dxNumberBox'>
+
+																<dxi-validation-rule  type="required" message="مقدار استفاده شده اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'پیام'}"  dataField="message" editorType='dxTextArea'>
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'تعداد امتیازهای معتبر که هنوز هزینه نکرده اید'}"  dataField="validPoints" editorType='dxNumberBox'>
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'کد'}"  dataField="code" >
+
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'عنوان'}"  dataField="title" >
+
+																<dxi-validation-rule  type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+									<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'>
+
+
+				</dxi-item>
+
+									<dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+					[editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+																					<dxi-validation-rule  type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+				</dxi-item>
+</dx-form>
+</app-base-edit-form></app-busy-indicator>

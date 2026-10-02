@@ -1,0 +1,12 @@
+<app-base-list-form #listForm
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [title]="'لیست کسورات فاکتور'"
+                    [showAddButton]="showAddButton"
+                    [allowEditInForm]="allowEditInForm"
+                    [allowDeleteInForm]="allowDeleteInForm"
+                    [detailComponent]="detailComponent">
+</app-base-list-form>

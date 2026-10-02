@@ -1,0 +1,36 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <app-factor-statistic #factorPaymentStatistic [factorId]="entity.factorId" [complexMode]="true"
+                          [factorPaymentId]="selectedEntityId"></app-factor-statistic>
+    <hr/>
+    <dx-form id="form" [colCount]="3" #detailForm [formData]="entity">
+      <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentCount" editorType='dxNumberBox'
+                [editorOptions]="{format:'#,##0' , onValueChanged : getFactorPaymentInstallmentPrice}">
+        <dxi-validation-rule type="required" message="تعداد اقساط اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'قیمت(ریال)'}" dataField="price" editorType='dxNumberBox'
+                [editorOptions]="{format:'#,##0'}">
+        <dxi-validation-rule type="required" message="قیمت اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ پرداخت'}" dataField="paymentDate" editorType='dxNumberBox'>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.paymentDate=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="paymentDateDataValue"
+                 style="float:right"
+                 placeholder="تاریخ پرداخت"
+                 [ngModel]="entity.paymentDate  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--      <dp-date-picker-->
+        <!--        [config]="datePickerConfig"-->
+        <!--        dir="rtl"-->
+        <!--        mode="day"-->
+        <!--        placeholder="تاریخ پرداخت"-->
+        <!--        theme="dp-material"-->
+        <!--        [ngModel]="entity.paymentDate | intToStringDate" (ngModelChange)="entity.paymentDate=convertDateToInt($event)">-->
+        <!--      </dp-date-picker>-->
+        <dxi-validation-rule type="required" message="تاریخ پرداخت اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

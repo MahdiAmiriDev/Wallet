@@ -1,0 +1,10 @@
+<app-base-list-form #listForm
+                    [wordWrapEnabled]="true"
+                    (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                    [loadAfterSetFilter]="loadAfterSetFilter"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)"
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    [showExportToExcelButton]="true">
+</app-base-list-form>

@@ -1,0 +1,55 @@
+<app-base-list-form #listFrom
+                    entityName="UploadedCertificate"
+                    customListUrl="UploadedCertificate/GeUploadedInfo"
+                    [columns]="columns"
+                    [customButtons]="customButtons"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    (customButtonClicked)="customButtonClicked($event)">
+</app-base-list-form>
+
+<dx-popup
+  class="popup"
+  [fullScreen]="true"
+  [showTitle]="true"
+  rtlEnabled="true"
+  title="بارگذاری گواهینامه"
+  [dragEnabled]="false"
+  [(visible)]="showDialog"
+  [deferRendering]="false"
+  (onHiding)="resetFileModel()">
+  <div *ngIf="!showList">
+    <div class="alert alert-info">
+      لطفا با زدن دکمه انتخاب فایل، فایل اکسل را از روی کامپیوتر شخصی خود انتخاب کنید
+    </div>
+    <form>
+      <dx-form id="form" [colCount]="1" [formData]="certificateFileModel" enctype="multipart/form-data">
+        <dxi-item [template]="'fileTemplate'"></dxi-item>
+        <div *dxTemplate="let data of 'fileTemplate'">
+          <dx-file-uploader
+            #fileUploader
+            name="tempCertificateFile"
+            rtlEnabled="true"
+            selectButtonText="انتخاب فایل"
+            width="300px"
+            style="float:right"
+            labelText=""
+            [allowedFileExtensions]="['.xls','.xlsx']"
+            (valueChange)="addFile($event)"
+            [(value)]="value"
+            [uploadUrl]="uploadUrl"
+            (onUploadStarted)="setBusy(true)"
+            (onUploaded)="setBusy(false);refreshListAndShowMessage($event)"
+            [multiple]="false"
+            uploadMode="instantly">
+          </dx-file-uploader>
+        </div>
+
+      </dx-form>
+    </form>
+  </div>
+  <app-uploaded-certificate-list *ngIf="showList" [invalidItem]="invalidItem"
+                          (afterFinalRegistration)="afterFinalRegistration()">
+  </app-uploaded-certificate-list>
+</dx-popup>

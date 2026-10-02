@@ -1,0 +1,27 @@
+﻿@using YashilCommerce.Core.Classes
+
+@if (ViewData["MetaDescription"] == null)
+{
+    <meta name="description" content="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationMetaDescription)" />
+}
+else
+{
+    <meta name="description" content='@Html.Raw(ViewData["MetaDescription"])' />
+}
+@if (ViewData["MetaKeywords"] == null)
+{
+    <meta name="keywords" content="@await Component.InvokeAsync("AppConfigValuePresenter", ApplicationConfigKey.SiteConfigurationKeyWord)" />
+}
+else
+{
+    <meta name="keywords" content='@Html.Raw(@ViewData["MetaKeywords"])' />
+}
+
+<meta name="author" content="inst" />
+<meta name="robots" content="index, follow" />
+<!-- Mobile Specific Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-navbutton-color" content="#fb3449" />
+<meta name="theme-color" content="#fb3449" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#fb3449" />

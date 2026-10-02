@@ -1,0 +1,18 @@
+<app-busy-indicator>
+  <app-base-edit-form [fixHeight]="fixHeight" (submitEvent)="formSubmit($event)"
+                      (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="4" #detailForm [formData]="entity" style="margin: 5px;padding: 5px">
+
+      <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea' colSpan="2" style="padding-left: 5px">
+        <dxi-validation-rule type="required" message="توضیحات اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item *ngIf="!issueType" dataField="issueType" editorType="dxSelectBox" [label]="{text: 'نوع مشکل'}"
+                [editorOptions]="{ items: selectedIssueTypes,displayExpr:'title',valueExpr:'id', onSelectionChanged: customizeIssueTitle }">
+        <dxi-validation-rule type="required" message="نوع مشکل اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item [label]="{text: 'زمان صرف شده(دقیقه)'}" dataField="timeSpent" editorType='dxNumberBox'>
+        <dxi-validation-rule type="required" message="زمان صرف شده اجباری می باشد"></dxi-validation-rule>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

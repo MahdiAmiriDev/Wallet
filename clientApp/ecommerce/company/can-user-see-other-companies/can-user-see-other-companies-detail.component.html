@@ -1,0 +1,10 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="onFormSubmit()" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" [formData]="entity">
+      <dxi-item [label]="{text: 'shp.Company.CanUserSeeOtherCompany' | translate}" dataField="canUserSeeOtherCompany"
+                editorType='dxCheckBox'>
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+
+</app-busy-indicator>

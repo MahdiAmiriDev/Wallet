@@ -1,0 +1,93 @@
+﻿@using Yashil.Common.SharedKernel.Helpers
+@model Yashil.Core.CustomViewModels.ECommerce.ProductSalePlanningViewModel
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+}
+<div class="row" style="padding-top: 5px;">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+        <div class="righticon" style="text-align:right;">
+            <i class="fad fa-calendar-alt" style="margin-top:7px;  margin-left: 5px;"></i>
+            <span class="courseDetailTitle2">
+                تاریخ: از    <span style="padding-right:5px">@DateFunction.GetDateFromIntReverse(@Model.StartDate)</span> تا <span style="padding-right:5px">@DateFunction.GetDateFromIntReverse(Model.EndDate)</span>
+            </span>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+        <div class="righticon" style="text-align:right;">
+            <i class="fad fa-clock" style="margin-top:7px;  margin-left: 5px;"></i>
+            <span class="courseDetailTitle2">
+                مدت زمان:  @Model.Duration ساعت
+            </span>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+        <div class="righticon" style="text-align:right;">
+            <i class="fas fa-calendar-day" style="margin-top:7px;  margin-left: 5px;"></i>
+            <span class="courseDetailTitle2">
+                روزهای تشکیل:  @Model.CoursePlanningSchedule
+            </span>
+        </div>
+        <br>
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(Model.RepresentationTitle))
+{
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+            <div class="righticon" style="text-align:right;">
+                <i class="fad fa-sitemap" style="margin-top:7px; margin-left: 5px;"></i>
+                <span class="courseDetailTitle2">
+                     @Model.RepresentationTitle
+                </span>
+            </div>
+            <br>
+        </div>
+    </div>
+}
+
+<div class="row">
+    @if (!string.IsNullOrEmpty(Model.CityTitle))
+    {
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+            <div class="righticon" style="text-align:right;">
+                <i class="fad fa-city" style="margin-top:7px;  margin-left: 5px;"></i>
+                <span class="courseDetailTitle2">
+                    شهر: @Model.CityTitle
+                </span>
+            </div>
+            <br>
+        </div>
+
+    }
+</div>
+<div class="row">
+
+    @if (Model.InstallmentCount != null)
+    {
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pr">
+            <div class="righticon" style="text-align:right;">
+                <i class="fad fa-city" style="margin-top:7px;  margin-left: 5px;"></i>
+                <span class="courseDetailTitle2">
+                    تعداد اقساط:  @Model.InstallmentCount
+                </span>
+            </div>
+            <br>
+        </div>
+    }
+</div>
+
+
+
+
+

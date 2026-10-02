@@ -1,0 +1,777 @@
+@using Yashil.Common.SharedKernel.Helpers;
+@using Yashil.Core.Enums
+@model YashilPayment.Web.Areas.Payment.ViewModels.HybridIpgViewModel
+@using Yashil.Infrastructure.Util;
+@using System.Text.Encodings.Web
+
+@{
+ 
+    var encodedToken = JavaScriptEncoder.Default.Encode(Model.PaymentRequestToken);
+    var encodedCallBackUrl = JavaScriptEncoder.Default.Encode(Model.CallBackUrl);
+    //Layout = "_HekmatIpgLayout";
+    // بررسی اینکه تراکنش تعیین تکلیف نشده حکمت وجود دارد یا خیر
+    System.Diagnostics.Debug.Assert(Model.HybridPayments != null, "Model.HybridPayments != null");
+
+}
+
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="~/css/hekmatIpg.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/bootstrap5/bootstrap.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/bootstrap5/bootstrap-v5.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/bootstrap5/styles.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/yashilIpgStyle.css" asp-append-version="true" />
+
+<script src="~/js/jquery/jquery.min.js" asp-append-version="true"></script>
+<script src="~/js/bootstrap/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/js/components/authentication/captcha.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery/jquery-validate/jquery.validate.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+<script src="~/js/errorMessage.min.js" asp-append-version="true"></script>
+<script src="~/js/ipg/hekmatIpg.min.js" asp-append-version="true"></script>
+<script src="~/js/ipg/ipgBootstrap.min.js" asp-append-version="true"></script>
+<script src="~/js/bootstrap/bootstrap.bundle.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/customJs.js" asp-append-version="true"></script>
+
+
+<body class="bg-gray-light">
+
+
+    <div class="container dir-rtl mt-3 mb-3">
+
+        <div class="bg-white d-flex pt-1 ps-1 pe-1 rounded-2 justify-content-between align-items-center flex-column position-relative">
+            <div class="order-0 top-lg-40">
+                <div class="pt-3 pt-lg-0 text-center">
+                    <span class="fs-20-px">درگاه پرداخت اینترنتی شرکت انستیتوایزایران</span>
+                </div>
+            </div>
+            <div class="order-1 d-flex justify-content-between  align-items-center w-100 mt-2 mt-lg-0">
+                <img src="/images/HekmatIpg/hekmat.jpg" alt="Hekmat Logo" class="w-50-m-1 w-lg-auto ms-1 img-fluid border-radius-2" />
+                <img src="/images/HekmatIpg/inst.png" alt="Institute Logo" class="w-50-m-1 w-lg-auto me-1 img-fluid border-radius-2" />
+            </div>
+            <div class="order-2 overflow-hide h-50-px w-100 position-relative d-flex justify-content-center align-items-end">
+                <div class="bg-svg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mb-3 order-0 order-lg-1 d-table-cell">
+                <div class="beh-card carddetail">
+                    <div class="">
+                        <!--<span class="shape"></span>-->
+                    </div>
+                    <div class="card-headerr">
+                        <h3>محاسبه روش پرداخت</h3>
+                    </div>
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="d-flex justify-content-between align-items-center alert alert-danger">
+                            <div>@ViewBag.Message</div>
+                        </div>
+                    }
+                    @if (Model.HasAnyPaymentNotDetermined)
+                    {
+                        <div class="d-flex justify-content-between align-items-center alert alert-danger rtl m-2">
+                            <div>کاربر گرامی تا زمان مشخص شدن وضعیت پرداخت قبلی امکان پرداخت وجود ندارد</div>
+                        </div>
+                    }
+
+
+                    <div class="card-body p-2 bg-logo-hybrid rtl">
+                        <div class="d-flex justify-content-center">
+                            @if (!Model.CashPaymentPercentage.HasValue && !Model.HybridPaymentRequestStatus.HasValue)
+                            {
+                                <div id="priceCalculateDiv" class="w-100">
+                                    <div class="d-flex flex-column justify-content-between align-items-center gap-1 text">
+                                        @if (!Model.AllowPayCash && !Model.HasAnyPaymentNotDetermined)
+                                        {
+                                            <div class="alert alert-info">
+                                                <p style="text-align: justify;">برای محاسبه میزان سهم پرداخت نقدی یا اقساطی ابتدا درصد پرداخت نقدی را در کادر زیر انتخاب کنید سپس بر روی دکمه محاسبه کلیک نمایید.</p>
+                                            </div>
+                                        }
+                                        @if (Model.AllowPayCash)
+                                        {
+                                            <div class="alert alert-info">
+                                                <p style="text-align: justify;"> کاربر گرامی پرداخت اقساطی شما با موفقیت انجام شده است، لطفا پرداخت نقدی خود را تکمیل نمایید. </p>
+                                            </div>
+                                        }
+
+                                        <div class="bg-transparent rounded-2 p-2 w-50" style="border: solid 1px #e1e1e1;">
+
+                                            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center my-2">
+                                                @* درصد پرداخت نقدی *@
+
+
+                                                <div class="align-self-center">
+                                                    <label class="col-form-label">
+                                                        انتخاب درصد پرداخت نقدی
+                                                    </label>
+                                                </div>
+
+
+                                                <div class="ms-1">
+                                                    @if (Model.CashPaymentPercentage.HasValue)
+                                                    {
+                                                        <div class="d-flex align-items-center justify-content-center gap-2 ms-1 ">
+                                                            @Html.TextBoxFor(t => t.CashPaymentPercentage, null, new { @readonly = "readonly", @type = "number", max = 3, min = 0, @class = "form-control ss02" })
+                                                            <div class="currency">درصد</div>
+                                                        </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <select class=" select-down form-select basic" id='CashPaymentPercentage' name="CashPaymentPercentage"></select>
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                            @* پرداخت نقدی *@
+
+                                            @if (Model.AllowPayCash)
+                                            {
+                                                <div class="d-flex flex-column flex-sm-row justify-content-between my-2">
+                                                    <div class="">
+                                                        <label class="col-form-label me-1">مبلغ نقدی قابل پرداخت</label>
+
+                                                    </div>
+                                                    <div id="cashPaymentArea" name="cashPaymentArea" class="d-flex align-items-center gap-2 ms-1 ">
+
+                                                        <input id="RemainingCashPaymentPrice" name="RemainingCashPaymentPrice" readonly class="form-control ss02" value="@CurrencyUtility.FormatPrice(Model.RemainingCashPaymentPrice)" />
+                                                        <div class="currency">تومان</div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+
+
+                                        </div>
+                                        <div class="d-flex flex-column flex-sm-row gap-2">
+
+
+                                            @if (!Model.CashPaymentPercentage.HasValue)
+                                            {
+                                                <button type="submit" class="btn btn-calc" id="paymentButton" onclick="CalculatePriceForPay(event);showHideDiv('installmentsCalculateDiv','priceCalculateDiv');">
+                                                    <i id="spinner" style="display: none" class="fas fa-spinner fa-spin"></i>
+                                                    محاسبه قیمت
+                                                </button>
+                                            }
+
+                                            @if (!Model.AllowPayCash && !Model.AllowPayHekmat && !Model.HasAnyPaymentNotDetermined)
+                                            {
+                                                <button type="submit" class="btn btn-cancel" id="cancelButton" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                                    <i id="spinner" style="display: none" class="fas fa-spinner fa-spin"></i>
+                                                    انصراف از پرداخت
+                                                </button>
+                                            }
+
+                                            @if (Model.AllowPayCash)
+                                            {@using (Html.BeginForm("CashPurchase", "HybridIpg", FormMethod.Post, new { @id = "purchaseCashForm", @name = "purchaseCashForm", @class = "w-100", @style = Model.AllowPayCash ? "" : "display:none" }))
+                                                {
+                                                    @Html.HiddenFor(t => t.PaymentRequestToken)
+                                                    <input type="button" id="purchaseCashForm" value="پرداخت نقدی" class="btn btn-calc" data-bs-toggle="modal" data-bs-target="#purchaseCashModal" />
+                                                }}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-12 col-lg-8 col-xxl-7" id="installmentsCalculateDiv" style="@((!Model.CashPaymentPercentage.HasValue && !Model.HybridPaymentRequestStatus.HasValue) ? "display:none"  : "display:block " )">
+                                @if (!(!Model.CashPaymentPercentage.HasValue && !Model.HybridPaymentRequestStatus.HasValue))
+                                {
+                                    <div id="callCalcPriceFunction" value="@Model.CashPaymentPercentage"></div>
+                                }
+                                <div id="CashPaymentPrecentageAlert" name="CashPaymentPrecentageAlert" class="alert alert-danger w-100" style="display: none">
+                                </div>
+                                @if (!(Model.CashPaymentPercentage.HasValue && Model.CashPaymentPercentage == 0))
+                                {
+                                    <div class="alert alert-info w-100">
+                                        <p style="text-align: justify;">جهت محاسبه مجدد میزان سهم پرداخت نقدی یا اقساطی بر روی تغییر درصد پرداخت نقدی کلیک نمایید.</p>
+                                    </div>
+                                }
+                                <div class="bg-transparent rounded-2 p-2" style="border: solid 1px #e1e1e1;">
+
+
+                                    @* مبلغ پایه *@
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between my-2 row-highlight">
+                                        <div>
+                                            <label class="col-form-label me-1 ">مبلغ پایه</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 ms-1 ">
+                                            <input id="BasePrice" name="BasePrice" readonly class="form-control ss02" value="@CurrencyUtility.FormatPrice(Model.BasePrice)" />
+                                            <div class="currency">تومان</div>
+                                        </div>
+                                    </div>
+
+                                    @* درصد پرداخت نقدی *@
+
+                                    @if (!(Model.CashPaymentPercentage.HasValue && Model.CashPaymentPercentage == 0))
+                                    {
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between my-2">
+                                        <div>
+                                            <label class="col-form-label me-1 "> درصد پرداخت نقدی انتخابی توسط شما</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 ms-1 ">
+                                                <input id="CashPaymentPricePrecentage" name="CashPaymentPricePrecentage" readonly class="form-control ml-3px ss02" value="@Model.CashPaymentPercentage" />
+                                                <div class="currency">درصد</div>
+                                            </div>
+                                        </div>
+
+                                        @* مبلغ نقدی قابل پرداخت *@
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between my-2 row-highlight">
+                                            <div class="">
+                                                <label class="col-form-label me-1">مبلغ نقدی قابل پرداخت</label>
+
+                                            </div>
+                                            <div id="cashPaymentArea" name="cashPaymentArea" class="d-flex align-items-center gap-2 ms-1 ">
+
+                                                <input id="RemainingCashPaymentPrice" name="RemainingCashPaymentPrice" readonly class="form-control ss02" value="@CurrencyUtility.FormatPrice(Model.RemainingCashPaymentPrice)" />
+                                                <div class="currency">تومان</div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                    @*  مبلغ اقساطی قابل پرداخت *@
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between my-2">
+                                        <div class="">
+                                            <label class="col-form-label me-1">
+                                                مبلغ اقساطی قابل پرداخت
+                                            </label>
+                                        </div>
+                                        <div id="hekmatPaymentArea" name="hekmatPaymentArea" class="d-flex align-items-center gap-2 ms-1 ">
+                                            @if (Model.CashPaymentPercentage.HasValue)
+                                            {
+                                                @Html.TextBox("RemainingHekmatPaymentPriceHint", @CurrencyUtility.FormatPrice(Model.RemainingHekmatPaymentPrice), new { @readonly = "readonly", @class = "form-control ss02" })
+                                                <div class="currency">تومان</div>
+
+                                            }
+                                            @if (!Model.CashPaymentPercentage.HasValue)
+                                            {
+                                                <input id="RemainingHekmatPaymentPrice" name="RemainingHekmatPaymentPrice" readonly class="form-control ss02" value="@CurrencyUtility.FormatPrice(Model.RemainingHekmatPaymentPrice)" />
+                                                <div class="currency">تومان</div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    @* مبلغ هر قسط *@
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between my-2 row-highlight">
+                                        <div class="">
+                                            <label class="col-form-label me-1">مبلغ هر قسط</label>
+                                        </div>
+
+                                        <div class="d-flex align-items-center gap-2 ms-1  ">
+                                            <input id="amountOfEachInstallment" name="amountOfEachInstallment" value="@CurrencyUtility.FormatPrice(Model.AmountOfEachInstallment)" readonly class="form-control ss02" />
+
+                                            <div class="currency">تومان</div>
+                                        </div>
+
+                                    </div>
+
+                                    @* اقساط *@
+
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between my-2">
+
+                                        <div class="">
+                                            <label class="col-form-label me-1">تعداد اقساط</label>
+                                        </div>
+
+                                        <div class="d-flex align-items-center gap-2 ms-1  ">
+                                            @Html.TextBoxFor(t => t.InstallmentCount, new { @readonly = "readonly", @class = "form-control ss02" })
+                                            <div class="currency invisible">تومان</div>
+                                        </div>
+
+                                    </div>
+
+                                    @* هزینه حمل *@
+                                    @if (Model.ShippingAmount.HasValue)
+                                    {
+
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between my-2 row-highlight">
+
+                                            <div class="">
+                                                <label class="col-form-label me-1">هزینه ارسال</label>
+                                            </div>
+
+                                            <div class="d-flex align-items-center gap-2 ms-1  ">
+                                                <input id="ShippingAmount" name="ShippingAmount" readonly class="form-control ss02" value="@CurrencyUtility.FormatPrice(Model.ShippingAmount)" />
+
+                                                <div class="currency">تومان</div>
+                                            </div>
+
+                                        </div>
+
+                                    }
+
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center btn-submit-form gap-3 mt-3">
+
+                                    <div class="installment-btn">
+                                        @Html.HiddenFor(t => t.PaymentRequestToken)
+
+                                        @using (Html.BeginForm("HekmatPurchase", "HybridIpg", FormMethod.Post, new { @id = "purchaseHekmatForm", @name = "purchaseHekmatForm", @class = "w-100", @style = Model.AllowPayHekmat ? "" : "display:none" }))
+                                        {
+                                            @Html.HiddenFor(t => t.PaymentRequestToken)
+                                            <input type="button" id="purchaseHekmatForm" value="پرداخت اقساطی" class="btn btn-calc" data-bs-toggle="modal" data-bs-target="#HekmatPurchaseModal" />
+
+                                        }
+
+
+                                        @using (Html.BeginForm("CashPurchase", "HybridIpg", FormMethod.Post, new { @id = "purchaseCashForm", @name = "purchaseCashForm", @class = "w-100", @style = Model.AllowPayCash ? "" : "display:none" }))
+                                        {
+                                            @Html.HiddenFor(t => t.PaymentRequestToken)
+                                            <input type="button" id="purchaseCashForm" value="پرداخت نقدی" class="btn btn-calc" data-bs-toggle="modal" data-bs-target="#purchaseCashModal" />
+
+                                        }
+
+                                    </div>
+                                    @if (!Model.CashPaymentPercentage.HasValue)
+                                    {
+                                        <input type="submit" value="تغییر درصد پرداخت نقدی" class="btn btn-edit" onclick="showCalcPriceDiv('installmentsCalculateDiv','priceCalculateDiv');" />
+                                    }
+                                    <button type="submit" class="btn btn-cancel" id="cancelButton" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                        <i id="spinner" style="display: none" class="fas fa-spinner fa-spin"></i>
+                                        انصراف از پرداخت
+                                    </button>
+
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="d-flex flex-column ">
+
+                            @if (!Model.CashPaymentPercentage.HasValue)
+                            {
+                                <div id="resultMessage" name="resultMessage" class="alert alert-danger" style="display: none"></div>
+                            }
+
+
+
+                            <div class="d-flex justify-content-center my-3 px-3 overflow-auto">
+                                <div class="d-flex justify-content-md-center my-3 px-3 overflow-auto w-100">
+                                    <table class="w-100">
+                                        @if (Model.HybridPayments != null && Model.HybridPayments.Count > 0)
+                                        {
+                                            <tr class="">
+                                                <th class=" ">
+                                                    شناسه
+                                                </th>
+                                                <th class="">
+                                                    قیمت
+                                                </th>
+                                                <th class="">
+                                                    نوع فروش
+                                                </th>
+                                                <th class="">
+                                                    روش پرداخت
+                                                </th>
+                                                <th class="">
+                                                    وضعیت پرداخت
+                                                </th>
+                                                <th class="">
+                                                    تاریخ پرداخت
+                                                </th>
+                                            </tr>
+                                            foreach (var hybridPayment in Model.HybridPayments)
+                                            {
+                                                <tr class="fs-14 ">
+                                                    <th class="fw-400">
+                                                        @hybridPayment.Id
+                                                    </th>
+                                                    <th class="fw-400">
+                                                        @CurrencyUtility.FormatPrice(hybridPayment.Price)<span class="me-1 fs-10 fw-800">تومان</span>
+                                                    </th>
+                                                    <th class="fw-400">
+                                                        @hybridPayment.SaleTypeTitle
+                                                    </th>
+                                                    <th class="fw-400">
+                                                        @hybridPayment.PaymentMethodTypeTitle
+                                                    </th>
+                                                    <th class="fw-400">
+                                                        @hybridPayment.HybridPaymentStatusTypeTitle
+                                                    </th>
+                                                    <th class="fw-400">
+                                                        @DateFunction.GetDateFromIntReverse(hybridPayment.PaidDateInt)
+                                                    </th>
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- The cancel Modal -->
+            <div class="modal fade rtl" id="cancelModal">
+                <div class="modal-dialog top-30">
+                    <div class="modal-content">
+
+                        <!-- Modal Header-->
+                        <div class="modal-header">
+                            <h4 class="modal-title">توجه</h4>
+                            <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p class="text-justify">
+                                کاربر گرامی، آیا مایل به <strong>انصراف از پرداخت</strong> می باشید ؟
+                            </p>
+                        </div>
+
+
+                        <!-- Modal footer  reservationNumber, statusCode, paymentRequestToken, callBackUrl -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal" 
+                                    onclick="window.location = '@Url.Action("CancelPayment","HybridIpg", new {reservationNumber = @Model.ReservationNumber ,callBackUrl =@Model.CallBackUrl ,paymentRequestToken =@Model.PaymentRequestToken})'">
+                                بلی
+                            </button>
+                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">خیر</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- The invalidHekmatPrice Modal -->
+            <div class="modal fade rtl" id="invalidHekmatPriceModal">
+                <div class="modal-dialog top-30">
+                    <div class="modal-content">
+
+                        <!-- Modal Header-->
+                        <div class="modal-header" style="background-color: #f8d7da;">
+                            <h4 class="modal-title text-danger">توجه</h4>
+                            <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p class="text-justify">
+                                کاربر گرامی مبلغ اقساطی قابل پرداخت شما کمتر از <strong>100,000 تومان </strong> است و این مبلغ قابل پرداخت نمی باشد. لطفا درصد پرداخت نقدی را اصلاح نمایید.
+                            </p>
+                        </div>
+
+
+                        <!-- Modal footer -->
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- The HekmatPurchase Modal -->
+            <div class="modal fade rtl" id="HekmatPurchaseModal">
+                <div class="modal-dialog top-30">
+                    <div class="modal-content">
+
+                        <!-- Modal Header-->
+                        <div class="modal-header">
+                            <h4 class="modal-title">توجه</h4>
+                            <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p class="text-justify">
+                                کاربر گرامی، آیا از <strong>پرداخت اقساطی </strong> اطمینان دارید؟
+                            </p>
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal" onclick="PurchaseHekmatFormSubmit()">بلی</button>
+
+                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">خیر</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- The HekmatPurchase Modal -->
+            <div class="modal fade rtl" id="purchaseCashModal">
+                <div class="modal-dialog top-30">
+                    <div class="modal-content">
+
+                        <!-- Modal Header-->
+                        <div class="modal-header">
+                            <h4 class="modal-title">توجه</h4>
+                            <button type="button" class="btn-close m-0" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p class="text-justify">
+                                کاربر گرامی، آیا از <strong>پرداخت نقدی </strong> اطمینان دارید؟
+                            </p>
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal" onclick="PurchaseCashModalFormSubmit()">بلی</button>
+
+                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">خیر</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+       @*<fom method="POST" action="@Model.CallBackUrl" id="frmCancelPayment" style="display:none">
+            <input type="hidden" id="ReservationNumber" name="ReservationNumber" value="@Model.ReservationNumber" />
+            <input type="hidden" id="statusCode" name="statusCode" value="@paymentGatewayCancelStatus"/>
+                <button style="display:none"></button>
+            </form>*@
+
+        </div>
+    </div>
+
+</body>
+
+
+
+<script>
+
+    function PurchaseHekmatFormSubmit() {
+        $("#purchaseHekmatForm").submit();
+    }
+    function PurchaseCashModalFormSubmit() {
+        $("#purchaseCashForm").submit();
+    }
+
+
+    var select = '';
+    for (i = 0; i <= 100; i++) {
+        select += '<option val=' + i + '>' + i + '</option>';
+    }
+    $('#CashPaymentPercentage').html(select);
+
+</script>
+<script>
+    // Generated by CoffeeScript 1.4.0
+    (function () {
+        var $;
+
+        $ = window.jQuery || window.Zepto || window.$;
+
+        $.fn.fancySelect = function (opts) {
+            var isiOS, settings;
+            if (opts == null) {
+                opts = {};
+            }
+            settings = $.extend({
+                forceiOS: false,
+                includeBlank: false,
+                optionTemplate: function (optionEl) {
+                    return optionEl.text();
+                },
+                triggerTemplate: function (optionEl) {
+                    return optionEl.text();
+                }
+            }, opts);
+            isiOS = !!navigator.userAgent.match(/iP(hone|od|ad)/i);
+            return this.each(function () {
+                var copyOptionsToList, disabled, options, sel, trigger, updateTriggerText, wrapper;
+                sel = $(this);
+                if (sel.hasClass('fancified') || sel[0].tagName !== 'SELECT') {
+                    return;
+                }
+                sel.addClass('fancified');
+                sel.css({
+                    width: 1,
+                    height: 1,
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    opacity: 0
+                });
+                sel.wrap('<div class="fancy-select">');
+                wrapper = sel.parent();
+                if (sel.data('class')) {
+                    wrapper.addClass(sel.data('class'));
+                }
+                wrapper.append('<div class="trigger ss02">');
+                if (!(isiOS && !settings.forceiOS)) {
+                    wrapper.append('<ul class="options ss02">');
+                }
+                trigger = wrapper.find('.trigger');
+                options = wrapper.find('.options');
+                disabled = sel.prop('disabled');
+                if (disabled) {
+                    wrapper.addClass('disabled');
+                }
+                updateTriggerText = function () {
+                    var triggerHtml;
+                    triggerHtml = settings.triggerTemplate(sel.find(':selected'));
+                    return trigger.html(triggerHtml);
+                };
+                sel.on('blur.fs', function () {
+                    if (trigger.hasClass('open')) {
+                        return setTimeout(function () {
+                            return trigger.trigger('close.fs');
+                        }, 120);
+                    }
+                });
+                trigger.on('close.fs', function () {
+                    trigger.removeClass('open');
+                    return options.removeClass('open');
+                });
+                trigger.on('click.fs', function () {
+                    var offParent, parent;
+                    if (!disabled) {
+                        trigger.toggleClass('open');
+                        if (isiOS && !settings.forceiOS) {
+                            if (trigger.hasClass('open')) {
+                                return sel.focus();
+                            }
+                        } else {
+                            if (trigger.hasClass('open')) {
+                                parent = trigger.parent();
+                                offParent = parent.offsetParent();
+                                if ((parent.offset().top + parent.outerHeight() + options.outerHeight() + 20) > $(window).height() + $(window).scrollTop()) {
+                                    options.addClass('overflowing');
+                                } else {
+                                    options.removeClass('overflowing');
+                                }
+                            }
+                            options.toggleClass('open');
+                            if (!isiOS) {
+                                return sel.focus();
+                            }
+                        }
+                    }
+                });
+                sel.on('enable', function () {
+                    sel.prop('disabled', false);
+                    wrapper.removeClass('disabled');
+                    disabled = false;
+                    return copyOptionsToList();
+                });
+                sel.on('disable', function () {
+                    sel.prop('disabled', true);
+                    wrapper.addClass('disabled');
+                    return disabled = true;
+                });
+                sel.on('change.fs', function (e) {
+                    if (e.originalEvent && e.originalEvent.isTrusted) {
+                        return e.stopPropagation();
+                    } else {
+                        return updateTriggerText();
+                    }
+                });
+                sel.on('keydown', function (e) {
+                    var hovered, newHovered, w;
+                    w = e.which;
+                    hovered = options.find('.hover');
+                    hovered.removeClass('hover');
+                    if (!options.hasClass('open')) {
+                        if (w === 13 || w === 32 || w === 38 || w === 40) {
+                            e.preventDefault();
+                            return trigger.trigger('click.fs');
+                        }
+                    } else {
+                        if (w === 38) {
+                            e.preventDefault();
+                            if (hovered.length && hovered.index() > 0) {
+                                hovered.prev().addClass('hover');
+                            } else {
+                                options.find('li:last-child').addClass('hover');
+                            }
+                        } else if (w === 40) {
+                            e.preventDefault();
+                            if (hovered.length && hovered.index() < options.find('li').length - 1) {
+                                hovered.next().addClass('hover');
+                            } else {
+                                options.find('li:first-child').addClass('hover');
+                            }
+                        } else if (w === 27) {
+                            e.preventDefault();
+                            trigger.trigger('click.fs');
+                        } else if (w === 13 || w === 32) {
+                            e.preventDefault();
+                            hovered.trigger('click.fs');
+                        } else if (w === 9) {
+                            if (trigger.hasClass('open')) {
+                                trigger.trigger('close.fs');
+                            }
+                        }
+                        newHovered = options.find('.hover');
+                        if (newHovered.length) {
+                            options.scrollTop(0);
+                            return options.scrollTop(newHovered.position().top - 12);
+                        }
+                    }
+                });
+                options.on('click.fs', 'li', function (e) {
+                    var clicked;
+                    clicked = $(this);
+                    sel.val(clicked.data('raw-value'));
+                    if (!isiOS) {
+                        sel.trigger('blur.fs').trigger('focus.fs');
+                    }
+                    options.find('.selected').removeClass('selected');
+                    clicked.addClass('selected');
+                    trigger.addClass('selected');
+                    return sel.val(clicked.data('raw-value')).trigger('change.fs').trigger('blur.fs').trigger('focus.fs');
+                });
+                options.on('mouseenter.fs', 'li', function () {
+                    var hovered, nowHovered;
+                    nowHovered = $(this);
+                    hovered = options.find('.hover');
+                    hovered.removeClass('hover');
+                    return nowHovered.addClass('hover');
+                });
+                options.on('mouseleave.fs', 'li', function () {
+                    return options.find('.hover').removeClass('hover');
+                });
+                copyOptionsToList = function () {
+                    var selOpts;
+                    updateTriggerText();
+                    if (isiOS && !settings.forceiOS) {
+                        return;
+                    }
+                    selOpts = sel.find('option');
+                    return sel.find('option').each(function (i, opt) {
+                        var optHtml;
+                        opt = $(opt);
+                        if (!opt.prop('disabled') && (opt.val() || settings.includeBlank)) {
+                            optHtml = settings.optionTemplate(opt);
+                            if (opt.prop('selected')) {
+                                return options.append("<li data-raw-value=\"" + (opt.val()) + "\" class=\"selected\">" + optHtml + "</li>");
+                            } else {
+                                return options.append("<li data-raw-value=\"" + (opt.val()) + "\">" + optHtml + "</li>");
+                            }
+                        }
+                    });
+                };
+                sel.on('update.fs', function () {
+                    wrapper.find('.options').empty();
+                    return copyOptionsToList();
+                });
+                return copyOptionsToList();
+            });
+        };
+
+    }).call(this);
+
+    $('.basic').fancySelect();
+
+</script>

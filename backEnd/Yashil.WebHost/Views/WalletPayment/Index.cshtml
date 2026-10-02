@@ -1,0 +1,177 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, DNTCaptcha.Core
+@model YashilCommerce.Web.Areas.ECommerce.ViewModels.PayWithWalletParam
+@{
+    Layout = "_BaseLayout";
+
+}
+<div class="content-wrap">
+    <div class="content-page-fullwidth-wrap clearfix pd-top-45">
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="col-md-4 col-lg-4 hidden-sm hidden-xs"></div>
+                        <form id="walletForm" method="post" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 LoginForm">
+                            <div class="row">
+                                <img src="~/images/logo/login_logo.png" alt="Logo Institute ISIRAN" style="margin: auto;margin-top:25px;height: 90px;" />
+                            </div>
+                            <div class="row" style="margin-top: 30px;">
+                                <span class="loginregister fullwidth">کد ملی صاحب کارت</span>
+                            </div>
+                            @Html.HiddenFor(x => x.OId)
+                            <div class="row" style="margin-top:10px;">
+                                <div class="form-group fullwidth">
+                                    <label class="customLable" for="inputCode">کدملی صاحب کارت را وارد نمائید</label>
+                                    @Html.TextBoxFor(x => x.Code, new { autocomplete = "off", Required = true })
+                                    <div class="customLable">
+                                        @Html.ValidationMessageFor(x => x.Code, "", new { @class = "validationMessage" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="form-group fullwidth dntCaptcha">
+                                    <div class="dntCaptcha" style="width:100%">
+
+                                        <div style="display:inline-block;width: 30%;">
+                                            @Html.TextBoxFor(x => x.DNTCaptchaInputText, new { autocomplete = "off", Required = true })
+                                            <div class="customLable">
+                                                @Html.ValidationMessageFor(x => x.DNTCaptchaInputText, "", new { @class = "validationMessage" })
+                                            </div>
+                                        </div>
+                                        <div style="display:inline-block;">
+                                            <img alt="captcha"
+                                                 id="dntCaptchaImg"
+                                                 name="dntCaptchaImg" style="width:200px;height:36px" />
+                                            <input id="DNTCaptchaToken" name="DNTCaptchaToken" type="hidden" />
+                                            <input id="DNTCaptchaText" name="DNTCaptchaText" type="hidden" />
+                                        </div>
+                                        <div style="display:inline-block">
+                                            <img id="dntCaptchaRefreshButton"
+                                                 name="dntCaptchaRefreshButton"
+                                                 onclick="doRefreshCaptcha()" style="width:35px;height:25px" src="~/images/refresh.png" alt="Refresh Captcha" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="form-group fullwidth">
+                                    <div style="width:100%">
+                                        <button type="submit" class="loginButton">
+                                            <i id="spinner" style="display:none" class="fas fa-spinner fa-spin"></i> پرداخت
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="form-group fullwidth">
+                                    <div style="width:100%">
+                                        <button class="loginButton" onclick="cancelPayment(event)">
+                                            <i id="spinner2" style="display:none" class="fas fa-spinner fa-spin"></i> انصراف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:5px;margin-bottom:20px;">
+                                <div class="form-group fullwidth">
+                                    <div style="width:100%">
+                                        <span class="loginError">
+                                            با وارد کردن کد ملی صاحب کارت عملیات پرداخت شما صورت میپذیرد
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="col-md-4 col-lg-4 hidden-sm hidden-xs"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- /.content-wrap  -->
+
+</div>
+@section scripts{
+
+
+    <script>
+        $("#walletForm").submit(function (e) {
+            e.preventDefault();
+            showSpinner($('#spinner'));
+            disableButton($('.loginButton'));
+            if ($("#walletForm").valid()) {
+                //var jsonObject = Object.fromEntries(new FormData(e.target));
+                //jsonObject.OId = + jsonObject.OId;
+                let  formData = new FormData(e.target);
+                fetch('api/order/payWithWallet',
+                    {
+                        method: 'POST',
+                        body:  formData 
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.isSuccess) {
+                            window.location = data.returnUrl;
+                        } else {
+                            bootbox.alert(data.message);
+                            doRefreshCaptcha();
+                            hideSpinner($('#spinner'));
+                            enableButton($('.loginButton'));
+                        }
+
+                    })
+                    .catch(data => {
+                        bootbox.alert('خطا در برقراری ارتباط!');
+                        doRefreshCaptcha();
+                        hideSpinner($('#spinner'));
+                        enableButton($('.loginButton'));
+                    });
+            } else {
+                bootbox.alert('لطفا ورودی ها را چک نمایید!');
+                doRefreshCaptcha();
+                hideSpinner($('#spinner'));
+                enableButton($('.loginButton'));
+            }
+
+
+        });
+
+        function cancelPayment(e) {
+            e.preventDefault();
+            showSpinner($('#spinner2'));
+            disableButton($('.loginButton'));
+            var dataParams = { OId: @Model.OId.Value };
+            fetch('api/order/CancelPayWithWallet',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(dataParams)
+            })
+            .then(response => response.json())
+            .then(data => {
+                 if (data.isSuccess) {
+                     window.location = data.returnUrl;
+                 }
+                 else {
+                     bootbox.alert(data.message);
+                     doRefreshCaptcha();
+                     hideSpinner($('#spinner2'));
+                     enableButton($('.loginButton'));
+                 }
+            })
+            .catch(data => {
+                bootbox.alert('خطا در برقراری ارتباط!');
+                doRefreshCaptcha();
+                hideSpinner($('#spinner2'));
+                enableButton($('.loginButton'));
+            });
+        }
+
+    </script>
+    <script src="~/js/components/authentication/captcha.js" asp-append-version="true"></script>
+
+}

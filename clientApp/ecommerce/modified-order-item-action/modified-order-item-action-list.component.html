@@ -1,0 +1,65 @@
+<app-busy-indicator>
+    <app-base-list-form #listForm
+                        (listRowPrepared)="rowPrepared($event)"
+                        [showAddButton]="false"
+                        [showRefreshButton]="true"
+                        [wordWrapEnabled]="true"
+                        (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                        [loadAfterSetFilter]="loadAfterSetFilter"
+                        (selectedRowChanged)="setSelectedRow($event)"
+                        [columns]="columns"
+                        [entityName]="entityName"
+                        [detailComponent]="detailComponent"
+                        [customRowButtons]="customRowButtons"
+                        [isForSelectReadOnly]="true"
+                        [allowGrouping]="true"
+    >
+    </app-base-list-form>
+</app-busy-indicator>
+
+<dx-popup
+        title="توضیحات"
+        (onShowing)="showDescriptionPopUp=true"
+        (onHidden)="showDescriptionPopUp=false"
+        [(visible)]="showDescriptionPopUp"
+        [closeOnOutsideClick]="true"
+        [deferRendering]="false"
+        [dragEnabled]="false"
+        [fullScreen]="false"
+        [rtlEnabled]="true"
+        class="popup">
+    <div *dxTemplate="let data = model of 'content'">
+        <app-busy-indicator>
+            <div>
+                <dx-text-area
+                        [(value)]="expertDescription"
+                        [width]="'100%'"
+                        [height]="'100px'"
+                        [rtlEnabled]="true"
+                        [maxLength]="500"
+                        placeholder="لطفاً توضیحات را وارد کنید">
+                </dx-text-area>
+            </div>
+            <div style="border: 1px solid #ddd;text-align: right;background: #ddd;margin-top: 5px" class="p-1">
+                <dx-button
+                        id="btnSave"
+                        text="ذخیره"
+                        icon="save"
+                        type="success"
+                        style="font-size: 11px"
+                        (onClick)=apply()
+                >
+                </dx-button>
+                <dx-button
+                        class="ml-2 mediumIcon"
+                        id="btnClose"
+                        text="انصراف"
+                        style="margin-right: 5px;"
+                        type="default"
+                        icon="close"
+                        (onClick)="selectedRowChanged=null;showDescriptionPopUp=false">
+                </dx-button>
+            </div>
+        </app-busy-indicator>
+    </div>
+</dx-popup>

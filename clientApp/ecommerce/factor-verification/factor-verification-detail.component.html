@@ -1,0 +1,144 @@
+<app-busy-indicator>
+  <div style="text-align: right;background: #8689c8;" class="p-1" *ngIf="!allowConfirmOrRejectFactor">
+  <span style="color: white">
+       لیست آیتم های فاکتوری که مشکل دارند
+    </span>
+  </div>
+  <dx-data-grid id="gridContainer"
+                width="100%"
+                style="padding-bottom: 6px"
+                *ngIf="!allowConfirmOrRejectFactor"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [dataSource]="invalidFactorItemDataSource"
+                [showBorders]="true"
+                [rtlEnabled]="true"
+                [rowAlternationEnabled]="true"
+                [height]="200"
+                [allowColumnReordering]="false"
+                [columns]="columns"
+                [columnHidingEnabled]="false"
+                [wordWrapEnabled]="true"
+                [remoteOperations]="true"
+  >
+    <dxo-scrolling mode="virtual" rowRenderingMode="virtual"
+                   columnRenderingMode="virtual"></dxo-scrolling>
+    <dxo-filter-row
+      [visible]="false"></dxo-filter-row>
+    <dxo-selection
+      [selectAllMode]="false"
+      [showCheckBoxesMode]="false"
+      [mode]="'single'">
+    </dxo-selection>
+    <dxo-header-filter
+      [visible]="false"></dxo-header-filter>
+    <div *dxTemplate="let data of 'number'" style="direction: ltr !important;">
+      {{data.displayValue | number}}
+    </div>
+
+  </dx-data-grid>
+  <app-base-edit-form
+    [showSaveButton]="false"
+    [showCloseButton]='false'
+    (submitEvent)="formSubmit($event)"
+    (cancelEditOrInsert)="onCloseFormClick()"
+    [allowSave]="false"
+    [customButtons]="customButtons"
+    (customButtonClicked)="customButtonClicked($event)">
+    <div class="col-12">
+      <app-factor-statistic [factorId]="this.entity.factorId" [complexMode]="false"></app-factor-statistic>
+    </div>
+    <div class="col-12">
+      <as-split direction="horizontal" dir="rtl">
+        <as-split-area size="100" #t2 dir="rtl">
+          <div>
+            <div class="row" style="background:  #8689c8; color: white">
+              <dx-button
+                (click)="showLargeUploadReport=true"
+                icon="fullscreen"
+                style="margin: 3px 18px 3px 3px;"
+                hint="نمایش در ابعاد بزرگ">
+              </dx-button>
+              <dx-button
+                (click)="downloadUploadedReport($event)"
+                icon="pdffile"
+                style="margin: 3px 3px 3px 3px;"
+                hint="دانلود">
+              </dx-button>
+              <div class="text-center" style="padding: 9px;">
+                فاکتور بارگذاری شده توسط تامین کننده
+              </div>
+            </div>
+          </div>
+          <dx-scroll-view style="height: 450px;" [rtlEnabled]="true">
+            <pdf-viewer [src]="uploadReport"
+                        [page]="1"
+                        render-text="false"
+                        [render-text-mode]="0"
+                        [show-all]="true"
+                        [autoresize]="true"
+                        [fit-to-page]="true"
+                        [show-borders]="false"
+                        style="display: block;">
+            </pdf-viewer>
+          </dx-scroll-view>
+        </as-split-area>
+      </as-split>
+    </div>
+  </app-base-edit-form>
+</app-busy-indicator>
+
+<dx-popup
+  (onHidden)="showLargeUploadReport=false"
+  [(visible)]="showLargeUploadReport"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <dx-scroll-view style="width: 100%; height: 100%;" [rtlEnabled]="true">
+      <pdf-viewer [src]="uploadReport" [render-text-mode]="0" [page]="1" [stick-to-page]="true" style="display: block;">
+      </pdf-viewer>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+
+<dx-popup
+  (onHidden)="showLargeSystemReport=false"
+  [(visible)]="showLargeSystemReport"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="true"
+  [rtlEnabled]="true"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <dx-scroll-view style="width: 100%; height: 100%;" [rtlEnabled]="true">
+      <pdf-viewer
+        [src]="systemReport"
+        [render-text-mode]="0"
+        [page]="1"
+        [stick-to-page]="true" style="display: block;">
+      </pdf-viewer>
+    </dx-scroll-view>
+  </div>
+</dx-popup>
+
+<dx-popup
+  (onHidden)="requestForReject=false"
+  [(visible)]="requestForReject"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  [rtlEnabled]="true"
+  [maxHeight]="300"
+  [maxWidth]="500"
+  title="رد فاکتور"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <ng-template appDetailComponentHost></ng-template>
+  </div>
+</dx-popup>

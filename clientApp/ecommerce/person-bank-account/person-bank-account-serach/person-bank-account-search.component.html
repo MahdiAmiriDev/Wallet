@@ -1,0 +1,43 @@
+<div style="width: 100%;" [style.height.px]="contentHeight">
+  <div class="row" style="padding-bottom: 5px">
+    <div class="col-12">
+      <div style="width: 100%; height: 50px;">
+        <as-split direction="horizontal">
+          <as-split-area [size]="20" dir="rtl">
+            <as-split direction="vertical">
+              <as-split-area #t [size]="100">
+                <app-person-select (selectedRowChanged)="selectedPersonChanged($event)"></app-person-select>
+              </as-split-area>
+            </as-split>
+          </as-split-area>
+        </as-split>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div style="width: 100%;" [style.height.px]="contentHeight">
+        <as-split direction="horizontal">
+          <as-split-area [size]="100" dir="rtl">
+            <as-split direction="vertical">
+              <as-split-area #t [size]="100">
+                <app-busy-indicator>
+                  <app-person-bank-account-list
+                    (personBankAccountSelect)="selectedPersonBankAccountChanged($event)"
+                    #personBankAccount
+                    [gridHeight]="t.offsetHeight-50"
+                    [fixHeight]="false"
+                    [showSelectButton]="true"
+                    [personId]="selectedPersonId">
+                  </app-person-bank-account-list>
+                </app-busy-indicator>
+              </as-split-area>
+            </as-split>
+          </as-split-area>
+        </as-split>
+      </div>
+    </div>
+  </div>
+</div>

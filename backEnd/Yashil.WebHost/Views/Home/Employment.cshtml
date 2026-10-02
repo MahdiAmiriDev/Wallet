@@ -1,0 +1,311 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.EmploymentViewModel
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/components/talentExam.min.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/components/employment.min.css" rel="stylesheet" asp-append-version="true" />
+<script src="~/js/num2persian.min.js" asp-append-version="true"></script>
+@* Hero Section *@
+<section class="hero-wide-image-talent p-4 pt-lg-5 pt-xxl-2 pb-lg-5 fill">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-xl-8">
+                <div class="row">
+                    <div class="col-12 col-md-6 px-1">
+                        <a class="postcard__img_link w-100" href="@Url.Action("ResumeFillHelp", "Home")" target="_blank" asp-append-version="true">
+                            <article class="postcard light purple">
+                                <div class="w-100 h-100">
+                                    <img class="postcard__img d-block d-md-none" src="~/images/employement-mobile.jpg" alt="Employment periods" />
+                                    <img class="postcard__img d-none d-md-block" src="~/images/employement-crop.webp" alt="Employment periods" />
+                                </div>
+                                <div class="postcard__text t-dark">
+                                    <h4 class="postcard__title purple fs-18 fw-800 lh-base">
+                                        ثبت رزومه
+                                        <svg width="25" height="25" stroke="#000">
+                                            <use href="images/icons/general.svg#chevron-left" />
+                                        </svg>
+                                    </h4>
+                                    <div class="postcard__bar"></div>
+                                    <span class="pt-2 fs-14 fw-500 text-under-title-employment ss02 text-dark">
+                                        <ul>
+                                            <li>
+                                                استفاده از مزایای طرح اشتغال از طریق ثبت و تکمیل رزومه
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </article>
+                        </a>
+                        <a class="postcard__img_link w-100" href="@Url.Action("TalentExam", "Home")" target="_blank" asp-append-version="true">
+                            <article class="postcard light blue">
+                                <div class="w-100 h-100">
+                                    <img class="postcard__img" src="~/images/talent-exam/1706711830909.webp" alt="participating in a test" />
+                                </div>
+                                <div class="postcard__text t-dark " id="Participation-career-guidance">
+                                    <h4 class="postcard__title blue fs-18 fw-800 lh-base ">
+                                        شرکت در آزمون هدایت شغلی
+                                        <svg width="25" height="25" stroke="#000">
+                                            <use href="images/icons/general.svg#chevron-left" />
+                                        </svg>
+                                    </h4>
+                                    <div class="postcard__bar"></div>
+                                    <span class="pt-2 fs-14 fw-500 text-under-title-employment ss02 text-dark">
+                                        <ul>
+                                            <li>سنجش هوشمندانه استعداد</li>
+                                            <li>شناخت عمیق، کشف استعداد و ارتباط موثر</li>
+                                            <li> آموزش‌های هدفمندِ منحصر‌به‌فرد</li>
+                                            <li>تخصص، اشتغال، کارآفرینی و کسب درآمد</li>
+                                        </ul>
+
+                                    </span>
+
+                                </div>
+                            </article>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 px-1">
+                        <a class="postcard__img_link w-100" href="@Url.Action("Index", "main", new { categoryGroupId = @Model.EmploymentCategoryGroupId })" target="_blank" asp-append-version="true">
+                            <article class="postcard light yellow">
+                                <div class="w-100 h-100">
+                                    <img class="postcard__img" src="~/images/job-hunting-tips.jpg" alt="Employment periods" />
+                                </div>
+                                <div class="postcard__text t-dark">
+                                    <h4 class="postcard__title yellow fs-18 fw-800 lh-base">
+                                        دوره های منجر به اشتغال
+                                        <svg width="25" height="25" stroke="#000">
+                                            <use href="images/icons/general.svg#chevron-left" />
+                                        </svg>
+                                    </h4>
+                                    <div class="postcard__bar"></div>
+                                    <span class="pt-2 fs-14 fw-500 text-under-title-employment ss02 text-dark">
+                                        <ul>
+                                            <li>تخفیف تا 30 درصد</li>
+                                            <li> تا سقف <b class="employment-subsidy-information"></b> (بلاعوض) </li>
+                                            <li>تقسیط مانده هزینه دوره (بدون سود) بین 3 الی 12 ماه</li>
+
+                                        </ul>
+                                    </span>
+                                </div>
+                            </article>
+                        </a>
+                        <a class="postcard__img_link w-100" href="@Url.Action("JobOfferLanding", "CorporationJobCo")" target="_blank" asp-append-version="true">
+                            <article class="postcard light navyblue">
+                                <div class="w-100 h-100">
+                                    <img class="postcard__img" src="~/images/talent-exam/1520166811347.jpg" alt="List of Jobs" />
+                                </div>
+                                <div class="postcard__text t-dark">
+                                    <h4 class="postcard__title navyblue fs-18 fw-800 lh-base">
+                                        لیست مشاغل
+                                        <svg width="25" height="25" stroke="#000">
+                                            <use href="images/icons/general.svg#chevron-left" />
+                                        </svg>
+                                    </h4>
+                                    <div class="postcard__bar"></div>
+                                    <span class="pt-2 fs-14 fw-500 text-under-title-employment ss02 text-dark">
+                                        <ul>
+                                            <li>انتخاب هوشمندانه شغل با طی کردن دوره مرتبط </li>
+                                            <li>
+                                                امکان انتخاب شغل با تنوع بالا در حوزه های مختلف
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </article>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-xl-4 align-self-center">
+                <div class="w-100 pb-5 pt-5 pt-lg-2 left-side-hero-section-talent">
+                    <img src="~/images/talent-exam/layer-667-100x100.webp" class="absolute-pattern-one-talent" alt="dots" />
+                    <h1 class="fw-900 fs-40 titles-talent">
+                        سامانه اشتغال
+                    </h1>
+                    <h2 class="fw-900 fs-24 lh-lg titles-talent">متقاضی محترم اشتغال با سلام و احترام</h2>
+                    <p class="lh-lg fs-18 ss02 text-justify">
+                        این سامانه در راستای کمک به اشتغال و مهارت افزایی فرزندان کارکنان شاغل و بازنشسته نیروهای مسلح طراحی و در راستای اجرای این ماموریت مزایای به شرح زیر جهت طی دوره های مهارتی
+                        <span class="fs-18 orange-text">ویژه فرزندان 17 الی 40 سال </span>
+                        در نظر گرفته شده است.
+                    </p>
+
+                    <ul class="lh-lg fs-18 ss02 text-justify ms-3 list-unstyled">
+                        <li>
+                            <p class="d-inline mb-0">1.</p>
+                            <p class="d-inline mb-0">
+                                اختصاص  <span class="fs-18 orange-text employment-subsidy-information"></span>
+                            </p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">2.</p>
+                            <p class="d-inline mb-0">
+                                تخفیف های ویژه
+                                <span class="fs-18 orange-text"> 10 الی 50 درصدی</span>
+                                طی دوره
+                            </p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">3.</p>
+                            <p class="d-inline mb-0">
+                                تقسیط هزینه دوره (بعد از کسر تخفیف های ویژه و یارانه) از طریق
+                                <span class="fs-18 orange-text">کارت حکمت</span>
+                                سرپرست طی 3 الی 12 ماه (بدون سود)
+                            </p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">4.</p>
+                            <p class="d-inline mb-0">
+                                امکان معرفی جهت جذب در نیرو های مسلح و شرکت های طرف قرارداد با
+                                <span class="fs-18 orange-text"> انستیتو ایزایران در سطح کشور</span>
+                            </p>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="d-block d-lg-flex w-100 gap-4 pb-5">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* Wave Section *@
+<section class="wave-hero-section-talent ">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path class="path-insvg-wave-section-talent" fill="#F5F5F5" fill-opacity="1" d="M0,192L48,186.7C96,181,192,171,288,192C384,213,480,267,576,245.3C672,224,768,128,864,101.3C960,75,1056,117,1152,133.3C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+</section>
+
+
+@* Work Steps Section *@
+<section class="mb-5 pb-5" id="Work-Steps-Section">
+    <div class="container w-100 ">
+        <div class="w-100 rounded-3 bg-white">
+            <div class="d-block d-lg-flex justify-content-between align-items-center w-50 text-align-justify w-100">
+                <div class=" pt-5 pt-lg-0 w-100">
+                    <img class="w-100  rounded-3 mx-auto d-block" src="~/images/samane-eshteghal-map.webp" alt="RoadMap Employment" />
+                </div>
+                <div class="w-100 p-4 p-md-5">
+                    <h2 class="fw-900 fs-22 lh-base titles-talent">مراحل انجام کار به شرح زیر می‏باشد.</h2>
+
+                    <ul class="lh-lg fs-18 ss02 ms-3 list-unstyled">
+                        <li>
+                            <p class="d-inline mb-0">1.</p>
+                            <p class="d-inline mb-0">مراجعه به سایت tbao.ir</p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">2.</p>
+                            <p class="d-inline mb-0">انتخاب سامانه اشتغال و وارد نمودن شماره تماس</p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">3.</p>
+                            <p class="d-inline mb-0">وارد کردن رمز دلخواه و شماره حکمت کارت سرپرست</p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">4.</p>
+                            <p class="d-inline mb-0">تکمیل کامل رزومه متقاضی در سامانه اشتغال</p>
+                        </li>
+                        <li>
+                            <p class="d-inline mb-0">5.</p>
+                            <p class="d-inline mb-0">شرکت در آزمون استعدادیابی و استعداد سنجی شغلی(اختیاری)</p>
+                        </li>
+                    </ul>
+
+                    <p class="lh-lg fs-18">
+                        با انجام مراحل بالا یارانه جهت کد ملی شما فعال و شما می توانید از دوره های مهارتی دارای برچسب زرد رنگ اشتغال ( این برچسب در قسمت بالا سمت راست دوره ها درج گردیده است) انتخاب و در دوره مربوطه در نزدیکترین موسسه محل زندگی خود و یا در دوره های آنلاین شرکت نمایید.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@* Info Section *@
+<section class="mb-5 pb-5" id="gallery-in-talent-exam">
+    <div class="container w-100">
+        <div class="w-100 rounded-3 info-bg-one-section-talent  p-4 p-md-5 position-relative">
+            <div class="d-block d-lg-flex justify-content-between align-items-center w-50 text-align-justify w-100">
+                <div class="w-100">
+                    <h4 class="fw-900 fs-22 py-2 titles-talent">
+                        فرزندان کارکنان و بازنشستگان نیرو های مسلح
+                    </h4>
+                    <p class="section-three-employement-text fs-18 pb-5 lh-lg">
+                        در راستای تحقق منویات مقام معظم رهبری و فرماندهی معظم کل قوا «مدظله العالی»
+                        <span class="fw-bold fs-18 titles-talent lh-lg">
+                            معاونت نیروی انسانی ستاد کل ن.م-اداره خدمات و حکمت
+                        </span>
+                        جهت ترویج و تقویت فرهنگ کار و حمایت از تولید داخلی و اشتغال آفرینی دانش بنیان برای
+                        <span class="fw-bold fs-18 titles-talent lh-lg">فرزندان کارکنان  و بازنشستگان</span>
+                        معزز نیروهای مسلح، در نظر است آموزش های مورد نظر توسط
+                        <a target="_blank" href="@Url.Action("Index","About")" class="fw-bold fs-18 titles-talent lh-lg">شرکت انستیتو ایزایران </a>به عنوان مجری برگزار گردیده و پس از کسب مهارت های مورد تقاضا، زمینه اشتغال فراهم گردد.
+                        لذا <span class="fw-bold fs-18 titles-talent lh-lg">سامانه اشتغال</span>، در راستای جمع آوری رزومه متقاضیان، استعداد یابی،استعداد سنجی و برگزاری دوره های مهارتی متناسب با استعدادهای اشخاص طراحی گردیده است.
+                    </p>
+                </div>
+
+                <div class=" text-center">
+                    <img src="~/images/talent-exam/abouteacademyimg2.png" class="rotate-circle" alt="blue circle" />
+                    <img src="~/images/talent-exam/abouteacademyimg2.png" class="rotate-circle2" alt="blue circle" />
+                    <img class="w-100 img-info-section-talent position-relative" src="./images/talent-exam/picture1.webp" alt="Career guidance test" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* Wide Image Section *@
+<section class="m-2 mt-5">
+    <div class="container">
+        <div class="w-100 bg-white rounded-3 ">
+            <img class="employement-image2 w-100 d-none d-lg-block" src="~/images/employement.jpg" alt="resume fill help Institute ISIRAN desktop mode" />
+            <img class="employement-image2 w-100 d-block d-lg-none" src="~/images/employement-mobile.jpg" alt="resume fill help Institute ISIRAN mobile mode" />
+        </div>
+    </div>
+</section>
+
+
+@* Banner Section *@
+<section class="my-5 py-5">
+    <div class="banner-section-talent py-5">
+        <div class="container px-4">
+            <h2 class="fw-900 fs-28 text-center pb-4 titles-talent custom-title-employment">چرا استعداد یابی و استعداد سنجی؟</h2>
+            <div class="row g-3 g-xl-5">
+                <div class="col-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="rounded-3 p-3 bg-white card-banner-section-employment">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/5602594.webp" class="icons-banner-section-in-talent" alt="Deep Understanding" />
+                            <h4 class="banner-cards-talent fw-bold fs-22">شناخت عمیق</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">به شما کمک می کند تا رفتارها، روحیات و شخصیت خود را بیشتر بشناسید.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="rounded-3 p-3 bg-white card-banner-section-employment">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/6041596.webp" class="icons-banner-section-in-talent" alt="talent discovery" />
+
+                            <h4 class="banner-cards-talent fw-bold fs-22">کشف استعداد</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">می توانید استعدادهای نهفته ی خود را شکوفا کنید.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="rounded-3 p-3 bg-white card-banner-section-employment">
+                        <div class="d-flex justify-content-start align-items-center gap-2 pb-2">
+                            <img src="~/images/talent-exam/reading-open-book-3d-icon-illustration-png.webp" class="icons-banner-section-in-talent" alt="Real knowledge" />
+                            <h4 class="banner-cards-talent fw-bold fs-22">دانش واقعی</h4>
+                        </div>
+                        <p class="text-align-justify text-muted">با شناخت عمیق خود با دیگران ارتباط هدفمندی داشته باشید.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/components/employmentSubsidyInformation.js" asp-append-version="true"></script>

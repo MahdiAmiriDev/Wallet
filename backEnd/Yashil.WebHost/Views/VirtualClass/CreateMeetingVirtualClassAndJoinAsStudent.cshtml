@@ -1,0 +1,35 @@
+﻿@model Yashil.Common.Core.Classes.ResultStatus<int>
+@{
+
+    Layout = "_Layout";
+}
+<div class="boxed">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="card2">
+                <div class="o-page__row" style="font-size:14px;font-weight:400;width:100%;background-color: white;">
+                    <div class="c-checkout__tab-container">
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="profile">
+                                    <div style="margin-top: 20px;margin-bottom: 20px;">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-12 padding">
+                                                        <div class="titleBoldCenter" style="color:Red"> بروز خطا!</div>
+                                                        <div class="descriptionCenter">@Model.Message</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+	<app-base-edit-form   (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form"  [colCount]="2" #detailForm [formData]="entity">
+	<dxi-item [label]="{text: 'عنوان'}"  dataField="title"     >
+					<dxi-validation-rule  type="required" message="عنوان اجباری می باشد"></dxi-validation-rule>
+		</dxi-item>
+
+				<dxi-item dataField="productId" editorType="dxLookup" [label]="{text: 'عنوان محصول'}"
+				[editorOptions]="{rtlEnabled:true,readOnly:productId,closeOnOutsideClick:true,showPopupTitle:false, dataSource: productDataSource,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="ProductId اجباری می باشد"></dxi-validation-rule>
+		</dxi-item>
+	<dxi-item [label]="{text: 'توضیحات'}"  dataField="description" editorType='dxTextArea'    >
+		</dxi-item>
+	<dxi-item dataField="tagType" editorType="dxSelectBox" [label]="{text: 'برچسب'}"
+				[editorOptions]="{ items: tagTypes,displayExpr:'title',valueExpr:'id' }">
+					<dxi-validation-rule  type="required" message="برچسب اجباری می باشد"></dxi-validation-rule>
+		</dxi-item>
+</dx-form>
+</app-base-edit-form>

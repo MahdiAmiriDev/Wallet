@@ -1,0 +1,152 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+
+      <dxi-item [label]="{text: 'کد'}" dataField="code">
+
+
+      </dxi-item>
+
+      <dxi-item dataField="orderId" editorType="dxLookup" [label]="{text: 'سفارش'}"
+                [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: orderDataSource,displayExpr:'title',valueExpr:'id' }">
+
+        <dxi-validation-rule type="required" message="سفارش اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ پرداخت به شمسی'}" dataField="paidDateInt" editorType='dxNumberBox'>
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.paidDateInt=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="paidDateIntDataValue"
+                 style="float:right"
+                 placeholder="تاریخ پرداخت به شمسی"
+                 [ngModel]="entity.paidDateInt  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          placeholder="تاریخ پرداخت به شمسی"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="entity.paidDateInt | intToStringDate"-->
+        <!--          (ngModelChange)="entity.paidDateInt=convertDateToInt($event)">-->
+        <!--        </dp-date-picker>-->
+
+
+      </dxi-item>
+
+      <dxi-item dataField="cardType" editorType="dxSelectBox" [label]="{text: 'نوع کارت'}"
+                [editorOptions]="{ items: cardTypes,displayExpr:'title',valueExpr:'id' }">
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'نام کارت'}" dataField="cardName" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره کارت - CardHashPan'}" dataField="cardNumber" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره کارت اعتباری - CardMaskPan'}" dataField="maskedCreditCardNumber"
+                editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'CVV2 رمز شده'}" dataField="cardCvv2" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'ماه انقضا کارت رمز شده'}" dataField="cardExpirationMonth" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'سال انقضا کارت رمز شده'}" dataField="cardExpirationYear" editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'کد سفارش به ازای هر پرداخت'}" dataField="reservationNumber">
+
+        <dxi-validation-rule type="required" message="کد سفارش به ازای هر پرداخت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره پیگیری تراکنش- RefNum'}" dataField="authorizationTransactionId">
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'کد معامله - token جهت خرید'}" dataField="authorizationTransactionCode">
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'نتیجه معامله-پیام'}" dataField="authorizationTransactionResult"
+                editorType='dxTextArea'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تاریخ و زمان پرداخت شده'}" dataField="paidDateUtc">
+        <ng-persian-datepicker [dateInitValue]="false"
+                               (dateOnSelect)="entity.paidDateUtc=convertDateToInt($event);">
+          <input type="text"
+                 [formControl]="paidDateUtcDataValue"
+                 style="float:right"
+                 placeholder="تاریخ و زمان پرداخت شده"
+                 [ngModel]="entity.paidDateUtc  | intToStringDate"/>
+        </ng-persian-datepicker>
+        <!--        <dp-date-picker-->
+        <!--          [config]="datePickerConfig"-->
+        <!--          dir="rtl"-->
+        <!--          mode="day"-->
+        <!--          placeholder="تاریخ و زمان پرداخت شده"-->
+        <!--          theme="dp-material"-->
+        <!--          [ngModel]="entity.paidDateUtc | intToStringDate"-->
+        <!--          (ngModelChange)="entity.paidDateUtc=convertDateToInt($event)">-->
+        <!--        </dp-date-picker>-->
+
+
+      </dxi-item>
+
+      <dxi-item dataField="saleType" editorType="dxSelectBox" [label]="{text: 'نقدی یا اقساطی-نوع پرداخت'}"
+                [editorOptions]="{ items: saleTypes,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="نقدی یا اقساطی-نوع پرداخت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'کد خطا'}" dataField="errorCode" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'شماره پیگیری مشتری'}" dataField="traceNumber">
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+
+
+      </dxi-item>
+
+      <dxi-item dataField="paymentStatusType" editorType="dxSelectBox" [label]="{text: 'شناسه وضعیت پرداخت'}"
+                [editorOptions]="{ items: paymentStatusTypes,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="شناسه وضعیت پرداخت اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+
+      <dxi-item dataField="paymentMethodType" editorType="dxSelectBox"
+                [label]="{text: 'نام سیستم روش پرداخت- حکمت-ثمین و شتاب-'}"
+                [editorOptions]="{ items: paymentMethodTypes,displayExpr:'title',valueExpr:'id' }">
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentCount" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+      <dxi-item [label]="{text: 'مجموع سفارش'}" dataField="total" editorType='dxNumberBox'>
+
+
+      </dxi-item>
+
+      <dxi-item dataField="accessLevelId" editorType="dxSelectBox" [label]="{text: 'سطح دسترسی'}"
+                [editorOptions]="{ items: accessLevels,displayExpr:'title',valueExpr:'id' }">
+        <dxi-validation-rule type="required" message="سطح دسترسی اجباری می باشد"></dxi-validation-rule>
+
+      </dxi-item>
+    </dx-form>
+  </app-base-edit-form>
+</app-busy-indicator>

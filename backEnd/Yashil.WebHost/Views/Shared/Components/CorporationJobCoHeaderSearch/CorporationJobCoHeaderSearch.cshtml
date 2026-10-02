@@ -1,0 +1,69 @@
+﻿@using YashilJobJourney.Web.Areas.JobJourneyAdminApi.ViewModels
+@model CorporationJobCoHeaderSearchViewModel
+@{
+}
+
+<link rel="stylesheet" href="~/css/components/job_offer_search.css" />
+
+<section class="job-offer-component">
+    <div class="d-flex align-items-center justify-content-center overflow-hidden position-absolute h-100 w-100">
+        <img src="~/images/job-offer/search_background.webp" class="job-offer-search--background" />
+    </div>
+    <div class="job-offer-search">
+        @if (Model.ShowActiveJobPositionCount)
+        {
+            <h3 class="job-offer-search--title ss02"><span class="text-decoration-underline px-1">@Model.ActiveJobPositionCount</span> آگهی استخدام فعال در <span class="text-decoration-underline px-1">@Model.ActiveCorporationCount</span> شرکت</h3>
+        }
+        <form id="job-offer-search--form" class="row g-2 w-100">
+            <div class="input-container col-12 col-lg-4">
+                <div class="dropdown-icon--container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke="#6e6e6e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </div>
+                <input id="search-query--input" name="SearchTitle" placeholder="عنوان شغلی" />
+            </div>
+            <div class="input-container col-12 col-lg-3">
+                <div class="dropdown-icon--container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke="#6e6e6e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                    </svg>
+                </div>
+                <select id="province-list--input" name="ProvinceIds" style="width:100%;">
+                    <option></option>
+                    @foreach (var item in Model.Proviences)
+                    {
+                        <option value="@item.Id">@item.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="input-container col-12 col-lg-3">
+                <div class="dropdown-icon--container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke="#6e6e6e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M9 6l11 0" />
+                        <path d="M9 12l11 0" />
+                        <path d="M9 18l11 0" />
+                        <path d="M5 6l0 .01" />
+                        <path d="M5 12l0 .01" />
+                        <path d="M5 18l0 .01" />
+                    </svg>
+                </div>
+                <select id="category-list--input" name="JobCoCategoryIds" style="width:100%;">
+                    <option></option>
+                    @foreach (var item in Model.JobCoCategories)
+                    {
+                        <option value="@item.Id">@item.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="input-container col-12 col-lg-2">
+                <button id="submit-search--button" class="w-100" type="submit">جستجو در مشاغل</button>
+            </div>
+        </form>
+    </div>
+</section>

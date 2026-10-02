@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-12">
+    <div style="width: 100%;" [style.height.px]="contentHeight">
+      <as-split direction="horizontal" dir="ltr">
+        <as-split direction="horizontal">
+          <as-split-area size="35" #t1 dir="rtl">
+            <app-base-list-form #listForm
+                                (afterInitialDetailComponent)="afterInitialDetailComponent($event)"
+                                [loadAfterSetFilter]="loadAfterSetFilter"
+                                (selectedRowChanged)="selectedRowChanged.emit($event)"
+                                [columns]="columns"
+                                [entityName]="entityName"
+                                [showEditForm]="false"
+                                [showAddButton]="showAddButton"
+                                [allowEditInForm]="true"
+                                [title]="'لیست پرداختی های فاکتور'"
+                                [allowDeleteInForm]="false"
+                                [detailComponent]="detailComponent">
+            </app-base-list-form>
+          </as-split-area>
+          <as-split-area size="65" #t2 dir="rtl">
+            <app-grouped-factor-list
+              (selectedRowChanged)="changeSelectedFactorId($event)"
+              (selectedFactorIdChanged)="changeSelectedFactorId($event)">
+            </app-grouped-factor-list>
+          </as-split-area>
+        </as-split>
+      </as-split>
+    </div>
+  </div>
+</div>
+
+

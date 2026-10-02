@@ -1,0 +1,35 @@
+﻿@model List<YashilCommerce.Web.Areas.ECommerce.ViewModels.CompanyViewModel>
+
+
+<div class="widget-categories border-f-e6f3ff" style="margin-bottom: 5px;">
+    <!--jQuery slideToggle()-->
+    <div id="flip" style="cursor:pointer">
+        <a href="#">
+            <h6 class="title-widget">مراکز آموزشی </h6>
+        </a>
+    </div>
+    <div class="content">
+        <!--jQuery slideToggle()-->
+        <div id="panel">
+            <form>
+                @foreach (var company in Model)
+                {
+                    <div class="form-check" onclick="setCompanyFilterForPage()">
+                        <input type="checkbox" class="form-check-input" id="company_@company.Id" name="company" value="@company.Id">
+                        <label class="form-check-labell " for="company_@company.Id">@company.Title</label>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</div> <!-- /.widget-categories -->
+
+<script type="text/javascript">
+    function setCompanyFilterForPage() {
+        var company = [];
+        $.each($("input[name='company']:checked"), function () {
+            company.push($(this).val());
+        });
+        setCompany(company);
+    }
+</script>

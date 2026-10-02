@@ -1,0 +1,32 @@
+<app-entity-grouping-list [columns]="columns" #entityGroupingList
+                          [customListRowButtons]="customRowButtons"
+                          itemGroupSubGroupsUrl="api/ApplicationPaymentMethod/GetNajaAndHekmatPaymentMethodsForSelect"
+                          entityName="RefundDetail"
+                          [necessaryItemGroupTypeSubId]="true"
+                          (itemListRowPrepared)="setColorForRefundDetailItemListRow($event)"
+                          itemGroupSubGroupsLabel="روش پرداخت"
+                          itemGroupListLabel="گروه بندی عودت وجه"
+                          hasReport="false"
+                          [itemGroupKeyModel]="itemGroupKeyModel">
+</app-entity-grouping-list>
+<dx-popup
+  title="ویرایش عودت وجه"
+  [rtlEnabled]="true"
+  [(visible)]="showPopUp"
+  (onHidden)="showPopUp=false"
+  [closeOnOutsideClick]="true"
+  [deferRendering]="false"
+  [dragEnabled]="false"
+  [fullScreen]="false"
+  class="popup">
+  <div *dxTemplate="let data = model of 'content'">
+    <dx-scroll-view [rtlEnabled]="true">
+      <app-confirm-refund-detail [refundDetailId]="selectedRefundDetailId"
+                                 (confirmOrRejectClicked)="reloadRefundDetailList()"
+                                 (hekmatTransactionData)="receiveHekmatTransactionData($event)"></app-confirm-refund-detail>
+      <app-hekmat-canceled-or-modified-transaction-list
+        [hekmatTransactionData]="hekmatTransactionData"></app-hekmat-canceled-or-modified-transaction-list>
+    </dx-scroll-view>
+
+  </div>
+</dx-popup>

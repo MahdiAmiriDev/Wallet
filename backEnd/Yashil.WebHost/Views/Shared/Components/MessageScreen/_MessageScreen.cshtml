@@ -1,0 +1,30 @@
+﻿@model YashilCommerce.Web.Areas.ECommerce.ViewModels.MessageScreen
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/messageScreen.min.css">
+<div id="pricing" class="pricing-tables mb-5">
+    <div class="tables-right-dec">
+        <img src="~/images/message-screen/tables-right-dec.png" alt="">
+    </div>
+    <div class="container">
+        <div id="subscribe" class="subscribe">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="inner-content">
+                            <div class="row">
+                                <div class="col-lg-10 offset-lg-1">
+                                    <h2>پیام پیش ثبت نام</h2>
+                                    <p class="text-white pt-1 fs-18 ">
+                                      @Model.Message
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

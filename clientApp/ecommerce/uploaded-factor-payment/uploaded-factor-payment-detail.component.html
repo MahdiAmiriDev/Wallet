@@ -1,0 +1,69 @@
+<app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+  <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+    <dxi-item [label]="{text: 'کد'}" dataField="code">
+    </dxi-item>
+    <dxi-item [label]="{text: 'عنوان'}" dataField="title">
+    </dxi-item>
+    <dxi-item dataField="appDocumentId" editorType="dxLookup" [label]="{text: 'فایل آپلود شده'}"
+              [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: appDocumentDataSource,displayExpr:'title',valueExpr:'id' }">
+      <dxi-validation-rule type="required" message="فایل آپلود شده اجباری می باشد"></dxi-validation-rule>
+    </dxi-item>
+    <dxi-item [label]="{text: 'کد فاکتور'}" dataField="factorCode">
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا کد فاکتور نامعتبر است'}" dataField="factorCodeIsInvalid" editorType='dxCheckBox'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'مبلغ پرداخت'}" dataField="price">
+    </dxi-item>
+    <dxi-item [label]="{text: 'ایا مبلغ واریزی نامعتبر است'}" dataField="priceIsInvalid" editorType='dxCheckBox'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'تاریخ پرداخت'}" dataField="paymentDate">
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.paymentDate=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="paymentDateDataValue"
+               style="float:right"
+               placeholder="تاریخ پرداخت"
+               [ngModel]="entity.paymentDate  | intToStringDate"/>
+      </ng-persian-datepicker>
+<!--      <dp-date-picker-->
+<!--        [config]="datePickerConfig"-->
+<!--        dir="rtl"-->
+<!--        mode="day"-->
+<!--        placeholder="تاریخ پرداخت"-->
+<!--        theme="dp-material"-->
+<!--        [ngModel]="entity.paymentDate | intToStringDate" (ngModelChange)="entity.paymentDate=convertDateToInt($event)">-->
+<!--      </dp-date-picker>-->
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا تاریخ پرداخت نامعتبر است'}" dataField="paymentDateIsInvalid" editorType='dxCheckBox'>
+      <ng-persian-datepicker [dateInitValue]="false"
+                             (dateOnSelect)="entity.paymentDateIsInvalid=convertDateToInt($event);">
+        <input type="text"
+               [formControl]="paymentDateIsInvalidDataValue"
+               style="float:right"
+               placeholder="آیا تاریخ پرداخت نامعتبر است"
+               [ngModel]="entity.paymentDateIsInvalid  | intToStringDate"/>
+      </ng-persian-datepicker>
+<!--      <dp-date-picker-->
+<!--        [config]="datePickerConfig"-->
+<!--        dir="rtl"-->
+<!--        mode="day"-->
+<!--        placeholder="آیا تاریخ پرداخت نامعتبر است"-->
+<!--        theme="dp-material"-->
+<!--        [ngModel]="entity.paymentDateIsInvalid | intToStringDate"-->
+<!--        (ngModelChange)="entity.paymentDateIsInvalid=convertDateToInt($event)">-->
+<!--      </dp-date-picker>-->
+    </dxi-item>
+    <dxi-item [label]="{text: 'تعداد اقساط'}" dataField="installmentCount">
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا تعداد اقساط نامعتبر است'}" dataField="installmentCountIsInvalid"
+              editorType='dxCheckBox'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'شماره حساب'}" dataField="bankAccountNumber">
+    </dxi-item>
+    <dxi-item [label]="{text: 'آیا شماره حساب نامعتبر است'}" dataField="bankAccountNumberIsInvalid"
+              editorType='dxCheckBox'>
+    </dxi-item>
+    <dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+    </dxi-item>
+  </dx-form>
+</app-base-edit-form>

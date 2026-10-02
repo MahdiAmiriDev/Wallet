@@ -1,0 +1,16 @@
+<app-base-list-form #listForm
+                    [columns]="columns"
+                    [allowEditInForm]="false"
+                    [allowDeleteInForm]="false"
+                    [showAddButton]="false"
+                    [showFilterButton]="true"
+                    (listRowPrepared)="validateEmptyDataRowAndColorThem($event)"
+                    [wordWrapEnabled]="true"
+                    [customButtons]="customButtons"
+                    (customButtonClicked)="downloadFactorGroupConvertReport($event)"
+                    [entityName]="entityName"
+                    [gridHeight]="gridHeight"
+                    [allowFilter]="false"
+                    title="گزارش کانورت"
+>
+</app-base-list-form>

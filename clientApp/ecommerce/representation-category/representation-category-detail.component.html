@@ -1,0 +1,47 @@
+<app-busy-indicator><app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+	<dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+		<dxi-item dataField="representationId" editorType="dxLookup" [label]="{text: 'shp.RepresentationCategory.Representation' | translate}"
+				  [editorOptions]="{rtlEnabled:true ,onValueChanged: onRepresentationChange,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: representationDataSource,displayExpr:'title',valueExpr:'id' }">
+			<dxi-validation-rule type="required" message="{{'shp.RepresentationCategory.Validation.Representation' | translate}}"></dxi-validation-rule>
+		</dxi-item>
+
+		<!--        <dxi-item dataField="categoryId" editorType="dxLookup" [label]="{text: 'دسته بندي  آموزشی'}"-->
+		<!--                  [editorOptions]="{rtlEnabled:true,dropDownOptions:{closeOnOutsideClick:true, showTitle:false}, dataSource: categoryDataSource,displayExpr:'title',valueExpr:'id' }">-->
+		<!--            <dxi-validation-rule type="required" message="دسته بندي  آموزشی اجباری می باشد"></dxi-validation-rule>-->
+		<!--        </dxi-item>-->
+		<dxi-item [template]="'categoryTree'" dataField="categoryId" [label]="{text: 'shp.RepresentationCategory.Category' | translate}">
+			<dxi-validation-rule type="required" message="{{'shp.RepresentationCategory.Validation.Category'}}"></dxi-validation-rule>
+		</dxi-item>
+		<dxi-item [label]="{text: 'توضیحات'}" dataField="description" editorType='dxTextArea'>
+		</dxi-item>
+		<div *dxTemplate="let data of 'categoryTree'">
+			<dx-drop-down-box
+					[(value)]="entity.categoryId"
+					valueExpr="id"
+					#ddlCourseCategory
+					displayExpr="title"
+					placeholder="انتخاب..."
+					[showClearButton]="true"
+					[dataSource]="categoryDataSource"
+					(onValueChanged)="syncTreeViewSelection($event)">
+
+				<div *dxTemplate="let data of 'content'">
+					<dx-tree-view
+							[dataSource]="categoryDataSource"
+							dataStructure="plain"
+							keyExpr="id"
+							parentIdExpr="parentId"
+							selectionMode="single"
+							displayExpr="title"
+							rtlEnabled="true"
+							[selectByClick]="true"
+							[searchEnabled]="true"
+							(onContentReady)="syncTreeViewSelection($event)"
+							(onItemSelectionChanged)="treeView_itemSelectionChanged($event);ddlCourseCategory.instance.close();"
+					>
+					</dx-tree-view>
+				</div>
+			</dx-drop-down-box>
+		</div>
+	</dx-form>
+</app-base-edit-form></app-busy-indicator>

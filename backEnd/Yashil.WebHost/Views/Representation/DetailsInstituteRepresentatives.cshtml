@@ -1,0 +1,137 @@
+﻿@using Yashil.Core.CustomDtos.Representation;
+@model Yashil.Core.CustomDtos.Representation.RepresentationDetailDto;
+
+@{
+    if (Model == null)
+    {
+        return;
+    }
+    Layout = "_Layout";
+
+}
+
+<link href="~/css/instituteRepresentatives.min.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+<section class="container py-5">
+    <div class="p-4 p-md-0">
+        @if (!string.IsNullOrEmpty(Model.Title))
+        {
+            <div class="bg-white rounded-3 p-2 my-2">
+                <h1 class="fs-22 fw-bold p-3 pb-2">
+                    @Model.Title
+                </h1>
+            </div>
+        }
+        <div class="d-block d-md-flex my-2 gap-2">
+            @if (!string.IsNullOrEmpty(Model.CompanyTitle))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>نام مرکز:</b>
+                        <span class="fs-16">@Model.CompanyTitle</span>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Founder))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>موسس:</b>
+                        <span class="fs-16">@Model.Founder</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="d-block d-md-flex my-2 gap-2">
+            @if (!string.IsNullOrEmpty(Model.Code))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>کد عضویت</b>
+                        <span class="fs-16">@Model.Code</span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.LicenseExpireTime > 0)
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>تاریخ انقضای مجوز:</b>
+                        <span class="fs-16">
+                            @{
+                                var dateStr = Model.LicenseExpireTime.ToString();
+                                var formattedDate = dateStr.Length == 8
+                                ? $"{dateStr.Substring(0, 4)}/{dateStr.Substring(4, 2)}/{dateStr.Substring(6, 2)}"
+                                : dateStr;
+                            }
+                            @formattedDate
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="d-block d-md-flex my-2 gap-2">
+            @if (!string.IsNullOrEmpty(Model.Province))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>استان:</b>
+                        <span class="fs-16">@Model.Province</span>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.City))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>شهر:</b>
+                        <span class="fs-16">@Model.City</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="d-block d-md-flex my-2 gap-2">
+            @if (!string.IsNullOrEmpty(Model.Telephone))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>تلفن:</b>
+                        <span class="fs-16">@Model.Telephone</span>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Email))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>ایمیل:</b>
+                        <span class="fs-16">@Model.Email</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="d-block d-md-flex my-2 gap-2">
+            @if (!string.IsNullOrEmpty(Model.FullAddress))
+            {
+                <div class="bg-white my-2 my-md-0 rounded-3 p-3 w-100">
+                    <div class="d-flex gap-2">
+                        <b>آدرس:</b>
+                        <span class="fs-16">
+                            @Model.FullAddress
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
