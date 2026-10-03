@@ -8,7 +8,7 @@ Use whenever a task changes Wallet eligibility, assignment, reservation, payment
 
 ## Steps
 1. Read `docs/codex/wallet.md` and the relevant section of the detailed Wallet reference.
-2. Find the closest existing implementation and inspect real schema relationships before coding.
+2. Find the closest existing implementation. Inspect database schema, tables, columns, FKs, indexes, or other database details only when the feature directly or indirectly includes database work in scope; otherwise, do not inspect schema or load database context.
 3. Identify the balance/ledger and concurrency effects of the change.
 4. Implement the smallest change consistent with existing architecture.
 5. Verify affected tests/builds and inspect the final diff.

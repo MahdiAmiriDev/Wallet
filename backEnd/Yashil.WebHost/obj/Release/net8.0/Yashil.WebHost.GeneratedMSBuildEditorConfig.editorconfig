@@ -1,0 +1,531 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Yashil.WebHost
+build_property.RootNamespace = Yashil.WebHost
+build_property.ProjectDir = P:\Projects\walletProject\Wallet\backEnd\Yashil.WebHost\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = P:\Projects\walletProject\Wallet\backEnd\Yashil.WebHost
+build_property._RazorSourceGeneratorDebug = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/About/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/AnsarPayment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW5zYXJQYXltZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Category/_MobileCategoryMenuList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcX01vYmlsZUNhdGVnb3J5TWVudUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Certificate/CertificateSearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VydGlmaWNhdGVcQ2VydGlmaWNhdGVTZWFyY2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Company/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/ContactUs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/CorporationJobCo/JobOffer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29ycG9yYXRpb25Kb2JDb1xKb2JPZmZlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/CorporationJobCo/JobOfferDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29ycG9yYXRpb25Kb2JDb1xKb2JPZmZlckRldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/CorporationJobCo/JobOfferLanding.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29ycG9yYXRpb25Kb2JDb1xKb2JPZmZlckxhbmRpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Corporation/CorporationJobOfferDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29ycG9yYXRpb25cQ29ycG9yYXRpb25Kb2JPZmZlckRldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/CustomerClub/CustomerClubMembershipVerify.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJDbHViXEN1c3RvbWVyQ2x1Yk1lbWJlcnNoaXBWZXJpZnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HekmatIpg/CompletePurchase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVrbWF0SXBnXENvbXBsZXRlUHVyY2hhc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HekmatIpg/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVrbWF0SXBnXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HekmatIpg/IpgError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVrbWF0SXBnXElwZ0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/Employment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbXBsb3ltZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIb21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/ListofInstituteRepresentatives.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0b2ZJbnN0aXR1dGVSZXByZXNlbnRhdGl2ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/PlacementForeignLanguage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQbGFjZW1lbnRGb3JlaWduTGFuZ3VhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/Resume.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXN1bWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/ResumeFillHelp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXN1bWVGaWxsSGVscC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/ShowResume.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaG93UmVzdW1lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Home/TalentExam.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUYWxlbnRFeGFtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HybridIpg/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHlicmlkSXBnXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HybridIpg/IpgError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHlicmlkSXBnXElwZ0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/HybridIpg/VerifyPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSHlicmlkSXBnXFZlcmlmeVBheW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/CheckOut.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcQ2hlY2tPdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/LastOrderStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcTGFzdE9yZGVyU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/OrderList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_EmpityOrderListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX0VtcGl0eU9yZGVyTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderAddressSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVyQWRkcmVzc1N1bW1hcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderItemDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVySXRlbURldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderItemListSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVySXRlbUxpc3RTdW1tYXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderListItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVyTGlzdEl0ZW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderSuccessFulPaymentListSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVyU3VjY2Vzc0Z1bFBheW1lbnRMaXN0U3VtbWFyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderSummary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVyU3VtbWFyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_OrderSummaryForPay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX09yZGVyU3VtbWFyeUZvclBheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Order/_Recipient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcX1JlY2lwaWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Product/CategoryProducts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxDYXRlZ29yeVByb2R1Y3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Product/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Product/_City.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxfQ2l0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Recipient/EditRecipient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjaXBpZW50XEVkaXRSZWNpcGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Representation/DetailsInstituteRepresentatives.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwcmVzZW50YXRpb25cRGV0YWlsc0luc3RpdHV0ZVJlcHJlc2VudGF0aXZlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Representation/RepresentationsSearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwcmVzZW50YXRpb25cUmVwcmVzZW50YXRpb25zU2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Representation/_Representation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwcmVzZW50YXRpb25cX1JlcHJlc2VudGF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/SaminPayment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FtaW5QYXltZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/SaminPayment/ShowPurchaseType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FtaW5QYXltZW50XFNob3dQdXJjaGFzZVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/AppConfigValuePresenter/_AppConfigValuePresenter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQXBwQ29uZmlnVmFsdWVQcmVzZW50ZXJcX0FwcENvbmZpZ1ZhbHVlUHJlc2VudGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ApplicationPaymentMethodComponent/_ApplicationPaymentMethod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQXBwbGljYXRpb25QYXltZW50TWV0aG9kQ29tcG9uZW50XF9BcHBsaWNhdGlvblBheW1lbnRNZXRob2QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CategoryGroupProductsSalePlanning/CategoryGroupProductsSalePlanning.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2F0ZWdvcnlHcm91cFByb2R1Y3RzU2FsZVBsYW5uaW5nXENhdGVnb3J5R3JvdXBQcm9kdWN0c1NhbGVQbGFubmluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CategoryHierarchically/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2F0ZWdvcnlIaWVyYXJjaGljYWxseVxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CitySelector/_CitySelector.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2l0eVNlbGVjdG9yXF9DaXR5U2VsZWN0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Company/_Horizontal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29tcGFueVxfSG9yaXpvbnRhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Company/_VerticalMultipleSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29tcGFueVxfVmVydGljYWxNdWx0aXBsZVNlbGVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Company/_VerticalSingleSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29tcGFueVxfVmVydGljYWxTaW5nbGVTZWxlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Content/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29udGVudFxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Content/_OrderSummeryDescriptions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29udGVudFxfT3JkZXJTdW1tZXJ5RGVzY3JpcHRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CorporationDetailHeader/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29ycG9yYXRpb25EZXRhaWxIZWFkZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CorporationJobCoHeaderSearch/CorporationJobCoHeaderSearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29ycG9yYXRpb25Kb2JDb0hlYWRlclNlYXJjaFxDb3Jwb3JhdGlvbkpvYkNvSGVhZGVyU2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CorporationRequirementsSlider/CorporationRequirementsSlider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ29ycG9yYXRpb25SZXF1aXJlbWVudHNTbGlkZXJcQ29ycG9yYXRpb25SZXF1aXJlbWVudHNTbGlkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CourseCarouselWithImageHorizontal/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ291cnNlQ2Fyb3VzZWxXaXRoSW1hZ2VIb3Jpem9udGFsXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CourseDetail/_CourseDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ291cnNlRGV0YWlsXF9Db3Vyc2VEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/CustomerClubRegister/_CustomerClubRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ3VzdG9tZXJDbHViUmVnaXN0ZXJcX0N1c3RvbWVyQ2x1YlJlZ2lzdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/FilterItemsContainer/_Desktop.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcRmlsdGVySXRlbXNDb250YWluZXJcX0Rlc2t0b3AuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/FilterItemsContainer/_Mobile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcRmlsdGVySXRlbXNDb250YWluZXJcX01vYmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/FooterParallax/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcRm9vdGVyUGFyYWxsYXhcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/FullOfDiscountsComponent/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcRnVsbE9mRGlzY291bnRzQ29tcG9uZW50XERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/HomePageCategory/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSG9tZVBhZ2VDYXRlZ29yeVxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/HomePageCommercialImage/HomePageCommercialImage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSG9tZVBhZ2VDb21tZXJjaWFsSW1hZ2VcSG9tZVBhZ2VDb21tZXJjaWFsSW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/HomePageLearningSkillImage/HomePageLearningSkillImage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSG9tZVBhZ2VMZWFybmluZ1NraWxsSW1hZ2VcSG9tZVBhZ2VMZWFybmluZ1NraWxsSW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/HomePageSlider/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSG9tZVBhZ2VTbGlkZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/HomePageTopRightAdvertisingImage/HomePageTopRightAdvertisingImage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSG9tZVBhZ2VUb3BSaWdodEFkdmVydGlzaW5nSW1hZ2VcSG9tZVBhZ2VUb3BSaWdodEFkdmVydGlzaW5nSW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/JobOfferList/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSm9iT2ZmZXJMaXN0XERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Logo/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTG9nb1xEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Menu/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTWVudVxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/MessageScreen/_MessageScreen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTWVzc2FnZVNjcmVlblxfTWVzc2FnZVNjcmVlbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/MostPopularCompanyCenters/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTW9zdFBvcHVsYXJDb21wYW55Q2VudGVyc1xEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/NewsAndAnnouncements/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTmV3c0FuZEFubm91bmNlbWVudHNcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/OrdersSubsidyWaitingToBePaidStatistics/_OrdersSubsidyWaitingToBePaidStatistics.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcT3JkZXJzU3Vic2lkeVdhaXRpbmdUb0JlUGFpZFN0YXRpc3RpY3NcX09yZGVyc1N1YnNpZHlXYWl0aW5nVG9CZVBhaWRTdGF0aXN0aWNzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ProductDetail/_ProductDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUHJvZHVjdERldGFpbFxfUHJvZHVjdERldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ProductsByFilter/_CategoriesCarouselProductSalePlanning.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUHJvZHVjdHNCeUZpbHRlclxfQ2F0ZWdvcmllc0Nhcm91c2VsUHJvZHVjdFNhbGVQbGFubmluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ProductsByFilter/_ProductsByFilter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUHJvZHVjdHNCeUZpbHRlclxfUHJvZHVjdHNCeUZpbHRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ProductTag/ProductTag.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUHJvZHVjdFRhZ1xQcm9kdWN0VGFnLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/ProductVerticalList/_ProductsByFilter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUHJvZHVjdFZlcnRpY2FsTGlzdFxfUHJvZHVjdHNCeUZpbHRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/RedirectToExternalSiteForReceiveProduct/RedirectToExternalSiteForReceiveProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUmVkaXJlY3RUb0V4dGVybmFsU2l0ZUZvclJlY2VpdmVQcm9kdWN0XFJlZGlyZWN0VG9FeHRlcm5hbFNpdGVGb3JSZWNlaXZlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/RelatedProduct/RelatedProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUmVsYXRlZFByb2R1Y3RcUmVsYXRlZFByb2R1Y3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/RepresentationByFilter/_RepresentationByFilter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcUmVwcmVzZW50YXRpb25CeUZpbHRlclxfUmVwcmVzZW50YXRpb25CeUZpbHRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/Slider/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcU2xpZGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/Components/UserResumeStatus/UserResumeStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVXNlclJlc3VtZVN0YXR1c1xVc2VyUmVzdW1lU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/PublicPageNewsDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFB1YmxpY1BhZ2VOZXdzRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/VerifyPaymentTransaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFZlcmlmeVBheW1lbnRUcmFuc2FjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_BaseLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CYXNlTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_CategoryHierarchicallyPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DYXRlZ29yeUhpZXJhcmNoaWNhbGx5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_Cities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DaXRpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_HekmatIpgLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWttYXRJcGdMYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_JobOffersFilterSectionPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Kb2JPZmZlcnNGaWx0ZXJTZWN0aW9uUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_LeadToEmploymentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MZWFkVG9FbXBsb3ltZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_MainCategories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYWluQ2F0ZWdvcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_MembershipType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW1iZXJzaGlwVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_Meta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZXRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_NoResultProductPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob1Jlc3VsdFByb2R1Y3RQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductListByCategoryIdForCompanyPagePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdEJ5Q2F0ZWdvcnlJZEZvckNvbXBhbnlQYWdlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductListByFilterForCompanyPagePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdEJ5RmlsdGVyRm9yQ29tcGFueVBhZ2VQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductListByFilterPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdEJ5RmlsdGVyUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductSearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0U2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ProductSearchByNamePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0U2VhcmNoQnlOYW1lUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_SearchCityPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TZWFyY2hDaXR5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_ServiceSelectionModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TZXJ2aWNlU2VsZWN0aW9uTW9kYWxQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/Shared/_SpotPlayerPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TcG90UGxheWVyUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/ShoppingCartItem/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHBpbmdDYXJ0SXRlbVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDb25maXJtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/CustomerClubRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDdXN0b21lckNsdWJSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/ForgetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxGb3JnZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/LoginByPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbkJ5UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/LoginRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpblJlZ2lzdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/User/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/VirtualClass/CreateMeetingVirtualClassAndJoinAsStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlydHVhbENsYXNzXENyZWF0ZU1lZXRpbmdWaXJ0dWFsQ2xhc3NBbmRKb2luQXNTdHVkZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/VirtualClass/CreateMeetingVirtualClassAndJoinAsTeacher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlydHVhbENsYXNzXENyZWF0ZU1lZXRpbmdWaXJ0dWFsQ2xhc3NBbmRKb2luQXNUZWFjaGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/WalletPayment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2FsbGV0UGF5bWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/WalletPayment/Result.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2FsbGV0UGF5bWVudFxSZXN1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[P:/Projects/walletProject/Wallet/backEnd/Yashil.WebHost/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 

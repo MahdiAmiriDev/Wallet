@@ -23,7 +23,8 @@ This repository contains the Wallet work built on an existing Yashil commerce ap
 8. Before finishing, build/test the affected area when the repository provides a valid command for it, then inspect the diff for unrelated changes.
 
 ## Planning
-For non-trivial work, first produce a concise implementation plan identifying affected files, existing patterns, risks, and verification steps. Do not implement until the task's required approval point is satisfied.
+A feature request should state the desired behavior, acceptance criteria, and constraints/scope. Clarify only missing details needed to proceed.
+Treat a feature as non-trivial if it changes multiple layers or a contract, changes or adds a business/financial rule, changes architecture or design, or requires choosing between implementation approaches. For non-trivial work, first produce a concise implementation plan identifying affected files, existing patterns, risks, and verification steps; obtain the user's approval before implementation. Avoid unnecessary plans for simple, local changes.
 
 ## Scope note
 The supplied archive references additional Yashil modules from `Yashil.WebHost`, but those modules are not present in the supplied source archive. Do not assume their implementation details; treat them as external dependencies unless their source is later provided.

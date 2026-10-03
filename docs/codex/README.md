@@ -16,10 +16,9 @@ This directory is intentionally small. `AGENTS.md` is the entry point; these doc
 ## Context policy
 Do not read every document before every task. Start from the task, locate the smallest relevant set of files, then expand context only when evidence requires it.
 
-## Source-of-truth order
-1. Existing code and executable behavior.
-2. Approved repository documentation/specification.
-3. The detailed Wallet business document for Wallet rules.
-4. Task prompt.
+## Source of truth
+- Repository code and executable behavior describe the system's existing behavior.
+- The user request defines the expected behavior of the feature.
+- An approved feature specification, when present, formally defines the desired behavior, business rules, and acceptance criteria.
 
-If two sources conflict, do not silently choose. Report the conflict and use the most directly verifiable source.
+If existing behavior differs from the requested or approved behavior, identify and report the difference. Clarify the desired behavior from the user request or specification before implementation; do not decide it independently. Read only the code and documentation relevant to the feature.

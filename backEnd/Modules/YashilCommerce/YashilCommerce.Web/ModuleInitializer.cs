@@ -57,6 +57,8 @@ namespace YashilCommerce.Web
             services.AddScoped<ICustomerClubCardService, CustomerClubCardService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IWalletReservationRepository, WalletReservationRepository>();
+            services.AddScoped<IWalletReservationService, WalletReservationService>();
             services.AddScoped<IProductSalesPlanningRepository, ProductSalesPlanningRepository>();
             services.AddScoped<IProductSalesPlanningService, ProductSalesPlanningService>();
             services.AddScoped<ICompanyMainCategoryRepository, CompanyMainCategoryRepository>();
