@@ -59,6 +59,18 @@ namespace YashilCommerce.Web
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IWalletReservationRepository, WalletReservationRepository>();
             services.AddScoped<IWalletReservationService, WalletReservationService>();
+            services.AddScoped<IWalletOrderPreparationService, WalletOrderPreparationService>();
+            services.AddScoped<IWalletProgramService, WalletProgramService>();
+            services.AddScoped<IWalletScopeService, WalletScopeService>();
+            services.AddScoped<IWalletEligibilityService, WalletEligibilityService>();
+            services.AddScoped<IWalletAssignmentService, WalletAssignmentService>();
+            services.AddScoped<IWalletGrantService, WalletGrantService>();
+            services.AddScoped<IWalletBenefitsService, WalletBenefitsService>();
+            services.AddScoped<IWalletSettlementService, WalletSettlementService>();
+            services.AddScoped<IWalletRefundService, WalletRefundService>();
+            services.AddScoped<IWalletAuditService, WalletAuditService>();
+            services.AddScoped<ICustomerWalletBalanceService, CustomerWalletBalanceService>();
+            services.AddScoped<ICustomerOrderFundingService, CustomerOrderFundingService>();
             services.AddScoped<IProductSalesPlanningRepository, ProductSalesPlanningRepository>();
             services.AddScoped<IProductSalesPlanningService, ProductSalesPlanningService>();
             services.AddScoped<ICompanyMainCategoryRepository, CompanyMainCategoryRepository>();

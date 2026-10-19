@@ -219,6 +219,92 @@ namespace YashilCommerce.Core.Enums
     {
         Reserved = 3184,
         Released = 3185,
-        Expired = 3186
+        Expired = 3186,
+	Captured=3210	
     }
+
+public enum WalletProgramStatusEnum
+{
+    Draft = 3168,
+    Active = 3169,
+    Suspended = 3170,
+    Expired = 3171,
+    Closed = 3172
 }
+
+public enum WalletScopeTypeEnum { 
+Company = 3173,  
+Representation = 3174,  
+City = 3175,  
+Product = 3176 
+ }
+
+public enum WalletAssignmentStatusTypeEnum
+{
+    Active = 3177,
+    Suspended = 3178,
+    Expired = 3179
+}
+
+public enum WalletAssignmentSourceTypeEnum
+{
+    Manual = 3180,
+    Organization = 3181,
+    Card = 3182,
+    Coupon = 3183
+}
+
+public enum WalletTransactionTypeEnum
+{
+    Grant = 3187,       // اعطای اعتبار
+    Capture = 3188,     // ثبت نهایی / مصرف واقعی
+    Refund = 3189,     // برگشت اعتبار کیف پول
+    Expired = 3190,     // منقضی
+    ManualAdjustment = 3191 // اصلاح دستی
+}
+
+public enum WalletTransactionDirectionTypeEnum
+{
+    Debit = 3192,   // بدهکار
+    Credit = 3193   // بستانکار
+}
+
+public enum WalletCouponStatusType
+ {
+     Available = 3205,
+     Claimed = 3206 ,
+     Expired = 3207 ,
+     Cancelled = 3208
+ }
+
+ public enum WalletCouponBatchStatusType
+ {
+     Draft = 3201,
+     Active = 3202,
+     Closed = 3203,
+     Cancelled = 3204
+ }
+
+ public enum WalletCardMemberStatusType
+ {
+     Active = 3198,
+     Blocked = 3199,
+     Closed = 3200
+ }
+
+ public enum WalletCardGroupStatusType
+ {
+     Draft = 3194,
+     Active = 3195,
+     Suspended = 3196,
+     Closed = 3197
+ }
+
+public enum WalletProgramAllocationMethodType
+  {
+      FixedForUser = 3166 ,
+      Manual = 3167
+  }
+
+}
+

@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "YashilPayment.Web.Protos";
+
+package hekmatIPG;
+
+// The greeting service definition.
+service HekmatIPG {
+  // Sends a greeting
+  rpc PaymentRequest (PaymentRequestModel) returns (PaymentRequestResultModel);
+  rpc CheckPaymentStatus (PaymentStatusModel) returns (PaymentStatusResultModel);
+}
+
+message  PaymentRequestModel
+{
+  int32 MerchantId = 1;
+  int32 TerminalId = 2;
+  string ReservationNumber = 3;
+  string LocalDateTime = 4;
+  string ReturnUrl = 5;
+  int32 Amount = 6;
+  int32 InstallmentCount = 7;
+  string  SignData = 8;
+  string AdditionalData = 9;
+  string MultiplexingData = 10;
+  string ApplicationName = 11;
+  string CardNumber = 12;
+}
+// The response message containing the greetings.
+message PaymentRequestResultModel {
+  optional string Message = 1;
+  optional int32 StatusCode = 2;
+  optional string Token = 3;
+  optional bool Succeeded = 4;
+}
+message PaymentStatusModel{
+  int32 MerchantId = 1;
+  int32 TerminalId = 2;
+  string ReservationNumber = 3;
+  string  SignData = 4;
+}
+message PaymentStatusResultModel{
+
+  optional string ReservationNumber = 1;
+  optional string RefrenceNumber = 2;
+  optional int32 Status = 3;
+  optional string Message = 4;
+  optional string PaidDate = 5;
+
+}

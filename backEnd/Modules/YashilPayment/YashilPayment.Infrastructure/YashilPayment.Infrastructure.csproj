@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+     <TargetFramework>net8.0</TargetFramework>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+<FileVersion>5.0.3</FileVersion>  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\Yashil.Infrastructure\Yashil.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\YashilBaseInfo\YashilBaseInfo.Core\YashilBaseInfo.Core.csproj" />
+    <ProjectReference Include="..\..\YashilCommerce\YashilCommerce.Core\YashilCommerce.Core.csproj" />
+    <ProjectReference Include="..\..\YashilCommerce\YashilCommerce.Infrastructure\YashilCommerce.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\YashilDms\YashilDms.Core\YashilDms.Core.csproj" />
+    <ProjectReference Include="..\..\YashilUserManagement\YashilUserManagement.Core\YashilUserManagement.Core.csproj" />
+    <ProjectReference Include="..\YashilPayment.Core\YashilPayment.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.1" />
+  </ItemGroup>
+</Project>

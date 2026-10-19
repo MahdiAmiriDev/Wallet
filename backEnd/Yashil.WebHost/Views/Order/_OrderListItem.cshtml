@@ -83,6 +83,22 @@
                             <p class="mb-0">تومان</p>
                         </div>
                     }
+                    @if (Model.Funding != null)
+                    {
+                        <div class="d-flex gap-4 flex-wrap py-1">
+                            <span>پرداخت موفق ثبت‌شده: @Model.Funding.RecordedPaidAmount.ToString("N2") تومان</span>
+                            <span>مصرف خالص کیف پول: @Model.Funding.WalletNetAmount.ToString("N2") تومان</span>
+                            @if (Model.Funding.OpenWalletReservedAmount.HasValue)
+                            {
+                                <span>رزرو کیف پول: @Model.Funding.OpenWalletReservedAmount.Value.ToString("N2") تومان</span>
+                                <span>سهم درگاه: @Model.Funding.OpenGatewayPaymentAmount.Value.ToString("N2") تومان</span>
+                            }
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.OrderSimpleViewModel.PaymentStatusTypeTitle))
+                    {
+                        <div class="py-1">وضعیت پرداخت: @Model.OrderSimpleViewModel.PaymentStatusTypeTitle</div>
+                    }
 
 
                     <div class="d-flex gap-2 align-items-center">

@@ -1,0 +1,38 @@
+{
+  "name": "wwwroot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "npmScripts.js",
+  "dependencies": {
+    "@videojs/http-streaming": "^2.15.1",
+    "bootbox": "^5.4.0",
+    "bootstrap": "^4.5.3",
+    "crypto-js": "^4.0.0",
+    "css-skeletons": "^1.0.7",
+    "jalaali-js": "^1.2.7",
+    "jquery": "^3.6.1",
+    "jquery-validate": "^2.0.0",
+    "jquery-validation": "^1.19.5",
+    "jquery-validation-unobtrusive": "^4.0.0",
+    "lazyload": "^2.0.0-rc.2",
+    "leaflet": "^1.9.4",
+    "lit": "^3.0.2",
+    "node-forge": "^1.3.1",
+    "popper.js": "^1.16.1",
+    "select2": "^4.1.0-rc.0",
+    "sweetalert2": "^11.10.7",
+    "swiper": "^6.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-minify": "^0.5.2",
+    "eslint": "^8.56.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "video.js": "^7.20.3",
+    "webpack-cli": "^5.1.4"
+  }
+}

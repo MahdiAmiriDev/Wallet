@@ -11,8 +11,8 @@ public WalletScope()
     InverseParent = new HashSet<WalletScope>();
  }
 
-public long Id { get; set; }
-public long? ParentId { get; set; }
+public int Id { get; set; }
+public int? ParentId { get; set; }
 /// <summary>
 ///         /// کد
 ///</summary>

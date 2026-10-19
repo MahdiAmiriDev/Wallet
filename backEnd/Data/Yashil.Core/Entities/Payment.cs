@@ -12,6 +12,8 @@ public Payment()
     Issue = new HashSet<Issue>();
     OrderItemPayment = new HashSet<OrderItemPayment>();
     RefundDetail = new HashSet<RefundDetail>();
+    WalletReservation = new HashSet<WalletReservation>();
+    WalletTransaction = new HashSet<WalletTransaction>();
  }
 
 public int Id { get; set; }
@@ -200,5 +202,9 @@ public virtual ICollection<OrderItemPayment>
     OrderItemPayment { get; set; }
 public virtual ICollection<RefundDetail>
     RefundDetail { get; set; }
+public virtual ICollection<WalletReservation>
+    WalletReservation { get; set; }
+public virtual ICollection<WalletTransaction>
+    WalletTransaction { get; set; }
     }
  }

@@ -1,0 +1,33 @@
+.detail-representations-background--section {
+    background: #F5F5F5;
+}
+
+
+
+.list-representation-show-more--button {
+    background: #172554 !important;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    transition: .5s all;
+}
+
+    .list-representation-show-more--button:hover {
+        transition: .5s all;
+        transform: scale(1.1);
+    }
+
+
+tr:first-child {
+    background: #172554;
+    color: white;
+}
+
+th {
+    width: inherit !important;
+}
+
+.dataTables_wrapper {
+    overflow: hidden;
+    overflow-x: auto !important;
+}

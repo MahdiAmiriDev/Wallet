@@ -1,0 +1,137 @@
+﻿.max-width-category {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: auto;
+}
+
+.details-category {
+    display: flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap: 20px;
+    width: 90%;
+    max-width: 1320px;
+}
+
+.category-skeleton--container {
+    width: 120px
+}
+
+.category-image__container {
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    overflow: auto;
+}
+
+.image-category {
+    height: 100%
+}
+
+.text-category {
+    padding: 4px;
+    margin: 4px;
+    text-align: center;
+    font-size: 13px
+}
+
+.text-category-title {
+    margin: 10px 0 26px 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.advertise-banner {
+    width: calc((100% - 48px) / 4);
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px 2px #bbbaba;
+}
+
+.advertise-section {
+    column-gap: 12px;
+    row-gap: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    max-width: 1320px;
+}
+
+.border-radius {
+    border-radius: 100px !important;
+}
+
+@media screen and (min-width: 1440px) {
+    .details-category {
+        column-gap: 60px;
+    }
+}
+
+
+@media screen and (max-width: 1440px) {
+    .details-category {
+        column-gap: 50px;
+    }
+
+    .advertise-banner {
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .details-category {
+        column-gap: 40px;
+    }
+
+    .advertise-banner {
+        width: calc((100% - 16px) / 2);
+        height: 260px;
+    }
+
+    .advertise-section {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .details-category {
+        column-gap: 30px;
+    }
+
+    .advertise-banner {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .advertise-banner {
+        height: 180px;
+    }
+
+    .category-image__container {
+        height: 90px;
+        width: 90px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .details-category {
+        gap: 20px;
+    }
+
+    .advertise-banner {
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .advertise-banner {
+        height: 140px;
+    }
+}

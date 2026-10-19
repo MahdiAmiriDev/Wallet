@@ -1,0 +1,208 @@
+<app-busy-indicator>
+  <app-base-edit-form (submitEvent)="formSubmit($event)" (cancelEditOrInsert)="onCloseFormClick()">
+    <dx-form id="form" [colCount]="2" #detailForm [formData]="entity">
+      <dxi-item dataField="code" [label]="{text: 'کد Program'}">
+        <dxi-validation-rule type="required" message="کد اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="title" [label]="{text: 'عنوان'}">
+        <dxi-validation-rule type="required" message="عنوان اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="walletProgramType" editorType="dxSelectBox"
+                [label]="{text: 'نوع Program'}"
+                [editorOptions]="{items: programTypes, displayExpr: 'title', valueExpr: 'id', disabled: !isDraft()}">
+        <dxi-validation-rule type="required" message="نوع Program اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="walletProgramAllocationMethodType" editorType="dxSelectBox"
+                [label]="{text: 'روش تخصیص'}"
+                [editorOptions]="{items: allocationMethods, displayExpr: 'title', valueExpr: 'id', disabled: !isDraft()}">
+        <dxi-validation-rule type="required" message="روش تخصیص اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="currencyCode" [label]="{text: 'کد ارز'}"
+                [editorOptions]="{disabled: !isDraft()}">
+        <dxi-validation-rule type="required" message="کد ارز اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="totalAmount" editorType="dxNumberBox"
+                [label]="{text: 'بودجه کل'}"
+                [editorOptions]="{min: 0, disabled: !canEditFinancial()}">
+        <dxi-validation-rule type="required" message="بودجه اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="targetUserCount" editorType="dxNumberBox"
+                [label]="{text: 'تعداد هدف کاربران'}"
+                [editorOptions]="{min: 1, format: '#0', disabled: !canEditAllocation()}">
+      </dxi-item>
+      <dxi-item dataField="amountPerUser" editorType="dxNumberBox"
+                [label]="{text: 'مبلغ ثابت هر کاربر'}"
+                [editorOptions]="{min: 0.01, disabled: !canEditAllocation()}">
+      </dxi-item>
+      <dxi-item dataField="startDate" editorType="dxDateBox"
+                [label]="{text: 'شروع اعتبار'}"
+                [editorOptions]="{type: 'datetime', disabled: !canEditFinancial()}">
+        <dxi-validation-rule type="required" message="شروع اعتبار اجباری است"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="endDate" editorType="dxDateBox"
+                [label]="{text: 'پایان اعتبار'}"
+                [editorOptions]="{type: 'datetime', disabled: !canEditFinancial()}">
+      </dxi-item>
+      <dxi-item dataField="description" editorType="dxTextArea"
+                [label]="{text: 'توضیحات'}" [colSpan]="2"></dxi-item>
+    </dx-form>
+    <div *ngIf="entity.id">
+      <dx-button *ngIf="canChangeTo(status.active)" text="فعال‌سازی / ادامه" (onClick)="changeStatus(status.active)"></dx-button>
+      <dx-button *ngIf="canChangeTo(status.suspended)" text="تعلیق" (onClick)="changeStatus(status.suspended)"></dx-button>
+      <dx-button *ngIf="canChangeTo(status.closed)" text="بستن" (onClick)="changeStatus(status.closed)"></dx-button>
+    </div>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>محدوده مصرف Program</h4>
+      <p>بین نوع‌های محدوده شرط «و» و بین چند مقدار از یک نوع شرط «یا» اعمال می‌شود.</p>
+      <dx-data-grid *ngIf="scopes" [dataSource]="scopes" [showBorders]="true"
+                    [rtlEnabled]="true" [remoteOperations]="true"
+                    (onRowClick)="editScope($event)">
+        <dxi-column dataField="title" caption="عنوان"></dxi-column>
+        <dxi-column dataField="walletScopeType" caption="نوع">
+          <dxo-lookup [dataSource]="scopeTypes" valueExpr="id" displayExpr="title"></dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="isActive" caption="فعال" dataType="boolean"></dxi-column>
+      </dx-data-grid>
+      <dx-button *ngIf="isDraft()" text="افزودن محدوده" (onClick)="addScope()"></dx-button>
+      <div *ngIf="scopeEditor && isDraft()" style="margin-top: 16px">
+        <dx-text-box [(value)]="scopeEditor.title" placeholder="عنوان Scope"></dx-text-box>
+        <dx-select-box [(value)]="scopeEditor.walletScopeType" [items]="scopeTypes"
+                       valueExpr="id" displayExpr="title" placeholder="نوع Scope"
+                       (onValueChanged)="scopeTypeChanged($event)"></dx-select-box>
+        <dx-select-box *ngFor="let type of scopeTypes" [visible]="scopeEditor.walletScopeType === type.id"
+                       [(value)]="scopeEditor[type.field]" [dataSource]="scopeTargets[type.field]"
+                       valueExpr="id" displayExpr="title" [searchEnabled]="true"
+                       placeholder="هدف Scope"></dx-select-box>
+        <dx-text-area [(value)]="scopeEditor.description" placeholder="توضیحات"></dx-text-area>
+        <dx-check-box [(value)]="scopeEditor.isActive" text="فعال"></dx-check-box>
+        <dx-button text="ثبت Scope" (onClick)="saveScope()"></dx-button>
+        <dx-button *ngIf="scopeEditor.id" text="حذف Scope" (onClick)="deleteScope()"></dx-button>
+        <dx-button text="انصراف" (onClick)="scopeEditor = null"></dx-button>
+      </div>
+    </section>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>عضویت کاربران در Program</h4>
+      <p>Assignment با اعتبار صفر ایجاد می‌شود و Grant اعتبار مالی آن را افزایش می‌دهد.</p>
+      <dx-data-grid *ngIf="assignments" [dataSource]="assignments" [showBorders]="true"
+                    [rtlEnabled]="true" [remoteOperations]="true">
+        <dxi-column dataField="userId" caption="کاربر">
+          <dxo-lookup [dataSource]="assignmentUsers" valueExpr="id" displayExpr="title"></dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="title" caption="عنوان"></dxi-column>
+        <dxi-column dataField="assignedAmount" caption="اعتبار" dataType="number"></dxi-column>
+        <dxi-column dataField="availableAmount" caption="موجودی" dataType="number"></dxi-column>
+        <dxi-column dataField="walletAssignmentStatusType" caption="وضعیت">
+          <dxo-lookup [dataSource]="assignmentStatuses" valueExpr="id" displayExpr="title"></dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="walletAssignmentSourceType" caption="منبع">
+          <dxo-lookup [dataSource]="assignmentSources" valueExpr="id" displayExpr="title"></dxo-lookup>
+        </dxi-column>
+      </dx-data-grid>
+      <dx-button *ngIf="canCreateAssignment()" text="افزودن کاربر" (onClick)="addAssignment()"></dx-button>
+      <div *ngIf="assignmentEditor && canCreateAssignment()" style="margin-top: 16px">
+        <dx-select-box [(value)]="assignmentEditor.userId" [dataSource]="assignmentUsers"
+                       valueExpr="id" displayExpr="title" [searchEnabled]="true"
+                       placeholder="کاربر"></dx-select-box>
+        <dx-text-box [(value)]="assignmentEditor.title" placeholder="عنوان Assignment"></dx-text-box>
+        <dx-text-area [(value)]="assignmentEditor.description" placeholder="توضیحات"></dx-text-area>
+        <dx-button text="ثبت Assignment" (onClick)="saveAssignment()"></dx-button>
+        <dx-button text="انصراف" (onClick)="assignmentEditor = null"></dx-button>
+      </div>
+    </section>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>Grantهای Program</h4>
+      <dx-data-grid *ngIf="grants" [dataSource]="grants" [showBorders]="true"
+                    [rtlEnabled]="true" [remoteOperations]="true">
+        <dxi-column dataField="walletAssignmentId" caption="Assignment"></dxi-column>
+        <dxi-column dataField="code" caption="کلید Grant"></dxi-column>
+        <dxi-column dataField="amount" caption="مبلغ" dataType="number"></dxi-column>
+        <dxi-column dataField="occurredAt" caption="زمان" dataType="datetime"></dxi-column>
+      </dx-data-grid>
+      <dx-button *ngIf="canCreateGrant()" text="اعطای اعتبار" (onClick)="addGrant()"></dx-button>
+      <div *ngIf="grantEditor && canCreateGrant()" style="margin-top: 16px">
+        <dx-select-box [(value)]="grantEditor.walletAssignmentId" [dataSource]="assignments"
+                       valueExpr="id" displayExpr="title" [searchEnabled]="true"
+                       placeholder="Assignment"></dx-select-box>
+        <dx-number-box [(value)]="grantEditor.amount" [min]="0.01" [step]="0.01"
+                       placeholder="مبلغ Grant"></dx-number-box>
+        <dx-text-box [(value)]="grantEditor.code" [maxLength]="150"
+                     placeholder="کلید یکتای درخواست Grant"></dx-text-box>
+        <dx-button text="ثبت Grant" (onClick)="saveGrant()"></dx-button>
+        <dx-button text="انصراف" (onClick)="grantEditor = null"></dx-button>
+      </div>
+    </section>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>گروه کارت</h4>
+      <dx-data-grid *ngIf="cardGroups" [dataSource]="cardGroups" [showBorders]="true"
+                    [rtlEnabled]="true" [remoteOperations]="true"
+                    (onRowClick)="selectCardGroup($event)">
+        <dxi-column dataField="title" caption="عنوان"></dxi-column>
+        <dxi-column dataField="memberCount" caption="تعداد کارت"></dxi-column>
+        <dxi-column dataField="walletCardGroupStatusType" caption="وضعیت"></dxi-column>
+      </dx-data-grid>
+      <dx-button *ngIf="isDraft()" text="گروه جدید" (onClick)="cardGroupEditor = {startDate: entity.startDate, endDate: entity.endDate}"></dx-button>
+      <div *ngIf="cardGroupEditor && isDraft()" class="mt-2">
+        <dx-text-box [(value)]="cardGroupEditor.title" placeholder="عنوان گروه"></dx-text-box>
+        <dx-date-box [(value)]="cardGroupEditor.startDate" type="datetime"></dx-date-box>
+        <dx-date-box [(value)]="cardGroupEditor.endDate" type="datetime"></dx-date-box>
+        <dx-button text="ثبت گروه" (onClick)="createCardGroup()"></dx-button>
+      </div>
+      <div *ngIf="selectedCardGroup" class="mt-2">
+        <h5>{{selectedCardGroup.title}}</h5>
+        <dx-data-grid *ngIf="cardMembers" [dataSource]="cardMembers" [showBorders]="true"
+                      [rtlEnabled]="true" [remoteOperations]="true">
+          <dxi-column dataField="maskedCard" caption="کارت ماسک‌شده"></dxi-column>
+          <dxi-column dataField="walletCardMemberStatusType" caption="وضعیت"></dxi-column>
+        </dx-data-grid>
+        <div *ngIf="selectedCardGroup.walletCardGroupStatusType === 3194" class="mt-2">
+          <dx-text-box [(value)]="cardNumber" mode="password" placeholder="شماره کارت عضو"></dx-text-box>
+          <dx-button text="افزودن کارت" (onClick)="addCard()"></dx-button>
+          <dx-button text="فعال‌سازی گروه" (onClick)="activateCardGroup()"></dx-button>
+        </div>
+      </div>
+    </section>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>Batch کوپن</h4>
+      <dx-data-grid *ngIf="couponBatches" [dataSource]="couponBatches" [showBorders]="true"
+                    [rtlEnabled]="true" [remoteOperations]="true"
+                    (onRowClick)="selectedCouponBatch = $event.data">
+        <dxi-column dataField="title" caption="عنوان"></dxi-column>
+        <dxi-column dataField="quantity" caption="تعداد"></dxi-column>
+        <dxi-column dataField="amountPerCoupon" caption="مبلغ هر کد" dataType="number"></dxi-column>
+        <dxi-column dataField="walletCouponBatchStatusType" caption="وضعیت"></dxi-column>
+      </dx-data-grid>
+      <dx-button text="Batch جدید" [disabled]="issuedCodes.length > 0" (onClick)="newCouponBatch()"></dx-button>
+      <div *ngIf="couponBatchEditor" class="mt-2">
+        <dx-text-box [(value)]="couponBatchEditor.title" placeholder="عنوان Batch"></dx-text-box>
+        <dx-number-box [(value)]="couponBatchEditor.quantity" [min]="1" [max]="10000"></dx-number-box>
+        <dx-number-box [(value)]="couponBatchEditor.amountPerCoupon" [min]="0.01"></dx-number-box>
+        <dx-date-box [(value)]="couponBatchEditor.startDate" type="datetime"></dx-date-box>
+        <dx-date-box [(value)]="couponBatchEditor.endDate" type="datetime"></dx-date-box>
+        <dx-button text="ساخت Batch" [disabled]="batchCreating || !!issuedBatchId" (onClick)="createCouponBatch()"></dx-button>
+      </div>
+      <div *ngIf="issuedCodes.length" class="mt-2">
+        <p class="text-danger">کدهای خام فقط همین یک‌بار نمایش داده می‌شوند. پیش از فعال‌سازی، آن‌ها را در مسیر امن نگهداری کنید.</p>
+        <textarea class="form-control" rows="8" readonly>{{issuedCodes.join('\n')}}</textarea>
+        <dx-button text="کدها را دریافت کردم؛ فعال‌سازی" (onClick)="activateIssuedBatch()"></dx-button>
+      </div>
+      <dx-button *ngIf="selectedCouponBatch && selectedCouponBatch.walletCouponBatchStatusType === 3201"
+                 text="لغو Batch در Draft" (onClick)="cancelCouponBatch()"></dx-button>
+    </section>
+    <section *ngIf="entity.id" style="margin-top: 24px">
+      <h4>ممیزی کیف پول</h4>
+      <dx-button text="بررسی مغایرت‌ها" [disabled]="auditLoading" (onClick)="loadAudit()"></dx-button>
+      <div *ngIf="auditResult" class="mt-2">
+        <p>{{auditResult.hasDiscrepancies ? 'مغایرت شناسایی شد.' : 'مغایرتی شناسایی نشد.'}}</p>
+        <dx-data-grid *ngIf="auditResult.hasDiscrepancies" [dataSource]="auditResult.issues"
+                      [showBorders]="true" [rtlEnabled]="true">
+          <dxi-column dataField="code" caption="کد"></dxi-column>
+          <dxi-column dataField="entityType" caption="نوع رکورد"></dxi-column>
+          <dxi-column dataField="entityId" caption="شناسه"></dxi-column>
+          <dxi-column dataField="expectedAmount" caption="مبلغ مورد انتظار" dataType="number"></dxi-column>
+          <dxi-column dataField="actualAmount" caption="مبلغ ثبت‌شده" dataType="number"></dxi-column>
+          <dxi-column dataField="message" caption="شرح مغایرت"></dxi-column>
+        </dx-data-grid>
+      </div>
+    </section>
+  </app-base-edit-form>
+</app-busy-indicator>

@@ -1,0 +1,109 @@
+﻿
+/* Blog CSS Start */
+.blog-card {
+    -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    margin-bottom: 30px;
+}
+
+    .blog-card .blog-img {
+        overflow: hidden;
+    }
+
+        .blog-card .blog-img img {
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+    .blog-card .blog-text {
+        padding: 25px;
+    }
+
+        .blog-card .blog-text ul {
+            padding-left: 0;
+            margin-bottom: 10px;
+        }
+
+            .blog-card .blog-text ul li {
+                list-style: none;
+                display: inline-block;
+                margin-right: 20px;
+                font-size: 14px;
+            }
+
+                .blog-card .blog-text ul li i {
+                    color: #fd1616;
+                    margin-right: 2px;
+                }
+
+        .blog-card .blog-text h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+            .blog-card .blog-text h3 a {
+                color: #001935;
+            }
+
+                .blog-card .blog-text h3 a:hover {
+                    color: #fd1616;
+                }
+
+        .blog-card .blog-text p {
+            margin-bottom: 10px;
+        }
+
+        .blog-card .blog-text .blog-btn {
+            color: var(--dark-primary-yellow-color) !important;
+            font-size: 16px;
+        }
+
+            .blog-card .blog-text .blog-btn:hover {
+                color: #001935 !important;
+            }
+
+            .blog-card .blog-text .blog-btn i {
+                top: 2px;
+                position: relative;
+            }
+
+    .blog-card:hover .blog-img img {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+    .blog-card .blog-text h3 a:hover {
+        color: #001935;
+        font-size: 24px !important;
+    }
+
+
+
+
+    .blog-card .blog-img {
+        overflow: hidden;
+        border-radius: 32px !important;
+    }
+
+
+.blog-card {
+    border-radius: 12px !important;
+}
+
+.blog-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+    .blog-card .blog-text .blog-btn {
+        font-size: 16px !important;
+    }
+
+.custom-ul-style{
+    margin-right:-3.5rem!important;
+}
+/* Blog CSS End */
+

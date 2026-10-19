@@ -9,6 +9,7 @@ namespace YashilCommerce.Core.DTO
         OrderNotFound,
         UnauthorizedOrder,
         AssignmentMismatch,
+        ScopeMismatch,
         InsufficientBalance,
         Conflict
     }

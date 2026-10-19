@@ -1,0 +1,157 @@
+.top-background-jobofferdetail {
+    position: relative;
+}
+
+   .top-background-jobofferdetail:before {
+        display: block;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: url(../../images/job-offer/gradient.webp) bottom repeat-x;
+        content: "";
+    }
+
+.container-joboffer-fisrt-section {
+    position: relative;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.company-joboffer-logo {
+    width: 112px;
+    height: 112px;
+    margin-right: 0;
+    margin-bottom: 0;
+    position: absolute;
+    bottom: -20px;
+    right: 15px;
+    border: 1px solid #d0d0d0;
+    z-index: 2;
+}
+
+.company-joboffer-info {
+    position: absolute;
+    bottom: 20px;
+    right: 142px;
+    width: 50%;
+}
+
+
+.main-title-job-offer-detail {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 34px;
+    border-bottom: 1px dashed #e5e5e5;
+    font-weight: 300;
+}
+
+.aside-job-offer-detail {
+    top: 8rem;
+}
+
+.badge {
+    width: max-content;
+}
+
+@media(max-width:992px) {
+    .company-joboffer-info {
+        width: 75% !important;
+    }
+}
+
+@media(max-width:768px) {
+    .container-joboffer-fisrt-section {
+        margin-top: -6rem;
+    }
+   
+    .company-joboffer-logo {
+        display: block;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #d0d0d0;
+        -webkit-border-radius: 3px 3px 3px 3px;
+        border-radius: 3px 3px 3px 3px;
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        position: relative;
+        right: 0 !important;
+        bottom: 6rem !important;
+    }
+
+    .company-joboffer-info {
+        padding: 0 30px 15px 0;
+        text-align: right;
+        right: 0 !important;
+        width: 100% !important;
+    }
+}
+
+@media(max-width:480px) {
+    .company-joboffer-logo {
+        display: block !important;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #d0d0d0;
+        -webkit-border-radius: 3px 3px 3px 3px;
+        border-radius: 3px 3px 3px 3px;
+        bottom: -9rem;
+        margin: 0 auto !important;
+    }
+
+    .company-joboffer-info-title {
+        text-align: center !important;
+    }
+
+    .company-joboffer-info {
+        padding: 10px !important;
+        text-align: center !important;
+        right: 0 !important;
+    }
+}
+
+.tags-joboffer-detail {
+    padding: 0.3rem 0.5rem;
+    font-size: 13px !important;
+}
+
+.tags-joboffer-detail:hover {
+    transition: 0.5s;
+    background-color: #198754 !important;
+    color: white !important;
+    cursor:default;
+}
+
+
+.nav-items-corporation-detail-header:hover {
+    color: #198754 !important;
+}
+
+
+.info-job-offer-detail-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media(max-width:768px) {
+    .info-job-offer-detail-text {
+        display: grid;
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+.top-background-jobofferdetail >img {
+    height: 375px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.job-offer--card:not(:last-child) {
+    border-bottom: 1px solid #dee2e6
+}

@@ -35,6 +35,7 @@ import {RewardPointsHistoryListComponent} from './reward-points-history/reward-p
 import {ShoppingCartItemListComponent} from './shopping-cart-item/shopping-cart-item-list.component';
 import {RecipientListComponent} from './recipient/recipient-list.component';
 import {CustomerClubListComponent} from './customer-club/customer-club-list.component';
+import {WalletProgramListComponent} from './wallet-program/wallet-program-list.component';
 import {CustomerClubCardListComponent} from './customer-club-card/customer-club-card-list.component';
 import {
   CustomerClubPaymentMethodTypeListComponent
@@ -219,6 +220,7 @@ const routes: Routes = [
   {path: 'shoppingCartItems', component: ShoppingCartItemListComponent, canActivate: [AuthGuard]},
   {path: 'recipients', component: RecipientListComponent, canActivate: [AuthGuard]},
   {path: 'customerClubs', component: CustomerClubListComponent, canActivate: [AuthGuard]},
+  {path: 'walletPrograms', component: WalletProgramListComponent, canActivate: [AuthGuard]},
   {path: 'customerClubCards', component: CustomerClubCardListComponent, canActivate: [AuthGuard]},
   {
     path: 'customerClubPaymentMethodTypes',

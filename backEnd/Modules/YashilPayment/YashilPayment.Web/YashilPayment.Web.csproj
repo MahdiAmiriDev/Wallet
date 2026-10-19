@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		 <TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="module.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.66.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.67.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="MimeKit" Version="4.8.0" />
+		<PackageReference Include="Yashil.Common.Web.Infrastructure" Version="9.8.45" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Data\Yashil.Core\Yashil.Core.csproj" />
+		<ProjectReference Include="..\..\YashilCommerce\YashilCommerce.Core\YashilCommerce.Core.csproj" />
+		<ProjectReference Include="..\..\YashilCommerce\YashilCommerce.Infrastructure\YashilCommerce.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\YashilDms\YashilDms.Core\YashilDms.Core.csproj" />
+		<ProjectReference Include="..\..\YashilUserManagement\YashilUserManagement.Core\YashilUserManagement.Core.csproj" />
+		<ProjectReference Include="..\YashilPayment.Core\YashilPayment.Core.csproj" />
+		<ProjectReference Include="..\YashilPayment.Infrastructure\YashilPayment.Infrastructure.csproj" />
+	</ItemGroup>
+	<!--<ItemGroup>
+		<ContentWithTargetPath Include="Protos\hekmatIPG.proto">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>wwwroot\hekmatIPG.proto</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>-->
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Views\YashilIpg\HekmatIpg\Index.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\HybridIpg\Index.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Include="Views\HekmatIpg\OldIndex.cshtml" />
+	</ItemGroup>
+
+</Project>
+
+

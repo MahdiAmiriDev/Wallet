@@ -19983,6 +19983,10 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
 
                 entity.Property(e => e.Duration).HasComment("مدت زمان به ثانیه");
 
+                entity.Property(e => e.IsPublic)
+                    .HasDefaultValue(false)
+                    .HasComment("آیا این دسته بندی سوالات عمومی هست و برای آزمون ساز استفاده میشود");
+
                 entity.Property(e => e.ModificationDate)
                     .HasColumnType("datetime")
                     .HasComment("زمان تغییر");
@@ -20097,6 +20101,10 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasComment("حذف شده");
 
                 entity.Property(e => e.Description).HasComment("توضیحات");
+
+                entity.Property(e => e.IsPublic)
+                    .HasDefaultValue(false)
+                    .HasComment("آیا این دسته بندی سوالات عمومی هست و برای آزمون ساز استفاده میشود");
 
                 entity.Property(e => e.ModificationDate)
                     .HasColumnType("datetime")
@@ -20679,6 +20687,10 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasComment("تاریخ بازپرداخت");
 
                 entity.Property(e => e.RefundType).HasComment("نوع عودت وجه - با توجه به نوع پرداخت-آنلاین-ناجا-حکمت");
+
+                entity.Property(e => e.VoidTransactionId)
+                    .HasMaxLength(200)
+                    .HasComment("شناسه ابطال تراکنش");
 
                 entity.HasOne(d => d.AccessLevel)
                     .WithMany(p => p.RefundDetail)
@@ -27954,6 +27966,8 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasColumnType("decimal(18, 2)")
                     .HasDefaultValue(0m);
 
+                entity.Property(e => e.AmountPerUser).HasColumnType("decimal(18, 2)");
+
                 entity.Property(e => e.ApplicationId).HasComment("برنامه");
 
                 entity.Property(e => e.Code)
@@ -28090,12 +28104,8 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
 
                 entity.HasIndex(e => new { e.WalletAssignmentId, e.WalletReservationStatusType, e.ExpiresAt }, "IX_WalletReservation_Assignment_Status");
 
-                entity.HasIndex(e => new { e.ApplicationId, e.IdempotencyKey }, "UX_WalletReservation_Application_IdempotencyKey")
+                entity.HasIndex(e => e.IdempotencyKey, "UX_WalletReservation_IdempotencyKey")
                     .IsUnique();
-
-                entity.HasIndex(e => new { e.ApplicationId, e.OrderId }, "UX_WalletReservation_ActiveOrder")
-                    .IsUnique()
-                    .HasFilter("([WalletReservationStatusType]=(3184))");
 
                 entity.Property(e => e.Id).HasComment("");
 
@@ -28130,7 +28140,8 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                 entity.Property(e => e.Description).HasComment("توضیحات");
 
                 entity.Property(e => e.ExpiresAt)
-                    .HasPrecision(0);
+                    .HasPrecision(0)
+                    .HasDefaultValueSql("(dateadd(minute,(15),sysutcdatetime()))");
 
                 entity.Property(e => e.IdempotencyKey)
                     .IsRequired()
@@ -28142,8 +28153,6 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasComment("زمان تغییر");
 
                 entity.Property(e => e.ModifyBy).HasComment("ویرایش کننده");
-
-                entity.Property(e => e.OrderId).HasDefaultValue(0);
 
                 entity.Property(e => e.ReleasedAt).HasPrecision(0);
 
@@ -28161,7 +28170,7 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
 
                 entity.Property(e => e.WalletAssignmentId).HasDefaultValue(0);
 
-                entity.Property(e => e.WalletReservationStatusType).HasDefaultValue(3184);
+                entity.Property(e => e.WalletReservationStatusType).HasDefaultValue(1);
 
                 entity.HasOne(d => d.AccessLevel)
                     .WithMany(p => p.WalletReservation)
@@ -28192,21 +28201,15 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasForeignKey(d => d.ModifyBy)
                     .HasConstraintName("FK_WalletReservation_User1");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.WalletReservation)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_WalletReservation_Order");
-
-                entity.HasOne(d => d.OrderItem)
-                    .WithMany(p => p.WalletReservation)
-                    .HasForeignKey(d => d.OrderItemId)
-                    .HasConstraintName("FK_WalletReservation_OrderItem");
-
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_WalletReservation_WalletReservation");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.WalletReservation)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK_WalletReservation_Payment");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.WalletReservationUser)
@@ -28360,8 +28363,6 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
 
                 entity.HasIndex(e => new { e.WalletAssignmentId, e.CreationDate }, "IX_WalletTransaction_Assignment_CreatedAt");
 
-                entity.HasIndex(e => new { e.OrderId, e.CreationDate }, "IX_WalletTransaction_OrderId");
-
                 entity.Property(e => e.Id).HasComment("");
 
                 entity.Property(e => e.AccessLevelId).HasComment("سطح دسترسی");
@@ -28448,20 +28449,15 @@ public YashilAppDbContext(DbContextOptions<YashilAppDbContext> options) : base(o
                     .HasForeignKey(d => d.ModifyBy)
                     .HasConstraintName("FK_WalletTransaction_User1");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.WalletTransaction)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK_WalletTransaction_Order");
-
-                entity.HasOne(d => d.OrderItem)
-                    .WithMany(p => p.WalletTransaction)
-                    .HasForeignKey(d => d.OrderItemId)
-                    .HasConstraintName("FK_WalletTransaction_OrderItem");
-
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_WalletTransaction_WalletTransaction");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.WalletTransaction)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK_WalletTransaction_Payment");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.WalletTransactionUser)

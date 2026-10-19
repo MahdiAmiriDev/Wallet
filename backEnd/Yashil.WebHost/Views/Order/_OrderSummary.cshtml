@@ -43,6 +43,37 @@
         <!-- left sidebar -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-4 p-3 ">
             <div class="sticky-top sticky-top-ziro-index">
+                @if (Model.OrderId.HasValue && Model.Funding != null)
+                {
+                    <div class="detail p-sm-1 p-md-3 rounded mb-2">
+                        <div class="d-flex justify-content-between"><span>وضعیت سفارش</span><strong>@Model.OrderStatusTypeTitle</strong></div>
+                        <div class="d-flex justify-content-between"><span>پرداخت موفق ثبت‌شده</span><strong>@Model.Funding.RecordedPaidAmount.ToString("N2") تومان</strong></div>
+                        <div class="d-flex justify-content-between mt-2"><span>مصرف خالص کیف پول</span><strong>@Model.Funding.WalletNetAmount.ToString("N2") تومان</strong></div>
+                        @if (Model.Funding.OpenWalletReservedAmount.HasValue)
+                        {
+                            <div class="d-flex justify-content-between mt-2"><span>سهم رزروشده کیف پول</span><strong>@Model.Funding.OpenWalletReservedAmount.Value.ToString("N2") تومان</strong></div>
+                            <div class="d-flex justify-content-between"><span>سهم درگاه در این تلاش</span><strong>@Model.Funding.OpenGatewayPaymentAmount.Value.ToString("N2") تومان</strong></div>
+                            <small class="text-muted">رزرو کیف پول تا زمان تأیید پرداخت، مصرف قطعی نیست.</small>
+                        }
+                        <small class="text-muted">مبلغ پرداخت موفق پیش از بازپرداخت احتمالی نمایش داده شده است.</small>
+                        @if (Model.Funding.PendingVibeCapturePaymentId.HasValue)
+                        {
+                            <form method="post" action="@Url.Action("RecoverMixed", "VibePayment")">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="paymentId" value="@Model.Funding.PendingVibeCapturePaymentId.Value" />
+                                <button type="submit" class="btn btn-warning mt-2">پیگیری ثبت سهم کیف پول</button>
+                            </form>
+                        }
+                        @if (Model.Funding.PendingHekmatOnlineCapturePaymentId.HasValue)
+                        {
+                            <form method="post" action="/HekmatOnlinePaymentGateway/RecoverMixed">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="paymentId" value="@Model.Funding.PendingHekmatOnlineCapturePaymentId.Value" />
+                                <button type="submit" class="btn btn-warning mt-2">پیگیری ثبت سهم کیف پول</button>
+                            </form>
+                        }
+                    </div>
+                }
                 @if (Model.OrderId.HasValue && (Model.OrderStatusType == (int)OrderStatusTypesEnum.Complete) || Model.OrderStatusType == (int)OrderStatusTypesEnum.IncompletePayment ||
                 Model.OrderStatusType == (int)OrderStatusTypesEnum.IncompleteCashAndInstallmentPay)
                 {

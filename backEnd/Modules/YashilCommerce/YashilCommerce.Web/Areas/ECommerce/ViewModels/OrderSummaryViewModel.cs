@@ -6,6 +6,7 @@ namespace YashilCommerce.Web.Areas.ECommerce.ViewModels
 {
     public class OrderSummaryViewModel
     {
+        public YashilCommerce.Core.DTO.CustomerOrderFundingDto Funding { get; set; }
         /// <summary>
         /// لیست پرداخت های موفق سفارش
         /// </summary>

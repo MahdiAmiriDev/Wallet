@@ -1,0 +1,39 @@
+﻿#job-offer-search--container {
+    position: relative
+}
+
+#job-offers-landing--container {
+    padding-top: 10px;
+    max-width: 1600px;
+    margin: 0 auto;
+    overflow: hidden
+}
+
+#corporation-requirements--container {
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.job-offer-landing--sidebar {
+    width: 300px;
+}
+
+#job-offers--container {
+    display: flex !important;
+    flex-direction: column
+}
+
+.job-offer--card:not(:last-child) {
+    border-bottom: 1px solid #dee2e6
+}
+
+@media (max-width: 992px) {
+    .job-offer-landing--sidebar {
+        width: 100%;
+    }
+
+    .job-offer-search--background {
+        height: 100%
+    }
+}

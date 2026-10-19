@@ -1,0 +1,107 @@
+﻿@media(min-width: 1400px)  {
+    .hero-banner-image--skeleton {
+        --c-w: 1440px !important;
+        --l-h: 400px !important;
+    }
+}
+
+@media(min-width: 1301px) and (max-width: 1399px) {
+    .hero-banner-image--skeleton {
+        --c-w: 1259px !important;
+        --l-h: 349px !important;
+    }
+}
+
+
+@media(min-width: 1200px) and (max-width: 1300px) {
+    .hero-banner-image--skeleton {
+        --c-w: 1125px !important;
+        --l-h: 313px !important;
+    }
+}
+
+
+@media(min-width:1026px) and (max-width: 1199px) {
+    .hero-banner-image--skeleton {
+        --c-w: 1080px !important;
+        --l-h: 300px !important;
+    }
+}
+
+
+@media(min-width: 992px) and (max-width: 1025px) {
+    .hero-banner-image--skeleton {
+        --c-w: 922px !important;
+        --l-h: 257px !important;
+    }
+}
+
+@media(min-width: 770px) and (max-width: 991px) {
+    .hero-banner-image--skeleton {
+        --c-w: 893px !important;
+        --l-h: 249px !important;
+    }
+}
+
+@media(min-width: 650px) and (max-width: 769px) {
+    .hero-banner-image--skeleton {
+        --c-w: 691px !important;
+        --l-h: 190px !important;
+    }
+}
+
+@media(min-width: 542px) and (max-width: 649px) {
+    .hero-banner-image--skeleton {
+        --c-w: 583px !important;
+        --l-h: 160px !important;
+    }
+}
+
+@media(min-width: 500px) and (max-width: 541px) {
+    .hero-banner-image--skeleton {
+        --c-w: 486px !important;
+        --l-h: 135px !important;
+    }
+}
+
+
+@media(min-width: 427px) and (max-width: 499px) {
+    .hero-banner-image--skeleton {
+        --c-w: 449px !important;
+        --l-h: 124px !important;
+    }
+}
+
+
+@media(min-width: 376px) and (max-width: 426px) {
+    .hero-banner-image--skeleton {
+        --c-w:383px !important;
+        --l-h: 107px !important;
+    }
+}
+
+.hero-banner-image--skeleton {
+    --c-w: 338px;
+    --l-h: 94px;
+    --c-p: 0px !important;
+}
+
+
+.product-category--skeleton-circle {
+    --c-s: 90px;
+}
+
+.product-category--skeleton-line {
+    --c-w: 150px;
+}
+
+
+.educational-centers--skeleton-circle {
+    --c-s: 80px;
+}
+
+.educational-centers--skeleton-line {
+    --l-h: 10px;
+    --lines: 2;
+    --c-w: 110px;
+}

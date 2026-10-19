@@ -75,6 +75,8 @@ public DateTime StartDate { get; set; }
 public DateTime? EndDate { get; set; }
 public int WalletProgramStatusType { get; set; }
 public byte[] RowVersion { get; set; }
+public int? TargetUserCount { get; set; }
+public decimal? AmountPerUser { get; set; }
 
     public virtual AccessLevel AccessLevel { get; set; }
     public virtual Application Application { get; set; }

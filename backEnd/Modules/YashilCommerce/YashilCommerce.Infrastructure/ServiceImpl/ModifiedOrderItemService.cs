@@ -13,6 +13,8 @@ using Yashil.Common.SharedKernel.Logging;
 using Yashil.Core.CustomDomainModels;
 using Yashil.Core.Entities;
 using Yashil.Core.Enums;
+using Yashil.Infrastructure.Data;
+using YashilCommerce.Core.Enums;
 using YashilCommerce.Core.Repositories;
 using YashilCommerce.Core.Services;
 
@@ -34,6 +36,7 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
         private readonly IRefundService _refundService;
         private readonly ICustomerClubPaymentInstallmentService _customerClubPaymentInstallmentService;
         private readonly IYashilLogger<ModifiedOrderItem> _logger;
+        private readonly YashilAppDbContext _walletContext;
 
         public ICustomerClubService ClubService { get; }
 
@@ -47,7 +50,8 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             ISubsidyService subsidyService,
             IPaymentService paymentService,
             ICustomerClubPaymentInstallmentService customerClubPaymentInstallmentService,
-            IOrderService orderService, ICustomerClubService customerClubService, IYashilLogger<ModifiedOrderItem> logger)
+            IOrderService orderService, ICustomerClubService customerClubService, IYashilLogger<ModifiedOrderItem> logger,
+            YashilAppDbContext walletContext)
             : base(unitOfWork, modifiedOrderItemRepository, userPrincipal, eventPublisher)
         {
             _unitOfWork = unitOfWork;
@@ -64,6 +68,7 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             _refundDetailService = refundDetailService;
             _refundService = refundService;
             _customerClubPaymentInstallmentService = customerClubPaymentInstallmentService;
+            _walletContext = walletContext;
         }
 
         /// <summary>
@@ -114,6 +119,15 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             {
                 return "بروز خطا در تغییر سفارش، آیتم سفارش مورد نظر یافت نشد";
             }
+
+            // جریان فعلی اصلاح سفارش فقط Payment و RefundDetail را محاسبه می‌کند.
+            // تا زمان ثبت قرارداد نهایی Refund ترکیبی، اجازهٔ تغییر سفارش دارای Capture داده نمی‌شود.
+            if (await _walletContext.WalletReservation.AsNoTracking().AnyAsync(x =>
+                !x.Deleted && x.ApplicationId == _applicationConfiguration.ApplicationId
+                && x.PaymentId.HasValue && x.Payment.OrderId == oldOrderItem.OrderId
+                && (x.WalletReservationStatusType == (int)WalletReservationStatusType.Reserved
+                    || x.WalletReservationStatusType == (int)WalletReservationStatusType.Captured)))
+                return "اصلاح سفارش پرداخت‌شده با کیف پول تا تعیین تکلیف بازپرداخت درگاه و کیف پول مجاز نیست.";
 
             //باید در مراحل بعدی از این کد باشگاه مشتریان استفاده کرد نه از کد باشگاه مشتریان کاربر جاری!!!!
 

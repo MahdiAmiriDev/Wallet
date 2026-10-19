@@ -1,0 +1,90 @@
+﻿@model YashilPayment.Web.Areas.Payment.ViewModels.UserCardInfoViewModel
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" style="direction: ltr">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @ViewBag.Message
+    </div>
+}
+@*TODO: show timer - the purchase will be rejected if the time passed*@
+@using (Html.BeginForm("Purchase", "YashilIpg"))
+{
+    <div class="row">
+        <div class="col-md-4">
+            مبلغ
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.PurchaseInfoDto.TotalAmount, new { @readonly = "readonly" })
+        </div>
+    </div>
+    @if (Model.PurchaseInfoDto.InstallmentCount > 0)
+    {
+        <div class="clr"></div>
+        <div class="row">
+            <div class="col-md-4">
+                تعداد اقساط
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(t => t.PurchaseInfoDto.InstallmentCount, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="clr"></div>
+        <div class="row">
+            <div class="col-md-4">
+                مبلغ هر قسط
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(t => t.PurchaseInfoDto.Amount, new { @readonly = "readonly" })
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(t => t.CardNumber)
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.CardNumber)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(t => t.CVV2)
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.CVV2)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(t => t.ExpireDateMonth)
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.ExpireDateMonth)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(t => t.ExpireDateYear)
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.ExpireDateYear)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(t => t.SecondPassword)
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.SecondPassword)
+        </div>
+    </div>
+    @Html.HiddenFor(t => t.PaymentRequestToken)
+    <div class="row" style="text-align:center;">
+        <input type="submit" value="تایید" class="btn btn-primary" style="margin:0 auto;width:100px;" />
+    </div>
+}

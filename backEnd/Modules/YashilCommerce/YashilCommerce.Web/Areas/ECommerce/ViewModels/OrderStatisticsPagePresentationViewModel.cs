@@ -391,6 +391,7 @@ namespace YashilCommerce.Web.Areas.ECommerce.ViewModels
     /// </summary>
     public class OrderListPresentationViewModel
     {
+        public CustomerOrderFundingDto Funding { get; set; }
         public OrderListPresentationViewModel()
         {
             OrderSimpleViewModel = new OrderSimplePresentationViewModel();

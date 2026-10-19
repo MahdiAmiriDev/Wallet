@@ -1,0 +1,158 @@
+﻿.swiper-button-next::after,
+.swiper-button-prev::after {
+    background-color: white;
+    color: var(--dark-primary-yellow-color) !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: solid 1px #e0e0e6;
+    position: absolute;
+    font-size: 14px !important;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-button-disabled {
+    display: none !important;
+}
+
+.text-carousel {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    padding: 4px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+
+.text-body2-strong {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 2;
+}
+
+.text-body-2 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.text-h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2;
+}
+
+.title-product {
+    font-weight: 600;
+    font-size: 12px;
+    color: black;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.ProductPrice {
+    height: 20px;
+    width: 34px;
+}
+
+.color-bl {
+    color: black;
+}
+
+
+.bg-r {
+    background-color: #ef394e;
+}
+
+.color-white {
+    color: white !important;
+}
+
+.radius-4 {
+    border-radius: 4px;
+}
+
+.img-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100%;
+    font-weight: 700;
+}
+
+.candidat-text {
+    background: #ffffff !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important;
+    padding: 10px !important;
+    height: 70px !important;
+}
+
+.sale-product-carousel {
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.card-item {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    border-radius: 9px;
+    min-height: 210px;
+    border: 0px solid #f6f6f6;
+    overflow: hidden;
+    margin: 1px;
+}
+
+.img-course {
+    width: 100% !important;
+    display: inline-block;
+}
+
+.course-img {
+    height: 135px;
+}
+
+.course-img img {
+    width: 100%;
+}
+
+.course-img-box {
+    width: 100%;
+}
+
+.imgCourse {
+    width: 100%;
+    margin: auto;
+}
+
+.img-vline {
+    position: relative;
+}
+
+course-img-box {
+    width: 100%;
+}
+
+.img-icon {
+    max-width: 60px;
+    padding: 4px;
+    aspect-ratio: 7;
+}
+.condidate-item {
+    text-align: center;
+}

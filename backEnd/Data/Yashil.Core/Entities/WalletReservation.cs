@@ -61,7 +61,6 @@ public bool Deleted { get; set; }
 public int CreatorOrganizationId { get; set; }
 public int WalletAssignmentId { get; set; }
 public int UserId { get; set; }
-public int OrderId { get; set; }
 public decimal Amount { get; set; }
 public int WalletReservationStatusType { get; set; }
 public string IdempotencyKey { get; set; }
@@ -69,16 +68,15 @@ public DateTime ExpiresAt { get; set; }
 public DateTime? CapturedAt { get; set; }
 public DateTime? ReleasedAt { get; set; }
 public byte[] RowVersion { get; set; }
-public int? OrderItemId { get; set; }
+public int? PaymentId { get; set; }
 
     public virtual AccessLevel AccessLevel { get; set; }
     public virtual Application Application { get; set; }
     public virtual User CreateByNavigation { get; set; }
     public virtual Organization CreatorOrganization { get; set; }
     public virtual User ModifyByNavigation { get; set; }
-    public virtual Order Order { get; set; }
-    public virtual OrderItem OrderItem { get; set; }
     public virtual WalletReservation Parent { get; set; }
+    public virtual Payment Payment { get; set; }
     public virtual User User { get; set; }
     public virtual WalletAssignment WalletAssignment { get; set; }
 public virtual ICollection<WalletReservation>

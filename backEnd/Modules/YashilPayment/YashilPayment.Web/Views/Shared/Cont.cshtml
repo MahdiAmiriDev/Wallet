@@ -1,0 +1,46 @@
+﻿@model YashilPayment.Web.Areas.Payment.ViewModels.PurchaseResult
+@{
+    string formUrl = Model.Url;
+}
+@*TODO: set timer for submit button*@
+<form action="@formUrl" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            وضعیت
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.Status)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            شماره سفارش
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.ReservationNumber)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <div class="row">
+        <div class="col-md-4">
+            شماره پیگیری
+        </div>
+        <div class="col-md-8">
+            @Html.TextBoxFor(t => t.RefrenceNumber)
+        </div>
+    </div>
+    @*<div class="clr"></div>
+        <div class="row">
+            <div class="col-md-4">
+                توکن
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(t => t.Token)
+            </div>
+        </div>*@
+    @Html.HiddenFor(t => t.Token)
+    <div class="row" style="text-align:center;">
+        <input type="submit" value="تکمیل فرآیند خرید" class="btn btn-primary" style="margin:0 auto;width:100px;" />
+    </div>
+</form>

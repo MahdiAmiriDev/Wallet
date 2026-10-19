@@ -1,0 +1,335 @@
+.hero-advertisement-image--skeleton {
+    --l-h: 100px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.hero-slider-image--skeleton {
+    --l-h: 115px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.category-image--skeleton {
+    --c-s: 90px;
+    --c-p: 0px
+}
+
+.category-title--skeleton {
+    --l-h: 12px;
+    --l-gap: 8px;
+    --lines: 2;
+    --c-w: 80%;
+    --c-p: 0px
+}
+
+.commercial-image--skeleton {
+    --l-h: 90px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.recent-courses--skeleton {
+    --c-bg: #F8F7FC;
+    --rect-h: 110px;
+    --c-w: 200px;
+    --lines: 5;
+    --l-h: 15px;
+    --c-p: 15px
+}
+
+.learnin-skill-image--skeleton {
+    --l-h: 70px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.biggest-discount-product--skeleton {
+    --rect-h: 100px;
+    --c-w: 100%;
+    --lines: 3;
+    --l-h: 15px;
+    --c-p: 0px;
+}
+
+.company-image--skeleton {
+    --l-h: 270px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.slogan-image--skeleton {
+    --l-h: 80px;
+    --c-w: 100%;
+    --c-p: 0px
+}
+
+.news-card--skeleton {
+    --rect-h: 140px !important;
+    --c-w: 100% !important;
+    --lines: 8 !important;
+    --c-p: 0px !important
+}
+
+@media (min-width: 200px) {
+    .recent-courses--skeleton {
+        --rect-h: 80px !important;
+        --c-w: 160px !important;
+        --lines: 6 !important;
+        --c-p: 10px !important
+    }
+}
+
+@media(min-width: 321px) {
+    .company-image--skeleton {
+        --l-h: 355px !important;
+    }
+
+    .slogan-image--skeleton {
+        --l-h: 110px !important
+    }
+}
+
+@media (max-width: 375px) {
+    .news-card--skeleton {
+        --rect-h: 130px !important;
+    }
+}
+
+@media (min-width: 400px) {
+    .commercial-image--skeleton {
+        --l-h: 140px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 100px !important;
+    }
+}
+
+@media (min-width: 425px) {
+    .recent-courses--skeleton {
+        --rect-h: 90px !important;
+        --c-w: 180px !important;
+    }
+}
+
+@media(min-width: 426px) {
+    .company-image--skeleton {
+        --l-h: 555px !important;
+    }
+
+    .slogan-image--skeleton {
+        --l-h: 150px !important
+    }
+}
+
+@media(min-width: 500px) {
+    .hero-slider-image--skeleton {
+        --l-h: 150px !important;
+    }
+
+    .commercial-image--skeleton {
+        --l-h: 150px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 120px !important;
+    }
+
+    .news-card--skeleton {
+        --rect-h: 120px !important;
+    }
+}
+
+@media (min-width: 541px) {
+    .category-image--skeleton {
+        --c-s: 110px !important;
+    }
+}
+
+@media (min-width: 570px) {
+    .recent-courses--skeleton {
+        --rect-h: 80px !important;
+        --c-w: 160px !important;
+    }
+}
+
+@media (min-width: 580px) {
+    .commercial-image--skeleton {
+        --l-h: 180px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 130px !important;
+    }
+}
+
+@media(min-width: 650px) {
+    .hero-slider-image--skeleton {
+        --l-h: 170px !important;
+    }
+}
+
+@media(min-width: 750px) {
+    .hero-slider-image--skeleton {
+        --l-h: 200px !important;
+    }
+}
+
+@media(min-width: 768px) {
+    .hero-advertisement-image--skeleton {
+        --l-h: 130px !important
+    }
+
+    .commercial-image--skeleton {
+        --l-h: 90px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 85px !important;
+    }
+
+    .biggest-discount-product--skeleton {
+        --rect-h: 150px;
+    }
+
+    .company-image--skeleton {
+        --l-h: 750px !important;
+    }
+
+    .slogan-image--skeleton {
+        --l-h: 100px !important
+    }
+}
+
+@media (min-width: 770px) {
+    .recent-courses--skeleton {
+        --rect-h: 85px !important;
+        --c-w: 175px !important;
+    }
+}
+
+@media(min-width: 850px) {
+    .hero-slider-image--skeleton {
+        --l-h: 220px !important;
+    }
+}
+
+@media(min-width: 950px) {
+    .hero-slider-image--skeleton {
+        --l-h: 250px !important;
+    }
+
+    .recent-courses--skeleton {
+        --rect-h: 95px !important;
+        --c-w: 200px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .news-card--skeleton {
+        --rect-h: 100px !important;
+        --lines: 7 !important;
+    }
+}
+
+@media(min-width: 992px) {
+    .commercial-image--skeleton {
+        --l-h: 120px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 120px !important;
+    }
+
+    .biggest-discount-product--skeleton {
+        --rect-h: 110px;
+    }
+}
+
+@media(min-width: 993px) {
+    .slogan-image--skeleton {
+        --l-h: 130px !important
+    }
+}
+
+
+@media(min-width: 1100px) {
+    .hero-slider-image--skeleton {
+        --l-h: 268px !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .news-card--skeleton {
+        --rect-h: 120px !important;
+        --lines: 6 !important;
+    }
+}
+
+@media(min-width: 1200px) {
+    .commercial-image--skeleton {
+        --l-h: 140px !important;
+    }
+
+    .recent-courses--skeleton {
+        --rect-h: 105px !important;
+        --c-w: 220px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 140px !important;
+    }
+
+    .biggest-discount-product--skeleton {
+        --rect-h: 105px;
+    }
+
+    .company-image--skeleton {
+        --l-h: 600px !important;
+    }
+
+    .slogan-image--skeleton {
+        --l-h: 160px !important
+    }
+}
+
+@media (min-width: 1250px) {
+    .recent-courses--skeleton {
+        --rect-h: 80px !important;
+        --c-w: 170px !important;
+    }
+}
+
+@media (max-width: 1399px) {
+    .news-card--skeleton {
+        --rect-h: 120px !important;
+        --c-w: 100% !important;
+        --lines: 7 !important;
+        --c-p: 0px !important
+    }
+}
+
+
+@media(min-width: 1400px) {
+    .commercial-image--skeleton {
+        --l-h: 165px !important;
+    }
+
+    .recent-courses--skeleton {
+        --rect-h: 95px !important;
+        --c-w: 195px !important;
+    }
+
+    .learnin-skill-image--skeleton {
+        --l-h: 165px !important;
+    }
+
+    .biggest-discount-product--skeleton {
+        --rect-h: 120px;
+    }
+
+    .slogan-image--skeleton {
+        --l-h: 182px !important
+    }
+}

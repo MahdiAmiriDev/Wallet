@@ -28,8 +28,10 @@ using Yashil.Common.Web.Infrastructure.Filters;
 using Yashil.Core.Web;
 using Yashil.Core.CustomDomainModels.Commerce;
 using Yashil.Infrastructure.Extensions;
+using Yashil.Infrastructure.Data;
 using YashilCommerce.Core.Classes;
 using YashilCommerce.Core.Enums;
+using YashilCommerce.Core.DTO;
 using Language = DNTCaptcha.Core.Language;
 
 namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
@@ -59,6 +61,9 @@ namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
         private readonly ISaleConfigurationService _saleConfigurationService;
         private readonly IProductSalesPlanningService _productSalesPlanningService;
         private readonly IModifiedOrderItemService _modifiedOrderItemService;
+        private readonly IWalletOrderPreparationService _walletPreparation;
+        private readonly IWalletBenefitsService _walletBenefits;
+        private readonly YashilAppDbContext _walletContext;
 
         public OrderController(IOrderService orderService, IMapper mapper, IYashilLogger<Order> logger,
             IPermissionService permissionService,
@@ -69,7 +74,9 @@ namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
             ICustomerClubService customerClubService, IOrderItemService orderItemService,
             IPaymentService paymentService,
             ISaleConfigurationService saleConfigurationService,
-            IDNTCaptchaValidatorService validatorService, IHekmatService hekmatService, IAdditionalUserPropService additionalUserPropService, IProductSalesPlanningService productSalesPlanningService, IModifiedOrderItemService modifiedOrderItemService)
+            IDNTCaptchaValidatorService validatorService, IHekmatService hekmatService, IAdditionalUserPropService additionalUserPropService, IProductSalesPlanningService productSalesPlanningService, IModifiedOrderItemService modifiedOrderItemService,
+            IWalletOrderPreparationService walletPreparation, IWalletBenefitsService walletBenefits,
+            YashilAppDbContext walletContext)
             : base(orderService, mapper, logger, permissionService)
         {
             _mapper = mapper;
@@ -91,6 +98,9 @@ namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
             _productSalesPlanningService = productSalesPlanningService;
             _modifiedOrderItemService = modifiedOrderItemService;
             _saleConfigurationService = saleConfigurationService;
+            _walletPreparation = walletPreparation;
+            _walletBenefits = walletBenefits;
+            _walletContext = walletContext;
         }
 
         [HttpGet("GetByCustomFilterForList")]
@@ -631,6 +641,42 @@ namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
             UnLockCartIdForSaveShoppingCartToOrder();
             if (paymentMethodType.HasValue)
             {
+                if (!shoppingCartParam.WalletProgramId.HasValue
+                    && await _walletContext.WalletReservation.AsNoTracking().AnyAsync(x =>
+                        !x.Deleted && x.ApplicationId == _applicationConfiguration.ApplicationId
+                        && x.WalletReservationStatusType == (int)WalletReservationStatusType.Reserved
+                        && x.PaymentId.HasValue && x.Payment.OrderId == orderId.Value))
+                    return await CreateOrderErrorMessageAsync(false,
+                        "تلاش پرداخت کیف پول برای این سفارش هنوز تعیین تکلیف نشده است.");
+                if (shoppingCartParam.WalletProgramId.HasValue)
+                {
+                    if ((paymentMethodType.Value != (int)PaymentMethodTypesEnum.Vibe
+                            && paymentMethodType.Value != (int)PaymentMethodTypesEnum.HekmatOnline)
+                        || requiresSubsidyApproval)
+                        return await CreateOrderErrorMessageAsync(false,
+                            "پرداخت ترکیبی برای این روش یا وضعیت سفارش مجاز نیست.");
+                    if (shoppingCartParam.RecipientId.HasValue)
+                        await _walletBenefits.MatchRecipientCardAsync(shoppingCartParam.RecipientId.Value);
+                    var prepared = await _walletPreparation.PrepareAsync(new WalletOrderPreparationRequestDto
+                    {
+                        OrderId = orderId.Value,
+                        WalletProgramId = shoppingCartParam.WalletProgramId.Value,
+                        PaymentMethodType = paymentMethodType.Value,
+                        AttemptKey = shoppingCartParam.WalletAttemptKey
+                    });
+                    if (!prepared.IsSuccess || !prepared.CanRedirect)
+                        return await CreateOrderErrorMessageAsync(false,
+                            prepared.Message ?? "تلاش پرداخت ترکیبی آمادهٔ ارسال به درگاه نیست.");
+                    return new ResultStatus<int>
+                    {
+                        IsSuccess = true,
+                        ReturnUrl = paymentMethodType.Value == (int)PaymentMethodTypesEnum.Vibe
+                            ? Url.Action("Index", "VibePayment",
+                                new { oId = orderId.Value, paymentId = prepared.PaymentId })
+                            : Url.Action("Index", "HekmatOnlinePaymentGateway",
+                                new { orderId = orderId.Value, paymentId = prepared.PaymentId })
+                    };
+                }
                 return new ResultStatus<int>
                 {
                     IsSuccess = true,
@@ -1180,6 +1226,14 @@ namespace YashilCommerce.Web.Areas.ECommerceAdminApi.Controllers
             }
 
             var order = await _orderService.GetAsync(orderStatusParam.OrderId.Value, true);
+            // لغو سفارش دارای تلاش باز یا مصرف قطعی Wallet بدون جریان Refund مالی مجاز نیست.
+            if (await _walletContext.WalletReservation.AsNoTracking().AnyAsync(x =>
+                !x.Deleted && x.ApplicationId == _applicationConfiguration.ApplicationId
+                && x.PaymentId.HasValue && x.Payment.OrderId == orderStatusParam.OrderId.Value
+                && (x.WalletReservationStatusType == (int)WalletReservationStatusType.Reserved
+                    || x.WalletReservationStatusType == (int)WalletReservationStatusType.Captured)))
+                return new ResultStatus<int>
+                { IsSuccess = false, Message = "لغو سفارش دارای پرداخت کیف پول نیازمند تعیین تکلیف مالی است." };
             if (order != null && order.UserId == _userPrincipal.Id &&
                 _orderService.CheckOrderAllowCancel(order.Id, (OrderStatusTypesEnum)order.OrderStatusType))
             {

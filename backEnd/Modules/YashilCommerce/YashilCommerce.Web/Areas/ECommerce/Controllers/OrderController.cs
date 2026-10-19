@@ -35,6 +35,7 @@ namespace YashilCommerce.Web.Areas.ECommerce.Controllers
         private readonly ApplicationConfiguration _applicationConfiguration;
         private readonly IUserPrincipal _userPrincipal;
         private readonly IOrderDataFactory _orderDataFactory;
+        private readonly ICustomerOrderFundingService _orderFunding;
         private readonly IHekmatService _hekmatService;
         private readonly IOrderItemService _orderItemService;
         private readonly IMaktabKhoneApiService _maktabKhoneApiService;
@@ -52,7 +53,7 @@ namespace YashilCommerce.Web.Areas.ECommerce.Controllers
                 IPermissionService permissionService,
                 IOrderService orderService,
                 IUserPrincipal userPrincipal,
-                IOrderDataFactory orderDataFactory,
+                IOrderDataFactory orderDataFactory, ICustomerOrderFundingService orderFunding,
                 IHekmatService hekmatService,
                 IOrderItemService orderItemService,
                 IAdditionalUserPropService additionalUserPropService, IMaktabKhoneApiService maktabKhoneApiService, IHumaxService humaxService) : base(applicationConfiguration, mapper, logger, permissionService)
@@ -64,6 +65,7 @@ namespace YashilCommerce.Web.Areas.ECommerce.Controllers
             _userPrincipal = userPrincipal;
             _orderService = orderService;
             _orderDataFactory = orderDataFactory;
+            _orderFunding = orderFunding;
             _hekmatService = hekmatService;
             _orderItemService = orderItemService;
             _additionalUserPropService = additionalUserPropService;
@@ -194,12 +196,14 @@ namespace YashilCommerce.Web.Areas.ECommerce.Controllers
             var orderListPresentationViewModelList = new List<OrderListPresentationViewModel>();
             var orderSimplePresentationViewModelList = await orders.ProjectTo<OrderSimplePresentationViewModel>(_mapper.ConfigurationProvider).ToListAsync();
             var orderItemSimplePresentationViewModelList = await orderItems.ProjectTo<OrderItemSimplePresentationViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            var funding = await _orderFunding.GetCurrentUserOrdersAsync(orderSimplePresentationViewModelList.Select(x => x.Id));
 
             foreach (var orderSimplePresentationViewModel in orderSimplePresentationViewModelList)
             {
                 orderListPresentationViewModelList.Add(new OrderListPresentationViewModel
                 {
                     OrderSimpleViewModel = orderSimplePresentationViewModel,
+                    Funding = funding.TryGetValue(orderSimplePresentationViewModel.Id, out var itemFunding) ? itemFunding : null,
                     OrderItemSimplePresentationViewModels = orderItemSimplePresentationViewModelList.Where(x => x.OrderId == orderSimplePresentationViewModel.Id).ToList()
 
                 });
@@ -235,7 +239,17 @@ namespace YashilCommerce.Web.Areas.ECommerce.Controllers
         #region Order Detail
         public async Task<ActionResult> Detail(int? orderId)
         {
+            if (!orderId.HasValue || _userPrincipal == null || _userPrincipal.Id <= 0
+                || !await _orderService.GetOrderIncludeAddress(orderId.Value)
+                    .AnyAsync(x => x.UserId == _userPrincipal.Id
+                        && x.ApplicationId == _applicationConfiguration.ApplicationId))
+                return NotFound();
             OrderSummaryViewModel orderSummary = await _orderDataFactory.FillOrderSummaryByOrderId(orderId);
+            if (orderSummary == null)
+                return NotFound();
+            var funding = await _orderFunding.GetCurrentUserOrdersAsync(new[] { orderId.Value });
+            funding.TryGetValue(orderId.Value, out var itemFunding);
+            orderSummary.Funding = itemFunding;
             return View("Detail", orderSummary);
         }
 

@@ -1,0 +1,149 @@
+/* Dropdown Selection */
+.select2-dropdown--tbao.select2-selection {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 45px;
+    line-height: 44px;
+    padding: 0;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+    -webkit-border-radius: 3px;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.select2-dropdown--tbao.select2-selection--single .select2-selection__rendered {
+    color: #555 !important;
+    font-size: 14px !important;
+}
+
+.select2-dropdown--tbao.select2-selection--single .select2-selection__placeholder {
+    color: #999 !important;
+    font-size: 14px !important
+}
+
+.select2-dropdown--tbao.select2-selection--single .select2-selection__arrow {
+    right: auto;
+}
+/* Dropdown Selection */
+
+/* Dropdown Icon */
+.select2-container--open .select2-selection .select2-selection__arrow b {
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+
+
+.select2-dropdown--tbao .select2-selection__arrow {
+    background-color: #dadada !important;
+    height: 100% !important;
+    width: 30px !important;
+    opacity: 1 !important;
+    left: 0px !important;
+    top: 0px !important;
+}
+
+    .select2-dropdown--tbao .select2-selection__arrow b {
+        background: url(../../images/icons/chevron-down.svg) no-repeat center center !important;
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        left: 0 !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        top: 0 !important;
+        transition: all ease-in-out 0.3s;
+    }
+/* Dropdown Icon */
+
+/* Dropdown Panel */
+.select2-panel--tbao.select2-dropdown {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    z-index: 1040;
+}
+
+.select2-panel--tbao.select2-dropdown--above {
+    border-bottom: none !important
+}
+
+.select2-panel--tbao.select2-dropdown--below {
+    border-top: none !important
+}
+
+.select2-panel--tbao .select2-search--dropdown {
+    padding: 12px !important;
+}
+
+    .select2-panel--tbao .select2-search--dropdown .select2-search__field {
+        font-size: 13px
+    }
+
+.select2-panel--tbao .select2-results > .select2-results__options {
+    max-height: 250px
+}
+
+.select2-panel--tbao .select2-results__option {
+    color: #000;
+    font-size: 14px;
+    padding: 10px 8px 10px 0 !important;
+}
+
+.select2-panel--tbao .select2-results__option:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.select2-panel--tbao .select2-results__option--highlighted.select2-results__option--selectable {
+    background: #eaf2ff !important;
+    color: #000 !important;
+}
+
+.select2-panel--tbao .select2-results__option--selected {
+    background: #c0e6ff !important;
+}
+/* Dropdown Panel */
+
+/* Multiselect Box */
+.select2-selection--multiple.select2-multiselect--tbao {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    border-color: #ced4da !important;
+}
+
+    .select2-selection--multiple.select2-multiselect--tbao .select2-selection__rendered {
+        margin-bottom: 0;
+        margin-top: 0
+    }
+
+.select2-multiselect--tbao.select2-selection--multiple .select2-selection__choice {
+    background: #eaf2ff !important;
+    padding-right: 20px !important;
+    padding-left: 0 !important;
+}
+
+.select2-multiselect--tbao.select2-selection--multiple .select2-selection__choice__remove {
+    background: #c6dbfd;
+    left: auto;
+    right: 0
+}
+
+.select2-selection--multiple.select2-multiselect--tbao::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: url(../../images/icons/chevron-down.svg) no-repeat center center !important;
+    height: 30px;
+    width: 20px;
+    transition: all ease-in-out 0.3s;
+}
+
+.select2-container--open .select2-multiselect--tbao::after {
+    -webkit-transform: rotate(180deg) translateY(50%);
+    -ms-transform: rotate(180deg) translateY(50%);
+    transform: rotate(180deg) translateY(50%);
+}
+/* Multiselect Box */

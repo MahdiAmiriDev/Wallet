@@ -1,0 +1,7 @@
+<app-base-list-form #listForm
+                    [columns]="columns"
+                    [entityName]="entityName"
+                    [detailComponent]="detailComponent"
+                    [allowDeleteInForm]="false"
+                    (selectedRowChanged)="selectedRowChanged.emit($event)">
+</app-base-list-form>

@@ -20,6 +20,7 @@ using Yashil.Core.CustomDomainModels.Commerce;
 using Yashil.Core.Entities;
 using Yashil.Core.Enums;
 using Yashil.Infrastructure.Extensions;
+using Yashil.Infrastructure.Data;
 using YashilCommerce.Core.Classes;
 using YashilCommerce.Core.Enums;
 using YashilCommerce.Core.Repositories;
@@ -51,6 +52,7 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
         private readonly ISmsTemplatesConfiguration _smsTemplatesConfiguration;
         private readonly IVerifySmsServiceConfiguration _verifySmsServiceConfiguration;
         private readonly IActivityLogService _activityLogService;
+        private readonly YashilAppDbContext _walletContext;
 
 
         public OrderService(
@@ -69,7 +71,8 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             ApplicationConfiguration applicationConfiguration,
             IAdditionalUserPropService additionalUserPropService,
             ISmsTemplatesConfiguration smsTemplatesConfiguration, IVerifySmsService verifySmsService,
-            IVerifySmsServiceConfiguration verifySmsServiceConfiguration, IActivityLogService activityLogService)
+            IVerifySmsServiceConfiguration verifySmsServiceConfiguration, IActivityLogService activityLogService,
+            YashilAppDbContext walletContext)
             : base(unitOfWork, orderRepository, userPrincipal, eventPublisher)
         {
             _unitOfWork = unitOfWork;
@@ -91,6 +94,7 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             _productSalesPlanningService = productSalesPlanningService;
             _orderItemService = orderItemService;
             _activityLogService = activityLogService;
+            _walletContext = walletContext;
         }
         public async Task<ResultStatus<int>> ConfirmSubsidyBySata(int orderId)
         {
@@ -435,15 +439,37 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             {
 
                 var sumPaidTotal = _paymentService.GetOrderTotalPayment(orderId, PaymentStatusTypesEnum.Paid);
+                // Reservation پرداخت نیست؛ فقط خالص Capture و Wallet Refund بدهی را کاهش می‌دهد.
+                var walletAmounts = await _walletContext.WalletTransaction.AsNoTracking()
+                    .Where(x => x.ApplicationId == _applicationConfiguration.ApplicationId && !x.Deleted
+                        && x.PaymentId.HasValue && x.Payment.OrderId == orderId
+                        && x.Payment.ApplicationId == _applicationConfiguration.ApplicationId && !x.Payment.Deleted
+                        && x.WalletReservationId.HasValue
+                        && ((x.WalletTransactionType == (int)WalletTransactionTypeEnum.Capture
+                                && x.WalletTransactionDirectionType == (int)WalletTransactionDirectionTypeEnum.Debit
+                                && x.Amount < 0m)
+                            || (x.WalletTransactionType == (int)WalletTransactionTypeEnum.Refund
+                                && x.WalletTransactionDirectionType == (int)WalletTransactionDirectionTypeEnum.Credit
+                                && x.Amount > 0m)))
+                    .GroupBy(x => x.WalletTransactionType)
+                    .Select(x => new { Type = x.Key, Amount = x.Sum(t => t.Amount) })
+                    .ToListAsync();
+                var captured = -walletAmounts.Where(x => x.Type == (int)WalletTransactionTypeEnum.Capture)
+                    .Sum(x => x.Amount);
+                var refunded = walletAmounts.Where(x => x.Type == (int)WalletTransactionTypeEnum.Refund)
+                    .Sum(x => x.Amount);
+                if (refunded > captured)
+                    throw new InvalidOperationException("Wallet refunds exceed captured amount for the order.");
+                var netWalletPayment = captured - refunded;
 
                 if (order.TotalInclSubsidy.HasValue)
                 {
-                    order.TotalInclSubsidy -= sumPaidTotal;
+                    order.TotalInclSubsidy -= sumPaidTotal + netWalletPayment;
                 }
 
                 if (order.TotalExclSubsidy.HasValue)
                 {
-                    order.TotalExclSubsidy -= sumPaidTotal;
+                    order.TotalExclSubsidy -= sumPaidTotal + netWalletPayment;
                 }
 
                 int? installmentCountInclSubsidy = null;
@@ -552,6 +578,12 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
         public async Task<PaymentInformation> CreateNewPaymentAndReturnAsync(int orderId,
             PaymentMethodTypesEnum paymentMethodType, string merchantId, string terminalId)
         {
+            // تا تعیین تکلیف تلاش Mixed، ساخت Payment دوم می‌تواند کل بدهی را دوباره مطالبه کند.
+            if (await _walletContext.WalletReservation.AsNoTracking().AnyAsync(x =>
+                !x.Deleted && x.ApplicationId == _applicationConfiguration.ApplicationId
+                && x.WalletReservationStatusType == (int)WalletReservationStatusType.Reserved
+                && x.PaymentId.HasValue && x.Payment.OrderId == orderId))
+                return null;
             var calcAmountForPay = await CalcAmountForPayAsync((int)paymentMethodType, orderId);
             if (calcAmountForPay.Total <= 0)
             {

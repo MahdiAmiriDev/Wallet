@@ -1,0 +1,209 @@
+﻿.height-60 {
+    height: 60vh;
+}
+
+.swiper-navigation-buttons {
+    left: 40px;
+    bottom: 40px;
+    gap: 15px;
+    z-index: 1;
+    transition: opacity 0.1s ease-in !important;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.swiper-navigation-buttons .swiper-button-prev,
+.swiper-navigation-buttons .swiper-button-next {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px #c0c2c5 solid;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: initial !important;
+}
+
+    .swiper-navigation-buttons .swiper-button-prev::after,
+    .swiper-navigation-buttons .swiper-button-next::after {
+        content: none !important;
+    }
+
+.swiper-pagination-bullets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+.swiper-pagination-bullet-active {
+    height: 8px !important;
+    background: #303030 !important;
+    width: 20px !important;
+    border-radius: 4px !important;
+    transition: width 0.1s ease;
+}
+
+.baner-width {
+    width: 100%;
+    max-width: 1800px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+
+.banerPage {
+    width: 100%;
+    object-fit: fill;
+}
+
+@media screen and (max-width: 1330px) {
+    .banerPage {
+        object-position: right;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .banerPage {
+        height: 268px !important;
+    }
+}
+
+/* story highlight swiper in homepage */
+
+.swiper-story-buttons {
+    left: 40px;
+    bottom: 40px;
+    gap: 15px;
+    z-index: 1;
+    transition: opacity 0.1s ease-in !important;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.swiper-story-buttons .swiper-button-prev,
+.swiper-story-buttons .swiper-button-next {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px #c0c2c5 solid;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: initial !important;
+}
+
+    .swiper-story-buttons .swiper-button-prev::after,
+    .swiper-story-buttons .swiper-button-next::after {
+        content: none !important;
+    }
+
+.storyHighlights-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.storyHighlights-thumbnail-border {
+    border: 4px solid white !important;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 4px);
+}
+
+.swiper {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.storyHighlights-thumbnail-background {
+    background-image: linear-gradient(to right top, #ffc600 20%, #ff0040, #e600cc 80%);
+    border-radius: 100%;
+    padding: 5px;
+}
+
+.demo-stories-avatar {
+    border-radius: 50%;
+    padding: 5px;
+    background-image: linear-gradient(to right top, #ffc600 20%, #ff0040, #e600cc 80%);
+    z-index: 2;
+    height: 89%;
+    width: 89%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+    .demo-stories-avatar.loading {
+        animation: rotateStoryLoader 1s linear infinite;
+    }
+
+.position-relative.m-auto:hover > .demo-stories-avatar {
+    animation: rotateStoryLoader 1s linear infinite !important;
+}
+
+.demo-stories-avatar-background {
+    background: #fff;
+    border-radius: 50%;
+    width: 80%;
+    height: 80%;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.demo-stories-avatar-image {
+    width: 76%;
+    height: 76%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+@keyframes rotateStoryLoader {
+    100% {
+        transform: translate(-50%, -50%) rotateZ(360deg)
+    }
+}
+
+.thumbnail-stories-avatar-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 0.4rem;
+    width: 95% !important;
+    background: #e5e5e5;
+}
+
+.parent-stories-avatar-section {
+    width: 85px;
+    height: 85px;
+}
+/* END - story highlight swiper in homepage */

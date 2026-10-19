@@ -1,0 +1,29 @@
+﻿
+    .icons - sidebar {
+    width: 45px;
+    height: 45px;
+}
+
+p.text - sidebar3 {
+    display: flex;
+    align - self: flex - end;
+    padding - right: 8px;
+}
+
+    .glyphicon {
+    position: relative;
+    top: 2px;
+    font - size: 12px!important;
+    display: inline - block;
+    font - family: "Glyphicons Halflings";
+    font - style: normal;
+    font - weight: 300;
+    line - height: 1;
+    -webkit - font - smoothing: antialiased;
+    -moz - osx - font - smoothing: grayscale;
+}
+
+button.btn.btn - light.border - 2.border - secondary.dropdown - toggle {
+    border - color: #d8d8d8!important;
+}
+

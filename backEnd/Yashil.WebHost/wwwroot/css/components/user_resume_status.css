@@ -1,0 +1,89 @@
+:root {
+    --progress-bar: #c1121f19;
+    --progress-value: #c1121f;
+}
+
+.resume-status--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 24px 0
+}
+
+.resume-status--details {
+    list-style: none;
+    padding: 0;
+    margin: 0
+}
+
+.resume-status-icon--container {
+    background: rgba(155, 197, 61, 0.3);
+    border-radius: 50%;
+    color: #9bc53d;
+    display: inline-block;
+    padding: 22px;
+}
+
+.resume-status--username {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px
+}
+
+.resume-status--completion {
+    background: var(--progress-bar);
+    border-radius: 10px;
+    height: 10px;
+    width: 100%;
+}
+
+    .resume-status--completion::-webkit-progress-bar {
+        background: var(--progress-bar);
+        border-radius: 10px;
+        transition: background ease-in-out 0.2s
+    }
+
+    .resume-status--completion::-webkit-progress-value {
+        background: var(--progress-value);
+        border-radius: 10px;
+        transition: background ease-in-out 0.2s
+    }
+
+    .resume-status--completion::-moz-progress-bar {
+        background: var(--progress-value);
+        border-radius: 10px;
+        transition: background ease-in-out 0.2s
+    }
+
+.resume-status-rate--container {
+    color: var(--progress-value);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.resume-status-rate {
+    color: inherit
+}
+
+.resume-status--button {
+    background: none;
+    border: none;
+    color: #6c757d;
+    display: flex;
+    font-size: 13px !important;
+    font-weight: 500;
+    justify-content: space-between;
+    width: 100%
+}
+
+.complete-resume--button {
+    color: #00b4d8
+}
+
+.user-not-logged {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500
+}

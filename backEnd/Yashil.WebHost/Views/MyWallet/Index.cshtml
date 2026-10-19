@@ -1,0 +1,76 @@
+@model YashilCommerce.Core.DTO.CustomerWalletBalanceDto
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Linq
+@{
+    Layout = "_Layout";
+}
+
+<section class="container custom-container ss02 pt-3 pb-5" dir="rtl">
+    <h1 class="fs-4 mb-3">کیف پول من</h1>
+    @if (TempData["WalletMessage"] != null)
+    {
+        <p class="alert alert-info">@TempData["WalletMessage"]</p>
+    }
+    <div class="detail bg-white rounded p-3 mb-3">
+        <form asp-controller="MyWallet" asp-action="ClaimCoupon" method="post" class="mb-3">
+            @Html.AntiForgeryToken()
+            <label for="walletCouponCode">ثبت کوپن هشت‌رقمی</label>
+            <input id="walletCouponCode" name="code" type="text" inputmode="numeric" pattern="[0-9]{8}"
+                   maxlength="8" autocomplete="off" class="form-control" required />
+            <button type="submit" class="btn btn-primary mt-2">ثبت کوپن</button>
+        </form>
+        @if (((System.Collections.Generic.IEnumerable<SelectListItem>)ViewBag.CardRecipients).Any())
+        {
+            <form asp-controller="MyWallet" asp-action="MatchRecipientCard" method="post">
+                @Html.AntiForgeryToken()
+                <label for="walletRecipient">تطبیق کارت گیرنده</label>
+                <select id="walletRecipient" name="recipientId" class="form-select" required>
+                    <option value="">گیرنده را انتخاب کنید</option>
+                    @foreach (var recipient in (System.Collections.Generic.IEnumerable<SelectListItem>)ViewBag.CardRecipients)
+                    {
+                        <option value="@recipient.Value">@recipient.Text</option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-primary mt-2">بررسی کارت</button>
+            </form>
+        }
+    </div>
+    <p class="text-muted">همه مبالغ به تومان است. اعتبار قابل استفاده فقط از برنامه‌ها و تخصیص‌های فعال محاسبه می‌شود.</p>
+    <div class="detail bg-white rounded p-3 mb-3">
+        <div class="row g-3">
+            <div class="col-6 col-md-4">اعتبار تخصیص‌یافته: <strong>@Model.AssignedAmount.ToString("N2")</strong></div>
+            <div class="col-6 col-md-4">اعتبار مصرف‌شده: <strong>@Model.ConsumedAmount.ToString("N2")</strong></div>
+            <div class="col-6 col-md-4">اعتبار رزروشده: <strong>@Model.ReservedAmount.ToString("N2")</strong></div>
+            <div class="col-6 col-md-4">اعتبار منقضی‌شده: <strong>@Model.ExpiredAmount.ToString("N2")</strong></div>
+            <div class="col-12 col-md-4">اعتبار قابل استفاده: <strong>@Model.AvailableAmount.ToString("N2")</strong> تومان</div>
+        </div>
+    </div>
+    @if (Model.Items.Count == 0)
+    {
+        <p class="text-center py-4">اعتباری برای شما ثبت نشده است.</p>
+    }
+    else
+    {
+        foreach (var item in Model.Items)
+        {
+            <div class="detail bg-white rounded p-3 mb-3">
+                <h2 class="fs-5">@item.ProgramTitle</h2>
+                <div class="row g-2">
+                    <div class="col-6 col-md-4">تخصیص‌یافته: @item.AssignedAmount.ToString("N2")</div>
+                    <div class="col-6 col-md-4">مصرف‌شده: @item.ConsumedAmount.ToString("N2")</div>
+                    <div class="col-6 col-md-4">رزروشده: @item.ReservedAmount.ToString("N2")</div>
+                    <div class="col-6 col-md-4">منقضی‌شده: @item.ExpiredAmount.ToString("N2")</div>
+                    <div class="col-12 col-md-4">قابل استفاده: <strong>@item.AvailableAmount.ToString("N2")</strong> تومان</div>
+                </div>
+                @if (!item.IsUsable)
+                {
+                    <p class="text-muted mt-2 mb-0">این اعتبار در حال حاضر برای پرداخت فعال نیست.</p>
+                }
+                @if (item.HasBalanceMismatch)
+                {
+                    <p class="text-danger mt-2 mb-0">مانده این اعتبار نیاز به بررسی دارد.</p>
+                }
+            </div>
+        }
+    }
+</section>

@@ -17,20 +17,24 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
         private readonly YashilAppDbContext _context;
         private readonly IUserPrincipal _userPrincipal;
         private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IWalletEligibilityService _eligibility;
 
         public WalletReservationService(IWalletReservationRepository repository, YashilAppDbContext context,
-            IUserPrincipal userPrincipal, ApplicationConfiguration applicationConfiguration)
+            IUserPrincipal userPrincipal, ApplicationConfiguration applicationConfiguration,
+            IWalletEligibilityService eligibility)
         {
             _repository = repository;
             _context = context;
             _userPrincipal = userPrincipal;
             _applicationConfiguration = applicationConfiguration;
+            _eligibility = eligibility;
         }
 
         public async Task<WalletReserveResultDto> ReserveAsync(WalletReserveRequestDto request)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.IdempotencyKey)
-                || request.IdempotencyKey.Length > 100 || request.OrderId <= 0 || request.WalletAssignmentId <= 0)
+                || request.IdempotencyKey.Length > 100 || request.OrderId <= 0
+                || request.PaymentId <= 0 || request.WalletAssignmentId <= 0)
                 return WalletReserveResultDto.Failure(WalletReserveErrorCode.InvalidRequest, "Invalid wallet reserve request.");
 
             if (request.Amount <= 0 || decimal.Round(request.Amount, 2) != request.Amount)
@@ -47,15 +51,34 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             if (order.UserId != userId)
                 return WalletReserveResultDto.Failure(WalletReserveErrorCode.UnauthorizedOrder, "The current user does not own this order.");
 
+            var payment = await _context.Payment.AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.PaymentId
+                && x.OrderId == request.OrderId && x.ApplicationId == applicationId && !x.Deleted);
+            if (payment == null)
+                return WalletReserveResultDto.Failure(WalletReserveErrorCode.InvalidRequest,
+                    "An existing Payment for this Order is required before Reserve.");
+
+            // هر تلاش Payment کلید مستقل دارد؛ تغییر کلید Client رزرو دوم برای همان تلاش نمی‌سازد.
+            var reserveKey = $"WalletReserve:Payment:{payment.Id}";
+
             await using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                var byKey = await _repository.FindByIdempotencyKeyAsync(applicationId, request.IdempotencyKey);
+                var byPayment = await _repository.FindByPaymentIdAsync(applicationId, payment.Id);
+                if (byPayment.Count > 0)
+                {
+                    await transaction.RollbackAsync();
+                    return byPayment.Count == 1 && Matches(byPayment[0], request, applicationId, userId)
+                        ? Replay(byPayment[0], request.OrderId)
+                        : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict,
+                            "Payment already has a different wallet reservation.");
+                }
+
+                var byKey = await _repository.FindByIdempotencyKeyAsync(applicationId, reserveKey);
                 if (byKey != null)
                 {
                     await transaction.RollbackAsync();
                     return Matches(byKey, request, applicationId, userId)
-                        ? Replay(byKey)
+                        ? Replay(byKey, request.OrderId)
                         : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict, "Idempotency key belongs to a different request.");
                 }
 
@@ -65,17 +88,33 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
                 {
                     await transaction.RollbackAsync();
                     return Matches(active, request, applicationId, userId)
-                        ? Replay(active)
+                        ? Replay(active, request.OrderId)
                         : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict, "Order already has an active wallet reservation.");
                 }
 
                 var assignment = await _repository.FindAssignmentWithProgramAsync(request.WalletAssignmentId);
                 if (assignment == null || assignment.UserId != userId || assignment.ApplicationId != applicationId
                     || assignment.WalletProgram == null || assignment.WalletProgram.Id != assignment.WalletProgramId
-                    || assignment.WalletProgram.ApplicationId != applicationId || assignment.WalletProgram.Deleted)
+                    || assignment.WalletProgram.ApplicationId != applicationId || assignment.WalletProgram.Deleted
+                    || assignment.WalletAssignmentStatusType != (int)WalletAssignmentStatusTypeEnum.Active
+                    || assignment.StartDate > DateTime.UtcNow
+                    || (assignment.EndDate.HasValue && assignment.EndDate.Value <= DateTime.UtcNow)
+                    || assignment.AssignedAmount <= 0
+                    || assignment.WalletProgram.WalletProgramStatusType != (int)WalletProgramStatusEnum.Active
+                    || assignment.WalletProgram.StartDate > DateTime.UtcNow
+                    || (assignment.WalletProgram.EndDate.HasValue
+                        && assignment.WalletProgram.EndDate.Value <= DateTime.UtcNow))
                 {
                     await transaction.RollbackAsync();
                     return WalletReserveResultDto.Failure(WalletReserveErrorCode.AssignmentMismatch, "Wallet assignment or program is invalid.");
+                }
+
+                // همه اقلام سفارش باید با Scopeهای فعال Program سازگار باشند؛ Reserve در سطح Order است.
+                if (!await _eligibility.IsOrderEligibleAsync(applicationId, assignment.WalletProgramId, request.OrderId))
+                {
+                    await transaction.RollbackAsync();
+                    return WalletReserveResultDto.Failure(WalletReserveErrorCode.ScopeMismatch,
+                        "Order items are outside the wallet program scope.");
                 }
 
                 var updatedAssignment = await _repository.TryIncreaseAssignmentReservedAsync(
@@ -108,33 +147,39 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
                     CreatorOrganizationId = _userPrincipal.OrganizationId,
                     WalletAssignmentId = assignment.Id,
                     UserId = userId,
-                    OrderId = request.OrderId,
-                    OrderItemId = null,
+                    PaymentId = payment.Id,
                     Amount = request.Amount,
                     WalletReservationStatusType = (int)WalletReservationStatusType.Reserved,
-                    IdempotencyKey = request.IdempotencyKey,
+                    IdempotencyKey = reserveKey,
                     ExpiresAt = creationTime.AddMinutes(30)
                 };
 
                 await _repository.InsertAsync(reservation);
                 await transaction.CommitAsync();
-                return Replay(reservation);
+                return Replay(reservation, request.OrderId);
             }
             catch (DbUpdateException exception) when (IsUniqueViolation(exception))
             {
                 await transaction.RollbackAsync();
                 await transaction.DisposeAsync();
-                var byKey = await _repository.FindByIdempotencyKeyAsync(applicationId, request.IdempotencyKey);
+                var byPayment = await _repository.FindByPaymentIdAsync(applicationId, payment.Id);
+                if (byPayment.Count > 0)
+                    return byPayment.Count == 1 && Matches(byPayment[0], request, applicationId, userId)
+                        ? Replay(byPayment[0], request.OrderId)
+                        : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict,
+                            "Payment already has a different wallet reservation.");
+
+                var byKey = await _repository.FindByIdempotencyKeyAsync(applicationId, reserveKey);
                 if (byKey != null)
                     return Matches(byKey, request, applicationId, userId)
-                        ? Replay(byKey)
+                        ? Replay(byKey, request.OrderId)
                         : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict, "Idempotency key belongs to a different request.");
 
                 var active = await _repository.FindActiveByOrderAsync(applicationId, request.OrderId,
                     (int)WalletReservationStatusType.Reserved);
                 if (active != null)
                     return Matches(active, request, applicationId, userId)
-                        ? Replay(active)
+                        ? Replay(active, request.OrderId)
                         : WalletReserveResultDto.Failure(WalletReserveErrorCode.Conflict, "Order already has an active wallet reservation.");
 
                 throw;
@@ -148,16 +193,16 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
 
         private static bool Matches(Yashil.Core.Entities.WalletReservation reservation,
             WalletReserveRequestDto request, int applicationId, int userId)
-            => reservation.ApplicationId == applicationId && reservation.UserId == userId
-                && reservation.OrderId == request.OrderId
+            => !reservation.Deleted && reservation.ApplicationId == applicationId && reservation.UserId == userId
+                && reservation.PaymentId == request.PaymentId
                 && reservation.WalletAssignmentId == request.WalletAssignmentId
                 && reservation.Amount == request.Amount;
 
-        private static WalletReserveResultDto Replay(Yashil.Core.Entities.WalletReservation reservation)
+        private static WalletReserveResultDto Replay(Yashil.Core.Entities.WalletReservation reservation, int orderId)
             => new WalletReserveResultDto
             {
                 ReservationId = reservation.Id,
-                OrderId = reservation.OrderId,
+                OrderId = orderId,
                 Amount = reservation.Amount,
                 Status = reservation.WalletReservationStatusType,
                 ExpiresAt = reservation.ExpiresAt

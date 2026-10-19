@@ -260,7 +260,16 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
 
         public decimal GetOrderTotalPayment(int orderId, PaymentStatusTypesEnum paid)
         {
-            var paymentRefunds = _refundDetailService.GetByOrderId(orderId).GroupBy(x => x.PaymentId).Select(x => new { Paymentid = x.Key, NewPaymentAmount = x.Min(c => c.NewPaymentAmount) }).ToList();
+            var paymentRefunds = _refundDetailService.GetByOrderId(orderId)
+                .Select(x => new { x.PaymentId, x.NewPaymentAmount, x.RefundStatusType,
+                    PaymentMethodType = x.Payment.PaymentMethodType })
+                .ToList()
+                .Where(x => !RequiresFinalizedRefundStatus(x.PaymentMethodType)
+                    || x.RefundStatusType == (int)RefundStatusTypeEnum.SendForModifyPrice
+                    || x.RefundStatusType == (int)RefundStatusTypeEnum.Done)
+                .GroupBy(x => x.PaymentId)
+                .Select(x => new { Paymentid = x.Key, NewPaymentAmount = x.Min(c => c.NewPaymentAmount) })
+                .ToList();
 
             var completePayments = _paymentRepository
                 .GetOrderPaymentsByStatusType(orderId, PaymentStatusTypesEnum.Paid)
@@ -273,6 +282,8 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
                 var refundDetail = paymentRefunds.FirstOrDefault(x => x.Paymentid == payment.Id);
                 if (refundDetail != null)
                 {
+                    if (refundDetail.NewPaymentAmount < 0m || refundDetail.NewPaymentAmount > payment.Total)
+                        throw new InvalidOperationException("Final refund amount is inconsistent with the paid Payment.");
                     sumTotal += refundDetail.NewPaymentAmount;
                 }
                 else
@@ -283,6 +294,15 @@ namespace YashilCommerce.Infrastructure.ServiceImpl
             }
             return sumTotal;
         }
+
+        /// <summary>برای پرداخت‌های شتابی و حکمت آنلاین فقط Refund قطعی در مانده اثر می‌گذارد.</summary>
+        private static bool RequiresFinalizedRefundStatus(int? paymentMethodType)
+            => paymentMethodType == (int)PaymentMethodTypesEnum.BankInternetPaymentGateway
+                || paymentMethodType == (int)PaymentMethodTypesEnum.Ansar
+                || paymentMethodType == (int)PaymentMethodTypesEnum.Saman
+                || paymentMethodType == (int)PaymentMethodTypesEnum.Saderat
+                || paymentMethodType == (int)PaymentMethodTypesEnum.IranKish
+                || paymentMethodType == (int)PaymentMethodTypesEnum.HekmatOnline;
 
         public Task<bool> ExistsAnyPaymentWithThisItemGroupIdAsync(int itemGroupId)
         {

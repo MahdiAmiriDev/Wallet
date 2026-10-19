@@ -94,6 +94,12 @@ namespace YashilCommerce.Web
                     cronExpression: "0 0/1 * 1/1 * ? *")); // run every 45 seconds
             }
 
+            // اعتبار Assignment و وضعیت Program سررسیدشده هر دقیقه منقضی می‌شود.
+            services.AddSingleton<ExpireWalletProgramsJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(ExpireWalletProgramsJob),
+                cronExpression: "0 0/1 * 1/1 * ? *"));
+
             //تنطیم یک جاب برای اجرای ریست کردن تعداد بازدید روزانه سایت 
             //هر شب ساعت 23
             services.AddSingleton<ResetSiteVisitJob>();

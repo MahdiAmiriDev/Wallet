@@ -1,0 +1,949 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#service-selection__modal {
+    background: #fff;
+    z-index: 1050;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    overflow-y: auto;
+    transform: scale(0);
+    transition: all ease 1s;
+    letter-spacing: -0.5px !important;
+}
+
+    #service-selection__modal.show {
+        opacity: 1;
+        transform: scale(1);
+        visibility: visible;
+    }
+
+#sections-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    gap: 2px;
+}
+
+.section {
+    align-items: center;
+    display: flex;
+    padding: 50px;
+    position: absolute;
+    height: calc(50% - 21px);
+    width: calc(100% - 40px);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all ease-in-out 1s;
+    z-index: 1;
+}
+
+.section-one {
+    left: 20px;
+    top: 20px;
+}
+
+.section-two {
+    left: 20px;
+    top: 50%;
+}
+
+.section-one .section-title__container {
+    display: flex;
+    flex-direction: column;
+    color: #ffaa00;
+}
+
+.section-two .section-title__container {
+    display: flex;
+    flex-direction: column;
+    color: #ffe77aff;
+}
+
+.section-subtitle {
+    font-weight: 700;
+    text-align: center;
+}
+
+.section-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(50, 50, 50, 0.7);
+    transition: all ease 0.5s;
+    z-index: 2;
+}
+
+.section-image__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.section-image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.section:hover {
+    flex: 2;
+}
+
+    .section:hover .section-backdrop {
+        background: rgba(50, 50, 50, 0.6);
+        backdrop-filter: blur(15px);
+    }
+
+.section__wrapper {
+    max-width: 600px;
+    text-align: right;
+    position: relative;
+    transition: all ease-in-out 1s;
+    z-index: 3;
+}
+
+.section-content__container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.section-title__icon {
+    width: 55px;
+    position: absolute;
+    top: -37px;
+    right: -34px;
+    transform: rotate(-45deg);
+    transition: all ease 0.7s;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 45px;
+    text-align: center;
+    z-index: 2;
+}
+
+.section-description__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    background: rgba(248, 249, 250, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    color: #f8f9fa;
+    padding: 35px;
+    box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.section-description {
+    font-size: 14px;
+    line-height: 28px;
+    text-align: justify;
+}
+
+.show-more__button {
+    background: none;
+    overflow: hidden;
+    font-family: inherit;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 14px 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+    .show-more__button span {
+        color: #212529;
+        position: relative;
+        transition: all ease 0.6s;
+        z-index: 2;
+    }
+
+    .show-more__button::before {
+        transform-origin: left;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transition: all ease 1s;
+        z-index: 1;
+    }
+
+.section:hover .section-title__icon {
+    transform: rotate(0);
+}
+
+.section:hover .show-more__button::before {
+    top: 130%;
+    transform: skewY(40deg);
+}
+
+.section-one .show-more__button {
+    border: 2px solid #ffaa00;
+}
+
+.section-one:hover .show-more__button span {
+    color: #ffaa00;
+}
+
+.section-one .show-more__button::before {
+    background: #ffaa00;
+}
+
+.section-two .show-more__button {
+    border: 2px solid #ffe77aff;
+}
+
+.section-two:hover .show-more__button span {
+    color: #ffe77aff;
+}
+
+.section-two .show-more__button::before {
+    background: #ffe77aff;
+}
+
+.section-one .section-title {
+    text-shadow: 2px 2px #1f0f00, -2px 2px #1f0f00, 2px -2px #1f0f00, -2px -2px #1f0f00, 5px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.section-one .section-subtitle {
+    text-shadow: 2px 2px #1f0f00, -1px 1px #1f0f00, 1px -1px #1f0f00, -1px -1px #1f0f00, 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.section-two .section-title {
+    color: #ffe77aff;
+    text-shadow: 2px 2px #081c15, -2px 2px #081c15, 2px -2px #081c15, -2px -2px #081c15, 5px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.section-two .section-subtitle {
+    color: #ffe77aff;
+    text-shadow: 2px 2px #081c15, -1px 1px #081c15, 1px -1px #081c15, -1px -1px #081c15, 5px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.employment-cards__container {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    left: -450px;
+    gap: 40px;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all ease-in-out 0.8s;
+    transition-delay: 0.2s;
+}
+
+.employment-card {
+    background: rgba(248, 249, 250, 0.8);
+    border-radius: 15px;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: justify;
+    overflow: hidden;
+    transition: all ease-in-out 0.3s;
+}
+
+    .employment-card:hover {
+        color: inherit !important;
+        transform: scale(1.05);
+    }
+
+    .employment-card h3 {
+        font-size: 24px;
+        font-weight: 800;
+        text-align: center;
+        border-bottom: 1px solid;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .employment-card div {
+        padding: 15px 25px 20px;
+    }
+
+    .employment-card p {
+        display: inline;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .employment-card span {
+        font-size: 21px;
+        font-weight: 900;
+    }
+
+    .employment-card:nth-child(3) {
+        border-right: 5px solid #ffaa00;
+    }
+
+    .employment-card:nth-child(2) {
+        border-right: 5px solid #a8dadc;
+    }
+
+    .employment-card:nth-child(1) {
+        border-right: 5px solid #a7c957;
+    }
+
+    .employment-card:nth-child(3) h3 {
+        background: rgba(255, 170, 0, 0.3);
+        border-bottom: 1px solid #ffaa00;
+    }
+
+    .employment-card:nth-child(3) span {
+        color: #ffaa00;
+        text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .employment-card:nth-child(2) h3 {
+        background: rgba(168, 218, 220, 0.7);
+        border-bottom: 1px solid #a8dadc;
+    }
+
+    .employment-card:nth-child(2) span {
+        color: #a8dadc;
+        text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .employment-card:nth-child(1) h3 {
+        background: rgba(167, 201, 87, 0.3);
+        border-bottom: 1px solid #a7c957;
+    }
+
+    .employment-card:nth-child(1) span {
+        color: #a7c957;
+        text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+.tbao-information__container {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    left: -500px;
+    gap: 40px;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all ease-in-out 0.8s;
+    transition-delay: 0.2s;
+}
+
+.tbao-information__item {
+    max-width: 320px;
+    text-align: right;
+    list-style: none;
+    position: relative;
+    gap: 5px;
+    flex-wrap: wrap;
+    line-height: 34px;
+}
+
+    .tbao-information__item::before {
+        position: absolute;
+        display: block;
+        content: "⚪";
+        right: -40px;
+        top: 50%;
+        transform: translateY(-40%);
+    }
+
+    .tbao-information__item p {
+        color: #fff2d7;
+        font-size: 24px;
+        font-weight: 700;
+        text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+        margin-bottom: 1px;
+        display: inline;
+    }
+
+    .tbao-information__item span {
+        color: #f98866;
+        font-size: 28px;
+        font-weight: 900;
+        text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+.enter-employment-system__button {
+    background: none;
+    overflow: hidden;
+    font-family: inherit;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 14px 30px;
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #ffaa00;
+    max-width: 200px;
+    margin: auto;
+    font-weight: 700;
+}
+
+    .enter-employment-system__button:hover span {
+        color: #ffaa00;
+    }
+
+    .enter-employment-system__button span {
+        color: #212529;
+        position: relative;
+        transition: all ease 0.6s;
+        z-index: 2;
+    }
+
+    .enter-employment-system__button::before {
+        background: #ffaa00;
+        transform-origin: left;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transition: all ease 1s;
+        z-index: 1;
+    }
+
+    .enter-employment-system__button:hover::before {
+        top: 130%;
+        transform: skewY(40deg);
+    }
+
+.enter-tbao__button {
+    background: none;
+    overflow: hidden;
+    font-family: inherit;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 14px 30px;
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #ffe77aff;
+    max-width: 200px;
+    margin: auto;
+    font-weight: 700;
+}
+
+    .enter-tbao__button:hover span {
+        color: #ffe77aff;
+    }
+
+    .enter-tbao__button span {
+        color: #212529;
+        position: relative;
+        transition: all ease 0.6s;
+        z-index: 2;
+    }
+
+    .enter-tbao__button::before {
+        background: #ffe77aff;
+        transform-origin: left;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transition: all ease 1s;
+        z-index: 1;
+    }
+
+    .enter-tbao__button:hover::before {
+        top: 130%;
+        transform: skewY(40deg);
+    }
+
+.close-modal__button {
+    position: absolute;
+    background: #bc4749;
+    color: #f8f9fa;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    z-index: 40;
+    right: 10px;
+    top: 10px;
+    transition: all ease-in-out 0.3s;
+}
+
+    .close-modal__button:hover {
+        transform: scale(1.05);
+    }
+
+@media (max-width:450px) and (max-height: 800px) {
+    .section-content__container {
+        gap: 10px;
+    }
+
+    .section-title__icon {
+        width: 40px;
+        top: -25px;
+        right: -30px;
+    }
+}
+
+@media (min-width: 450px) and (max-width: 600px) and (max-height: 800px) {
+    #sections-container .section {
+        height: calc(140% - 22px) !important;
+    }
+
+    #sections-container .section-two {
+        top: 140% !important;
+    }
+
+    .section-content__container {
+        gap: 30px !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1100px) and (max-height: 800px) {
+    #sections-container .section {
+        padding-top: 50px !important;
+    }
+
+    .section-content__container {
+        gap: 20px !important;
+    }
+
+    .section-title {
+        line-height: 20px !important;
+    }
+
+    .section .section-title__icon {
+        top: -42px !important;
+        right: -35px !important;
+    }
+}
+
+@media (min-width: 450px) {
+    .section {
+        justify-content: center !important;
+        padding: 30px !important;
+        height: calc(100% - 22px) !important;
+    }
+
+    .section-two {
+        top: 100% !important;
+    }
+
+    .show-more__button {
+        font-size: 14px !important;
+    }
+
+    .section-title__icon {
+        top: -35px !important;
+        right: 45px !important;
+    }
+
+    .section-description__container {
+        display: flex !important;
+    }
+
+    .enter-employment-system__button {
+        display: none;
+    }
+
+    .enter-tbao__button {
+        display: none;
+    }
+}
+
+@media (min-width: 600px) {
+    .section-title,
+    .section-subtitle {
+        text-align: right !important;
+    }
+
+    .section-title__icon {
+        right: -15px !important;
+    }
+}
+
+@media (min-width: 1100px) {
+    #sections-container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        width: 100%;
+        padding: 50px;
+        gap: 2px;
+    }
+
+    .section {
+        height: calc(100% - 40px) !important;
+        width: calc(50% - 22px) !important;
+        padding: 80px 50px !important;
+        padding-top: 100px !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+    }
+
+        .section:hover {
+            width: calc(85% - 5px) !important;
+            z-index: 20 !important;
+        }
+
+    .section-one {
+        right: 20px !important;
+    }
+
+    .section-two {
+        top: 20px !important;
+    }
+
+    .section-title__icon {
+        top: -35px !important;
+        right: 45px !important;
+    }
+
+    .section__wrapper {
+        width: 100% !important;
+        max-width: 460px;
+    }
+
+    .section:hover .employment-cards__container {
+        left: 50px;
+    }
+
+    .section:hover .tbao-information__container {
+        left: 50px;
+    }
+
+    .section-title__icon {
+        width: 60px !important;
+        top: -42px !important;
+        right: -37px !important;
+    }
+
+    .section-title {
+        font-size: 35px !important;
+        line-height: 50px !important;
+        text-align: right !important;
+    }
+
+    .section-description {
+        font-size: 16px !important;
+        line-height: 32px !important;
+    }
+
+    .section-description__container {
+        min-height: 450px;
+        justify-content: space-between;
+    }
+
+    .tbao-information__container,
+    .employment-cards__container {
+        display: flex !important;
+    }
+
+    .tbao-information__item {
+        max-width: 300px !important;
+    }
+}
+
+@media (min-width: 1100px) and (max-height: 800px) {
+    #service-selection__modal #sections-container {
+        padding: 20px !important;
+    }
+
+    #sections-container .section {
+        padding: 40px !important;
+        padding-top: 70px !important;
+    }
+
+    .section-title__icon {
+        width: 55px !important;
+        top: -30px !important;
+        right: -36px !important;
+    }
+
+    .section-title {
+        font-size: 32px !important;
+        line-height: 44px !important;
+    }
+
+    .section-content__container {
+        gap: 30px;
+    }
+
+    .section-description__container {
+        gap: 20px;
+        padding: 30px;
+        min-height: 380px !important;
+    }
+
+    .section-description {
+        font-size: 14px !important;
+        line-height: 30px !important;
+    }
+
+    .employment-cards__container {
+        gap: 20px;
+    }
+
+    .employment-card {
+        height: unset;
+    }
+
+        .employment-card h3 {
+            font-size: 22px;
+            padding: 10px;
+        }
+
+        .employment-card div {
+            padding: 15px 20px 20px;
+            line-height: 28px;
+        }
+
+        .employment-card p {
+            display: inline;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .employment-card span {
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+    .tbao-information__container {
+        gap: 25px;
+    }
+
+    .tbao-information__item {
+        max-width: 320px;
+        text-align: right;
+        list-style: none;
+        position: relative;
+        gap: 5px;
+        flex-wrap: wrap;
+        line-height: 34px;
+    }
+
+        .tbao-information__item::before {
+            position: absolute;
+            display: block;
+            content: "⚪";
+            right: -40px;
+            top: 50%;
+            transform: translateY(-40%);
+        }
+
+        .tbao-information__item p {
+            color: #fff2d7;
+            font-size: 24px;
+            font-weight: 700;
+            text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1px;
+            display: inline;
+        }
+
+        .tbao-information__item span {
+            color: #f98866;
+            font-size: 28px;
+            font-weight: 900;
+            text-shadow: 2px 2px #212529, -1px 1px #212529, 1px -1px #212529, -1px -1px #212529, 5px 5px 0px rgba(0, 0, 0, 0.2);
+        }
+}
+
+@media (min-width: 1300px) and (max-height: 800px) {
+    .section__wrapper {
+        max-width: 600px !important;
+    }
+
+    #sections-container .section:hover .employment-cards__container {
+        left: 80px !important;
+    }
+}
+
+@media (min-width: 1500px) and (max-height: 800px) {
+    #service-selection__modal #sections-container {
+        padding: 20px !important;
+    }
+
+    #sections-container .section {
+        height: calc(100% - 40px) !important;
+        width: calc(50% - 22px) !important;
+    }
+
+        #sections-container .section:hover {
+            width: calc(85% - 5px) !important;
+        }
+
+    #sections-container .section-one {
+        top: 20px !important;
+        right: 20px !important;
+    }
+
+    #sections-container .section-two {
+        top: 20px !important;
+        left: 20px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .section {
+        padding: 80px 60px !important;
+        padding-top: 120px !important;
+    }
+
+    #sections-container {
+        padding: 50px !important;
+    }
+
+    .section__wrapper {
+        max-width: 500px;
+    }
+
+    .section-description__container {
+        min-height: 470px;
+    }
+}
+
+@media (min-width: 1300px) {
+    .section:hover .section__wrapper {
+        max-width: 550px !important;
+    }
+
+    .section:hover .employment-cards__container {
+        left: 100px !important;
+    }
+
+    .section:hover .tbao-information__container {
+        left: 100px !important;
+    }
+}
+
+@media (min-width: 1500px) {
+    .section {
+        padding: 90px 65px !important;
+        align-items: flex-start !important;
+        padding-top: 100px !important;
+        width: calc(50% - 52px) !important;
+        height: calc(100% - 100px) !important;
+    }
+
+    .section-description {
+        line-height: 34px !important;
+    }
+
+    .show-more__button {
+        font-size: 16px !important;
+    }
+
+    .section:hover {
+        width: calc(80% - 2px);
+        z-index: 20;
+    }
+
+    .section__wrapper {
+        max-width: 700px;
+    }
+
+    .section:hover .section__wrapper {
+        max-width: 650px !important;
+    }
+
+    .section:hover .employment-cards__container {
+        left: 100px !important;
+    }
+
+    .section:hover .tbao-information__container {
+        left: 70px !important;
+    }
+
+    .section-one {
+        top: 50px !important;
+        right: 50px !important;
+    }
+
+    .section-two {
+        top: 50px !important;
+        left: 50px !important;
+    }
+
+    .section-content__container {
+        gap: 30px !important;
+    }
+
+    .section-title__icon {
+        width: 60px !important;
+        top: -30px !important;
+        right: -38px !important;
+    }
+
+    .section-title {
+        font-size: 40px !important;
+        line-height: 55px !important;
+        text-align: right !important;
+    }
+
+    .section-subtitle {
+        font-size: 20px;
+        text-align: right;
+    }
+
+    .employment-card {
+        max-width: 360px !important;
+    }
+
+    .tbao-information__item {
+        max-width: 400px !important;
+    }
+
+        .tbao-information__item span {
+            font-size: 34px !important;
+        }
+
+        .tbao-information__item p {
+            font-size: 26px !important;
+            font-weight: 800 !important;
+        }
+}
+
+@media (min-width: 1700px) {
+    .section-content__container {
+        gap: 60px !important;
+    }
+
+    .section__wrapper {
+        max-width: 900px;
+    }
+
+    .section:hover .section__wrapper {
+        max-width: 65% !important;
+    }
+}

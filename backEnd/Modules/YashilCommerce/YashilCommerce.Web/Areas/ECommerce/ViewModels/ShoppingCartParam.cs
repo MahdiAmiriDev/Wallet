@@ -7,6 +7,8 @@
         public string RecipientIdString { get; set; }
         public int? PaymentMethodType { get; set; }
         public int? OrderId { get; set; }
+        public int? WalletProgramId { get; set; }
+        public string WalletAttemptKey { get; set; }
         /// <summary>
         /// نوع خرید  : اقساطی یا اعتباری یا نقدی
         /// </summary>

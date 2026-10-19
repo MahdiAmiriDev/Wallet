@@ -4,6 +4,8 @@
 @model YashilCommerce.Web.Areas.ECommerce.ViewModels.OrderSummaryForPayViewModel
 @{
     int saminPaymentMethodType = (int)PaymentMethodTypesEnum.Samin;
+    int vibePaymentMethodType = (int)PaymentMethodTypesEnum.Vibe;
+    int hekmatOnlineMixedMethodType = (int)PaymentMethodTypesEnum.HekmatOnline;
     var creditType = (int)SaminPurchaseTypeEnum.Credit;
     // پرداخت نقدی
     var debitType = (int)SaminPurchaseTypeEnum.Debit;
@@ -167,6 +169,14 @@
                          limitedToBankInternetPaymentGateway = Model.LimitedToBankInternetPaymentGateway,
                          saleType = Model.SaleType
                      })
+            <div id="mixedWalletOption" class="mt-2 d-none">
+                @Html.AntiForgeryToken()
+                <label><input id="useMixedWallet" type="checkbox" /> کسر بخشی از مبلغ از کیف پول</label>
+                <select id="mixedWalletProgram" class="form-select mt-2 d-none" aria-label="برنامه کیف پول">
+                    <option value="">برنامه کیف پول را انتخاب کنید</option>
+                </select>
+                <p id="mixedWalletCardMessage" class="small mt-2" role="status"></p>
+            </div>
         }
 
 
@@ -199,6 +209,64 @@
 
 
 <script type="text/javascript">
+    const vibeMixedMethod = @vibePaymentMethodType;
+    const hekmatOnlineMixedMethod = @hekmatOnlineMixedMethodType;
+    const supportsMixedWallet = method => method === vibeMixedMethod || method === hekmatOnlineMixedMethod;
+    const mixedWalletOption = document.getElementById('mixedWalletOption');
+    const mixedWalletCheckbox = document.getElementById('useMixedWallet');
+    const mixedWalletProgram = document.getElementById('mixedWalletProgram');
+    if (mixedWalletOption && mixedWalletCheckbox && mixedWalletProgram) {
+        const cardMessage = document.getElementById('mixedWalletCardMessage');
+        const update = () => {
+            const mixed = supportsMixedWallet(+$('input[name=paymentMethodType]:checked').val());
+            mixedWalletOption.classList.toggle('d-none', !mixed);
+            if (!mixed) mixedWalletCheckbox.checked = false;
+            mixedWalletProgram.classList.toggle('d-none', !mixed || !mixedWalletCheckbox.checked);
+        };
+        const showPrograms = programs => {
+            mixedWalletProgram.replaceChildren(new Option('برنامه کیف پول را انتخاب کنید', ''));
+            if (Array.isArray(programs)) {
+                const usable = programs.filter(x => x.isUsable && x.availableAmount > 0);
+                for (const program of usable) {
+                    mixedWalletProgram.add(new Option(`${program.programTitle} — ${program.availableAmount}`,
+                        program.walletProgramId));
+                }
+            }
+            update();
+        };
+        $(document).on('change', 'input[name=paymentMethodType]', update);
+        mixedWalletCheckbox.addEventListener('change', async () => {
+            update();
+            if (!mixedWalletCheckbox.checked) return;
+            mixedWalletCheckbox.disabled = true;
+            cardMessage.textContent = 'در حال بررسی کارت گیرنده و اعتبار کیف پول...';
+            try {
+                const body = new URLSearchParams({
+                    recipientId: '@Model.RecipientId',
+                    __RequestVerificationToken: mixedWalletOption.querySelector('input[name="__RequestVerificationToken"]').value
+                });
+                const response = await fetch('@Url.Action("MatchCheckoutRecipientCard", "MyWallet")', {
+                    method: 'POST', credentials: 'same-origin',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body
+                });
+                if (!response.ok) throw new Error('Card match failed');
+                const result = await response.json();
+                showPrograms(result.programs);
+                cardMessage.textContent = result.isSuccess
+                    ? 'کارت گیرنده بررسی شد؛ اعتبار قابل استفاده به‌روز شد.'
+                    : (result.message || 'اعتباری از کارت گیرنده یافت نشد؛ اعتبارهای قبلی همچنان قابل انتخاب‌اند.');
+            } catch (_) {
+                cardMessage.textContent = 'بررسی کارت انجام نشد؛ اعتبارهای موجود را دوباره بارگذاری کنید.';
+                const balance = await fetch('@Url.Action("Programs", "MyWallet")', {credentials: 'same-origin'});
+                if (balance.ok) showPrograms(await balance.json());
+            } finally { mixedWalletCheckbox.disabled = false; }
+        });
+        fetch('@Url.Action("Programs", "MyWallet")', { credentials: 'same-origin' })
+            .then(response => response.ok ? response.json() : [])
+            .then(showPrograms);
+        update();
+    }
+
     let blinkingIntervalId = null;  // Store interval ID globally
 
     function startBlinking(label) {
@@ -305,7 +373,23 @@
 
 
 
-        var dataParams = { recipientId: recipientId, paymentMethodType: +paymentMethod, orderId: orderId, purchaseType: purchaseType, RequiredSupplierApprovalBeforePayment: requiredSupplierApprovalBeforePayment };
+        const useWallet = mixedWalletCheckbox && mixedWalletCheckbox.checked && supportsMixedWallet(+paymentMethod);
+        if (useWallet && !mixedWalletProgram.value) {
+            bootbox.alert('برنامه کیف پول را انتخاب کنید.');
+            spinnerElement.classList.add('d-none');
+            buttonElement.removeAttribute('disabled');
+            return;
+        }
+        const cartCookie = document.cookie.split('; ').find(x => x.startsWith('CartId='));
+        const attemptSlot = 'walletMixedAttempt:' + (orderId || (cartCookie ? cartCookie.slice(7) : recipientId))
+            + ':' + paymentMethod + ':' + (useWallet ? mixedWalletProgram.value : 'none');
+        let attemptKey = useWallet ? sessionStorage.getItem(attemptSlot) : null;
+        if (useWallet && !attemptKey) {
+            attemptKey = window.crypto.randomUUID();
+            sessionStorage.setItem(attemptSlot, attemptKey);
+        }
+        var dataParams = { recipientId: recipientId, paymentMethodType: +paymentMethod, orderId: orderId, purchaseType: purchaseType, RequiredSupplierApprovalBeforePayment: requiredSupplierApprovalBeforePayment,
+            walletProgramId: useWallet ? +mixedWalletProgram.value : null, walletAttemptKey: attemptKey };
         fetch('/api/order/saveShoppingCartToOrder',
             {
                 method: 'POST',

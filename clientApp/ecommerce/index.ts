@@ -128,6 +128,8 @@ import {
 import {ShoppingCartItemListComponent} from './shopping-cart-item/shopping-cart-item-list.component';
 import {RewardPointsHistoryDetailComponent} from './reward-points-history/reward-points-history-detail.component';
 import {CustomerClubListComponent} from './customer-club/customer-club-list.component';
+import {WalletProgramListComponent} from './wallet-program/wallet-program-list.component';
+import {WalletProgramDetailComponent} from './wallet-program/wallet-program-detail.component';
 import {CustomerClubDetailComponent} from './customer-club/customer-club-detail.component';
 import {CustomerClubCardListComponent} from './customer-club-card/customer-club-card-list.component';
 import {RewardPointsHistoryListComponent} from './reward-points-history/reward-points-history-list.component';
@@ -541,6 +543,8 @@ export const COMPONENTS: Provider[] = [
   RecipientDetailComponent,
   CustomerClubListComponent,
   CustomerClubDetailComponent,
+  WalletProgramListComponent,
+  WalletProgramDetailComponent,
   CustomerClubCardListComponent,
   CustomerClubCardDetailComponent,
   CustomerClubPaymentMethodTypeListComponent,

@@ -1,0 +1,8 @@
+ 
+ {
+  "id": "YashilPayment.Web",
+  "name": "YashilPayment",
+  "isBundledWithHost": true,
+  "version": "1.0.0",
+  "subFolder": "YashilPayment"
+}
