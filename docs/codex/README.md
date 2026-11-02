@@ -8,6 +8,7 @@ This directory is intentionally small. `AGENTS.md` is the entry point; these doc
 | Backend feature | `architecture.md` + relevant `.agents/skills/backend-feature` |
 | Angular feature | `frontend.md` + relevant `.agents/skills/angular-feature` |
 | Wallet business behavior | `wallet.md` + the detailed Wallet reference |
+| Run the Maz/Zahedan card scenario or find Wallet business methods | `WALLET_BUSINESS_GUIDE.md` |
 | Wallet/financial feature | `wallet.md` + `.agents/skills/wallet-feature` |
 | Review existing changes | `.agents/skills/code-review` |
 | Define a new feature | `docs/specifications/TEMPLATE.md` |

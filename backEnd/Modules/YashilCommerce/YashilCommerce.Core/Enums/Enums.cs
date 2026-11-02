@@ -214,7 +214,6 @@ namespace YashilCommerce.Core.Enums
         Paying = 3157,
         Paid = 3158
     }
-
     public enum WalletReservationStatusType
     {
         Reserved = 3184,
